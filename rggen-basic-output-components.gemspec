@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.summary = "rggen-basic-output-components-#{RgGen::BasicOutputComponents::VERSION}"
   spec.description = 'Correction of basic output components.'
   spec.homepage = "TODO: Put your gem's website or public repo URL here."
-  spec.homepage = 'https://github.com/rggen/rggen-basic_output_components'
+  spec.homepage = 'https://github.com/rggen/rggen-basic-output-components'
   spec.license = 'MIT'
 
   spec.files = `git ls-files lib LICENSE.txt README.md`.split($RS)
