@@ -2,7 +2,8 @@ module RgGen
   module BasicOutputComponents
     module CodeUtility
       class Line
-        def initialize
+        def initialize(indent = 0)
+          @indent = indent
           @words = []
         end
 
@@ -11,6 +12,10 @@ module RgGen
         def <<(word)
           @words << word
           self
+        end
+
+        def concat(line)
+          @words.concat(line.words)
         end
 
         def empty?
@@ -28,6 +33,9 @@ module RgGen
           return false unless word.respond_to?(:empty?)
           word.empty?
         end
+
+        attr_reader :words
+        protected :words
       end
     end
   end
