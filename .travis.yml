@@ -12,17 +12,22 @@ env:
 language:
   ruby
 
-rvm:
-  - 2.3.8
-  - 2.4.5
-  - 2.5.3
-  - 2.6.1
-
 cache:
   bundler
 
+matrix:
+  include:
+    - rvm: 2.3.8
+    - rvm: 2.4.5
+      env: RUBYOPT=--enable-frozen-string-literal
+    - rvm: 2.5.3
+      env: RUBYOPT=--enable-frozen-string-literal
+    - rvm: 2.6.1
+      env: RUBYOPT=--enable-frozen-string-literal
+
 before_install:
-  - gem install bundler
+  - "env -u RUBYOPT gem update --system"
+  - "env -u RUBYOPT gem install bundler"
 
 script:
   - bundle exec rake coverage
