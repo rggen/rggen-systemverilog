@@ -35,10 +35,8 @@ module RgGen
         "\"#{expression}\""
       end
 
-      def code_block(indent = 0)
-        code = CodeBlock.new(indent)
-        block_given? && yield(code)
-        code
+      def code_block(indent = 0, &body)
+        CodeBlock.new(indent, &body)
       end
 
       def indent(code, indent_size)

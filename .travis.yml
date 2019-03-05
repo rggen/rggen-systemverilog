@@ -19,11 +19,11 @@ matrix:
   include:
     - rvm: 2.3.8
     - rvm: 2.4.5
-      env: RUBYOPT=--enable-frozen-string-literal
+      env: RUBYOPT=--enable-frozen-string-literal USE_FIXED_GEMS=yes USE_GITHUB_REPOSITORY=yes
     - rvm: 2.5.3
-      env: RUBYOPT=--enable-frozen-string-literal
+      env: RUBYOPT=--enable-frozen-string-literal USE_FIXED_GEMS=yes USE_GITHUB_REPOSITORY=yes
     - rvm: 2.6.1
-      env: RUBYOPT=--enable-frozen-string-literal
+      env: RUBYOPT=--enable-frozen-string-literal USE_FIXED_GEMS=yes USE_GITHUB_REPOSITORY=yes
 
 before_install:
   - "env -u RUBYOPT gem update --system"

@@ -8,6 +8,7 @@ module RgGen
           @indent = indent
           @lines = []
           add_line
+          block_given? && yield(self)
         end
 
         attr_reader :indent

@@ -12,7 +12,6 @@ Gem::Specification.new do |spec|
 
   spec.summary = "rggen-basic-output-components-#{RgGen::BasicOutputComponents::VERSION}"
   spec.description = 'Correction of basic output components.'
-  spec.homepage = "TODO: Put your gem's website or public repo URL here."
   spec.homepage = 'https://github.com/rggen/rggen-basic-output-components'
   spec.license = 'MIT'
 
@@ -20,6 +19,9 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.required_ruby_version = '>= 2.3'
+
+  spec.add_runtime_dependency 'docile', '>= 1.1.5'
+  spec.add_runtime_dependency 'facets', '>= 3.0'
 
   spec.add_development_dependency "bundler"
 end
