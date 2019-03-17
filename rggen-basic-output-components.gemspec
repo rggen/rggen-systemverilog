@@ -23,5 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'docile', '>= 1.1.5'
   spec.add_runtime_dependency 'facets', '>= 3.0'
 
-  spec.add_development_dependency "bundler"
+  spec.add_development_dependency 'bundler'
 end
