@@ -9,9 +9,15 @@ module RgGen
           block_given? && yield(self)
         end
 
-        def __array_attributes__(width, array_size, array_format)
+        def __width__(width)
           @width = width
+        end
+
+        def __array_size__(array_size)
           @array_size = array_size
+        end
+
+        def __array_format__(array_format)
           @array_format = array_format
         end
 

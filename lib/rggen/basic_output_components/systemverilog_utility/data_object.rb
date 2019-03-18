@@ -43,7 +43,9 @@ module RgGen
 
         def identifier
           Identifier.new(name) do |identifier|
-            identifier.__array_attributes__(width, array_size, array_format)
+            identifier.__width__(width)
+            identifier.__array_size__(array_size)
+            identifier.__array_format__(array_format)
           end
         end
 
