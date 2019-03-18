@@ -3,12 +3,24 @@
 module RgGen
   module BasicOutputComponents
     module SystemVerilogUtility
-      class Identifier < BasicObject
-        def initialize(name, width = nil, size = nil, format = nil)
+      class Identifier
+        def initialize(name)
           @name = name
+          block_given? && yield(self)
+        end
+
+        def __array_attributes__(width, array_size, array_format)
           @width = width
-          @array_size = size
-          @array_format = format
+          @array_size = array_size
+          @array_format = array_format
+        end
+
+        def __sub_identifiers__(sub_identifiers)
+          sub_identifiers.each do |sub_identifier|
+            define_singleton_method(sub_identifier) do
+              Identifier.new("#{@name}.#{__method__}")
+            end
+          end
         end
 
         def to_s
@@ -23,33 +35,7 @@ module RgGen
           end
         end
 
-        TYPE_CONVERSIONS = [
-          :to_a,
-          :to_ary,
-          :to_f,
-          :to_enum,
-          :to_h,
-          :to_hash,
-          :to_i,
-          :to_int,
-          :to_io,
-          :to_proc,
-          :to_regexp,
-          :to_str
-        ].freeze
-
-        def respond_to?(name, _include_all = false)
-          return false if TYPE_CONVERSIONS.include?(name.to_sym)
-          return false if /\A__.*__\z/ =~ name
-          true
-        end
-
         private
-
-        def method_missing(name, *_args)
-          return super unless respond_to?(name)
-          Identifier.new("#{@name}.#{name}")
-        end
 
         def __create_new_identifier__(array_index_or_msb, lsb)
           select =
@@ -65,7 +51,7 @@ module RgGen
 
         def __array_select__(array_index)
           if @array_format == :vectorized
-            "[#{@width}*(#{__vecotr_index__(array_index)})+:#{@width}]"
+            "[#{__vecotr_lsb__(array_index)}+:#{@width}]"
           else
             array_index
               .map { |index| "[#{index}]" }
@@ -73,21 +59,40 @@ module RgGen
           end
         end
 
+        def __vecotr_lsb__(array_index)
+          __reduce_array__([@width, __vecotr_index__(array_index)], :*, 1)
+        end
+
         def __vecotr_index__(array_index)
-          index = []
-          array_index.zip(__index_factors__).reverse_each do |i, f|
-            index.unshift((index.size.zero? && i.to_s) || "#{f}*#{i}")
-          end
-          index.join('+')
+          index_values =
+            array_index
+              .reverse
+              .zip(__index_factors__)
+              .map { |i, f| __calc_index_value__(i, f) }
+          index = __reduce_array__(index_values.reverse, :+, 0)
+          integer?(index) ? index : "(#{index})"
         end
 
         def __index_factors__
-          factors = []
-          @array_size.reverse_each.inject(1) do |elements, size|
-            factors.unshift(elements)
-            elements * size
+          Array.new(@array_size.size) do |i|
+            i.zero? ? nil : __reduce_array__(@array_size[-i..-1], :*, 1)
           end
-          factors
+        end
+
+        def __calc_index_value__(index, factor)
+          __reduce_array__([factor, index].compact, :*, 1)
+        end
+
+        def __reduce_array__(array, operator, initial_value)
+          if array.all?(&method(:integer?))
+            array.reduce(initial_value, &operator)
+          else
+            array.join(operator.to_s)
+          end
+        end
+
+        def integer?(value)
+          value.is_a?(Integer)
         end
       end
     end

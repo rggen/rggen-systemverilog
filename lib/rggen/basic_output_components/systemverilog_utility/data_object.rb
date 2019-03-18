@@ -42,7 +42,9 @@ module RgGen
         end
 
         def identifier
-          Identifier.new(name, width, array_size, array_format)
+          Identifier.new(name) do |identifier|
+            identifier.__array_attributes__(width, array_size, array_format)
+          end
         end
 
         private
@@ -78,7 +80,7 @@ module RgGen
         end
 
         def packed_dimensions
-          ((vectorized_array? && vectorized_array_size) || packed_array_size)
+          (vectorized_array? ? vectorized_array_size : packed_array_size)
             .map { |size| (size.is_a?(Integer) && size - 1) || "#{size}-1" }
             .map { |msb| "[#{msb}:0]" }
             .join
