@@ -21,10 +21,6 @@ module RgGen::BasicOutputComponents::SystemVerilogUtility
     end
 
     describe '#declaration' do
-      matcher :match_declaration do |expectation|
-        match { |actual| actual.declaration == expectation }
-      end
-
       context '変数の場合' do
         it '変数/信号宣言を返す' do
           expect(variable('foo') { data_type :bit }).to match_declaration('bit foo')
@@ -106,14 +102,14 @@ module RgGen::BasicOutputComponents::SystemVerilogUtility
 
     describe '#identifier' do
       it '自身の識別子を返す' do
-        expect(data_object('foo') { data_type :bit }.identifier ).to match_string 'foo'
-        expect(data_object('foo') { data_type :bit; width 2 }.identifier ).to match_string 'foo'
-        expect(data_object('foo') { data_type :bit; width 2; array_size [2, 3]; array_format :packed }.identifier ).to match_string 'foo'
-        expect(data_object('foo') { data_type :bit; width 2; array_size [2, 3]; array_format :packed }.identifier[[:i, :j]] ).to match_string 'foo[i][j]'
-        expect(data_object('foo') { data_type :bit; width 2; array_size [2, 3]; array_format :unpacked }.identifier ).to match_string 'foo'
-        expect(data_object('foo') { data_type :bit; width 2; array_size [2, 3]; array_format :unpacked }.identifier[[:i, :j]] ).to match_string 'foo[i][j]'
-        expect(data_object('foo') { data_type :bit; width 2; array_size [2, 3]; array_format :vectorized }.identifier ).to match_string 'foo'
-        expect(data_object('foo') { data_type :bit; width 2; array_size [2, 3]; array_format :vectorized }.identifier[[:i, :j]] ).to match_string 'foo[2*(3*i+j)+:2]'
+        expect(data_object('foo') { data_type :bit } ).to match_identifier 'foo'
+        expect(data_object('foo') { data_type :bit; width 2 } ).to match_identifier 'foo'
+        expect(data_object('foo') { data_type :bit; width 2; array_size [2, 3]; array_format :packed } ).to match_identifier 'foo'
+        expect(data_object('foo') { data_type :bit; width 2; array_size [2, 3]; array_format :packed }.identifier[[:i, :j]] ).to match_identifier 'foo[i][j]'
+        expect(data_object('foo') { data_type :bit; width 2; array_size [2, 3]; array_format :unpacked } ).to match_identifier 'foo'
+        expect(data_object('foo') { data_type :bit; width 2; array_size [2, 3]; array_format :unpacked }.identifier[[:i, :j]] ).to match_identifier 'foo[i][j]'
+        expect(data_object('foo') { data_type :bit; width 2; array_size [2, 3]; array_format :vectorized } ).to match_identifier 'foo'
+        expect(data_object('foo') { data_type :bit; width 2; array_size [2, 3]; array_format :vectorized }.identifier[[:i, :j]] ).to match_identifier 'foo[2*(3*i+j)+:2]'
       end
     end
   end
