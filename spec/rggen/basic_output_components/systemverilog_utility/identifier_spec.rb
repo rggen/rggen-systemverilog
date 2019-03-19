@@ -138,9 +138,14 @@ module RgGen::BasicOutputComponents::SystemVerilogUtility
         identifier.__sub_identifiers__([:bar, :baz])
       end
 
-      it '#__sub_identifiers__で指定された下位階層識別子を取得できる' do
+      specify '#__sub_identifiers__で指定された下位階層識別子を取得できる' do
         expect(identifier.bar).to match_identifier('foo.bar')
         expect(identifier.baz).to match_identifier('foo.baz')
+      end
+
+      specify 'ビット選択、配列選択された識別子も下位階層識別子を取得できる' do
+        expect(identifier[0].bar).to match_identifier('foo[0].bar')
+        expect(identifier[0][1].baz).to match_identifier('foo[0][1].baz')
       end
     end
   end

@@ -22,7 +22,8 @@ module RgGen
         end
 
         def __sub_identifiers__(sub_identifiers)
-          sub_identifiers.each do |sub_identifier|
+          Array(sub_identifiers).each do |sub_identifier|
+            (@sub_identifiers ||= []) << sub_identifier
             define_singleton_method(sub_identifier) do
               Identifier.new("#{@name}.#{__method__}")
             end
@@ -30,7 +31,7 @@ module RgGen
         end
 
         def to_s
-          @name
+          @name.to_s
         end
 
         def [](array_index_or_msb, lsb = nil)
@@ -52,7 +53,9 @@ module RgGen
             else
               "[#{array_index_or_msb}:#{lsb}]"
             end
-          Identifier.new("#{@name}#{select}")
+          Identifier.new("#{@name}#{select}") do |identifier|
+            identifier.__sub_identifiers__(@sub_identifiers)
+          end
         end
 
         def __array_select__(array_index)
