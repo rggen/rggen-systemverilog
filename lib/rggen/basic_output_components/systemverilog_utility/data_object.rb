@@ -4,23 +4,11 @@ module RgGen
   module BasicOutputComponents
     module SystemVerilogUtility
       class DataObject
-        class << self
-          def attributes
-            @attributes ||= []
-          end
-
-          private
-
-          def define_attribute(name)
-            attributes << name
-            attr_setter(name)
-          end
-        end
+        include Core::Utility::AttributeSetter
 
         def initialize(object_type, **default_attributes, &block)
           @object_type = object_type
-          @array_format = :packed
-          apply_default_attributes(default_attributes)
+          apply_attributes(default_attributes)
           block_given? && Docile.dsl_eval(self, &block)
         end
 
@@ -30,7 +18,7 @@ module RgGen
         define_attribute :data_type
         define_attribute :width
         define_attribute :array_size
-        define_attribute :array_format
+        define_attribute :array_format, :packed
         define_attribute :random
         define_attribute :default
 
@@ -51,12 +39,6 @@ module RgGen
 
         private
 
-        def apply_default_attributes(default_attributes)
-          default_attributes.each do |name, value|
-            self.class.attributes.include?(name) && __send__(name, value)
-          end
-        end
-
         def declaration_snippets
           [
             rand_keyword,
@@ -64,7 +46,7 @@ module RgGen
             paraemter_keyword,
             data_type,
             packed_dimensions,
-            data_identifier,
+            object_identifier,
             default_value
           ]
         end
@@ -119,7 +101,7 @@ module RgGen
           width > 1
         end
 
-        def data_identifier
+        def object_identifier
           "#{name}#{unpacked_dimensions}"
         end
 
