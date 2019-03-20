@@ -65,9 +65,12 @@ module RgGen
 
         def packed_dimensions
           (vectorized_array? ? vectorized_array_size : packed_array_size)
-            .map { |size| (size.is_a?(Integer) && size - 1) || "#{size}-1" }
-            .map { |msb| "[#{msb}:0]" }
+            .map { |size| "[#{msb(size)}:0]" }
             .join
+        end
+
+        def msb(size)
+          (size.is_a?(Integer) && size - 1) || "#{size}-1"
         end
 
         def array?
