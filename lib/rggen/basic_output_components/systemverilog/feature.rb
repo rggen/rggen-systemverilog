@@ -5,6 +5,7 @@ module RgGen
     module SystemVerilog
       class Feature < Core::OutputBase::Feature
         include SystemVerilogUtility
+        template_engine Core::OutputBase::ERBEngine
 
         class << self
           def creation_method(entity)
