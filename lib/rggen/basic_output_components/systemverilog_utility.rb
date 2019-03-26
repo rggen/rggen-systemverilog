@@ -52,6 +52,24 @@ module RgGen
         bit_length = 1 if bit_length.zero?
         [width, bit_length].max
       end
+
+      def create_variable(data_type, attributes, &block)
+        DataObject.new(
+          :variable, attributes.merge(data_type: data_type), &block
+        )
+      end
+
+      def create_argument(direction, attributes, &block)
+        DataObject.new(
+          :argument, attributes.merge(direction: direction), &block
+        )
+      end
+
+      def create_parameter(parameter_type, attributes, &block)
+        DataObject.new(
+          :parameter, attributes.merge(parameter_type: parameter_type), &block
+        )
+      end
     end
   end
 end

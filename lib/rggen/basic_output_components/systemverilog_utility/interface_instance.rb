@@ -26,6 +26,8 @@ module RgGen
           ].select(&:itself).join(' ')
         end
 
+        alias_method :declaration, :instantiation
+
         def identifier
           Identifier.new(name) do |identifier|
             identifier.__array_size__(array_size)

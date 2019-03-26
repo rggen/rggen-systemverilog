@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'docile'
+require 'facets/kernel/attr_singleton'
 
 require_relative 'basic_output_components/version'
 
@@ -11,3 +12,5 @@ require_relative 'basic_output_components/systemverilog_utility/interface_instan
 require_relative 'basic_output_components/systemverilog_utility/structure_definition'
 require_relative 'basic_output_components/systemverilog_utility/module_definition'
 require_relative 'basic_output_components/systemverilog_utility'
+
+require_relative 'basic_output_components/systemverilog_rtl/feature'

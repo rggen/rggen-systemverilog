@@ -2,7 +2,12 @@
 
 RSpec::Matchers.define(:match_declaration) do |expected_declaration|
   match do |actual|
-    @actual_declaration = actual.declaration
+    @actual_declaration =
+      if actual.respond_to?(:declaration)
+        actual.declaration
+      else
+        actual
+      end
     values_match?(expected_declaration, @actual_declaration.to_s)
   end
 

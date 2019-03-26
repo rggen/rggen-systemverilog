@@ -42,7 +42,7 @@ module RgGen
         def declaration_snippets
           [
             rand_keyword,
-            artument_direction,
+            argument_direction,
             paraemter_keyword,
             data_type,
             packed_dimensions,
@@ -55,7 +55,7 @@ module RgGen
           @object_type == :variable && random
         end
 
-        def artument_direction
+        def argument_direction
           @object_type == :argument && direction
         end
 

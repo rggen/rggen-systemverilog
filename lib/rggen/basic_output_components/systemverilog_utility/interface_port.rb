@@ -13,6 +13,7 @@ module RgGen
 
         define_attribute :name
         define_attribute :interface_type
+        define_attribute :modport
         define_attribute :array_size
 
         def modport(name, ports = nil)
