@@ -45,6 +45,8 @@ module RgGen::BasicOutputComponents::SystemVerilogUtility
           expect(variable('foo') { data_type :bit; width 'WIDTH'; array_size [2, 3]; array_format :vectorized }).to match_declaration('bit [WIDTH*2*3-1:0] foo')
           expect(variable('foo') { data_type :bit; width 'WIDTH'; array_size ['ROW_SIZE', 3]; array_format :vectorized }).to match_declaration('bit [WIDTH*ROW_SIZE*3-1:0] foo')
 
+          expect(variable('foo') { data_type :bit; width 2; random true }).to match_declaration('rand bit [1:0] foo')
+          expect(variable('foo') { data_type :bit; width 2; random false }).to match_declaration('bit [1:0] foo')
           expect(variable('foo') { data_type :bit; width 2; random :rand }).to match_declaration('rand bit [1:0] foo')
           expect(variable('foo') { data_type :bit; width 2; random :randc }).to match_declaration('randc bit [1:0] foo')
 

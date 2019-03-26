@@ -52,7 +52,10 @@ module RgGen
         end
 
         def rand_keyword
-          @object_type == :variable && random
+          return unless @object_type == :variable
+          return unless random
+          return :rand if random.equal?(true)
+          random
         end
 
         def argument_direction
