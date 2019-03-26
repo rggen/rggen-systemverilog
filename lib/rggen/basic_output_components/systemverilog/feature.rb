@@ -2,9 +2,27 @@
 
 module RgGen
   module BasicOutputComponents
-    module SystemVerilogRTL
+    module SystemVerilog
       class Feature < Core::OutputBase::Feature
         include SystemVerilogUtility
+
+        class << self
+          def creation_method(entity)
+            @creation_methods[entity]
+          end
+
+          def declaration_type(entity)
+            @declaration_types[entity]
+          end
+
+          private
+
+          def define_entity(entity, creation_method, declaration_type)
+            (@creation_methods ||= {})[entity] = creation_method
+            (@declaration_types ||= {})[entity] = declaration_type
+            alias_method entity, :__declare_entity__
+          end
+        end
 
         def initialize(component, feature_name, &block)
           super(component, feature_name, &block)
@@ -26,31 +44,13 @@ module RgGen
           add_identifier(handle_name, entity)
         end
 
-        RenameMapper = Struct.new(:creation, :declaration)
-
-        RENAME_MAPPERS = {
-          logic: RenameMapper.new(:create_variable, :variable),
-          interface: RenameMapper.new(:create_interface, :variable),
-          input: RenameMapper.new(:create_argument, :port),
-          output: RenameMapper.new(:create_argument, :port),
-          interface_port: RenameMapper.new(:create_interface_port, :port),
-          parameter: RenameMapper.new(:create_parameter, :parameter),
-        }.freeze
-
         def create_entity(type, attributes, block)
-          __send__(RENAME_MAPPERS[type].creation, type, attributes, &block)
-        end
-
-        def create_interface(_, attributes, &block)
-          InterfaceInstance.new(attributes, &block)
-        end
-
-        def create_interface_port(_, attributes, &block)
-          InterfacePort.new(attributes, &block)
+          creation_method = self.class.creation_method(type)
+          __send__(creation_method, type, attributes, block)
         end
 
         def add_declaration(type, domain, entity)
-          declaration_type = RENAME_MAPPERS[type].declaration
+          declaration_type = self.class.declaration_type(type)
           @declarations[domain][declaration_type] << entity.declaration
         end
 
@@ -58,10 +58,6 @@ module RgGen
           export(handle_name)
           instance_variable_set("@#{handle_name}", entity.identifier)
           attr_singleton_reader(handle_name)
-        end
-
-        RENAME_MAPPERS.each_key do |definition|
-          alias_method definition, :__declare_entity__
         end
       end
     end

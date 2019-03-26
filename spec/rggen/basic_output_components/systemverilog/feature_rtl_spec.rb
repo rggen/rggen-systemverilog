@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-module RgGen::BasicOutputComponents::SystemVerilogRTL
-  describe Feature do
+module RgGen::BasicOutputComponents::SystemVerilog
+  describe FeatureRTL do
     let(:configuration) do
       RgGen::Core::Configuration::Component.new(nil)
     end
@@ -17,7 +17,7 @@ module RgGen::BasicOutputComponents::SystemVerilogRTL
     end
 
     let(:feature) do
-      Feature.new(component, :foo) do |f|
+      FeatureRTL.new(component, :foo) do |f|
         component.add_feature(f)
       end
     end
