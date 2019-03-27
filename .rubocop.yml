@@ -9,6 +9,9 @@ Layout/EmptyLineAfterGuardClause:
 Layout/EndOfLine:
   EnforcedStyle: lf
 
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented_relative_to_receiver
+
 Style/Alias:
   EnforcedStyle: prefer_alias_method
 
@@ -17,9 +20,6 @@ Style/EmptyMethod:
 
 Style/FormatStringToken:
   EnforcedStyle: unannotated
-
-Layout/MultilineMethodCallIndentation:
-  EnforcedStyle: indented_relative_to_receiver
 
 Style/RaiseArgs:
   EnforcedStyle: compact
