@@ -13,6 +13,7 @@ require_relative 'basic_output_components/systemverilog_utility/structure_defini
 require_relative 'basic_output_components/systemverilog_utility/module_definition'
 require_relative 'basic_output_components/systemverilog_utility'
 
+require_relative 'basic_output_components/systemverilog/component'
 require_relative 'basic_output_components/systemverilog/feature'
 require_relative 'basic_output_components/systemverilog/feature_rtl'
 require_relative 'basic_output_components/systemverilog/feature_ral'

@@ -7,6 +7,9 @@ module RgGen
         include SystemVerilogUtility
         template_engine Core::OutputBase::ERBEngine
 
+        EntityContext =
+          Struct.new(:entity_type, :creation_method, :declaration_type)
+
         class << self
           def creation_method(entity)
             @creation_methods[entity]
@@ -19,10 +22,10 @@ module RgGen
           private
 
           def define_entity(entity, creation_method, declaration_type)
-            (@creation_methods ||= {})[entity] = creation_method
-            (@declaration_types ||= {})[entity] = declaration_type
+            context =
+              EntityContext.new(entity, creation_method, declaration_type)
             define_method(entity) do |domain, name, **attributes, &block|
-              declare_entity(__method__, domain, name, attributes, &block)
+              declare_entity(context, domain, name, attributes, &block)
             end
           end
         end
@@ -40,20 +43,21 @@ module RgGen
 
         private
 
-        def declare_entity(entity_type, domain, name, **attributes, &block)
+        def declare_entity(context, domain, name, **attributes, &block)
           merged_attributes = { name: name }.merge(attributes)
-          entity = create_entity(entity_type, merged_attributes, block)
-          add_declaration(entity_type, domain, entity)
+          entity = create_entity(context, merged_attributes, block)
+          add_declaration(context, domain, entity)
           add_identifier(name, entity)
         end
 
-        def create_entity(type, attributes, block)
-          creation_method = self.class.creation_method(type)
-          __send__(creation_method, type, attributes, block)
+        def create_entity(context, attributes, block)
+          creation_method = context.creation_method
+          entity_type = context.entity_type
+          __send__(creation_method, entity_type, attributes, block)
         end
 
-        def add_declaration(type, domain, entity)
-          declaration_type = self.class.declaration_type(type)
+        def add_declaration(context, domain, entity)
+          declaration_type = context.declaration_type
           @declarations[domain][declaration_type] << entity.declaration
         end
 
