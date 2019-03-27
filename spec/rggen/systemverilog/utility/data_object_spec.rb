@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module RgGen::BasicOutputComponents::SystemVerilogUtility
+module RgGen::SystemVerilog::Utility
   describe DataObject do
     def data_object(name, &block)
       DataObject.new([:variable, :argument, :parameter].sample, name: name, &block)

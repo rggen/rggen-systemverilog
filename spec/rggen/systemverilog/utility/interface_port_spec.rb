@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module RgGen::BasicOutputComponents::SystemVerilogUtility
+module RgGen::SystemVerilog::Utility
   describe InterfacePort do
     def interface_port(interface_type, name, &block)
       InterfacePort.new(interface_type: interface_type, name: name, &block)

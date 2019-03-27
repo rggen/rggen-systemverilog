@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module RgGen::BasicOutputComponents::SystemVerilogUtility
+module RgGen::SystemVerilog::Utility
   describe Identifier do
     let(:name) { :foo }
 

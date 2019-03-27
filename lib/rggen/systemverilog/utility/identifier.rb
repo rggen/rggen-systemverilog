@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module RgGen
-  module BasicOutputComponents
-    module SystemVerilogUtility
+  module SystemVerilog
+    module Utility
       class Identifier
         def initialize(name)
           @name = name

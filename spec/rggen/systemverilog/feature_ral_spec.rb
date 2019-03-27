@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module RgGen::BasicOutputComponents::SystemVerilog
+module RgGen::SystemVerilog
   describe FeatureRAL do
     let(:configuration) do
       RgGen::Core::Configuration::Component.new(nil)

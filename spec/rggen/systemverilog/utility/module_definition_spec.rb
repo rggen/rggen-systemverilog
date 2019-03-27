@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module RgGen::BasicOutputComponents::SystemVerilogUtility
+module RgGen::SystemVerilog::Utility
   describe ModuleDefinition do
     def module_definition(name, &block)
       ModuleDefinition.new(name: name, &block).to_code

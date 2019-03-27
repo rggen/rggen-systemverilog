@@ -12,4 +12,4 @@ end
 builder = RgGen::Core::Builder.create
 RgGen.builder(builder)
 
-require 'rggen/basic_output_components'
+require 'rggen/systemverilog'
