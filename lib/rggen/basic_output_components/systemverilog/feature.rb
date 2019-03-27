@@ -21,7 +21,9 @@ module RgGen
           def define_entity(entity, creation_method, declaration_type)
             (@creation_methods ||= {})[entity] = creation_method
             (@declaration_types ||= {})[entity] = declaration_type
-            alias_method entity, :__declare_entity__
+            define_method(entity) do |domain, name, **attributes, &block|
+              declare_entity(__method__, domain, name, attributes, &block)
+            end
           end
         end
 
@@ -38,11 +40,11 @@ module RgGen
 
         private
 
-        def __declare_entity__(domain, handle_name, **attributes, &block)
-          merged_attributes = { name: handle_name }.merge(attributes)
-          entity = create_entity(__callee__, merged_attributes, block)
-          add_declaration(__callee__, domain, entity)
-          add_identifier(handle_name, entity)
+        def declare_entity(entity_type, domain, name, **attributes, &block)
+          merged_attributes = { name: name }.merge(attributes)
+          entity = create_entity(entity_type, merged_attributes, block)
+          add_declaration(entity_type, domain, entity)
+          add_identifier(name, entity)
         end
 
         def create_entity(type, attributes, block)
@@ -55,10 +57,10 @@ module RgGen
           @declarations[domain][declaration_type] << entity.declaration
         end
 
-        def add_identifier(handle_name, entity)
-          export(handle_name)
-          instance_variable_set("@#{handle_name}", entity.identifier)
-          attr_singleton_reader(handle_name)
+        def add_identifier(name, entity)
+          export(name)
+          instance_variable_set("@#{name}", entity.identifier)
+          attr_singleton_reader(name)
         end
       end
     end
