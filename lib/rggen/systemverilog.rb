@@ -17,21 +17,17 @@ require_relative 'systemverilog/component'
 require_relative 'systemverilog/feature'
 require_relative 'systemverilog/feature_rtl'
 require_relative 'systemverilog/feature_ral'
+require_relative 'systemverilog/factories'
 
 module RgGen
   module SystemVerilog
-    def self.setup(builder, name, feature)
+    def self.setup(builder, name, sv_feature)
       builder.output_component_registry(name) do
-        register_component :register_map do
-          component Component
-          component_factory Core::OutputBase::ComponentFactory
-        end
-
-        register_component [:register_block, :register, :bit_field] do
-          component Component
-          component_factory Core::OutputBase::ComponentFactory
-          base_feature feature
-          feature_factory Core::OutputBase::FeatureFactory
+        register_component [
+          :register_map, :register_block, :register, :bit_field
+        ] do |category|
+          component Component, ComponentFactory
+          feature sv_feature, FeatureFactory if category != :register_map
         end
       end
     end
