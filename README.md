@@ -1,8 +1,8 @@
-[![Build Status](https://travis-ci.org/rggen/rggen-basic-output-components.svg?branch=master)](https://travis-ci.org/rggen/rggen-basic-output-components)
-[![Maintainability](https://api.codeclimate.com/v1/badges/deed356bef9b27158bdd/maintainability)](https://codeclimate.com/github/rggen/rggen-basic-output-components/maintainability)
-[![codecov](https://codecov.io/gh/rggen/rggen-basic-output-components/branch/master/graph/badge.svg)](https://codecov.io/gh/rggen/rggen-basic-output-components)
+[![Build Status](https://travis-ci.org/rggen/rggen-systemverilog.svg?branch=master)](https://travis-ci.org/rggen/rggen-systemverilog)
+[![Maintainability](https://api.codeclimate.com/v1/badges/88086c5be538a1564a35/maintainability)](https://codeclimate.com/github/rggen/rggen-systemverilog/maintainability)
+[![codecov](https://codecov.io/gh/rggen/rggen-systemverilog/branch/master/graph/badge.svg)](https://codecov.io/gh/rggen/rggen-systemverilog)
 
-# Rggen::Basic::Output::Components
+# RgGen::SystemVerilog
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rggen/basic/output/components`. To experiment with that code, run `bin/console` for an interactive prompt.
 
