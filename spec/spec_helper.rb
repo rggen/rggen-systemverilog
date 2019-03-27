@@ -9,4 +9,7 @@ RSpec.configure do |config|
   RgGen::Devtools::SpecHelper.setup(config)
 end
 
+builder = RgGen::Core::Builder.create
+RgGen.builder(builder)
+
 require 'rggen/basic_output_components'
