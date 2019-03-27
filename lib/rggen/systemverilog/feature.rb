@@ -12,11 +12,13 @@ module RgGen
       class << self
         private
 
-        def define_entity(entity, creation_method, declaration_type)
+        def define_entity(entity_type, creation_method, declaration_type)
           context =
-            EntityContext.new(entity, creation_method, declaration_type)
-          define_method(entity) do |domain, name, **attributes, &block|
-            declare_entity(context, domain, name, attributes, &block)
+            EntityContext.new(entity_type, creation_method, declaration_type)
+          define_method(entity_type) do |domain, name, **attributes, &block|
+            entity =
+              create_entity(context, { name: name }.merge(attributes), block)
+            add_entity(entity, context, domain, name)
           end
         end
       end
@@ -34,28 +36,26 @@ module RgGen
 
       private
 
-      def declare_entity(context, domain, name, **attributes, &block)
-        merged_attributes = { name: name }.merge(attributes)
-        entity = create_entity(context, merged_attributes, block)
-        add_declaration(context, domain, entity)
-        add_identifier(name, entity)
-      end
-
       def create_entity(context, attributes, block)
         creation_method = context.creation_method
         entity_type = context.entity_type
         __send__(creation_method, entity_type, attributes, block)
       end
 
-      def add_declaration(context, domain, entity)
-        declaration_type = context.declaration_type
-        @declarations[domain][declaration_type] << entity.declaration
+      def add_entity(entity, context, domain, name)
+        add_declaration(context, domain, entity.declaration)
+        add_identifier(name, entity.identifier)
       end
 
-      def add_identifier(name, entity)
-        export(name)
-        instance_variable_set("@#{name}", entity.identifier)
+      def add_declaration(context, domain, declaration)
+        declaration_type = context.declaration_type
+        @declarations[domain][declaration_type] << declaration
+      end
+
+      def add_identifier(name, identifier)
+        instance_variable_set("@#{name}", identifier)
         attr_singleton_reader(name)
+        export(name)
       end
     end
   end
