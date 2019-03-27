@@ -2,17 +2,17 @@
 
 require 'spec_helper'
 
-module RgGen::BasicOutputComponents
-  describe SystemVerilogUtility do
+module RgGen::SystemVerilog
+  describe Utility do
     let(:sv) do
-      Class.new { include SystemVerilogUtility }.new
+      Class.new { include Utility }.new
     end
 
     describe '#assign' do
-      let(:lhs) { SystemVerilogUtility::Identifier.new(:foo) }
+      let(:lhs) { Utility::Identifier.new(:foo) }
 
       let(:rhs) do
-        ['4\'b0000', SystemVerilogUtility::Identifier.new(:bar)]
+        ['4\'b0000', Utility::Identifier.new(:bar)]
       end
 
       it '継続代入のコード片を返す' do
@@ -25,8 +25,8 @@ module RgGen::BasicOutputComponents
       let(:expressions) do
         [
           '4\'b0000',
-          SystemVerilogUtility::Identifier.new(:foo),
-          SystemVerilogUtility::Identifier.new(:bar)
+          Utility::Identifier.new(:foo),
+          Utility::Identifier.new(:bar)
         ]
       end
 
@@ -40,8 +40,8 @@ module RgGen::BasicOutputComponents
       let(:expressions) do
         [
           '4\'b0000',
-          SystemVerilogUtility::Identifier.new(:foo),
-          SystemVerilogUtility::Identifier.new(:bar)
+          Utility::Identifier.new(:foo),
+          Utility::Identifier.new(:bar)
         ]
       end
 

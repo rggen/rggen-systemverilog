@@ -15,6 +15,12 @@ Style/Alias:
 Style/EmptyMethod:
   EnforcedStyle: expanded
 
+Style/FormatStringToken:
+  EnforcedStyle: unannotated
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented_relative_to_receiver
+
 Style/RaiseArgs:
   EnforcedStyle: compact
 

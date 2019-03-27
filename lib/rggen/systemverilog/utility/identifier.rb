@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module RgGen
-  module BasicOutputComponents
-    module SystemVerilogUtility
+  module SystemVerilog
+    module Utility
       class Identifier
         def initialize(name)
           @name = name
@@ -45,16 +45,19 @@ module RgGen
         private
 
         def __create_new_identifier__(array_index_or_msb, lsb)
-          select =
-            if array_index_or_msb.is_a?(::Array)
-              __array_select__(array_index_or_msb)
-            elsif lsb.nil? || array_index_or_msb == lsb
-              "[#{array_index_or_msb}]"
-            else
-              "[#{array_index_or_msb}:#{lsb}]"
-            end
+          select = __create_select__(array_index_or_msb, lsb)
           Identifier.new("#{@name}#{select}") do |identifier|
             identifier.__sub_identifiers__(@sub_identifiers)
+          end
+        end
+
+        def __create_select__(array_index_or_msb, lsb)
+          if array_index_or_msb.is_a?(::Array)
+            __array_select__(array_index_or_msb)
+          elsif lsb.nil? || array_index_or_msb == lsb
+            "[#{array_index_or_msb}]"
+          else
+            "[#{array_index_or_msb}:#{lsb}]"
           end
         end
 

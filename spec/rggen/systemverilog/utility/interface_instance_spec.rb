@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module RgGen::BasicOutputComponents::SystemVerilogUtility
+module RgGen::SystemVerilog::Utility
   describe InterfaceInstance do
     def interface_instance(interface_type, name, &block)
       InterfaceInstance.new(interface_type: interface_type, name: name, &block)

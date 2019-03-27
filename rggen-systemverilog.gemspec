@@ -2,17 +2,17 @@
 
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'rggen/basic_output_components/version'
+require 'rggen/systemverilog/version'
 
 Gem::Specification.new do |spec|
-  spec.name = 'rggen-basic-output-components'
-  spec.version = RgGen::BasicOutputComponents::VERSION
+  spec.name = 'rggen-systemverilog'
+  spec.version = RgGen::SystemVerilog::VERSION
   spec.authors = ['Taichi Ishitani']
   spec.email = ['taichi730@gmail.com']
 
-  spec.summary = "rggen-basic-output-components-#{RgGen::BasicOutputComponents::VERSION}"
-  spec.description = 'Correction of basic output components.'
-  spec.homepage = 'https://github.com/rggen/rggen-basic-output-components'
+  spec.summary = "rggen-systemverilog-#{RgGen::SystemVerilog::VERSION}"
+  spec.description = 'RgGen output components for SystemVerilog RTL and RAL.'
+  spec.homepage = 'https://github.com/rggen/rggen-systemverilog'
   spec.license = 'MIT'
 
   spec.files = `git ls-files lib LICENSE.txt README.md`.split($RS)
