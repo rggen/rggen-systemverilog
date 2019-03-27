@@ -11,14 +11,6 @@ module RgGen
           Struct.new(:entity_type, :creation_method, :declaration_type)
 
         class << self
-          def creation_method(entity)
-            @creation_methods[entity]
-          end
-
-          def declaration_type(entity)
-            @declaration_types[entity]
-          end
-
           private
 
           def define_entity(entity, creation_method, declaration_type)
