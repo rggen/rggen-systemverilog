@@ -27,25 +27,13 @@ module RgGen::SystemVerilog::Utility
         end
       end
 
-      context 'パート選択がされて' do
-        context 'MSBとLSBが同値の場合' do
-          let(:msb) { rand(15) }
+      context 'パート選択がされた場合' do
+        let(:lsb) { rand(0..15) }
 
-          let(:lsb) { msb }
+        let(:width) { rand(1..(16 - lsb)) }
 
-          it 'ビット選択がされた識別子を返す' do
-            expect(identifier[msb, lsb]).to match_identifier("#{name}[#{msb}]")
-          end
-        end
-
-        context 'MSBとLSBが異なる場合' do
-          let(:lsb) { rand(0..14) }
-
-          let(:msb) { rand((lsb + 1)..15) }
-
-          it 'パート選択された識別子を返す' do
-            expect(identifier[msb, lsb]).to match_identifier("#{name}[#{msb}:#{lsb}]")
-          end
+        it 'パート選択された識別子を返す' do
+          expect(identifier[lsb, width]).to match_identifier("#{name}[#{lsb}+:#{width}]")
         end
       end
 

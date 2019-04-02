@@ -51,13 +51,13 @@ module RgGen
           end
         end
 
-        def __create_select__(array_index_or_msb, lsb)
-          if array_index_or_msb.is_a?(::Array)
-            __array_select__(array_index_or_msb)
-          elsif lsb.nil? || array_index_or_msb == lsb
-            "[#{array_index_or_msb}]"
+        def __create_select__(array_index_or_lsb, width = nil)
+          if array_index_or_lsb.is_a?(::Array)
+            __array_select__(array_index_or_lsb)
+          elsif width
+            "[#{array_index_or_lsb}+:#{width}]"
           else
-            "[#{array_index_or_msb}:#{lsb}]"
+            "[#{array_index_or_lsb}]"
           end
         end
 

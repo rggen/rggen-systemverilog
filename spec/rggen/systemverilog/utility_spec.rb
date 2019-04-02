@@ -17,7 +17,7 @@ module RgGen::SystemVerilog
 
       it '継続代入のコード片を返す' do
         expect(sv.send(:assign, lhs, rhs[0])).to eq 'assign foo = 4\'b0000;'
-        expect(sv.send(:assign, lhs[1, 0], rhs[1])).to eq 'assign foo[1:0] = bar;'
+        expect(sv.send(:assign, lhs[0, 1], rhs[1])).to eq 'assign foo[0+:1] = bar;'
       end
     end
 
