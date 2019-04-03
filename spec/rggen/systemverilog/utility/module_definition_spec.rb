@@ -12,6 +12,8 @@ module RgGen::SystemVerilog::Utility
       self
     end
 
+    let(:packages) { [:foo_pkg, :bar_pkg] }
+
     let(:parameters) do
       [:FOO, :BAR].map.with_index do |name, i|
         DataObject.new(
@@ -41,6 +43,29 @@ module RgGen::SystemVerilog::Utility
         module_definition(:foo)
       ).to match_string(<<~'MODULE')
         module foo ();
+        endmodule
+      MODULE
+
+      expect(
+        module_definition(:foo) do
+          packages [context.packages[0]]
+        end
+      ).to match_string(<<~'MODULE')
+        module foo
+          import foo_pkg::*;
+        ();
+        endmodule
+      MODULE
+
+      expect(
+        module_definition(:foo) do
+          packages context.packages
+        end
+      ).to match_string(<<~'MODULE')
+        module foo
+          import foo_pkg::*,
+                 bar_pkg::*;
+        ();
         endmodule
       MODULE
 
@@ -93,6 +118,7 @@ module RgGen::SystemVerilog::Utility
 
       expect(
         module_definition(:foo) do
+          packages context.packages
           parameters context.parameters
           ports context.ports
           variables context.variables
@@ -100,7 +126,10 @@ module RgGen::SystemVerilog::Utility
           body { |code| code << 'assign bar = 1;' }
         end
       ).to match_string(<<~'MODULE')
-        module foo #(
+        module foo
+          import foo_pkg::*,
+                 bar_pkg::*;
+        #(
           parameter int FOO = 0,
           parameter int BAR = 1
         )(

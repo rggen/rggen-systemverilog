@@ -5,6 +5,7 @@ module RgGen
     module Utility
       class ModuleDefinition < StructureDefinition
         define_attribute :name
+        define_attribute :packages
         define_attribute :parameters
         define_attribute :ports
         define_attribute :variables
@@ -12,10 +13,31 @@ module RgGen
         private
 
         def header_code(code)
-          code << :module << space << name << space
+          code << :module << space << name
+          package_import_declaration(code)
           parameter_declarations(code)
           port_declarations(code)
           code << semicolon
+        end
+
+        def package_import_declaration(code)
+          if (imports = pacakge_imports).empty?
+            code << space
+            return
+          end
+          indent(code, 2) do
+            code << imports.join(",\n") << semicolon
+          end
+        end
+
+        def pacakge_imports
+          Array(packages).map.with_index do |package, i|
+            if i.zero?
+              [:import, "#{package}::*"].join(space)
+            else
+              [space(6), "#{package}::*"].join(space)
+            end
+          end
         end
 
         def parameter_declarations(code)
