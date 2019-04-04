@@ -48,7 +48,7 @@ module RgGen::SystemVerilog::Utility
 
       expect(
         module_definition(:foo) do
-          packages [context.packages[0]]
+          package_import context.packages[0]
         end
       ).to match_string(<<~'MODULE')
         module foo
@@ -59,7 +59,7 @@ module RgGen::SystemVerilog::Utility
 
       expect(
         module_definition(:foo) do
-          packages context.packages
+          package_imports context.packages
         end
       ).to match_string(<<~'MODULE')
         module foo
@@ -118,7 +118,7 @@ module RgGen::SystemVerilog::Utility
 
       expect(
         module_definition(:foo) do
-          packages context.packages
+          package_imports context.packages
           parameters context.parameters
           ports context.ports
           variables context.variables

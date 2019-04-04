@@ -5,10 +5,19 @@ module RgGen
     module Utility
       class ModuleDefinition < StructureDefinition
         define_attribute :name
-        define_attribute :packages
+        define_attribute :package_imports
         define_attribute :parameters
         define_attribute :ports
         define_attribute :variables
+
+        def package_imports(packages)
+          @package_imports ||= []
+          @package_imports.concat(Array(packages))
+        end
+
+        def package_import(package)
+          package_imports([package])
+        end
 
         private
 
@@ -21,17 +30,17 @@ module RgGen
         end
 
         def package_import_declaration(code)
-          if (imports = pacakge_imports).empty?
+          if (items = pacakge_import_items).empty?
             code << space
             return
           end
           indent(code, 2) do
-            code << imports.join(",\n") << semicolon
+            code << items.join(",\n") << semicolon
           end
         end
 
-        def pacakge_imports
-          Array(packages).map.with_index do |package, i|
+        def pacakge_import_items
+          Array(@package_imports).map.with_index do |package, i|
             if i.zero?
               [:import, "#{package}::*"].join(space)
             else
