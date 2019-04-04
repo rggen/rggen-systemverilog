@@ -52,6 +52,15 @@ module RgGen
         bit_length = 1 if bit_length.zero?
         [width, bit_length].max
       end
+
+      {
+        module_definition: ModuleDefinition,
+        package_definition: PackageDefinition
+      }.each do |method_name, definition|
+        define_method(method_name) do |name, **attributes, &block|
+          definition.new(attributes.merge(name: name), &block).to_code
+        end
+      end
     end
   end
 end

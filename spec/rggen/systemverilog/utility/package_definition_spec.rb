@@ -4,9 +4,7 @@ require 'spec_helper'
 
 module RgGen::SystemVerilog::Utility
   describe PackageDefinition do
-    def package_definition(name, &block)
-      PackageDefinition.new(name: name, &block).to_code
-    end
+    include RgGen::SystemVerilog::Utility
 
     def context
       self
