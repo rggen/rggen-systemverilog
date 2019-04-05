@@ -38,9 +38,10 @@ module RgGen
         end
 
         def package_import_declaration(code)
-          Array(@package_imports).each do |package|
-            code << [:import, space, package, '::*', semicolon, nl]
-          end
+          declarations =
+            Array(@package_imports)
+              .map { |package| [:import, space, package, '::*'] }
+          add_declarations_in_body(code, declarations)
         end
 
         def file_include_directives(code)

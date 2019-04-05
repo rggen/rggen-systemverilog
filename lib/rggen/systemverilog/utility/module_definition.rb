@@ -22,7 +22,7 @@ module RgGen
         private
 
         def header_code(code)
-          code << :module << space << name
+          code << [:module, space, name]
           package_import_declaration(code)
           parameter_declarations(code)
           port_declarations(code)
@@ -34,9 +34,7 @@ module RgGen
             code << space
             return
           end
-          indent(code, 2) do
-            code << items.join(",\n") << semicolon
-          end
+          add_declarations_in_header(code, items, semicolon)
         end
 
         def pacakge_import_items
@@ -52,19 +50,19 @@ module RgGen
         def parameter_declarations(code)
           declarations = Array(parameters)
           declarations.empty? || wrap(code, '#(', ')') do
-            process_declarations_in_header(Array(parameters), code)
+            add_declarations_in_header(code, declarations)
           end
         end
 
         def port_declarations(code)
           declarations = Array(ports)
           wrap(code, '(', ')') do
-            process_declarations_in_header(declarations, code)
+            add_declarations_in_header(code, declarations)
           end
         end
 
         def pre_body_code(code)
-          process_declarations_in_body(Array(variables), code)
+          add_declarations_in_body(code, Array(variables))
         end
 
         def footer_code

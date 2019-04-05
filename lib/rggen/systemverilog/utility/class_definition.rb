@@ -21,7 +21,7 @@ module RgGen
         def parameter_declarations(code)
           declarations = Array(parameters)
           declarations.empty? || wrap(code << space, '#(', ')') do
-            process_declarations_in_header(declarations, code)
+            add_declarations_in_header(code, declarations)
           end
         end
 
@@ -31,7 +31,7 @@ module RgGen
         end
 
         def pre_body_code(code)
-          process_declarations_in_body(Array(variables), code)
+          add_declarations_in_body(code, Array(variables))
         end
 
         def footer_code

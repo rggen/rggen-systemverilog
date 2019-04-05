@@ -15,17 +15,21 @@ module RgGen
 
         private
 
-        def process_declarations_in_header(declarations, code)
+        def add_declarations_in_header(code, declarations, end_charactor = '')
           declarations.empty? || indent(code, 2) do
-            declarations.each_with_index do |declaration, i|
-              code << comma << nl if i.positive?
-              code << declaration
+            declarations.each_with_index do |d, i|
+              code <<
+                if i < (declarations.size - 1)
+                  [d, comma, nl]
+                else
+                  [d, end_charactor]
+                end
             end
           end
         end
 
-        def process_declarations_in_body(declarations, code)
-          declarations.each { |d| code << d << semicolon << nl }
+        def add_declarations_in_body(code, declarations, end_charactor = ';')
+          declarations.each { |d| code << d << end_charactor << nl }
         end
       end
     end
