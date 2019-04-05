@@ -54,6 +54,7 @@ module RgGen
       end
 
       {
+        class_definition: ClassDefinition,
         module_definition: ModuleDefinition,
         package_definition: PackageDefinition
       }.each do |method_name, definition|
