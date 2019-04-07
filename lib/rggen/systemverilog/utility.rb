@@ -53,8 +53,13 @@ module RgGen
         [width, bit_length].max
       end
 
+      def argument(name, **attribute)
+        DataObject.new(:argument, attribute.merge(name: name)).declaration
+      end
+
       {
         class_definition: ClassDefinition,
+        function_definition: FunctionDefinition,
         module_definition: ModuleDefinition,
         package_definition: PackageDefinition
       }.each do |method_name, definition|
