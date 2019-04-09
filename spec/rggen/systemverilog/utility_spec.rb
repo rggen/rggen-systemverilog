@@ -8,6 +8,20 @@ module RgGen::SystemVerilog
       Class.new { include Utility }.new
     end
 
+    describe '#create_blank_file' do
+      it '空のソースファイルオブジェクトを生成する' do
+        source_file = sv.create_blank_file('foo.sv')
+        expect(source_file.to_code).to match_string('')
+
+        source_file.include_guard
+        expect(source_file.to_code).to match_string(<<~'CODE')
+          `ifndef FOO_SV
+          `define FOO_SV
+          `endif
+        CODE
+      end
+    end
+
     describe '#assign' do
       let(:lhs) { Utility::Identifier.new(:foo) }
 

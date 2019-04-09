@@ -15,6 +15,7 @@ require_relative 'systemverilog/utility/function_definition'
 require_relative 'systemverilog/utility/local_scope'
 require_relative 'systemverilog/utility/module_definition'
 require_relative 'systemverilog/utility/package_definition'
+require_relative 'systemverilog/utility/source_file'
 require_relative 'systemverilog/utility'
 
 require_relative 'systemverilog/component'
