@@ -60,6 +60,7 @@ module RgGen
       {
         class_definition: ClassDefinition,
         function_definition: FunctionDefinition,
+        local_scope: LocalScope,
         module_definition: ModuleDefinition,
         package_definition: PackageDefinition
       }.each do |method_name, definition|
