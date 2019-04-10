@@ -67,6 +67,22 @@ module RgGen::SystemVerilog
       end
     end
 
+    describe '#function_call' do
+      it '関数呼び出しのコード編を返す' do
+        expect(sv.send(:function_call, :foo)).to eq 'foo()'
+        expect(sv.send(:function_call, :foo, :bar)).to eq 'foo(bar)'
+        expect(sv.send(:function_call, :foo, [:bar, :baz])).to eq 'foo(bar, baz)'
+      end
+    end
+
+    describe '#macro_call' do
+      it '関数呼び出しのコード編を返す' do
+        expect(sv.send(:macro_call, :foo)).to eq '`foo'
+        expect(sv.send(:macro_call, :foo, :bar)).to eq '`foo(bar)'
+        expect(sv.send(:macro_call, :foo, [:bar, :baz])).to eq '`foo(bar, baz)'
+      end
+    end
+
     describe '#bin' do
       it '与えた数のSystemVerilogの2進数表記を返す' do
         expect(sv.send(:bin, 2)).to eq '\'b10'

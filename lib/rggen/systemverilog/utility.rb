@@ -23,6 +23,18 @@ module RgGen
         "'#{concat(expressions)}"
       end
 
+      def function_call(name, expressions = nil)
+        "#{name}(#{Array(expressions).join(', ')})"
+      end
+
+      def macro_call(name, expressions = nil)
+        if (expression_array = Array(expressions)).empty?
+          "`#{name}"
+        else
+          "`#{name}(#{expression_array.join(', ')})"
+        end
+      end
+
       def bin(value, width = nil)
         if width
           width = bit_width(value, width)
