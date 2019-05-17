@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/rggen/rggen-systemverilog.svg?branch=master)](https://travis-ci.org/rggen/rggen-systemverilog)
 [![Maintainability](https://api.codeclimate.com/v1/badges/88086c5be538a1564a35/maintainability)](https://codeclimate.com/github/rggen/rggen-systemverilog/maintainability)
 [![codecov](https://codecov.io/gh/rggen/rggen-systemverilog/branch/master/graph/badge.svg)](https://codecov.io/gh/rggen/rggen-systemverilog)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=rggen_rggen-systemverilog&metric=alert_status)](https://sonarcloud.io/dashboard?id=rggen_rggen-systemverilog)
 
 # RgGen::SystemVerilog
 
