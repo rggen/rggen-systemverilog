@@ -21,9 +21,17 @@ matrix:
     - rvm: 2.6.2
       env: RUBYOPT=--enable-frozen-string-literal USE_FIXED_GEMS=yes
 
+addons:
+  sonarcloud:
+    organization:
+      rggen
+    token:
+      secure: "aHeb1fCKqh8T2RrrpgSidPyiPTKvs3QOPLm1+QV6o/tgxjMXRm58fWGJv1XfWtCvsWE8IEm2/90kADYo+90hxmLx+LzQfll68wkJluJLmJQSzE0FXXeq4FfObXXKR+LLi3PADdFzorYWBKVxyA9eAs7pReU9kSJhRzQ7vGxZaf4MRmHq+u7x8/TN3+oYo1QVcjefiwOcRyd+OVjYR5xlEV1+aX1LqVdqBT6NBw/Hw/ViZg0lQhJt34koYJmBCZHvWVob0H2qWydIr/MnbgP+ch9YHTT+ljfnv93VH4eAZAY7AHWgUHu5sRtDsHJyb3ZrEU9JS8qmYeTwOaCzxdhy6Eq9nrayuZQ2igRSAxoOO0lJtN0bWxjKo+CS/HGnq7QxEx25FRDhvsn6GyI1IBAZRC6f8SbxvQ6EYouUu8YCRsnX9YmCRNbYM4TfhTxKPyC6kvw1edL8/zDJUZvikoJBZVBg9kgJiPI6nsFQk024K7zFqILSO1/zMeWlsZs/Ey+fF588HRUV0h+4np+wR4zoPWAGWKU4AHrObSy1MuyQ9LT6B6nIO051Lkq6DHm/C5l2ABzkJ24p6qrQG2e5jCpEzXq/PZwen6dOhuB+URyIUDZxnHCiKJkx6fzuqhnP9buctf1T9iBZOEVxEIG1pOWU1goXPrQ5p74Q9730G5oc1Qg="
+
 before_install:
   - "env -u RUBYOPT gem update --system"
   - "env -u RUBYOPT gem install bundler"
 
 script:
   - bundle exec rake coverage
+  - sonar-scanner
