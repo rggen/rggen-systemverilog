@@ -14,16 +14,13 @@ gemspec
   end
 end
 
-{
-  'facets' => ['master', ENV['USE_FIXED_GEMS']],
-  'docile' => ['fix_issue_33', true]
-}.each do |library, (branch, use_fixed_gem)|
-  if use_fixed_gem
+if ENV['USE_FIXED_GEMS']
+  ['facets'].each do |library|
     library_path = File.expand_path("../#{library}", __dir__)
     if Dir.exist?(library_path) && !ENV['USE_GITHUB_REPOSITORY']
       gem library, path: library_path
     else
-      gem library, git: "https://github.com/taichi-ishitani/#{library}.git", branch: branch
+      gem library, git: "https://github.com/taichi-ishitani/#{library}.git"
     end
   end
 end
