@@ -26,28 +26,28 @@ require_relative 'systemverilog/factories'
 
 module RgGen
   module SystemVerilog
-    def self.setup(builder, name, sv_feature)
-      builder.output_component_registry(name) do
-        register_component [
-          :register_map, :register_block, :register, :bit_field
-        ] do |category|
-          component Component, ComponentFactory
-          feature sv_feature, FeatureFactory if category != :register_map
+    class << self
+      def setup_sv_component(builder, name, sv_feature)
+        builder.output_component_registry(name) do
+          register_component [
+            :register_map, :register_block, :register, :bit_field
+          ] do |category|
+            component Component, ComponentFactory
+            feature sv_feature, FeatureFactory if category != :register_map
+          end
         end
       end
-    end
 
-    def self.setup_rtl(builder)
-      setup(builder, :sv_rtl, FeatureRTL)
-    end
+      def setup(builder)
+        setup_sv_component(builder, :sv_rtl, FeatureRTL)
+        setup_sv_component(builder, :sv_ral, FeatureRAL)
+      end
 
-    def self.setup_ral(builder)
-      setup(builder, :sv_ral, FeatureRAL)
+      def version
+        VERSION
+      end
     end
   end
 
-  setup do |builder|
-    SystemVerilog.setup_rtl(builder)
-    SystemVerilog.setup_ral(builder)
-  end
+  setup :systemverilog, SystemVerilog
 end
