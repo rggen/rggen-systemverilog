@@ -42,10 +42,6 @@ module RgGen
         setup_sv_component(builder, :sv_rtl, FeatureRTL)
         setup_sv_component(builder, :sv_ral, FeatureRAL)
       end
-
-      def version
-        VERSION
-      end
     end
   end
 
