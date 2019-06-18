@@ -25,10 +25,10 @@ module RgGen::SystemVerilog
     describe '#variable' do
       specify 'ハンドル名で、定義した変数の識別子を参照できる' do
         feature.send(:variable, :domain_a, :foo, data_type: :bit)
-        expect(feature.foo).to match_identifier('foo')
+        expect(feature).to have_identifier(:foo, 'foo')
 
         feature.send(:variable, :domain_a, :bar, name: 'barbar', data_type: :bit, random: :rand)
-        expect(feature.bar).to match_identifier('barbar')
+        expect(feature).to have_identifier(:bar, 'barbar')
 
         feature.send(:variable, :domain_b, :baz) {
           data_type :bit
@@ -36,7 +36,7 @@ module RgGen::SystemVerilog
           width 2
           array_size [2]
         }
-        expect(feature.baz).to match_identifier('bazbaz')
+        expect(feature).to have_identifier(:baz, 'bazbaz')
       end
 
       specify '定義した変数の識別子はコンポーネント経由で参照できる' do
@@ -50,9 +50,9 @@ module RgGen::SystemVerilog
         }
         component.build
 
-        expect(component.foo).to match_identifier('foo')
-        expect(component.bar).to match_identifier('barbar')
-        expect(component.baz).to match_identifier('bazbaz')
+        expect(component).to have_identifier(:foo, 'foo')
+        expect(component).to have_identifier(:bar, 'barbar')
+        expect(component).to have_identifier(:baz, 'bazbaz')
       end
 
       specify '定義した変数の宣言は#declarationsで参照できる' do
@@ -65,30 +65,26 @@ module RgGen::SystemVerilog
           array_size [2]
         }
 
-        expect(feature.declarations(:domain_a, :variable)).to match([
-          match_declaration('bit foo'),
-          match_declaration('rand bit barbar')
-        ])
-        expect(feature.declarations(:domain_b, :variable)).to match([
-          match_declaration('bit [1:0] bazbaz[2]')
-        ])
+        expect(feature).to have_declaration(:domain_a, :variable, 'bit foo')
+        expect(feature).to have_declaration(:domain_a, :variable, 'rand bit barbar')
+        expect(feature).to have_declaration(:domain_b, :variable, 'bit [1:0] bazbaz[2]')
       end
     end
 
     describe '#parameter' do
       specify 'ハンドル名で、定義したパラメータの識別子を参照できる' do
         feature.send(:parameter, :domain_a, :foo, default: 1)
-        expect(feature.foo).to match_identifier('foo')
+        expect(feature).to have_identifier(:foo, 'foo')
 
         feature.send(:parameter, :domain_a, :bar, name: 'BAR',data_type: :int, default: 2)
-        expect(feature.bar).to match_identifier('BAR')
+        expect(feature).to have_identifier(:bar, 'BAR')
 
         feature.send(:parameter, :domain_b, :baz) {
           name 'BAZ'
           data_type :int
           default 3
         }
-        expect(feature.baz).to match_identifier('BAZ')
+        expect(feature).to have_identifier(:baz, 'BAZ')
       end
 
       specify '定義したパラメータの識別子はコンポーネント経由で参照できる' do
@@ -101,9 +97,9 @@ module RgGen::SystemVerilog
         }
         component.build
 
-        expect(component.foo).to match_identifier('foo')
-        expect(component.bar).to match_identifier('BAR')
-        expect(component.baz).to match_identifier('BAZ')
+        expect(component).to have_identifier(:foo, 'foo')
+        expect(component).to have_identifier(:bar, 'BAR')
+        expect(component).to have_identifier(:baz, 'BAZ')
       end
 
       specify '定義したパラメータの宣言は#declarationsで参照できる' do
@@ -115,13 +111,9 @@ module RgGen::SystemVerilog
           default 3
         }
 
-        expect(feature.declarations(:domain_a, :parameter)).to match([
-          match_declaration('parameter foo = 1'),
-          match_declaration('parameter int BAR = 2')
-        ])
-        expect(feature.declarations(:domain_b, :parameter)).to match([
-          match_declaration('parameter int BAZ = 3')
-        ])
+        expect(feature).to have_declaration(:domain_a, :parameter, 'parameter foo = 1')
+        expect(feature).to have_declaration(:domain_a, :parameter, 'parameter int BAR = 2')
+        expect(feature).to have_declaration(:domain_b, :parameter, 'parameter int BAZ = 3')
       end
     end
   end
