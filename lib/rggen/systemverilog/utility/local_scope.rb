@@ -25,19 +25,14 @@ module RgGen
         end
 
         def pre_body_code(code)
-          variable_declarations(code)
           genvar_declarations(code)
           generate_for_header(code)
-        end
-
-        def variable_declarations(code)
-          add_declarations_to_body(code, Array(variables))
+          variable_declarations(code)
         end
 
         def genvar_declarations(code)
-          declarations =
-            Array(loop_size&.keys).map { |genvar| "genvar #{genvar}" }
-          add_declarations_to_body(code, declarations)
+          genvars = Array(loop_size&.keys).map { |genvar| "genvar #{genvar}" }
+          add_declarations_to_body(code, genvars)
         end
 
         def generate_for_header(code)
@@ -49,6 +44,10 @@ module RgGen
 
         def generate_for(genvar, size)
           "for (#{genvar} = 0;#{genvar} < #{size};++#{genvar}) begin : g"
+        end
+
+        def variable_declarations(code)
+          add_declarations_to_body(code, Array(variables))
         end
 
         def post_body_code(code)

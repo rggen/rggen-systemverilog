@@ -89,14 +89,14 @@ module RgGen::SystemVerilog::Utility
         end
       ).to match_string(<<~'SCOPE')
         if (1) begin : foo
-          logic bar;
-          logic baz;
           genvar i;
           genvar j;
           genvar k;
           for (i = 0;i < 1;++i) begin : g
             for (j = 0;j < 2;++j) begin : g
               for (k = 0;k < 3;++k) begin : g
+                logic bar;
+                logic baz;
                 assign bar = 1;
                 assign baz = 2;
               end
@@ -115,14 +115,14 @@ module RgGen::SystemVerilog::Utility
         end
       ).to match_string(<<~'SCOPE')
         generate if (1) begin : foo
-          logic bar;
-          logic baz;
           genvar i;
           genvar j;
           genvar k;
           for (i = 0;i < 1;++i) begin : g
             for (j = 0;j < 2;++j) begin : g
               for (k = 0;k < 3;++k) begin : g
+                logic bar;
+                logic baz;
                 assign bar = 1;
                 assign baz = 2;
               end
