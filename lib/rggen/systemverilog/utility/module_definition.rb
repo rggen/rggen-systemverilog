@@ -34,7 +34,7 @@ module RgGen
             code << space
             return
           end
-          add_declarations_in_header(code, items, semicolon)
+          add_declarations_to_header(code, items, semicolon)
         end
 
         def pacakge_import_items
@@ -50,19 +50,19 @@ module RgGen
         def parameter_declarations(code)
           declarations = Array(parameters)
           declarations.empty? || wrap(code, '#(', ')') do
-            add_declarations_in_header(code, declarations)
+            add_declarations_to_header(code, declarations)
           end
         end
 
         def port_declarations(code)
           declarations = Array(ports)
           wrap(code, '(', ')') do
-            add_declarations_in_header(code, declarations)
+            add_declarations_to_header(code, declarations)
           end
         end
 
         def pre_body_code(code)
-          add_declarations_in_body(code, Array(variables))
+          add_declarations_to_body(code, Array(variables))
         end
 
         def footer_code

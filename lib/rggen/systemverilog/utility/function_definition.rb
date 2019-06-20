@@ -32,7 +32,7 @@ module RgGen
 
         def argument_declarations(code)
           wrap(code, '(', ')') do
-            add_declarations_in_header(code, Array(arguments))
+            add_declarations_to_header(code, Array(arguments))
           end
         end
 

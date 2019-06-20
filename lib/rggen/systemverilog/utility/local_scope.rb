@@ -31,13 +31,13 @@ module RgGen
         end
 
         def variable_declarations(code)
-          add_declarations_in_body(code, Array(variables))
+          add_declarations_to_body(code, Array(variables))
         end
 
         def genvar_declarations(code)
           declarations =
             Array(loop_size&.keys).map { |genvar| "genvar #{genvar}" }
-          add_declarations_in_body(code, declarations)
+          add_declarations_to_body(code, declarations)
         end
 
         def generate_for_header(code)

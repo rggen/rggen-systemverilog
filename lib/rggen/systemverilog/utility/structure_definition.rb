@@ -15,7 +15,7 @@ module RgGen
 
         private
 
-        def add_declarations_in_header(code, declarations, end_charactor = '')
+        def add_declarations_to_header(code, declarations, end_charactor = '')
           declarations.empty? || indent(code, 2) do
             declarations.each_with_index do |d, i|
               code <<
@@ -28,7 +28,7 @@ module RgGen
           end
         end
 
-        def add_declarations_in_body(code, declarations, end_charactor = ';')
+        def add_declarations_to_body(code, declarations, end_charactor = ';')
           declarations.each { |d| code << d << end_charactor << nl }
         end
       end

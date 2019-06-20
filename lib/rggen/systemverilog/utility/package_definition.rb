@@ -41,7 +41,7 @@ module RgGen
           declarations =
             Array(@package_imports)
               .map { |package| [:import, space, package, '::*'] }
-          add_declarations_in_body(code, declarations)
+          add_declarations_to_body(code, declarations)
         end
 
         def file_include_directives(code)
