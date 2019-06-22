@@ -23,18 +23,18 @@ module RgGen
         end
       end
 
-      def initialize(component, feature_name, &block)
-        super(component, feature_name, &block)
-        @declarations = Hash.new do |h0, k0|
-          h0[k0] = Hash.new { |h1, k1| h1[k1] = [] }
-        end
-      end
-
       def declarations(domain, type)
         @declarations[domain][type]
       end
 
       private
+
+      def post_initialize
+        super
+        @declarations = Hash.new do |h0, k0|
+          h0[k0] = Hash.new { |h1, k1| h1[k1] = [] }
+        end
+      end
 
       def create_entity(context, attributes, block)
         creation_method = context.creation_method

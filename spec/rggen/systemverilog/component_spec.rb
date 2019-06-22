@@ -33,6 +33,7 @@ module RgGen::SystemVerilog
 
     def create_feature(component, feature_name, &body)
       Class.new(FeatureRAL, &body).new(component, feature_name) do |feature|
+        feature.build
         component.add_feature(feature)
       end
     end
@@ -78,8 +79,6 @@ module RgGen::SystemVerilog
             end
           end
         end
-
-        component.build
       end
 
       it '配下のフィーチャーで定義された変数などの定義を返す' do

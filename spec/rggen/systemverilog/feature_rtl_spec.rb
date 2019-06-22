@@ -46,7 +46,7 @@ module RgGen::SystemVerilog
           width 2
           array_size [2]
         }
-        component.build
+        component.add_feature(feature)
 
         expect(component).to have_identifier(:foo, 'foo')
         expect(component).to have_identifier(:bar, 'barbar')
@@ -96,7 +96,7 @@ module RgGen::SystemVerilog
           parameter_values [1, 2]
           variables [:baz_0, :baz_1]
         }
-        component.build
+        component.add_feature(feature)
 
         expect(component).to have_identifier(:foo, 'foo')
         expect(component).to have_identifier(:bar, 'barbar')
@@ -145,7 +145,7 @@ module RgGen::SystemVerilog
           width 2
           array_size [2]
         }
-        component.build
+        component.add_feature(feature)
 
         expect(component).to have_identifier(:foo, 'foo')
         expect(component).to have_identifier(:bar, 'barbar')
@@ -191,7 +191,7 @@ module RgGen::SystemVerilog
           width 2
           array_size [2]
         }
-        component.build
+        component.add_feature(feature)
 
         expect(component).to have_identifier(:foo, 'foo')
         expect(component).to have_identifier(:bar, 'barbar')
@@ -241,7 +241,7 @@ module RgGen::SystemVerilog
           modport :baz, [:baz_0, :baz_1]
           array_size [2]
         }
-        component.build
+        component.add_feature(feature)
 
         expect(component).to have_identifier(:foo, 'foo')
         expect(component).to have_identifier(:bar, 'barbar')
@@ -290,7 +290,7 @@ module RgGen::SystemVerilog
           data_type :int
           default 3
         }
-        component.build
+        component.add_feature(feature)
 
         expect(component).to have_identifier(:foo, 'foo')
         expect(component).to have_identifier(:bar, 'BAR')
