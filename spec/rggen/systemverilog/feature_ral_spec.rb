@@ -48,7 +48,7 @@ module RgGen::SystemVerilog
           width 2
           array_size [2]
         }
-        component.add_feature(feature)
+        component.build
 
         expect(component).to have_identifier(:foo, 'foo')
         expect(component).to have_identifier(:bar, 'barbar')
@@ -95,7 +95,7 @@ module RgGen::SystemVerilog
           data_type :int
           default 3
         }
-        component.add_feature(feature)
+        component.build
 
         expect(component).to have_identifier(:foo, 'foo')
         expect(component).to have_identifier(:bar, 'BAR')
