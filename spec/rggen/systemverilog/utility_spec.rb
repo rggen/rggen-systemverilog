@@ -22,6 +22,12 @@ module RgGen::SystemVerilog
       end
     end
 
+    describe '#create_identifier' do
+      it '識別子オブジェクトを生成する' do
+        expect(sv.send(:create_identifier, 'foo')).to match_identifier('foo')
+      end
+    end
+
     describe '#assign' do
       let(:lhs) { Utility::Identifier.new(:foo) }
 

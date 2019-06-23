@@ -11,6 +11,10 @@ module RgGen
 
       private
 
+      def create_identifier(name)
+        Identifier.new(name)
+      end
+
       def assign(lhs, rhs)
         "assign #{lhs} = #{rhs};"
       end
