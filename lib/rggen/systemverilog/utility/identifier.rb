@@ -34,9 +34,9 @@ module RgGen
           @name.to_s
         end
 
-        def [](array_index_or_msb, lsb = nil)
-          if array_index_or_msb
-            __create_new_identifier__(array_index_or_msb, lsb)
+        def [](array_index_or_lsb, width = nil)
+          if array_index_or_lsb
+            __create_new_identifier__(array_index_or_lsb, width)
           else
             self
           end
@@ -44,14 +44,14 @@ module RgGen
 
         private
 
-        def __create_new_identifier__(array_index_or_msb, lsb)
-          select = __create_select__(array_index_or_msb, lsb)
+        def __create_new_identifier__(array_index_or_lsb, width)
+          select = __create_select__(array_index_or_lsb, width)
           Identifier.new("#{@name}#{select}") do |identifier|
             identifier.__sub_identifiers__(@sub_identifiers)
           end
         end
 
-        def __create_select__(array_index_or_lsb, width = nil)
+        def __create_select__(array_index_or_lsb, width)
           if array_index_or_lsb.is_a?(::Array)
             __array_select__(array_index_or_lsb)
           elsif width
