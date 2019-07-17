@@ -6,9 +6,9 @@ module RgGen
       class InterfaceInstance
         include Core::Utility::AttributeSetter
 
-        def initialize(**default_attributes, &block)
+        def initialize(**default_attributes)
           apply_attributes(default_attributes)
-          block_given? && Docile.dsl_eval(self, &block)
+          block_given? && yield(self)
         end
 
         define_attribute :name

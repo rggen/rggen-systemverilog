@@ -6,10 +6,6 @@ module RgGen::SystemVerilog::Utility
   describe LocalScope do
     include RgGen::SystemVerilog::Utility
 
-    def context
-      self
-    end
-
     let(:variables) do
       [:bar, :baz].map do |name|
         DataObject.new(
@@ -31,8 +27,8 @@ module RgGen::SystemVerilog::Utility
       SCOPE
 
       expect(
-        local_scope(:foo) do
-          top_scope
+        local_scope(:foo) do |s|
+          s.top_scope
         end
       ).to match_string(<<~'SCOPE')
         generate if (1) begin : foo
@@ -40,8 +36,8 @@ module RgGen::SystemVerilog::Utility
       SCOPE
 
       expect(
-        local_scope(:foo) do
-          variables context.variables
+        local_scope(:foo) do |s|
+          s.variables variables
         end
       ).to match_string(<<~'SCOPE')
         if (1) begin : foo
@@ -51,8 +47,8 @@ module RgGen::SystemVerilog::Utility
       SCOPE
 
       expect(
-        local_scope(:foo) do
-          loop_size context.loop_size
+        local_scope(:foo) do |s|
+          s.loop_size loop_size
         end
       ).to match_string(<<~'SCOPE')
         if (1) begin : foo
@@ -69,9 +65,9 @@ module RgGen::SystemVerilog::Utility
       SCOPE
 
       expect(
-        local_scope(:foo) do
-          body { 'assign bar = 1;' }
-          body { |c| c << 'assign baz = 2;' }
+        local_scope(:foo) do |s|
+          s.body { 'assign bar = 1;' }
+          s.body { |c| c << 'assign baz = 2;' }
         end
       ).to match_string(<<~'SCOPE')
         if (1) begin : foo
@@ -81,11 +77,11 @@ module RgGen::SystemVerilog::Utility
       SCOPE
 
       expect(
-        local_scope(:foo) do
-          body { 'assign bar = 1;' }
-          body { |c| c << 'assign baz = 2;' }
-          loop_size context.loop_size
-          variables context.variables
+        local_scope(:foo) do |s|
+          s.body { 'assign bar = 1;' }
+          s.body { |c| c << 'assign baz = 2;' }
+          s.loop_size loop_size
+          s.variables variables
         end
       ).to match_string(<<~'SCOPE')
         if (1) begin : foo
@@ -106,12 +102,12 @@ module RgGen::SystemVerilog::Utility
       SCOPE
 
       expect(
-        local_scope(:foo) do
-          body { 'assign bar = 1;' }
-          body { |c| c << 'assign baz = 2;' }
-          loop_size context.loop_size
-          variables context.variables
-          top_scope
+        local_scope(:foo) do |s|
+          s.body { 'assign bar = 1;' }
+          s.body { |c| c << 'assign baz = 2;' }
+          s.loop_size loop_size
+          s.variables variables
+          s.top_scope
         end
       ).to match_string(<<~'SCOPE')
         generate if (1) begin : foo

@@ -6,10 +6,6 @@ module RgGen::SystemVerilog::Utility
   describe ModuleDefinition do
     include RgGen::SystemVerilog::Utility
 
-    def context
-      self
-    end
-
     let(:packages) { [:foo_pkg, :bar_pkg] }
 
     let(:parameters) do
@@ -45,8 +41,8 @@ module RgGen::SystemVerilog::Utility
       MODULE
 
       expect(
-        module_definition(:foo) do
-          package_import context.packages[0]
+        module_definition(:foo) do |m|
+          m.package_import packages[0]
         end
       ).to match_string(<<~'MODULE')
         module foo
@@ -56,8 +52,8 @@ module RgGen::SystemVerilog::Utility
       MODULE
 
       expect(
-        module_definition(:foo) do
-          package_imports context.packages
+        module_definition(:foo) do |m|
+          m.package_imports packages
         end
       ).to match_string(<<~'MODULE')
         module foo
@@ -68,8 +64,8 @@ module RgGen::SystemVerilog::Utility
       MODULE
 
       expect(
-        module_definition(:foo) do
-          parameters context.parameters
+        module_definition(:foo) do |m|
+          m.parameters parameters
         end
       ).to match_string(<<~'MODULE')
         module foo #(
@@ -80,8 +76,8 @@ module RgGen::SystemVerilog::Utility
       MODULE
 
       expect(
-        module_definition(:foo) do
-          ports context.ports
+        module_definition(:foo) do |m|
+          m.ports ports
         end
       ).to match_string(<<~'MODULE')
         module foo (
@@ -92,8 +88,8 @@ module RgGen::SystemVerilog::Utility
       MODULE
 
       expect(
-        module_definition(:foo) do
-          variables context.variables
+        module_definition(:foo) do |m|
+          m.variables variables
         end
       ).to match_string(<<~'MODULE')
         module foo ();
@@ -103,9 +99,9 @@ module RgGen::SystemVerilog::Utility
       MODULE
 
       expect(
-        module_definition(:foo) do
-          body { 'assign foo = 0;' }
-          body { |code| code << 'assign bar = 1;' }
+        module_definition(:foo) do |m|
+          m.body { 'assign foo = 0;' }
+          m.body { |code| code << 'assign bar = 1;' }
         end
       ).to match_string(<<~'MODULE')
         module foo ();
@@ -115,13 +111,13 @@ module RgGen::SystemVerilog::Utility
       MODULE
 
       expect(
-        module_definition(:foo) do
-          package_imports context.packages
-          parameters context.parameters
-          ports context.ports
-          variables context.variables
-          body { 'assign foo = 0;' }
-          body { |code| code << 'assign bar = 1;' }
+        module_definition(:foo) do |m|
+          m.package_imports packages
+          m.parameters parameters
+          m.ports ports
+          m.variables variables
+          m.body { 'assign foo = 0;' }
+          m.body { |code| code << 'assign bar = 1;' }
         end
       ).to match_string(<<~'MODULE')
         module foo

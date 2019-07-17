@@ -30,10 +30,10 @@ module RgGen::SystemVerilog
         feature.send(:logic, :domain_a, :bar, name: 'barbar', width: 2, array_size: [2])
         expect(feature).to have_identifier(:bar, 'barbar')
 
-        feature.send(:logic, :domain_b, :baz) {
-          name 'bazbaz'
-          width 2
-          array_size [2]
+        feature.send(:logic, :domain_b, :baz) { |l|
+          l.name 'bazbaz'
+          l.width 2
+          l.array_size [2]
         }
         expect(feature).to have_identifier(:baz, 'bazbaz')
       end
@@ -41,10 +41,10 @@ module RgGen::SystemVerilog
       specify '定義した変数の識別子はコンポーネント経由で参照できる' do
         feature.send(:logic, :domain_a, :foo)
         feature.send(:logic, :domain_a, :bar, name: 'barbar', width: 2, array_size: [2])
-        feature.send(:logic, :domain_b, :baz) {
-          name 'bazbaz'
-          width 2
-          array_size [2]
+        feature.send(:logic, :domain_b, :baz) { |l|
+          l.name 'bazbaz'
+          l.width 2
+          l.array_size [2]
         }
         component.build
 
@@ -56,10 +56,10 @@ module RgGen::SystemVerilog
       specify '定義した変数の宣言は#declarationsで参照できる' do
         feature.send(:logic, :domain_a, :foo)
         feature.send(:logic, :domain_a, :bar, name: 'barbar', width: 2, array_size: [2])
-        feature.send(:logic, :domain_b, :baz) {
-          name 'bazbaz'
-          width 2
-          array_size [2]
+        feature.send(:logic, :domain_b, :baz) { |l|
+          l.name 'bazbaz'
+          l.width 2
+          l.array_size [2]
         }
 
         expect(feature).to have_declaration(:domain_a, :variable, 'logic foo')
@@ -76,11 +76,11 @@ module RgGen::SystemVerilog
         feature.send(:interface, :domain_a, :bar, interface_type: :bar_if, name: 'barbar', array_size: [2])
         expect(feature).to have_identifier(:bar, 'barbar')
 
-        feature.send(:interface, :domain_b, :baz) {
-          interface_type :baz_if
-          name 'bazbaz'
-          parameter_values [1, 2]
-          variables [:baz_0, :baz_1]
+        feature.send(:interface, :domain_b, :baz) { |i|
+          i.interface_type :baz_if
+          i.name 'bazbaz'
+          i.parameter_values [1, 2]
+          i.variables [:baz_0, :baz_1]
         }
         expect(feature).to have_identifier(:baz, 'bazbaz')
         expect(feature.baz.baz_0).to match_identifier('bazbaz.baz_0')
@@ -90,11 +90,11 @@ module RgGen::SystemVerilog
       specify '定義したインターフェースの識別子はコンポーネント経由で参照できる' do
         feature.send(:interface, :domain_a, :foo, interface_type: :foo_if)
         feature.send(:interface, :domain_a, :bar, interface_type: :bar_if, name: 'barbar', array_size: [2])
-        feature.send(:interface, :domain_b, :baz) {
-          interface_type :baz_if
-          name 'bazbaz'
-          parameter_values [1, 2]
-          variables [:baz_0, :baz_1]
+        feature.send(:interface, :domain_b, :baz) { |i|
+          i.interface_type :baz_if
+          i.name 'bazbaz'
+          i.parameter_values [1, 2]
+          i.variables [:baz_0, :baz_1]
         }
         component.build
 
@@ -108,11 +108,11 @@ module RgGen::SystemVerilog
       specify '定義したインターフェースの宣言は#declarationsで参照できる' do
         feature.send(:interface, :domain_a, :foo, interface_type: :foo_if)
         feature.send(:interface, :domain_a, :bar, interface_type: :bar_if, name: 'barbar', array_size: [2])
-        feature.send(:interface, :domain_b, :baz) {
-          interface_type :baz_if
-          name 'bazbaz'
-          parameter_values [1, 2]
-          variables [:baz_0, :baz_1]
+        feature.send(:interface, :domain_b, :baz) { |i|
+          i.interface_type :baz_if
+          i.name 'bazbaz'
+          i.parameter_values [1, 2]
+          i.variables [:baz_0, :baz_1]
         }
 
         expect(feature).to have_declaration(:domain_a, :variable, 'foo_if foo()')
@@ -129,10 +129,10 @@ module RgGen::SystemVerilog
         feature.send(:input, :domain_a, :bar, name: 'barbar', width: 2, array_size: [2])
         expect(feature).to have_identifier(:bar, 'barbar')
 
-        feature.send(:input, :domain_b, :baz) {
-          name 'bazbaz'
-          width 2
-          array_size [2]
+        feature.send(:input, :domain_b, :baz) { |i|
+          i.name 'bazbaz'
+          i.width 2
+          i.array_size [2]
         }
         expect(feature).to have_identifier(:baz, 'bazbaz')
       end
@@ -140,10 +140,10 @@ module RgGen::SystemVerilog
       specify '定義した入力ポートの識別子はコンポーネント経由で参照できる' do
         feature.send(:input, :domain_a, :foo)
         feature.send(:input, :domain_a, :bar, name: 'barbar', width: 2, array_size: [2])
-        feature.send(:input, :domain_b, :baz) {
-          name 'bazbaz'
-          width 2
-          array_size [2]
+        feature.send(:input, :domain_b, :baz) { |i|
+          i.name 'bazbaz'
+          i.width 2
+          i.array_size [2]
         }
         component.build
 
@@ -155,10 +155,10 @@ module RgGen::SystemVerilog
       specify '定義した入力ポートの宣言は#declarationsで参照できる' do
         feature.send(:input, :domain_a, :foo)
         feature.send(:input, :domain_a, :bar, name: 'barbar', width: 2, array_size: [2])
-        feature.send(:input, :domain_b, :baz) {
-          name 'bazbaz'
-          width 2
-          array_size [2]
+        feature.send(:input, :domain_b, :baz) { |i|
+          i.name 'bazbaz'
+          i.width 2
+          i.array_size [2]
         }
 
         expect(feature).to have_declaration(:domain_a, :port, 'input foo')
@@ -175,10 +175,10 @@ module RgGen::SystemVerilog
         feature.send(:output, :domain_a, :bar, name: 'barbar', width: 2, array_size: [2])
         expect(feature).to have_identifier(:bar, 'barbar')
 
-        feature.send(:output, :domain_b, :baz) {
-          name 'bazbaz'
-          width 2
-          array_size [2]
+        feature.send(:output, :domain_b, :baz) { |o|
+          o.name 'bazbaz'
+          o.width 2
+          o.array_size [2]
         }
         expect(feature).to have_identifier(:baz, 'bazbaz')
       end
@@ -186,10 +186,10 @@ module RgGen::SystemVerilog
       specify '定義した出力ポートの識別子はコンポーネント経由で参照できる' do
         feature.send(:output, :domain_a, :foo)
         feature.send(:output, :domain_a, :bar, name: 'barbar', width: 2, array_size: [2])
-        feature.send(:output, :domain_b, :baz) {
-          name 'bazbaz'
-          width 2
-          array_size [2]
+        feature.send(:output, :domain_b, :baz) { |o|
+          o.name 'bazbaz'
+          o.width 2
+          o.array_size [2]
         }
         component.build
 
@@ -201,10 +201,10 @@ module RgGen::SystemVerilog
       specify '定義した出力ポートの宣言は#declarationsで参照できる' do
         feature.send(:output, :domain_a, :foo)
         feature.send(:output, :domain_a, :bar, name: 'barbar', width: 2, array_size: [2])
-        feature.send(:output, :domain_b, :baz) {
-          name 'bazbaz'
-          width 2
-          array_size [2]
+        feature.send(:output, :domain_b, :baz) { |o|
+          o.name 'bazbaz'
+          o.width 2
+          o.array_size [2]
         }
 
         expect(feature).to have_declaration(:domain_a, :port, 'output foo')
@@ -221,11 +221,11 @@ module RgGen::SystemVerilog
         feature.send(:interface_port, :domain_a, :bar, interface_type: :bar_if, name: 'barbar', modport: :bar, array_size: [2])
         expect(feature).to have_identifier(:bar, 'barbar')
 
-        feature.send(:interface_port, :domain_b, :baz) {
-          interface_type :baz_if
-          name 'bazbaz'
-          modport :baz, [:baz_0, :baz_1]
-          array_size [2]
+        feature.send(:interface_port, :domain_b, :baz) { |i|
+          i.interface_type :baz_if
+          i.name 'bazbaz'
+          i.modport :baz, [:baz_0, :baz_1]
+          i.array_size [2]
         }
         expect(feature).to have_identifier(:baz, 'bazbaz')
         expect(feature.baz.baz_0).to match_identifier('bazbaz.baz_0')
@@ -235,11 +235,11 @@ module RgGen::SystemVerilog
       specify '定義したインターフェースポートの識別子はコンポーネント経由で参照できる' do
         feature.send(:interface_port, :domain_a, :foo, interface_type: :foo_if)
         feature.send(:interface_port, :domain_a, :bar, interface_type: :bar_if, name: 'barbar', modport: :bar, array_size: [2])
-        feature.send(:interface_port, :domain_b, :baz) {
-          interface_type :baz_if
-          name 'bazbaz'
-          modport :baz, [:baz_0, :baz_1]
-          array_size [2]
+        feature.send(:interface_port, :domain_b, :baz) { |i|
+          i.interface_type :baz_if
+          i.name 'bazbaz'
+          i.modport :baz, [:baz_0, :baz_1]
+          i.array_size [2]
         }
         component.build
 
@@ -253,11 +253,11 @@ module RgGen::SystemVerilog
       specify '定義したインターフェースポートの宣言は#declarationsで参照できる' do
         feature.send(:interface_port, :domain_a, :foo, interface_type: :foo_if)
         feature.send(:interface_port, :domain_a, :bar, interface_type: :bar_if, name: 'barbar', modport: :bar, array_size: [2])
-        feature.send(:interface_port, :domain_b, :baz) {
-          interface_type :baz_if
-          name 'bazbaz'
-          modport :baz, [:baz_0, :baz_1]
-          array_size [2]
+        feature.send(:interface_port, :domain_b, :baz) { |i|
+          i.interface_type :baz_if
+          i.name 'bazbaz'
+          i.modport :baz, [:baz_0, :baz_1]
+          i.array_size [2]
         }
 
         expect(feature).to have_declaration(:domain_a, :port, 'foo_if foo')
@@ -274,10 +274,10 @@ module RgGen::SystemVerilog
         feature.send(:parameter, :domain_a, :bar, name: 'BAR',data_type: :int, default: 2)
         expect(feature).to have_identifier(:bar, 'BAR')
 
-        feature.send(:parameter, :domain_b, :baz) {
-          name 'BAZ'
-          data_type :int
-          default 3
+        feature.send(:parameter, :domain_b, :baz) { |p|
+          p.name 'BAZ'
+          p.data_type :int
+          p.default 3
         }
         expect(feature).to have_identifier(:baz, 'BAZ')
       end
@@ -285,10 +285,10 @@ module RgGen::SystemVerilog
       specify '定義したパラメータの識別子はコンポーネント経由で参照できる' do
         feature.send(:parameter, :domain_a, :foo, default: 1)
         feature.send(:parameter, :domain_a, :bar, name: 'BAR',data_type: :int, default: 2)
-        feature.send(:parameter, :domain_b, :baz) {
-          name 'BAZ'
-          data_type :int
-          default 3
+        feature.send(:parameter, :domain_b, :baz) { |p|
+          p.name 'BAZ'
+          p.data_type :int
+          p.default 3
         }
         component.build
 
@@ -300,10 +300,10 @@ module RgGen::SystemVerilog
       specify '定義したパラメータの宣言は#declarationsで参照できる' do
         feature.send(:parameter, :domain_a, :foo, default: 1)
         feature.send(:parameter, :domain_a, :bar, name: 'BAR',data_type: :int, default: 2)
-        feature.send(:parameter, :domain_b, :baz) {
-          name 'BAZ'
-          data_type :int
-          default 3
+        feature.send(:parameter, :domain_b, :baz) { |p|
+          p.name 'BAZ'
+          p.data_type :int
+          p.default 3
         }
 
         expect(feature).to have_declaration(:domain_a, :parameter, 'parameter foo = 1')

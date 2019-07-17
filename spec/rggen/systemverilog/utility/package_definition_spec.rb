@@ -6,10 +6,6 @@ module RgGen::SystemVerilog::Utility
   describe PackageDefinition do
     include RgGen::SystemVerilog::Utility
 
-    def context
-      self
-    end
-
     let(:packages) do
       [:bar_pkg, :baz_pkg]
     end
@@ -27,8 +23,8 @@ module RgGen::SystemVerilog::Utility
       PACKAGE
 
       expect(
-        package_definition(:foo_pkg) do
-          package_import context.packages[0]
+        package_definition(:foo_pkg) do |p|
+          p.package_import packages[0]
         end
       ).to match_string(<<~'PACKAGE')
         package foo_pkg;
@@ -37,8 +33,8 @@ module RgGen::SystemVerilog::Utility
       PACKAGE
 
       expect(
-        package_definition(:foo_pkg) do
-          package_imports context.packages
+        package_definition(:foo_pkg) do |p|
+          p.package_imports packages
         end
       ).to match_string(<<~'PACKAGE')
         package foo_pkg;
@@ -48,8 +44,8 @@ module RgGen::SystemVerilog::Utility
       PACKAGE
 
       expect(
-        package_definition(:foo_pkg) do
-          include_file context.include_files[0]
+        package_definition(:foo_pkg) do |p|
+          p.include_file include_files[0]
         end
       ).to match_string(<<~'PACKAGE')
         package foo_pkg;
@@ -58,8 +54,8 @@ module RgGen::SystemVerilog::Utility
       PACKAGE
 
       expect(
-        package_definition(:foo_pkg) do
-          include_files context.include_files
+        package_definition(:foo_pkg) do |p|
+          p.include_files include_files
         end
       ).to match_string(<<~'PACKAGE')
         package foo_pkg;
@@ -69,9 +65,9 @@ module RgGen::SystemVerilog::Utility
       PACKAGE
 
       expect(
-        package_definition(:foo_pkg) do
-          body { 'int foo;' }
-          body { |c| c << 'int bar;' }
+        package_definition(:foo_pkg) do |p|
+          p.body { 'int foo;' }
+          p.body { |c| c << 'int bar;' }
         end
       ).to match_string(<<~'PACKAGE')
         package foo_pkg;
@@ -81,11 +77,11 @@ module RgGen::SystemVerilog::Utility
       PACKAGE
 
       expect(
-        package_definition(:foo_pkg) do
-          body { 'int foo;' }
-          body { |c| c << 'int bar;' }
-          include_files context.include_files
-          package_imports context.packages
+        package_definition(:foo_pkg) do |p|
+          p.body { 'int foo;' }
+          p.body { |c| c << 'int bar;' }
+          p.include_files include_files
+          p.package_imports packages
         end
       ).to match_string(<<~'PACKAGE')
         package foo_pkg;

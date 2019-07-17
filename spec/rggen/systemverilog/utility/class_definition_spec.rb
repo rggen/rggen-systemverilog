@@ -6,8 +6,6 @@ module RgGen::SystemVerilog::Utility
   describe ClassDefinition do
     include RgGen::SystemVerilog::Utility
 
-    let(:context) { self }
-
     let(:parameters) do
       [:FOO, :BAR].map.with_index do |name, i|
         DataObject.new(
@@ -33,8 +31,8 @@ module RgGen::SystemVerilog::Utility
       CLASS
 
       expect(
-        class_definition(:foo) do
-          parameters context.parameters
+        class_definition(:foo) do |c|
+          c.parameters parameters
         end
       ).to match_string(<<~'CLASS')
         class foo #(
@@ -45,8 +43,8 @@ module RgGen::SystemVerilog::Utility
       CLASS
 
       expect(
-        class_definition(:foo) do
-          base :bar
+        class_definition(:foo) do |c|
+          c.base :bar
         end
       ).to match_string(<<~'CLASS')
         class foo extends bar;
@@ -54,8 +52,8 @@ module RgGen::SystemVerilog::Utility
       CLASS
 
       expect(
-        class_definition(:foo) do
-          variables context.variables
+        class_definition(:foo) do  |c|
+          c.variables variables
         end
       ).to match_string(<<~'CLASS')
         class foo;
@@ -65,9 +63,9 @@ module RgGen::SystemVerilog::Utility
       CLASS
 
       expect(
-        class_definition(:foo) do
-          body { 'fizz = 0;' }
-          body { |c| c << 'buzz = 1;' }
+        class_definition(:foo) do |c|
+          c.body { 'fizz = 0;' }
+          c.body { |code| code << 'buzz = 1;' }
         end
       ).to match_string(<<~'CLASS')
         class foo;
@@ -77,12 +75,12 @@ module RgGen::SystemVerilog::Utility
       CLASS
 
       expect(
-        class_definition(:foo) do
-          body { 'fizz = 0;' }
-          body { |c| c << 'buzz = 1;' }
-          variables context.variables
-          parameters context.parameters
-          base :bar
+        class_definition(:foo) do |c|
+          c.body { 'fizz = 0;' }
+          c.body { |code| code << 'buzz = 1;' }
+          c.variables variables
+          c.parameters parameters
+          c.base :bar
         end
       ).to match_string(<<~'CLASS')
         class foo #(

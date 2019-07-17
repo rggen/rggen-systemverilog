@@ -6,8 +6,6 @@ module RgGen::SystemVerilog::Utility
   describe FunctionDefinition do
     include RgGen::SystemVerilog::Utility
 
-    let(:context) { self }
-
     let(:arguments) {
       [
         argument(:foo, data_type: :bit, width: 1),
@@ -25,8 +23,8 @@ module RgGen::SystemVerilog::Utility
       FUNCTION
 
       expect(
-        function_definition(:fizz) do
-          return_type data_type: :void
+        function_definition(:fizz) do |f|
+          f.return_type data_type: :void
         end
       ).to match_string(<<~'FUNCTION')
         function void fizz();
@@ -34,8 +32,8 @@ module RgGen::SystemVerilog::Utility
       FUNCTION
 
       expect(
-        function_definition(:fizz) do
-          return_type data_type: :bit, width: 2
+        function_definition(:fizz) do |f|
+          f.return_type data_type: :bit, width: 2
         end
       ).to match_string(<<~'FUNCTION')
         function bit [1:0] fizz();
@@ -43,8 +41,8 @@ module RgGen::SystemVerilog::Utility
       FUNCTION
 
       expect(
-        function_definition(:fizz) do
-          arguments context.arguments
+        function_definition(:fizz) do |f|
+          f.arguments arguments
         end
       ).to match_string(<<~'FUNCTION')
         function fizz(
@@ -56,8 +54,8 @@ module RgGen::SystemVerilog::Utility
       FUNCTION
 
       expect(
-        function_definition(:fizz) do
-          body { 'baz = foo + bar;' }
+        function_definition(:fizz) do |f|
+          f.body { 'baz = foo + bar;' }
         end
       ).to match_string(<<~'FUNCTION')
         function fizz();
@@ -66,10 +64,10 @@ module RgGen::SystemVerilog::Utility
       FUNCTION
 
       expect(
-        function_definition(:fizz) do
-          body { 'baz = foo + bar;' }
-          arguments context.arguments
-          return_type data_type: :bit, width: 2
+        function_definition(:fizz) do |f|
+          f.body { 'baz = foo + bar;' }
+          f.arguments arguments
+          f.return_type data_type: :bit, width: 2
         end
       ).to match_string(<<~'FUNCTION')
         function bit [1:0] fizz(

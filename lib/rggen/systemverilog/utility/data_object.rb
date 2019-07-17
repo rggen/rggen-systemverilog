@@ -6,10 +6,10 @@ module RgGen
       class DataObject
         include Core::Utility::AttributeSetter
 
-        def initialize(object_type, **default_attributes, &block)
+        def initialize(object_type, **default_attributes)
           @object_type = object_type
           apply_attributes(default_attributes)
-          block_given? && Docile.dsl_eval(self, &block)
+          block_given? && yield(self)
         end
 
         define_attribute :name
