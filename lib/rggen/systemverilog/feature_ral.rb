@@ -13,7 +13,7 @@ module RgGen
 
       def create_parameter(_, attributes, block)
         DataObject.new(
-          :parameter, attributes.merge(parameter_type: :parameter), &block
+          :parameter, attributes, &block
         )
       end
 

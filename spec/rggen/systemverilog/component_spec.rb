@@ -102,19 +102,19 @@ module RgGen::SystemVerilog
 
         expect(component.declarations(:domain_0, :parameter)).to match(
           [
-            match_declaration('parameter FOO_0 = 0'),
-            match_declaration('parameter BAR_0 = 2'),
-            match_declaration('parameter BAZ_0 = 4'),
-            match_declaration('parameter QUX_0 = 6')
+            match_declaration('FOO_0 = 0'),
+            match_declaration('BAR_0 = 2'),
+            match_declaration('BAZ_0 = 4'),
+            match_declaration('QUX_0 = 6')
           ]
         )
 
         expect(component.declarations(:domain_1, :parameter)).to match(
           [
-            match_declaration('parameter FOO_1 = 1'),
-            match_declaration('parameter BAR_1 = 3'),
-            match_declaration('parameter BAZ_1 = 5'),
-            match_declaration('parameter QUX_1 = 7')
+            match_declaration('FOO_1 = 1'),
+            match_declaration('BAR_1 = 3'),
+            match_declaration('BAZ_1 = 5'),
+            match_declaration('QUX_1 = 7')
           ]
         )
       end

@@ -111,9 +111,9 @@ module RgGen::SystemVerilog
           p.default 3
         }
 
-        expect(feature).to have_declaration(:domain_a, :parameter, 'parameter foo = 1')
-        expect(feature).to have_declaration(:domain_a, :parameter, 'parameter int BAR = 2')
-        expect(feature).to have_declaration(:domain_b, :parameter, 'parameter int BAZ = 3')
+        expect(feature).to have_declaration(:domain_a, :parameter, 'foo = 1')
+        expect(feature).to have_declaration(:domain_a, :parameter, 'int BAR = 2')
+        expect(feature).to have_declaration(:domain_b, :parameter, 'int BAZ = 3')
       end
     end
   end
