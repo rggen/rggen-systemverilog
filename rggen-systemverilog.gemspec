@@ -11,11 +11,19 @@ Gem::Specification.new do |spec|
   spec.email = ['taichi730@gmail.com']
 
   spec.summary = "rggen-systemverilog-#{RgGen::SystemVerilog::VERSION}"
-  spec.description = 'RgGen output components for SystemVerilog RTL and RAL.'
+  spec.description = <<~'DESCRIPTION'
+    Structure of SystemVerilog RTL and UVM RAL model writers for Rggen.
+  DESCRIPTION
   spec.homepage = 'https://github.com/rggen/rggen-systemverilog'
   spec.license = 'MIT'
 
-  spec.files = `git ls-files lib LICENSE.txt README.md`.split($RS)
+  spec.metadata = {
+    'bug_tracker_uri' => 'https://github.com/rggen/rggen-systemverilog/issues',
+    'source_code_uri' => 'https://github.com/rggen/rggen-systemverilog',
+    'wiki_uri' => 'https://github.com/rggen/rggen/wiki'
+  }
+
+  spec.files = `git ls-files lib LICENSE CODE_OF_CONDUCT.md README.md`.split($RS)
   spec.require_paths = ['lib']
 
   spec.required_ruby_version = '>= 2.3'
