@@ -5,44 +5,39 @@
 
 # RgGen::SystemVerilog
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rggen/basic/output/components`. To experiment with that code, run `bin/console` for an interactive prompt.
+RgGen::SystemVerilog provides for features listed below:
 
-TODO: Delete this and the text above, and describe your gem
+* Structure for defining SystemVerilog RTL and UVM RAL model writers
+* Convience APIs for SystemVerilog code
+    * Declaring signals, ports and variables
+    * Generating code to define module, class and package
+    * Etc.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+During RgGen installation, RgGen::SytemVerilog will also be installed automatically.
 
-```ruby
-gem 'rggen-basic-output-components'
+```
+$ gem install rggen
 ```
 
-And then execute:
+If you want to install RgGen::SytemVerilog only, use the command below:
 
-    $ bundle
+```
+$ gem isntall rggen-systemverilog
+```
 
-Or install it yourself as:
+## Contact
 
-    $ gem install rggen-basic-output-components
+Feedbacks, bug reports, questions and etc. are wellcome! You can post them by using following ways:
 
-## Usage
+* [GitHub Issue Tracker](https://github.com/rggen/rggen-systemverilog/issues)
+* [Mail](mailto:taichi730@gmail.com)
 
-TODO: Write usage instructions here
+## Copyright & License
 
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rggen-basic-output-components. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+Copyright &copy; 2019 Taichi Ishitani. RgGen::SpreadsheetLoader is licensed under the [MIT License](https://opensource.org/licenses/MIT), see [LICENSE](LICENSE) for futher details.
 
 ## Code of Conduct
 
-Everyone interacting in the Rggen::Basic::Output::Components project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/rggen-basic-output-components/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the RgGen project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/rggen/rggen-systemverilog/blob/master/CODE_OF_CONDUCT.md).
