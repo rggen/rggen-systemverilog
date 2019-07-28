@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.name = 'rggen-systemverilog'
   spec.version = RgGen::SystemVerilog::VERSION
   spec.authors = ['Taichi Ishitani']
-  spec.email = ['taichi730@gmail.com']
+  spec.email = ['rggen@googlegroups.com']
 
   spec.summary = "rggen-systemverilog-#{RgGen::SystemVerilog::VERSION}"
   spec.description = <<~'DESCRIPTION'
@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
 
   spec.metadata = {
     'bug_tracker_uri' => 'https://github.com/rggen/rggen-systemverilog/issues',
+    'mailing_list_uri' => 'https://groups.google.com/forum/#!forum/rggen',
     'source_code_uri' => 'https://github.com/rggen/rggen-systemverilog',
     'wiki_uri' => 'https://github.com/rggen/rggen/wiki'
   }

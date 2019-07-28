@@ -35,7 +35,8 @@ Feedbacks, bug reports, questions and etc. are wellcome! You can post them by us
 
 * [GitHub Issue Tracker](https://github.com/rggen/rggen-systemverilog/issues)
 * [Chat Room](https://gitter.im/rggen/rggen)
-* [Mail](mailto:taichi730@gmail.com)
+* [Mailing List](https://groups.google.com/forum/#!forum/rggen)
+* [Mail](mailto:rggen@googlegroups.com)
 
 ## Copyright & License
 
