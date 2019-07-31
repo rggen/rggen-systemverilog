@@ -62,8 +62,8 @@ module RgGen
         end
 
         def __array_select__(array_index)
-          if @array_format == :vectorized
-            "[#{__vecotr_lsb__(array_index)}+:#{@width}]"
+          if @array_format == :serialized
+            "[#{__serialized_lsb__(array_index)}+:#{@width}]"
           else
             array_index
               .map { |index| "[#{index}]" }
@@ -71,11 +71,11 @@ module RgGen
           end
         end
 
-        def __vecotr_lsb__(array_index)
-          __reduce_array__([@width, __vecotr_index__(array_index)], :*, 1)
+        def __serialized_lsb__(array_index)
+          __reduce_array__([@width, __serialized_index__(array_index)], :*, 1)
         end
 
-        def __vecotr_index__(array_index)
+        def __serialized_index__(array_index)
           index_values =
             array_index
               .reverse

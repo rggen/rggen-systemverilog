@@ -96,8 +96,8 @@ module RgGen::SystemVerilog::Utility
           end
         end
 
-        context '配列の形式がvectorizedの場合' do
-          let(:array_format) { :vectorized }
+        context '配列の形式がserializedの場合' do
+          let(:array_format) { :serialized }
 
           it 'ベクトル形式で選択された識別子を返す' do
             apply_array_attributes(width[0], array_size[0], array_format)

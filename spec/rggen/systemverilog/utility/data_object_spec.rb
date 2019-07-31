@@ -41,9 +41,9 @@ module RgGen::SystemVerilog::Utility
           expect(variable('foo') { |d| d.data_type :bit; d.width 'WIDTH'; d.array_size [2, 3]; d.array_format :packed }).to match_declaration('bit [1:0][2:0][WIDTH-1:0] foo')
           expect(variable('foo') { |d| d.data_type :bit; d.width 2; d.array_size [2, 3]; d.array_format :unpacked }).to match_declaration('bit [1:0] foo[2][3]')
           expect(variable('foo') { |d| d.data_type :bit; d.width 'WIDTH'; d.array_size [2, 3]; d.array_format :unpacked }).to match_declaration('bit [WIDTH-1:0] foo[2][3]')
-          expect(variable('foo') { |d| d.data_type :bit; d.width 2; d.array_size [2, 3]; d.array_format :vectorized }).to match_declaration('bit [11:0] foo')
-          expect(variable('foo') { |d| d.data_type :bit; d.width 'WIDTH'; d.array_size [2, 3]; d.array_format :vectorized }).to match_declaration('bit [WIDTH*2*3-1:0] foo')
-          expect(variable('foo') { |d| d.data_type :bit; d.width 'WIDTH'; d.array_size ['ROW_SIZE', 3]; d.array_format :vectorized }).to match_declaration('bit [WIDTH*ROW_SIZE*3-1:0] foo')
+          expect(variable('foo') { |d| d.data_type :bit; d.width 2; d.array_size [2, 3]; d.array_format :serialized }).to match_declaration('bit [11:0] foo')
+          expect(variable('foo') { |d| d.data_type :bit; d.width 'WIDTH'; d.array_size [2, 3]; d.array_format :serialized }).to match_declaration('bit [WIDTH*2*3-1:0] foo')
+          expect(variable('foo') { |d| d.data_type :bit; d.width 'WIDTH'; d.array_size ['ROW_SIZE', 3]; d.array_format :serialized }).to match_declaration('bit [WIDTH*ROW_SIZE*3-1:0] foo')
 
           expect(variable('foo') { |d| d.data_type :bit; d.width 2; d.random true }).to match_declaration('rand bit [1:0] foo')
           expect(variable('foo') { |d| d.data_type :bit; d.width 2; d.random false }).to match_declaration('bit [1:0] foo')
@@ -79,9 +79,9 @@ module RgGen::SystemVerilog::Utility
           expect(argument('foo', :input) { |a| a.width 'WIDTH'; a.array_size [2, 3]; a.array_format :packed }).to match_declaration('input [1:0][2:0][WIDTH-1:0] foo')
           expect(argument('foo', :input) { |a| a.width 2; a.array_size [2, 3]; a.array_format :unpacked }).to match_declaration('input [1:0] foo[2][3]')
           expect(argument('foo', :input) { |a| a.width 'WIDTH'; a.array_size [2, 3]; a.array_format :unpacked }).to match_declaration('input [WIDTH-1:0] foo[2][3]')
-          expect(argument('foo', :input) { |a| a.width 2; a.array_size [2, 3]; a.array_format :vectorized }).to match_declaration('input [11:0] foo')
-          expect(argument('foo', :input) { |a| a.width 'WIDTH'; a.array_size [2, 3]; a.array_format :vectorized }).to match_declaration('input [WIDTH*2*3-1:0] foo')
-          expect(argument('foo', :input) { |a| a.width 'WIDTH'; a.array_size ['ROW_SIZE', 3]; a.array_format :vectorized }).to match_declaration('input [WIDTH*ROW_SIZE*3-1:0] foo')
+          expect(argument('foo', :input) { |a| a.width 2; a.array_size [2, 3]; a.array_format :serialized }).to match_declaration('input [11:0] foo')
+          expect(argument('foo', :input) { |a| a.width 'WIDTH'; a.array_size [2, 3]; a.array_format :serialized }).to match_declaration('input [WIDTH*2*3-1:0] foo')
+          expect(argument('foo', :input) { |a| a.width 'WIDTH'; a.array_size ['ROW_SIZE', 3]; a.array_format :serialized }).to match_declaration('input [WIDTH*ROW_SIZE*3-1:0] foo')
         end
       end
 
@@ -110,8 +110,8 @@ module RgGen::SystemVerilog::Utility
         expect(data_object('foo') { |d| d.data_type :bit; d.width 2; d.array_size [2, 3]; d.array_format :packed }.identifier[[:i, :j]] ).to match_identifier 'foo[i][j]'
         expect(data_object('foo') { |d| d.data_type :bit; d.width 2; d.array_size [2, 3]; d.array_format :unpacked } ).to match_identifier 'foo'
         expect(data_object('foo') { |d| d.data_type :bit; d.width 2; d.array_size [2, 3]; d.array_format :unpacked }.identifier[[:i, :j]] ).to match_identifier 'foo[i][j]'
-        expect(data_object('foo') { |d| d.data_type :bit; d.width 2; d.array_size [2, 3]; d.array_format :vectorized } ).to match_identifier 'foo'
-        expect(data_object('foo') { |d| d.data_type :bit; d.width 2; d.array_size [2, 3]; d.array_format :vectorized }.identifier[[:i, :j]] ).to match_identifier 'foo[2*(3*i+j)+:2]'
+        expect(data_object('foo') { |d| d.data_type :bit; d.width 2; d.array_size [2, 3]; d.array_format :serialized } ).to match_identifier 'foo'
+        expect(data_object('foo') { |d| d.data_type :bit; d.width 2; d.array_size [2, 3]; d.array_format :serialized }.identifier[[:i, :j]] ).to match_identifier 'foo[2*(3*i+j)+:2]'
       end
     end
   end

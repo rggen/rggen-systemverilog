@@ -67,7 +67,7 @@ module RgGen
         end
 
         def packed_dimensions
-          (vectorized_array? ? vectorized_array_size : packed_array_size)
+          (serialized? ? serialized_array_size : packed_array_size)
             .map { |size| "[#{msb(size)}:0]" }
             .join
         end
@@ -81,11 +81,11 @@ module RgGen
           !array_size.empty?
         end
 
-        def vectorized_array?
-          array? && array_format == :vectorized
+        def serialized?
+          array? && array_format == :serialized
         end
 
-        def vectorized_array_size
+        def serialized_array_size
           size = [(width || 1), *array_size]
           if size.all? { |s| s.is_a?(Integer) }
             [size.inject(&:*)]
