@@ -22,6 +22,23 @@ module RgGen::SystemVerilog
       end
     end
 
+    describe '#package_imports' do
+      it '#import_package/import_packagesで指定されたパッケージ一覧を返す' do
+        feature = create_feature do
+          build do
+            import_package :foo, :foo_0_pkg
+            import_packages :foo, [:foo_0_pkg, :foo_1_pkg, :foo_2_pkg]
+            import_package :bar, :bar_0_pkg
+          end
+        end
+        feature.build
+
+        expect(feature.package_imports(:foo)).to match([:foo_0_pkg, :foo_1_pkg, :foo_2_pkg])
+        expect(feature.package_imports(:bar)).to match([:bar_0_pkg])
+        expect(feature.package_imports(:baz)).to be_empty
+      end
+    end
+
     it 'ERB形式のテンプレートを処理できる' do
       template_path = File.join(__dir__, 'foo.erb')
       allow(File).to receive(:binread).with(template_path).and_return('<%= object_id %><%= foo %>')

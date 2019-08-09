@@ -119,5 +119,43 @@ module RgGen::SystemVerilog
         )
       end
     end
+
+    describe '#package_imports' do
+      before do
+        create_feature(component, :foo_feature) do
+          build do
+            import_package :domain_0, :foo_0_pkg
+            import_package :domain_1, :foo_1_pkg
+          end
+        end
+
+        create_feature(component, :bar_feature) do
+          build do
+            import_package :domain_0, :bar_0_pkg
+            import_package :domain_1, :bar_1_pkg
+          end
+        end
+
+        create_child_component do |child_component|
+          create_feature(child_component, :foo_feature) do
+            build do
+              import_package :domain_0, :foo_0_pkg
+              import_package :domain_1, :foo_1_pkg
+            end
+          end
+          create_feature(child_component, :baz_feature) do
+            build do
+              import_package :domain_0, :baz_0_pkg
+              import_package :domain_1, :baz_1_pkg
+            end
+          end
+        end
+      end
+
+      it '配下のフィーチャーでインポート指定されたパッケージ一覧を返す' do
+        expect(component.package_imports(:domain_0)).to match([:foo_0_pkg, :bar_0_pkg, :baz_0_pkg])
+        expect(component.package_imports(:domain_1)).to match([:foo_1_pkg, :bar_1_pkg, :baz_1_pkg])
+      end
+    end
   end
 end

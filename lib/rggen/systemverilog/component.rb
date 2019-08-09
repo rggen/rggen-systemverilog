@@ -10,6 +10,14 @@ module RgGen
           @children.map(&body)
         ].flatten
       end
+
+      def package_imports(domain)
+        body = ->(r) { r.package_imports(domain) }
+        [
+          @features.each_value.map(&body),
+          @children.map(&body)
+        ].flatten.uniq
+      end
     end
   end
 end

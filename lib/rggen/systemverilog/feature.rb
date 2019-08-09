@@ -27,6 +27,10 @@ module RgGen
         @declarations[domain][type]
       end
 
+      def package_imports(domain)
+        @package_imports[domain]
+      end
+
       private
 
       def post_initialize
@@ -34,6 +38,7 @@ module RgGen
         @declarations = Hash.new do |h0, k0|
           h0[k0] = Hash.new { |h1, k1| h1[k1] = [] }
         end
+        @package_imports = Hash.new { |h, k| h[k] = [] }
       end
 
       def create_entity(context, attributes, block)
@@ -56,6 +61,15 @@ module RgGen
         instance_variable_set("@#{name}", identifier)
         attr_singleton_reader(name)
         export(name)
+      end
+
+      def import_package(domain, package)
+        @package_imports[domain].include?(package) ||
+          (@package_imports[domain] << package)
+      end
+
+      def import_packages(domain, packages)
+        Array(packages).each { |package| import_package(domain, package) }
       end
     end
   end
