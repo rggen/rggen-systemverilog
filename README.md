@@ -7,7 +7,7 @@
 
 # RgGen::SystemVerilog
 
-RgGen::SystemVerilog provides for features listed below:
+RgGen::SystemVerilog provides features listed below:
 
 * Structure for defining SystemVerilog RTL and UVM RAL model writers
 * Convenience APIs for SystemVerilog code
