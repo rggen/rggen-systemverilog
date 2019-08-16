@@ -10,7 +10,7 @@
 RgGen::SystemVerilog provides for features listed below:
 
 * Structure for defining SystemVerilog RTL and UVM RAL model writers
-* Convience APIs for SystemVerilog code
+* Convenience APIs for SystemVerilog code
     * Declaring signals, ports and variables
     * Generating code to define module, class and package
     * Etc.
