@@ -326,7 +326,7 @@ RSpec.describe 'register/sv_rtl_top' do
       end
     end
   end
-=begin
+
   describe '#generate_code' do
     it 'レジスタ階層のコードを出力する' do
       registers = create_registers do
@@ -576,5 +576,4 @@ RSpec.describe 'register/sv_rtl_top' do
       CODE
     end
   end
-=end
 end

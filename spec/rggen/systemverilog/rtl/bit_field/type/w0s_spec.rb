@@ -120,12 +120,12 @@ RSpec.describe 'bit_field/type/w0s' do
     expect(bit_fields[6]).to have_port(
       :register_block, :value_out,
       name: 'o_register_2_bit_field_2', direction: :output, data_type: :logic, width: 4,
-      array_size: [2, 4], array_format: array_port_format
+      array_size: [4, 2], array_format: array_port_format
     )
     expect(bit_fields[6]).to have_port(
       :register_block, :clear,
       name: 'i_register_2_bit_field_2_clear', direction: :input, data_type: :logic, width: 4,
-      array_size: [2, 4], array_format: array_port_format
+      array_size: [4, 2], array_format: array_port_format
     )
 
     expect(bit_fields[7]).to have_port(
