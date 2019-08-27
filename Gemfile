@@ -5,7 +5,11 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in rggen-basic-output-components.gemspec
 gemspec
 
-['rggen-devtools', 'rggen-core'].each do |rggen_library|
+[
+  'rggen-devtools',
+  'rggen-core',
+  'rggen-default-register-map'
+].each do |rggen_library|
   library_path = File.expand_path("../#{rggen_library}", __dir__)
   if Dir.exist?(library_path) && !ENV['USE_GITHUB_REPOSITORY']
     gem rggen_library, path: library_path

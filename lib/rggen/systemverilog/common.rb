@@ -21,3 +21,24 @@ require_relative 'common/utility'
 require_relative 'common/component'
 require_relative 'common/feature'
 require_relative 'common/factories'
+
+module RgGen
+  module SystemVerilog
+    module Common
+      def self.register_component(builder, name, feature_class)
+        builder.output_component_registry(name) do
+          register_component [
+            :register_map, :register_block, :register, :bit_field
+          ] do |category|
+            component Component, ComponentFactory
+            feature feature_class, FeatureFactory if category != :register_map
+          end
+        end
+      end
+
+      def self.load_features(features, root)
+        features.each { |feature| require File.join(root, feature) }
+      end
+    end
+  end
+end
