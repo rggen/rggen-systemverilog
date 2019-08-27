@@ -23,6 +23,9 @@ module RgGen
         'rtl/register/type',
         'rtl/register/type/external',
         'rtl/register/type/indirect',
+        'rtl/register_block/protocol',
+        'rtl/register_block/protocol/apb',
+        'rtl/register_block/protocol/axi4lite',
         'rtl/register_block/sv_rtl_top'
       ].freeze
 

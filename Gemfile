@@ -8,7 +8,8 @@ gemspec
 [
   'rggen-devtools',
   'rggen-core',
-  'rggen-default-register-map'
+  'rggen-default-register-map',
+  'rggen-spreadsheet-loader'
 ].each do |rggen_library|
   library_path = File.expand_path("../#{rggen_library}", __dir__)
   if Dir.exist?(library_path) && !ENV['USE_GITHUB_REPOSITORY']

@@ -107,7 +107,7 @@ RSpec.describe 'register_block/sv_rtl_top' do
       expect(register_block.register_if[0].value).to match_identifier('register_if[0].value')
     end
   end
-=begin
+
   describe '#write_file' do
     before do
       allow(FileUtils).to receive(:mkpath)
@@ -115,13 +115,13 @@ RSpec.describe 'register_block/sv_rtl_top' do
 
     let(:configuration) do
       file = ['config.yml', 'config.json'].sample
-      path = File.join(RGGEN_ROOT, 'sample', file)
+      path = File.join(RGGEN_SAMPLE_DIRECTORY, file)
       build_configuration_factory(RgGen.builder, false).create([path])
     end
 
     let(:register_map) do
       file = ['block_0.rb', 'block_0.xlsx', 'block_0.yml'].sample
-      path = File.join(RGGEN_ROOT, 'sample', file)
+      path = File.join(RGGEN_SAMPLE_DIRECTORY, file)
       build_register_map_factory(RgGen.builder, false).create(configuration, [path])
     end
 
@@ -130,7 +130,7 @@ RSpec.describe 'register_block/sv_rtl_top' do
     end
 
     let(:expected_code) do
-      path = File.join(RGGEN_ROOT, 'sample', 'block_0.sv')
+      path = File.join(RGGEN_SAMPLE_DIRECTORY, 'block_0.sv')
       File.binread(path)
     end
 
@@ -140,5 +140,4 @@ RSpec.describe 'register_block/sv_rtl_top' do
       }.to write_file match_string('foo/block_0.sv'), expected_code
     end
   end
-=end
 end
