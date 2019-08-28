@@ -13,14 +13,6 @@ RSpec.describe RgGen::SystemVerilog::Common::Component do
     described_class.new(nil, configuration, register_map)
   end
 
-  let(:child_components) do
-    Array.new(2) do
-      described_class.new(component, configuration, register_map) do |child_component|
-        component.add_child(child_component)
-      end
-    end
-  end
-
   def create_child_component
     described_class.new(component, configuration, register_map) do |child_component|
       component.add_child(child_component)
