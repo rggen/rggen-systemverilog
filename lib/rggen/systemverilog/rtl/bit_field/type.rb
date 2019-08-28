@@ -52,7 +52,10 @@ RgGen.define_list_feature(:bit_field, :type) do
 
     factory do
       def select_feature(_configuration, bit_field)
-        target_features[bit_field.type]
+        target_features[bit_field.type] || (
+          error "code generator for #{bit_field.type} " \
+                'bit field type is not implemented'
+        )
       end
     end
   end
