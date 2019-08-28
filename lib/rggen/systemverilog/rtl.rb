@@ -29,12 +29,21 @@ module RgGen
         'rtl/register_block/sv_rtl_top'
       ].freeze
 
+      def self.version
+        SystemVerilog::VERSION
+      end
+
       def self.register_component(builder)
         Common.register_component(builder, :sv_rtl, Feature)
       end
 
       def self.load_features
         Common.load_features(FEATURES, __dir__)
+      end
+
+      def self.default_setup(builder)
+        register_component(builder)
+        load_features
       end
     end
   end
