@@ -15,8 +15,24 @@ Layout/MultilineMethodCallIndentation:
 Lint/AmbiguousRegexpLiteral:
   Enabled: false
 
+Metrics/BlockLength:
+  ExcludedMethods:
+    - base_feature
+    - build
+    - configuration
+    - define_helpers
+    - define_list_feature
+    - define_list_item_feature
+    - define_simple_feature
+    - factory
+    - sv_rtl
+    - sv_ral
+
 Style/Alias:
   EnforcedStyle: prefer_alias_method
+
+Style/BracesAroundHashParameters:
+  Enabled: false
 
 Style/EmptyMethod:
   EnforcedStyle: expanded
