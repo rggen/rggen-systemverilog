@@ -8,8 +8,10 @@ builder = RgGen::Core::Builder.create
 RgGen.builder(builder)
 
 require 'rggen/default_register_map'
-require 'rggen/spreadsheet_loader/setup'
-RgGen::DefaultRegisterMap.load_features
+RgGen::DefaultRegisterMap.default_setup(builder)
+
+require 'rggen/spreadsheet_loader'
+RgGen::SpreadsheetLoader.default_setup(builder)
 
 RSpec.configure do |config|
   RgGen::Devtools::SpecHelper.setup(config)

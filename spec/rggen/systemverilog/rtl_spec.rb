@@ -20,14 +20,23 @@ RSpec.describe RgGen::SystemVerilog::RTL do
   end
 
   describe '既定セットアップ' do
+    before do
+      @original_builder = RgGen.builder
+      RgGen.builder(RgGen::Core::Builder.create)
+    end
+
+    after do
+      RgGen.builder(@original_builder)
+    end
+
     it 'フィーチャーの有効化を行う' do
-      allow(RgGen::SystemVerilog::RTL).to receive(:default_setup)
       expect(builder).to receive(:enable).with(:global, [:array_port_format, :fold_sv_interface_port])
       expect(builder).to receive(:enable).with(:register_block, [:sv_rtl_top, :protocol])
       expect(builder).to receive(:enable).with(:register_block, :protocol, [:apb, :axi4lite])
       expect(builder).to receive(:enable).with(:register, [:sv_rtl_top])
       expect(builder).to receive(:enable).with(:bit_field, [:sv_rtl_top])
       require 'rggen/systemverilog/rtl/setup'
+      builder.activate_plugins
     end
   end
 end

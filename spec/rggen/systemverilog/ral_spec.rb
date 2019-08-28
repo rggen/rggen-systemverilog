@@ -20,10 +20,19 @@ RSpec.describe RgGen::SystemVerilog::RAL do
   end
 
   describe '既定セットアップ' do
+    before do
+      @original_builder = RgGen.builder
+      RgGen.builder(RgGen::Core::Builder.create)
+    end
+
+    after do
+      RgGen.builder(@original_builder)
+    end
+
     it 'フィーチャーの有効化を行う' do
-      allow(RgGen::SystemVerilog::RAL).to receive(:default_setup)
       expect(builder).to receive(:enable).with(:register_block, [:sv_ral_package])
       require 'rggen/systemverilog/ral/setup'
+      builder.activate_plugins
     end
   end
 end
