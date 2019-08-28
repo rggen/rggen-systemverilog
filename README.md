@@ -7,13 +7,7 @@
 
 # RgGen::SystemVerilog
 
-RgGen::SystemVerilog provides features listed below:
-
-* Structure for defining SystemVerilog RTL and UVM RAL model writers
-* Convenience APIs for SystemVerilog code
-    * Declaring signals, ports and variables
-    * Generating code to define module, class and package
-    * Etc.
+RgGen::SystemVerilog privides SystemVerilog RTL generator and UVM RAL model generator for RgGen.
 
 ## Installation
 
