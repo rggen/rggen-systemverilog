@@ -15,9 +15,13 @@ RSpec.configure do |config|
   RgGen::Devtools::SpecHelper.setup(config)
 end
 
-require 'rggen/systemverilog'
+require 'rggen/systemverilog/rtl'
 RgGen::SystemVerilog::RTL.register_component(builder)
 RgGen::SystemVerilog::RTL.load_features
+
+require 'rggen/systemverilog/ral'
+RgGen::SystemVerilog::RAL.register_component(builder)
+RgGen::SystemVerilog::RAL.load_features
 
 RGGEN_SAMPLE_DIRECTORY =
   ENV['RGGEN_SAMPLE_DIRECTORY'] || '../rggen-sample'
