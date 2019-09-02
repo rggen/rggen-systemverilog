@@ -3,8 +3,8 @@ rggen_apb_adapter #(
   .BUS_WIDTH      (<%= bus_width %>),
   .REGISTERS      (<%= total_registers %>)
 ) u_adapter (
-  .i_clk        (<%= register_block.clock %>),
-  .i_rst_n      (<%= register_block.reset %>),
+  .i_clk        (<%= clock %>),
+  .i_rst_n      (<%= reset %>),
   .apb_if       (<%= apb_if %>),
   .register_if  (<%= register_if %>)
 );
