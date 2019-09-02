@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-RgGen.define_list_item_feature(:bit_field, :type, :rwc) do
-  sv_ral { access 'RW' }
-end
-
 RgGen.define_list_item_feature(:bit_field, :type, [:rwe, :rwl]) do
   sv_ral do
     model_name do
