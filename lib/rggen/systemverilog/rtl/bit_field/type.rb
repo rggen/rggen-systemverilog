@@ -17,6 +17,14 @@ RgGen.define_list_feature(:bit_field, :type) do
         bit_field.width
       end
 
+      def clock
+        register_block.clock
+      end
+
+      def reset
+        register_block.reset
+      end
+
       def array_size
         bit_field.array_size
       end

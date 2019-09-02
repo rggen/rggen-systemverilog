@@ -86,6 +86,14 @@ RgGen.define_list_feature(:register_block, :protocol) do
         register_block.total_registers
       end
 
+      def clock
+        register_block.clock
+      end
+
+      def reset
+        register_block.reset
+      end
+
       def register_if
         register_block.register_if
       end
