@@ -16,6 +16,7 @@ module RgGen
         'rtl/bit_field/type/rs_w0s_w1s',
         'rtl/bit_field/type/rw_wo',
         'rtl/bit_field/type/rwc_rwe_rwl',
+        'rtl/bit_field/type/rws',
         'rtl/bit_field/type/w0trg_w1trg',
         'rtl/global/array_port_format',
         'rtl/global/fold_sv_interface_port',

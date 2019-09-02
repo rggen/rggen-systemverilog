@@ -9,7 +9,8 @@ module RgGen
       FEATURES = [
         'ral/bit_field/type',
         'ral/bit_field/type/reserved_rof',
-        'ral/bit_field/type/rwc_rwe_rwl',
+        'ral/bit_field/type/rwc_rws',
+        'ral/bit_field/type/rwe_rwl',
         'ral/bit_field/type/w0trg_w1trg',
         'ral/register/type',
         'ral/register/type/external',
