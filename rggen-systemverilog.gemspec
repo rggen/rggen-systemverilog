@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = "rggen-systemverilog-#{RgGen::SystemVerilog::VERSION}"
   spec.description = <<~'DESCRIPTION'
-    Structure of SystemVerilog RTL and UVM RAL model writers for Rggen.
+    SystemVerilog RTL and UVM RAL model generators for RgGen.
   DESCRIPTION
   spec.homepage = 'https://github.com/rggen/rggen-systemverilog'
   spec.license = 'MIT'
