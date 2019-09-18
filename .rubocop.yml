@@ -28,6 +28,9 @@ Metrics/BlockLength:
     - sv_rtl
     - sv_ral
 
+Metrics/LineLength:
+  Max: 90
+
 Style/Alias:
   EnforcedStyle: prefer_alias_method
 
