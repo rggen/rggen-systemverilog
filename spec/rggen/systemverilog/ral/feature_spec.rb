@@ -2,15 +2,15 @@
 
 RSpec.describe RgGen::SystemVerilog::RAL::Feature do
   let(:configuration) do
-    RgGen::Core::Configuration::Component.new(nil)
+    RgGen::Core::Configuration::Component.new('configuration', nil)
   end
 
   let(:register_map) do
-    RgGen::Core::RegisterMap::Component.new(nil, configuration)
+    RgGen::Core::RegisterMap::Component.new('register_map', nil, configuration)
   end
 
   let(:component) do
-    RgGen::Core::OutputBase::Component.new(nil, configuration, register_map)
+    RgGen::Core::OutputBase::Component.new('component', nil, configuration, register_map)
   end
 
   let(:feature) do
