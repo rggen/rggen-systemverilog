@@ -75,8 +75,8 @@ RgGen.define_list_feature(:bit_field, :type) do
     end
 
     factory do
-      def select_feature(_configuration, bit_field)
-        target_features[bit_field.type]
+      def target_feature_key(_configuration, bit_field)
+        bit_field.type
       end
     end
   end

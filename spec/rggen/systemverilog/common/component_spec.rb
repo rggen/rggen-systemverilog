@@ -21,7 +21,7 @@ RSpec.describe RgGen::SystemVerilog::Common::Component do
   end
 
   def create_feature(component, feature_name, &body)
-    Class.new(RgGen::SystemVerilog::RAL::Feature, &body).new(component, feature_name) do |feature|
+    Class.new(RgGen::SystemVerilog::RAL::Feature, &body).new(feature_name, nil, component) do |feature|
       feature.build
       component.add_feature(feature)
     end

@@ -53,10 +53,11 @@ RgGen.define_list_feature(:register, :type) do
     end
 
     factory do
-      def select_feature(_configuration, register)
-        target_features[register.type] ||
-          unless register.type == :default
-            error "code generator for #{register.type} register type " \
+      def target_feature_key(_configuration, register)
+        type = register.type
+        (target_features.key?(type) || type == :default) && type ||
+          begin
+            error "code generator for #{type} register type " \
                   'is not implemented'
           end
       end

@@ -146,8 +146,8 @@ RgGen.define_list_feature(:register, :type) do
     end
 
     factory do
-      def select_feature(_configuration, register)
-        target_features[register.type]
+      def target_feature_key(_configuration, register)
+        register.type
       end
     end
   end

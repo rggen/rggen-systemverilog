@@ -14,7 +14,7 @@ RSpec.describe RgGen::SystemVerilog::RTL::Feature do
   end
 
   let(:feature) do
-    described_class.new(component, :foo) do |f|
+    described_class.new(:foo, nil, component) do |f|
       component.add_feature(f)
     end
   end
