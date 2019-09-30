@@ -57,6 +57,16 @@ RSpec.describe 'global/fold_sv_interface_port' do
     end
   end
 
+  it '表示可能オブジェクトとして、設定値を返す' do
+    value = [true, 'yes', 'on'].sample
+    configuration = create_configuration(fold_sv_interface_port: value)
+    expect(configuration.printables[:fold_sv_interface_port]).to eq true
+
+    value = [false, 'no', 'off'].sample
+    configuration = create_configuration(fold_sv_interface_port: value)
+    expect(configuration.printables[:fold_sv_interface_port]).to eq false
+  end
+
   describe 'エラーチェック' do
     context 'true/on/yes/false/off/no以外が入力された場合' do
       it 'ConfigurationErrorを起こす' do

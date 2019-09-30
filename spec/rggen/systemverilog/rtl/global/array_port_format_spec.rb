@@ -27,6 +27,12 @@ RSpec.describe 'global/array_port_format' do
     end
   end
 
+  it '表示可能オブジェクトとして、設定値を返す' do
+    value = [:packed, :unpacked, :serialized].sample
+    configuration = create_configuration(array_port_format: value)
+    expect(configuration.printables[:array_port_format]).to eq value
+  end
+
   describe 'エラーチェック' do
     context '入力がpacked/unpacked/serialized以外の場合' do
       it 'ConfigurationErrorを起こす' do
