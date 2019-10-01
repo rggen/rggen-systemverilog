@@ -15,5 +15,7 @@ RgGen.define_simple_feature(:global, :array_port_format) do
           error "illegal input value for array port format: #{value.inspect}"
         end
     end
+
+    printable :array_port_format
   end
 end

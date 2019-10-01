@@ -20,5 +20,9 @@ RgGen.define_simple_feature(:global, :fold_sv_interface_port) do
           error "cannot convert #{value.inspect} into boolean"
         end
     end
+
+    printable :fold_sv_interface_port do
+      fold_sv_interface_port?
+    end
   end
 end
