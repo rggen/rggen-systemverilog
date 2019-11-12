@@ -54,7 +54,7 @@ RgGen.define_list_feature(:bit_field, :type) do
       def arguments(index)
         [
           ral_model[index], bit_field.lsb(index), bit_field.width,
-          access, volatile, reset_value, valid_reset
+          access, volatile, reset_value(index), valid_reset
         ]
       end
 
@@ -62,8 +62,16 @@ RgGen.define_list_feature(:bit_field, :type) do
         bit_field.volatile? && 1 || 0
       end
 
-      def reset_value
-        hex(bit_field.initial_value, bit_field.width)
+      def reset_value(index)
+        value =
+          if bit_field.initial_values
+            bit_field.initial_values[index]
+          elsif bit_field.initial_value
+            bit_field.initial_value
+          else
+            0
+          end
+        hex(value, bit_field.width)
       end
 
       def valid_reset

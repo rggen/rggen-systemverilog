@@ -6,6 +6,7 @@ module RgGen
       module Utility
         class LocalScope < StructureDefinition
           define_attribute :name
+          define_attribute :parameters
           define_attribute :variables
           define_attribute :loop_size
 
@@ -28,6 +29,7 @@ module RgGen
           def pre_body_code(code)
             genvar_declarations(code)
             generate_for_header(code)
+            parameter_declarations(code)
             variable_declarations(code)
           end
 
@@ -45,6 +47,10 @@ module RgGen
 
           def generate_for(genvar, size)
             "for (#{genvar} = 0;#{genvar} < #{size};++#{genvar}) begin : g"
+          end
+
+          def parameter_declarations(code)
+            add_declarations_to_body(code, Array(parameters))
           end
 
           def variable_declarations(code)

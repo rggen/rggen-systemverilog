@@ -24,8 +24,16 @@ module RgGen
           "{#{Array(expressions).join(', ')}}"
         end
 
+        def repeat(count, expression)
+          "{#{count}{#{expression}}}"
+        end
+
         def array(expressions)
           "'#{concat(expressions)}"
+        end
+
+        def default_array(expression)
+          "'{default: #{expression}}"
         end
 
         def function_call(name, expressions = nil)

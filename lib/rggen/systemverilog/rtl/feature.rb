@@ -26,9 +26,9 @@ module RgGen
           InterfacePort.new(attributes, &block)
         end
 
-        def create_parameter(_, attributes, block)
+        def create_parameter(parameter_type, attributes, block)
           DataObject.new(
-            :parameter, attributes.merge(parameter_type: :parameter), &block
+            :parameter, attributes.merge(parameter_type: parameter_type), &block
           )
         end
 
@@ -38,7 +38,8 @@ module RgGen
           [:input, :create_argument, :port],
           [:output, :create_argument, :port],
           [:interface_port, :create_interface_port, :port],
-          [:parameter, :create_parameter, :parameter]
+          [:parameter, :create_parameter, :parameter],
+          [:localparam, :create_parameter, :parameter]
         ].each do |entity, creation_method, declaration_type|
           define_entity(entity, creation_method, declaration_type)
         end
