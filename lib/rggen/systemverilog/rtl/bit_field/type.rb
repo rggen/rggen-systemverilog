@@ -30,7 +30,8 @@ RgGen.define_list_feature(:bit_field, :type) do
       end
 
       def initial_value
-        hex(bit_field.initial_value, bit_field.width)
+        index = bit_field.initial_value_array? && bit_field.local_index || nil
+        bit_field.initial_value[index]
       end
 
       def mask

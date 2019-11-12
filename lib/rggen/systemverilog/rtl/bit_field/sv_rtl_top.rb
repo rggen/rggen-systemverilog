@@ -8,6 +8,19 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
     export :value
 
     build do
+      if fixed_initial_value?
+        localparam :bit_field, :initial_value, {
+          name: initial_value_name, data_type: :bit, width: bit_field.width,
+          array_size: initial_value_size, array_format: initial_value_format,
+          default: initial_value_lhs
+        }
+      elsif initial_value?
+        parameter :register_block, :initial_value, {
+          name: initial_value_name, data_type: :bit, width: bit_field.width,
+          array_size: initial_value_size, array_format: initial_value_format,
+          default: initial_value_lhs
+        }
+      end
       interface :bit_field, :bit_field_sub_if, {
         name: 'bit_field_sub_if',
         interface_type: 'rggen_bit_field_if',
@@ -18,6 +31,7 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
     main_code :register do
       local_scope("g_#{bit_field.name}") do |scope|
         scope.loop_size loop_size
+        scope.parameters parameters
         scope.variables variables
         scope.body(&method(:body_code))
       end
@@ -57,6 +71,49 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
 
     private
 
+    [:fixed_initial_value?, :initial_value_array?, :initial_value?].each do |m|
+      define_method(m) { bit_field.__send__(__method__) }
+    end
+
+    def initial_value_name
+      identifiers = []
+      identifiers << bit_field.full_name('_') unless fixed_initial_value?
+      identifiers << 'initial_value'
+      identifiers.join('_').upcase
+    end
+
+    def initial_value_size
+      initial_value_array? && [bit_field.sequence_size] || nil
+    end
+
+    def initial_value_format
+      fixed_initial_value? && :unpacked ||
+        configuration.array_port_format
+    end
+
+    def initial_value_lhs
+      initial_value_array? && initial_value_array_lhs || sized_initial_value
+    end
+
+    def initial_value_array_lhs
+      if fixed_initial_value?
+        array(sized_initial_values)
+      elsif initial_value_format == :unpacked
+        array(default: sized_initial_value)
+      else
+        repeat(bit_field.sequence_size, sized_initial_value)
+      end
+    end
+
+    def sized_initial_value
+      bit_field.initial_value &&
+        hex(bit_field.initial_value, bit_field.width)
+    end
+
+    def sized_initial_values
+      bit_field.initial_values&.map { |v| hex(v, bit_field.width) }
+    end
+
     def inside_loop?
       register.array? || bit_field.sequential?
     end
@@ -64,6 +121,10 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
     def loop_size
       (bit_field.sequential? || nil) &&
         { index_name => bit_field.sequence_size }
+    end
+
+    def parameters
+      bit_field.declarations(:bit_field, :parameter)
     end
 
     def variables

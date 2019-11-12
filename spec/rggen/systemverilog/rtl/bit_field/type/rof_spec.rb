@@ -36,7 +36,7 @@ RSpec.describe 'bit_field/type/rof' do
           .WIDTH  (1)
         ) u_bit_field (
           .bit_field_if (bit_field_sub_if),
-          .i_value      (1'h0)
+          .i_value      (INITIAL_VALUE)
         );
       CODE
 
@@ -45,7 +45,7 @@ RSpec.describe 'bit_field/type/rof' do
           .WIDTH  (16)
         ) u_bit_field (
           .bit_field_if (bit_field_sub_if),
-          .i_value      (16'habcd)
+          .i_value      (INITIAL_VALUE)
         );
       CODE
     end
