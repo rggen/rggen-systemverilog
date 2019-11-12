@@ -99,7 +99,7 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
       if fixed_initial_value?
         array(sized_initial_values)
       elsif initial_value_format == :unpacked
-        default_array(sized_initial_value)
+        array(default: sized_initial_value)
       else
         repeat(bit_field.sequence_size, sized_initial_value)
       end

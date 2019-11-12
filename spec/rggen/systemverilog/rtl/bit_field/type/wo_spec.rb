@@ -149,7 +149,7 @@ RSpec.describe 'bit_field/type/wo' do
       expect(bit_fields[0]).to generate_code(:bit_field, :top_down, <<~'CODE')
         rggen_bit_field_wo #(
           .WIDTH          (1),
-          .INITIAL_VALUE  (1'h0)
+          .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -161,7 +161,7 @@ RSpec.describe 'bit_field/type/wo' do
       expect(bit_fields[1]).to generate_code(:bit_field, :top_down, <<~'CODE')
         rggen_bit_field_wo #(
           .WIDTH          (16),
-          .INITIAL_VALUE  (16'habcd)
+          .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -173,7 +173,7 @@ RSpec.describe 'bit_field/type/wo' do
       expect(bit_fields[2]).to generate_code(:bit_field, :top_down, <<~'CODE')
         rggen_bit_field_wo #(
           .WIDTH          (64),
-          .INITIAL_VALUE  (64'h0000000000000000)
+          .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -185,7 +185,7 @@ RSpec.describe 'bit_field/type/wo' do
       expect(bit_fields[3]).to generate_code(:bit_field, :top_down, <<~'CODE')
         rggen_bit_field_wo #(
           .WIDTH          (4),
-          .INITIAL_VALUE  (4'h0)
+          .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -197,7 +197,7 @@ RSpec.describe 'bit_field/type/wo' do
       expect(bit_fields[4]).to generate_code(:bit_field, :top_down, <<~'CODE')
         rggen_bit_field_wo #(
           .WIDTH          (4),
-          .INITIAL_VALUE  (4'h0)
+          .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -209,7 +209,7 @@ RSpec.describe 'bit_field/type/wo' do
       expect(bit_fields[5]).to generate_code(:bit_field, :top_down, <<~'CODE')
         rggen_bit_field_wo #(
           .WIDTH          (4),
-          .INITIAL_VALUE  (4'h0)
+          .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),

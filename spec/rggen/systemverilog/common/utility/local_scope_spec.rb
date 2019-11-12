@@ -3,6 +3,14 @@
 RSpec.describe RgGen::SystemVerilog::Common::Utility::LocalScope do
   include RgGen::SystemVerilog::Common::Utility
 
+  let(:parameters) do
+    [:BAR, :BAZ].map do |name|
+      RgGen::SystemVerilog::Common::Utility::DataObject.new(
+        :parameter, name: name, parameter_type: :localparam, data_type: :logic, default: 0
+      ).declaration
+    end
+  end
+
   let(:variables) do
     [:bar, :baz].map do |name|
       RgGen::SystemVerilog::Common::Utility::DataObject.new(
@@ -30,6 +38,17 @@ RSpec.describe RgGen::SystemVerilog::Common::Utility::LocalScope do
     ).to match_string(<<~'SCOPE')
       generate if (1) begin : foo
       end endgenerate
+    SCOPE
+
+    expect(
+      local_scope(:foo) do |s|
+        s.parameters parameters
+      end
+    ).to match_string(<<~'SCOPE')
+      if (1) begin : foo
+        localparam logic BAR = 0;
+        localparam logic BAZ = 0;
+      end
     SCOPE
 
     expect(
@@ -79,6 +98,7 @@ RSpec.describe RgGen::SystemVerilog::Common::Utility::LocalScope do
         s.body { |c| c << 'assign baz = 2;' }
         s.loop_size loop_size
         s.variables variables
+        s.parameters parameters
       end
     ).to match_string(<<~'SCOPE')
       if (1) begin : foo
@@ -88,6 +108,8 @@ RSpec.describe RgGen::SystemVerilog::Common::Utility::LocalScope do
         for (i = 0;i < 1;++i) begin : g
           for (j = 0;j < 2;++j) begin : g
             for (k = 0;k < 3;++k) begin : g
+              localparam logic BAR = 0;
+              localparam logic BAZ = 0;
               logic bar;
               logic baz;
               assign bar = 1;
@@ -104,6 +126,7 @@ RSpec.describe RgGen::SystemVerilog::Common::Utility::LocalScope do
         s.body { |c| c << 'assign baz = 2;' }
         s.loop_size loop_size
         s.variables variables
+        s.parameters parameters
         s.top_scope
       end
     ).to match_string(<<~'SCOPE')
@@ -114,6 +137,8 @@ RSpec.describe RgGen::SystemVerilog::Common::Utility::LocalScope do
         for (i = 0;i < 1;++i) begin : g
           for (j = 0;j < 2;++j) begin : g
             for (k = 0;k < 3;++k) begin : g
+              localparam logic BAR = 0;
+              localparam logic BAZ = 0;
               logic bar;
               logic baz;
               assign bar = 1;

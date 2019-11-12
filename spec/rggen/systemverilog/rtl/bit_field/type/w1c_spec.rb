@@ -387,7 +387,7 @@ RSpec.describe 'bit_field/type/w1c' do
         rggen_bit_field_w01c #(
           .CLEAR_VALUE    (1'b1),
           .WIDTH          (1),
-          .INITIAL_VALUE  (1'h0)
+          .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),
@@ -403,7 +403,7 @@ RSpec.describe 'bit_field/type/w1c' do
         rggen_bit_field_w01c #(
           .CLEAR_VALUE    (1'b1),
           .WIDTH          (1),
-          .INITIAL_VALUE  (1'h1)
+          .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),
@@ -419,7 +419,7 @@ RSpec.describe 'bit_field/type/w1c' do
         rggen_bit_field_w01c #(
           .CLEAR_VALUE    (1'b1),
           .WIDTH          (8),
-          .INITIAL_VALUE  (8'h00)
+          .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),
@@ -435,7 +435,7 @@ RSpec.describe 'bit_field/type/w1c' do
         rggen_bit_field_w01c #(
           .CLEAR_VALUE    (1'b1),
           .WIDTH          (8),
-          .INITIAL_VALUE  (8'hab)
+          .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),
@@ -451,7 +451,7 @@ RSpec.describe 'bit_field/type/w1c' do
         rggen_bit_field_w01c #(
           .CLEAR_VALUE    (1'b1),
           .WIDTH          (64),
-          .INITIAL_VALUE  (64'h0000000000000000)
+          .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),
@@ -467,7 +467,7 @@ RSpec.describe 'bit_field/type/w1c' do
         rggen_bit_field_w01c #(
           .CLEAR_VALUE    (1'b1),
           .WIDTH          (4),
-          .INITIAL_VALUE  (4'h0)
+          .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),
@@ -483,7 +483,7 @@ RSpec.describe 'bit_field/type/w1c' do
         rggen_bit_field_w01c #(
           .CLEAR_VALUE    (1'b1),
           .WIDTH          (4),
-          .INITIAL_VALUE  (4'h0)
+          .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),
@@ -499,7 +499,7 @@ RSpec.describe 'bit_field/type/w1c' do
         rggen_bit_field_w01c #(
           .CLEAR_VALUE    (1'b1),
           .WIDTH          (4),
-          .INITIAL_VALUE  (4'h0)
+          .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),
@@ -515,7 +515,7 @@ RSpec.describe 'bit_field/type/w1c' do
         rggen_bit_field_w01c #(
           .CLEAR_VALUE    (1'b1),
           .WIDTH          (4),
-          .INITIAL_VALUE  (4'h0)
+          .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),
@@ -531,7 +531,7 @@ RSpec.describe 'bit_field/type/w1c' do
         rggen_bit_field_w01c #(
           .CLEAR_VALUE    (1'b1),
           .WIDTH          (4),
-          .INITIAL_VALUE  (4'h0)
+          .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),
@@ -547,7 +547,7 @@ RSpec.describe 'bit_field/type/w1c' do
         rggen_bit_field_w01c #(
           .CLEAR_VALUE    (1'b1),
           .WIDTH          (4),
-          .INITIAL_VALUE  (4'h0)
+          .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),

@@ -53,6 +53,12 @@ RSpec.describe RgGen::SystemVerilog::Common::Utility do
     end
   end
 
+  describe '#repeat' do
+    it '繰り返し連接のコード編を返す' do
+      expect(sv.send(:repeat, 2, '4\'b0000')).to eq '{2{4\'b0000}}'
+    end
+  end
+
   describe '#array' do
     let(:expressions) do
       [
@@ -62,11 +68,18 @@ RSpec.describe RgGen::SystemVerilog::Common::Utility do
       ]
     end
 
+    let(:default) { '4\'b1111' }
+
     it '配列リテラルのコード片を返す' do
       expect(sv.send(:array, expressions)).to eq '\'{4\'b0000, foo, bar}'
+      expect(sv.send(:array, expressions, default: default)).to eq '\'{4\'b0000, foo, bar, default: 4\'b1111}'
       expect(sv.send(:array, expressions[0])).to eq '\'{4\'b0000}'
+      expect(sv.send(:array, expressions[0], default: default)).to eq '\'{4\'b0000, default: 4\'b1111}'
       expect(sv.send(:array, [])).to eq '\'{}'
+      expect(sv.send(:array, [], default: default)).to eq '\'{default: 4\'b1111}'
       expect(sv.send(:array, nil)).to eq '\'{}'
+      expect(sv.send(:array, nil, default: default)).to eq '\'{default: 4\'b1111}'
+      expect(sv.send(:array, default: default)).to eq '\'{default: 4\'b1111}'
     end
   end
 
