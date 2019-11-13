@@ -64,6 +64,16 @@ RgGen.define_list_feature(:register_block, :protocol) do
     shared_context.feature_registry(registry)
 
     base_feature do
+      build do
+        parameter :register_block, :error_status, {
+          name: 'ERROR_STATUS', data_type: :bit, width: 1, default: 0
+        }
+        parameter :register_block, :default_read_data, {
+          name: 'DEFAULT_READ_DATA', data_type: :bit, width: bus_width,
+          default: hex(0, bus_width)
+        }
+      end
+
       private
 
       def address_width

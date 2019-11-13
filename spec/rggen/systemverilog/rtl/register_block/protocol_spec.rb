@@ -4,22 +4,23 @@ RSpec.describe 'register_block/protocol' do
   include_context 'configuration common'
   include_context 'clean-up builder'
 
+  before(:all) do
+    RgGen.enable(:register_block, :bus_width)
+    RgGen.define_list_item_feature(:register_block, :protocol, [:foo, :bar, :baz]) do
+      sv_rtl {}
+    end
+  end
+
+  before do
+    RgGen.enable(:register_block, :protocol)
+  end
+
+  after do
+    RgGen.disable(:register_block, :protocol)
+    delete_configuration_factory
+  end
+
   describe 'configuration' do
-    before(:all) do
-      RgGen.define_list_item_feature(:register_block, :protocol, [:foo, :bar, :baz]) do
-        sv_rtl {}
-      end
-    end
-
-    before do
-      RgGen.enable(:register_block, :protocol)
-    end
-
-    after do
-      RgGen.disable(:register_block, :protocol)
-      delete_configuration_factory
-    end
-
     describe '#protocol' do
       before do
         RgGen.enable(:register_block, :protocol, [:qux, :baz, :foo])
@@ -119,6 +120,32 @@ RSpec.describe 'register_block/protocol' do
           }.to raise_configuration_error "unknown protocol: #{value.inspect}"
         end
       end
+    end
+  end
+
+  describe 'sv rtl' do
+    include_context 'sv rtl common'
+
+    before do
+      RgGen.enable(:register_block, :protocol, :foo)
+    end
+
+    let(:bus_width) { 32 }
+
+    let(:sv_rtl) do
+      configuration = create_configuration(protocol: :foo, bus_width: bus_width)
+      create_sv_rtl(configuration).register_blocks.first
+    end
+
+    it 'パラメータERROR_STATUSとDEFAULT_READ_DATAを持つ' do
+      expect(sv_rtl).to have_parameter(
+        :register_block, :error_status,
+        name: 'ERROR_STATUS', parameter_type: :parameter, data_type: :bit, width: 1, default: 0
+      )
+      expect(sv_rtl).to have_parameter(
+        :register_block, :default_read_data,
+        name: 'DEFAULT_READ_DATA', parameter_type: :parameter, data_type: :bit, width: bus_width, default: "32'h00000000"
+      )
     end
   end
 end

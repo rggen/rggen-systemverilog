@@ -275,10 +275,12 @@ RSpec.describe 'register_block/protocol/apb' do
 
         expect(register_block).to generate_code(:register_block, :top_down, <<~'CODE')
           rggen_axi4lite_adapter #(
-            .ADDRESS_WIDTH  (8),
-            .BUS_WIDTH      (32),
-            .REGISTERS      (3),
-            .WRITE_FIRST    (WRITE_FIRST)
+            .ADDRESS_WIDTH      (8),
+            .BUS_WIDTH          (32),
+            .REGISTERS          (3),
+            .ERROR_STATUS       (ERROR_STATUS),
+            .DEFAULT_READ_DATA  (DEFAULT_READ_DATA),
+            .WRITE_FIRST        (WRITE_FIRST)
           ) u_adapter (
             .i_clk        (i_clk),
             .i_rst_n      (i_rst_n),
@@ -297,10 +299,12 @@ RSpec.describe 'register_block/protocol/apb' do
 
         expect(register_block).to generate_code(:register_block, :top_down, <<~'CODE')
           rggen_axi4lite_adapter #(
-            .ADDRESS_WIDTH  (8),
-            .BUS_WIDTH      (32),
-            .REGISTERS      (3),
-            .WRITE_FIRST    (WRITE_FIRST)
+            .ADDRESS_WIDTH      (8),
+            .BUS_WIDTH          (32),
+            .REGISTERS          (3),
+            .ERROR_STATUS       (ERROR_STATUS),
+            .DEFAULT_READ_DATA  (DEFAULT_READ_DATA),
+            .WRITE_FIRST        (WRITE_FIRST)
           ) u_adapter (
             .i_clk        (i_clk),
             .i_rst_n      (i_rst_n),
