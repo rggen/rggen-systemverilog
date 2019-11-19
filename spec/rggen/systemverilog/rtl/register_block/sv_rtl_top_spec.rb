@@ -10,7 +10,7 @@ RSpec.describe 'register_block/sv_rtl_top' do
     RgGen.enable(:register, [:name, :offset_address, :size, :type])
     RgGen.enable(:register, :type, [:external, :indirect])
     RgGen.enable(:bit_field, [:name, :bit_assignment, :type, :initial_value, :reference])
-    RgGen.enable(:bit_field, :type, [:rc, :reserved, :ro, :rof, :rs, :rw, :rwc, :rwe, :rwl, :rws, :w0c, :w1c, :w0s, :w1s, :w0crs, :w1crs, :w0src, :w1src, :w0trg, :w1trg, :wo])
+    RgGen.enable(:bit_field, :type, [:rc, :reserved, :ro, :rof, :rs, :rw, :rwc, :rwe, :rwl, :rws, :w0c, :w1c, :w0s, :w1s, :w0crs, :w1, :w1crs, :w0src, :w1src, :w0trg, :w1trg, :wo, :wo1])
     RgGen.enable(:register_block, [:sv_rtl_top, :protocol])
     RgGen.enable(:register_block, :protocol, :apb)
     RgGen.enable(:register, :sv_rtl_top)
