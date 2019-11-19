@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'bit_field/type/rw' do
+RSpec.describe 'bit_field/type/w1' do
   include_context 'clean-up builder'
   include_context 'sv rtl common'
 
@@ -9,7 +9,7 @@ RSpec.describe 'bit_field/type/rw' do
     RgGen.enable(:register_block, :byte_size)
     RgGen.enable(:register, [:name, :size, :type])
     RgGen.enable(:bit_field, [:name, :bit_assignment, :initial_value, :reference, :type])
-    RgGen.enable(:bit_field, :type, [:rw])
+    RgGen.enable(:bit_field, :type, [:w1])
     RgGen.enable(:register_block, :sv_rtl_top)
     RgGen.enable(:register, :sv_rtl_top)
     RgGen.enable(:bit_field, :sv_rtl_top)
@@ -30,30 +30,30 @@ RSpec.describe 'bit_field/type/rw' do
 
       register do
         name 'register_0'
-        bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
-        bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 2; type :rw; initial_value 0 }
-        bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 4, sequence_size: 2, step: 8; type :rw; initial_value 0 }
+        bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :w1; initial_value 0 }
+        bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 2; type :w1; initial_value 0 }
+        bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 4, sequence_size: 2, step: 8; type :w1; initial_value 0 }
       end
 
       register do
         name 'register_1'
-        bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 64; type :rw; initial_value 0 }
+        bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 64; type :w1; initial_value 0 }
       end
 
       register do
         name 'register_2'
         size [4]
-        bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
-        bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 2; type :rw; initial_value 0 }
-        bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 4, sequence_size: 2, step: 8; type :rw; initial_value 0 }
+        bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :w1; initial_value 0 }
+        bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 2; type :w1; initial_value 0 }
+        bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 4, sequence_size: 2, step: 8; type :w1; initial_value 0 }
       end
 
       register do
         name 'register_3'
         size [2, 2]
-        bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
-        bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 2; type :rw; initial_value 0 }
-        bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 4, sequence_size: 2, step: 8; type :rw; initial_value 0 }
+        bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :w1; initial_value 0 }
+        bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 2; type :w1; initial_value 0 }
+        bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 4, sequence_size: 2, step: 8; type :w1; initial_value 0 }
       end
     end
 
@@ -112,36 +112,36 @@ RSpec.describe 'bit_field/type/rw' do
   describe '#generate_code' do
     let(:array_port_format) { :packed }
 
-    it 'rggen_bit_field_rw_woをインスタンスするコードを出力する' do
+    it 'rggen_bit_field_rw_wo_woをインスタンスするコードを出力する' do
       bit_fields = create_bit_fields do
         byte_size 256
 
         register do
           name 'register_0'
-          bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
-          bit_field { name 'bit_field_1'; bit_assignment lsb: 16, width: 16; type :rw; initial_value 0xabcd }
+          bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :w1; initial_value 0 }
+          bit_field { name 'bit_field_1'; bit_assignment lsb: 16, width: 16; type :w1; initial_value 0xabcd }
         end
 
         register do
           name 'register_1'
-          bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 64; type :rw; initial_value 0 }
+          bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 64; type :w1; initial_value 0 }
         end
 
         register do
           name 'register_2'
-          bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 4, sequence_size: 4, step: 8; type :rw; initial_value 0 }
+          bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 4, sequence_size: 4, step: 8; type :w1; initial_value 0 }
         end
 
         register do
           name 'register_3'
           size [4]
-          bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 4, sequence_size: 4, step: 8; type :rw; initial_value 0 }
+          bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 4, sequence_size: 4, step: 8; type :w1; initial_value 0 }
         end
 
         register do
           name 'register_4'
           size [2, 2]
-          bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 4, sequence_size: 4, step: 8; type :rw; initial_value 0 }
+          bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 4, sequence_size: 4, step: 8; type :w1; initial_value 0 }
         end
       end
 
@@ -150,7 +150,7 @@ RSpec.describe 'bit_field/type/rw' do
           .WIDTH          (1),
           .INITIAL_VALUE  (INITIAL_VALUE),
           .WRITE_ONLY     (0),
-          .WRITE_ONCE     (0)
+          .WRITE_ONCE     (1)
         ) u_bit_field (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -164,7 +164,7 @@ RSpec.describe 'bit_field/type/rw' do
           .WIDTH          (16),
           .INITIAL_VALUE  (INITIAL_VALUE),
           .WRITE_ONLY     (0),
-          .WRITE_ONCE     (0)
+          .WRITE_ONCE     (1)
         ) u_bit_field (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -178,7 +178,7 @@ RSpec.describe 'bit_field/type/rw' do
           .WIDTH          (64),
           .INITIAL_VALUE  (INITIAL_VALUE),
           .WRITE_ONLY     (0),
-          .WRITE_ONCE     (0)
+          .WRITE_ONCE     (1)
         ) u_bit_field (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -192,7 +192,7 @@ RSpec.describe 'bit_field/type/rw' do
           .WIDTH          (4),
           .INITIAL_VALUE  (INITIAL_VALUE),
           .WRITE_ONLY     (0),
-          .WRITE_ONCE     (0)
+          .WRITE_ONCE     (1)
         ) u_bit_field (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -206,7 +206,7 @@ RSpec.describe 'bit_field/type/rw' do
           .WIDTH          (4),
           .INITIAL_VALUE  (INITIAL_VALUE),
           .WRITE_ONLY     (0),
-          .WRITE_ONCE     (0)
+          .WRITE_ONCE     (1)
         ) u_bit_field (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -220,7 +220,7 @@ RSpec.describe 'bit_field/type/rw' do
           .WIDTH          (4),
           .INITIAL_VALUE  (INITIAL_VALUE),
           .WRITE_ONLY     (0),
-          .WRITE_ONCE     (0)
+          .WRITE_ONCE     (1)
         ) u_bit_field (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),

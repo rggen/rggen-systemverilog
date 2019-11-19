@@ -627,9 +627,11 @@ RSpec.describe 'bit_field/sv_rtl_top' do
           localparam bit INITIAL_VALUE = 1'h0;
           rggen_bit_field_if #(1) bit_field_sub_if();
           `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 0, 1)
-          rggen_bit_field_rw #(
+          rggen_bit_field_rw_wo #(
             .WIDTH          (1),
-            .INITIAL_VALUE  (INITIAL_VALUE)
+            .INITIAL_VALUE  (INITIAL_VALUE),
+            .WRITE_ONLY     (0),
+            .WRITE_ONCE     (0)
           ) u_bit_field (
             .i_clk        (i_clk),
             .i_rst_n      (i_rst_n),
@@ -644,9 +646,11 @@ RSpec.describe 'bit_field/sv_rtl_top' do
           localparam bit [7:0] INITIAL_VALUE = 8'h00;
           rggen_bit_field_if #(8) bit_field_sub_if();
           `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 8, 8)
-          rggen_bit_field_rw #(
+          rggen_bit_field_rw_wo #(
             .WIDTH          (8),
-            .INITIAL_VALUE  (INITIAL_VALUE)
+            .INITIAL_VALUE  (INITIAL_VALUE),
+            .WRITE_ONLY     (0),
+            .WRITE_ONCE     (0)
           ) u_bit_field (
             .i_clk        (i_clk),
             .i_rst_n      (i_rst_n),
@@ -663,9 +667,11 @@ RSpec.describe 'bit_field/sv_rtl_top' do
             localparam bit INITIAL_VALUE = 1'h0;
             rggen_bit_field_if #(1) bit_field_sub_if();
             `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 16+1*i, 1)
-            rggen_bit_field_rw #(
+            rggen_bit_field_rw_wo #(
               .WIDTH          (1),
-              .INITIAL_VALUE  (INITIAL_VALUE)
+              .INITIAL_VALUE  (INITIAL_VALUE),
+              .WRITE_ONLY     (0),
+              .WRITE_ONCE     (0)
             ) u_bit_field (
               .i_clk        (i_clk),
               .i_rst_n      (i_rst_n),
@@ -682,9 +688,11 @@ RSpec.describe 'bit_field/sv_rtl_top' do
           for (i = 0;i < 2;++i) begin : g
             rggen_bit_field_if #(2) bit_field_sub_if();
             `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 20+2*i, 2)
-            rggen_bit_field_rw #(
+            rggen_bit_field_rw_wo #(
               .WIDTH          (2),
-              .INITIAL_VALUE  (REGISTER_0_BIT_FIELD_3_INITIAL_VALUE[i])
+              .INITIAL_VALUE  (REGISTER_0_BIT_FIELD_3_INITIAL_VALUE[i]),
+              .WRITE_ONLY     (0),
+              .WRITE_ONCE     (0)
             ) u_bit_field (
               .i_clk        (i_clk),
               .i_rst_n      (i_rst_n),
@@ -702,9 +710,11 @@ RSpec.describe 'bit_field/sv_rtl_top' do
             localparam bit [1:0] INITIAL_VALUE[2] = '{2'h0, 2'h1};
             rggen_bit_field_if #(2) bit_field_sub_if();
             `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 24+4*i, 2)
-            rggen_bit_field_rw #(
+            rggen_bit_field_rw_wo #(
               .WIDTH          (2),
-              .INITIAL_VALUE  (INITIAL_VALUE[i])
+              .INITIAL_VALUE  (INITIAL_VALUE[i]),
+              .WRITE_ONLY     (0),
+              .WRITE_ONCE     (0)
             ) u_bit_field (
               .i_clk        (i_clk),
               .i_rst_n      (i_rst_n),
@@ -720,9 +730,11 @@ RSpec.describe 'bit_field/sv_rtl_top' do
           localparam bit INITIAL_VALUE = 1'h0;
           rggen_bit_field_if #(1) bit_field_sub_if();
           `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 0, 1)
-          rggen_bit_field_rw #(
+          rggen_bit_field_rw_wo #(
             .WIDTH          (1),
-            .INITIAL_VALUE  (INITIAL_VALUE)
+            .INITIAL_VALUE  (INITIAL_VALUE),
+            .WRITE_ONLY     (0),
+            .WRITE_ONCE     (0)
           ) u_bit_field (
             .i_clk        (i_clk),
             .i_rst_n      (i_rst_n),
@@ -737,9 +749,11 @@ RSpec.describe 'bit_field/sv_rtl_top' do
           localparam bit [7:0] INITIAL_VALUE = 8'h00;
           rggen_bit_field_if #(8) bit_field_sub_if();
           `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 8, 8)
-          rggen_bit_field_rw #(
+          rggen_bit_field_rw_wo #(
             .WIDTH          (8),
-            .INITIAL_VALUE  (INITIAL_VALUE)
+            .INITIAL_VALUE  (INITIAL_VALUE),
+            .WRITE_ONLY     (0),
+            .WRITE_ONCE     (0)
           ) u_bit_field (
             .i_clk        (i_clk),
             .i_rst_n      (i_rst_n),
@@ -756,9 +770,11 @@ RSpec.describe 'bit_field/sv_rtl_top' do
             localparam bit INITIAL_VALUE = 1'h0;
             rggen_bit_field_if #(1) bit_field_sub_if();
             `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 16+1*j, 1)
-            rggen_bit_field_rw #(
+            rggen_bit_field_rw_wo #(
               .WIDTH          (1),
-              .INITIAL_VALUE  (INITIAL_VALUE)
+              .INITIAL_VALUE  (INITIAL_VALUE),
+              .WRITE_ONLY     (0),
+              .WRITE_ONCE     (0)
             ) u_bit_field (
               .i_clk        (i_clk),
               .i_rst_n      (i_rst_n),
@@ -775,9 +791,11 @@ RSpec.describe 'bit_field/sv_rtl_top' do
           for (j = 0;j < 2;++j) begin : g
             rggen_bit_field_if #(2) bit_field_sub_if();
             `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 20+2*j, 2)
-            rggen_bit_field_rw #(
+            rggen_bit_field_rw_wo #(
               .WIDTH          (2),
-              .INITIAL_VALUE  (REGISTER_1_BIT_FIELD_3_INITIAL_VALUE[j])
+              .INITIAL_VALUE  (REGISTER_1_BIT_FIELD_3_INITIAL_VALUE[j]),
+              .WRITE_ONLY     (0),
+              .WRITE_ONCE     (0)
             ) u_bit_field (
               .i_clk        (i_clk),
               .i_rst_n      (i_rst_n),
@@ -795,9 +813,11 @@ RSpec.describe 'bit_field/sv_rtl_top' do
             localparam bit [1:0] INITIAL_VALUE[2] = '{2'h0, 2'h1};
             rggen_bit_field_if #(2) bit_field_sub_if();
             `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 24+4*j, 2)
-            rggen_bit_field_rw #(
+            rggen_bit_field_rw_wo #(
               .WIDTH          (2),
-              .INITIAL_VALUE  (INITIAL_VALUE[j])
+              .INITIAL_VALUE  (INITIAL_VALUE[j]),
+              .WRITE_ONLY     (0),
+              .WRITE_ONCE     (0)
             ) u_bit_field (
               .i_clk        (i_clk),
               .i_rst_n      (i_rst_n),
@@ -813,9 +833,11 @@ RSpec.describe 'bit_field/sv_rtl_top' do
           localparam bit INITIAL_VALUE = 1'h0;
           rggen_bit_field_if #(1) bit_field_sub_if();
           `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 0, 1)
-          rggen_bit_field_rw #(
+          rggen_bit_field_rw_wo #(
             .WIDTH          (1),
-            .INITIAL_VALUE  (INITIAL_VALUE)
+            .INITIAL_VALUE  (INITIAL_VALUE),
+            .WRITE_ONLY     (0),
+            .WRITE_ONCE     (0)
           ) u_bit_field (
             .i_clk        (i_clk),
             .i_rst_n      (i_rst_n),
@@ -830,9 +852,11 @@ RSpec.describe 'bit_field/sv_rtl_top' do
           localparam bit [7:0] INITIAL_VALUE = 8'h00;
           rggen_bit_field_if #(8) bit_field_sub_if();
           `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 8, 8)
-          rggen_bit_field_rw #(
+          rggen_bit_field_rw_wo #(
             .WIDTH          (8),
-            .INITIAL_VALUE  (INITIAL_VALUE)
+            .INITIAL_VALUE  (INITIAL_VALUE),
+            .WRITE_ONLY     (0),
+            .WRITE_ONCE     (0)
           ) u_bit_field (
             .i_clk        (i_clk),
             .i_rst_n      (i_rst_n),
@@ -849,9 +873,11 @@ RSpec.describe 'bit_field/sv_rtl_top' do
             localparam bit INITIAL_VALUE = 1'h0;
             rggen_bit_field_if #(1) bit_field_sub_if();
             `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 16+1*k, 1)
-            rggen_bit_field_rw #(
+            rggen_bit_field_rw_wo #(
               .WIDTH          (1),
-              .INITIAL_VALUE  (INITIAL_VALUE)
+              .INITIAL_VALUE  (INITIAL_VALUE),
+              .WRITE_ONLY     (0),
+              .WRITE_ONCE     (0)
             ) u_bit_field (
               .i_clk        (i_clk),
               .i_rst_n      (i_rst_n),
@@ -868,9 +894,11 @@ RSpec.describe 'bit_field/sv_rtl_top' do
           for (k = 0;k < 2;++k) begin : g
             rggen_bit_field_if #(2) bit_field_sub_if();
             `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 20+2*k, 2)
-            rggen_bit_field_rw #(
+            rggen_bit_field_rw_wo #(
               .WIDTH          (2),
-              .INITIAL_VALUE  (REGISTER_2_BIT_FIELD_3_INITIAL_VALUE[k])
+              .INITIAL_VALUE  (REGISTER_2_BIT_FIELD_3_INITIAL_VALUE[k]),
+              .WRITE_ONLY     (0),
+              .WRITE_ONCE     (0)
             ) u_bit_field (
               .i_clk        (i_clk),
               .i_rst_n      (i_rst_n),
@@ -888,9 +916,11 @@ RSpec.describe 'bit_field/sv_rtl_top' do
             localparam bit [1:0] INITIAL_VALUE[2] = '{2'h0, 2'h1};
             rggen_bit_field_if #(2) bit_field_sub_if();
             `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 24+4*k, 2)
-            rggen_bit_field_rw #(
+            rggen_bit_field_rw_wo #(
               .WIDTH          (2),
-              .INITIAL_VALUE  (INITIAL_VALUE[k])
+              .INITIAL_VALUE  (INITIAL_VALUE[k]),
+              .WRITE_ONLY     (0),
+              .WRITE_ONCE     (0)
             ) u_bit_field (
               .i_clk        (i_clk),
               .i_rst_n      (i_rst_n),
@@ -906,9 +936,11 @@ RSpec.describe 'bit_field/sv_rtl_top' do
           localparam bit [31:0] INITIAL_VALUE = 32'h00000000;
           rggen_bit_field_if #(32) bit_field_sub_if();
           `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 0, 32)
-          rggen_bit_field_rw #(
+          rggen_bit_field_rw_wo #(
             .WIDTH          (32),
-            .INITIAL_VALUE  (INITIAL_VALUE)
+            .INITIAL_VALUE  (INITIAL_VALUE),
+            .WRITE_ONLY     (0),
+            .WRITE_ONCE     (0)
           ) u_bit_field (
             .i_clk        (i_clk),
             .i_rst_n      (i_rst_n),

@@ -1,6 +1,8 @@
-rggen_bit_field_<%= bit_field.type %> #(
+rggen_bit_field_rw_wo #(
   .WIDTH          (<%= width %>),
-  .INITIAL_VALUE  (<%= initial_value %>)
+  .INITIAL_VALUE  (<%= initial_value %>),
+  .WRITE_ONLY     (<%= write_only %>),
+  .WRITE_ONCE     (<%= write_once %>)
 ) u_bit_field (
   .i_clk        (<%= clock %>),
   .i_rst_n      (<%= reset %>),
