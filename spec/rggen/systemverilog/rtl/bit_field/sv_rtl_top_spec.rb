@@ -308,30 +308,22 @@ RSpec.describe 'bit_field/sv_rtl_top' do
         end
       end
 
-      expect(bit_fields[0])
-        .to have_interface :bit_field, :bit_field_sub_if, {
-          name: 'bit_field_sub_if',
-          interface_type: 'rggen_bit_field_if',
-          parameter_values: [1]
-        }
-      expect(bit_fields[1])
-        .to have_interface :bit_field, :bit_field_sub_if, {
-          name: 'bit_field_sub_if',
-          interface_type: 'rggen_bit_field_if',
-          parameter_values: [8]
-        }
-      expect(bit_fields[2])
-        .to have_interface :bit_field, :bit_field_sub_if, {
-          name: 'bit_field_sub_if',
-          interface_type: 'rggen_bit_field_if',
-          parameter_values: [8]
-        }
-       expect(bit_fields[3])
-        .to have_interface :bit_field, :bit_field_sub_if, {
-          name: 'bit_field_sub_if',
-          interface_type: 'rggen_bit_field_if',
-          parameter_values: [64]
-        }
+      expect(bit_fields[0]).to have_interface(
+        :bit_field, :bit_field_sub_if,
+        name: 'bit_field_sub_if', interface_type: 'rggen_bit_field_if', parameter_values: [1]
+      )
+      expect(bit_fields[1]).to have_interface(
+        :bit_field, :bit_field_sub_if,
+        name: 'bit_field_sub_if', interface_type: 'rggen_bit_field_if', parameter_values: [8]
+      )
+      expect(bit_fields[2]).to have_interface(
+        :bit_field, :bit_field_sub_if,
+        name: 'bit_field_sub_if', interface_type: 'rggen_bit_field_if', parameter_values: [8]
+      )
+      expect(bit_fields[3]).to have_interface(
+        :bit_field, :bit_field_sub_if,
+        name: 'bit_field_sub_if', interface_type: 'rggen_bit_field_if', parameter_values: [64]
+      )
     end
   end
 

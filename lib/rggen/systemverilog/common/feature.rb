@@ -16,9 +16,9 @@ module RgGen
           def define_entity(entity_type, creation_method, declaration_type)
             context =
               EntityContext.new(entity_type, creation_method, declaration_type)
-            define_method(entity_type) do |domain, name, **attributes, &block|
+            define_method(entity_type) do |domain, name, attributes = {}, &block|
               entity =
-                create_entity(context, { name: name }.merge(attributes), block)
+                create_entity(context, { name: name }.merge(attributes), &block)
               add_entity(entity, context, domain, name)
             end
           end
@@ -42,10 +42,10 @@ module RgGen
           @package_imports = Hash.new { |h, k| h[k] = [] }
         end
 
-        def create_entity(context, attributes, block)
+        def create_entity(context, attributes, &block)
           creation_method = context.creation_method
           entity_type = context.entity_type
-          __send__(creation_method, entity_type, attributes, block)
+          __send__(creation_method, entity_type, attributes, &block)
         end
 
         def add_entity(entity, context, domain, name)

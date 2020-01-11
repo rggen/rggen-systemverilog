@@ -7,9 +7,9 @@ module RgGen
         class DataObject
           include Core::Utility::AttributeSetter
 
-          def initialize(object_type, **default_attributes)
+          def initialize(object_type, default_attributes = {})
             @object_type = object_type
-            apply_attributes(default_attributes)
+            apply_attributes(**default_attributes)
             block_given? && yield(self)
           end
 
