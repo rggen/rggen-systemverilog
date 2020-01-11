@@ -7,8 +7,8 @@ module RgGen
         class InterfacePort
           include Core::Utility::AttributeSetter
 
-          def initialize(**default_attributes)
-            apply_attributes(default_attributes)
+          def initialize(default_attributes = {})
+            apply_attributes(**default_attributes)
             block_given? && yield(self)
           end
 

@@ -22,45 +22,33 @@ RSpec.describe 'register/type/external' do
   end
 
   it '外部レジスタブロックモデル変数#ral_modelを持つ' do
-    expect(registers[0])
-      .to have_variable :register_block, :ral_model, {
-        name: 'register_0',
-        data_type: 'REGISTER_0',
-        random: true
-      }
-    expect(registers[1])
-      .to have_variable :register_block, :ral_model, {
-        name: 'register_1',
-        data_type: 'REGISTER_1',
-        random: true
-      }
+    expect(registers[0]).to have_variable(
+      :register_block, :ral_model,
+      name: 'register_0', data_type: 'REGISTER_0', random: true
+    )
+    expect(registers[1]).to have_variable(
+      :register_block, :ral_model,
+      name: 'register_1', data_type: 'REGISTER_1', random: true
+    )
   end
 
   it 'パラメータ#model_typeと#integrateを持つ' do
-    expect(registers[0])
-      .to have_parameter :register_block, :model_type, {
-        name: 'REGISTER_0',
-        data_type: 'type',
-        default: 'rggen_ral_block'
-      }
-    expect(registers[0])
-      .to have_parameter :register_block, :integrate_model, {
-        name: 'INTEGRATE_REGISTER_0',
-        data_type: 'bit',
-        default: 1
-      }
-    expect(registers[1])
-      .to have_parameter :register_block, :model_type, {
-        name: 'REGISTER_1',
-        data_type: 'type',
-        default: 'rggen_ral_block'
-      }
-    expect(registers[1])
-      .to have_parameter :register_block, :integrate_model, {
-        name: 'INTEGRATE_REGISTER_1',
-        data_type: 'bit',
-        default: 1
-      }
+    expect(registers[0]).to have_parameter(
+      :register_block, :model_type,
+      name: 'REGISTER_0', data_type: 'type', default: 'rggen_ral_block'
+    )
+    expect(registers[0]).to have_parameter(
+      :register_block, :integrate_model,
+      name: 'INTEGRATE_REGISTER_0', data_type: 'bit', default: 1
+    )
+    expect(registers[1]).to have_parameter(
+      :register_block, :model_type,
+      name: 'REGISTER_1', data_type: 'type', default: 'rggen_ral_block'
+    )
+    expect(registers[1]).to have_parameter(
+      :register_block, :integrate_model,
+      name: 'INTEGRATE_REGISTER_1', data_type: 'bit', default: 1
+    )
   end
 
   describe '#constructors' do

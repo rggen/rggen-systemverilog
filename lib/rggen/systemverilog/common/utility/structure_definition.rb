@@ -9,8 +9,8 @@ module RgGen
 
           include Core::Utility::AttributeSetter
 
-          def initialize(**default_attributes, &block)
-            apply_attributes(default_attributes)
+          def initialize(default_attributes = {}, &block)
+            apply_attributes(**default_attributes)
             super(&block)
           end
 

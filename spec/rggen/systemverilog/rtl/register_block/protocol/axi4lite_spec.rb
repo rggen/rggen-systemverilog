@@ -254,13 +254,10 @@ RSpec.describe 'register_block/protocol/apb' do
         register { name 'register_0'; offset_address 0x00; size [1]; type :external }
       end
 
-      expect(register_block)
-        .to have_parameter :register_block, :write_first, {
-          name: 'WRITE_FIRST',
-          parameter_type: :parameter,
-          data_type: :bit,
-          default: 1
-        }
+      expect(register_block).to have_parameter(
+        :register_block, :write_first,
+        name: 'WRITE_FIRST', parameter_type: :parameter, data_type: :bit, default: 1
+      )
     end
 
     describe '#generate_code' do

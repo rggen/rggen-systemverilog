@@ -79,7 +79,7 @@ module RgGen
           [width, bit_length].max
         end
 
-        def argument(name, **attribute)
+        def argument(name, attribute = {})
           DataObject.new(:argument, attribute.merge(name: name)).declaration
         end
 
@@ -90,7 +90,7 @@ module RgGen
           module_definition: ModuleDefinition,
           package_definition: PackageDefinition
         }.each do |method_name, definition|
-          define_method(method_name) do |name, **attributes, &block|
+          define_method(method_name) do |name, attributes = {}, &block|
             definition.new(attributes.merge(name: name), &block).to_code
           end
         end
