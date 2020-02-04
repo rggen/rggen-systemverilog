@@ -82,7 +82,7 @@ RgGen.define_list_item_feature(:register_block, :protocol, :apb) do
           [pready, apb_if.pready],
           [prdata, apb_if.prdata],
           [pslverr, apb_if.pslverr]
-        ].map { |lhs, rhs| code << assign(lhs, rhs) << nl }
+        ].each { |lhs, rhs| code << assign(lhs, rhs) << nl }
       end
     end
   end
