@@ -8,7 +8,7 @@ RgGen.define_simple_feature(:register, :sv_rtl_top) do
 
     pre_build do
       @base_index =
-        register_block.registers.map(&:count).inject(0, :+)
+        register_block.registers.map(&:count).sum
     end
 
     build do
@@ -34,7 +34,7 @@ RgGen.define_simple_feature(:register, :sv_rtl_top) do
       operands =
         register.array? ? [@base_index, offset || local_index] : [@base_index]
       if operands.all? { |operand| operand.is_a?(Integer) }
-        operands.inject(:+)
+        operands.sum
       else
         operands.join('+')
       end
