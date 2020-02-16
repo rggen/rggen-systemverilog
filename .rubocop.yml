@@ -9,6 +9,9 @@ Layout/EmptyLineAfterGuardClause:
 Layout/EndOfLine:
   EnforcedStyle: lf
 
+Layout/LineLength:
+  Max: 90
+
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented_relative_to_receiver
 
@@ -27,9 +30,6 @@ Metrics/BlockLength:
     - factory
     - sv_rtl
     - sv_ral
-
-Metrics/LineLength:
-  Max: 90
 
 Style/Alias:
   EnforcedStyle: prefer_alias_method
