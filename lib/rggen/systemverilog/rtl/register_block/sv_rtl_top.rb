@@ -24,10 +24,7 @@ RgGen.define_simple_feature(:register_block, :sv_rtl_top) do
     end
 
     def total_registers
-      register_block
-        .registers
-        .map(&:count)
-        .inject(:+)
+      register_block.registers.map(&:count).sum
     end
 
     private

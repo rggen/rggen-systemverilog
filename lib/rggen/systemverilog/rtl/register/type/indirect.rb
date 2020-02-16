@@ -19,7 +19,7 @@ RgGen.define_list_item_feature(:register, :type, :indirect) do
     end
 
     def index_width
-      @index_width ||= index_fields.map(&:width).inject(:+)
+      @index_width ||= index_fields.map(&:width).sum
     end
 
     def index_values
