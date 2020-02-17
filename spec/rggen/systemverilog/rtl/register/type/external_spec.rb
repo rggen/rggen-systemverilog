@@ -86,12 +86,12 @@ RSpec.describe 'register/type/external' do
         name: 'o_register_0_valid', data_type: :logic, direction: :output,  width: 1
       )
       expect(register).to have_port(
-        :register_block, :address,
-        name: 'o_register_0_address', data_type: :logic, direction: :output, width: 8
+        :register_block, :access,
+        name: 'o_register_0_access', data_type: :logic, direction: :output, width: '$bits(rggen_access)'
       )
       expect(register).to have_port(
-        :register_block, :write,
-        name: 'o_register_0_write', data_type: :logic, direction: :output, width: 1
+        :register_block, :address,
+        name: 'o_register_0_address', data_type: :logic, direction: :output, width: 8
       )
       expect(register).to have_port(
         :register_block, :write_data,
@@ -178,8 +178,8 @@ RSpec.describe 'register/type/external' do
           .bus_if       (bus_if)
         );
         assign o_register_0_valid = bus_if.valid;
+        assign o_register_0_access = bus_if.access;
         assign o_register_0_address = bus_if.address;
-        assign o_register_0_write = bus_if.write;
         assign o_register_0_data = bus_if.write_data;
         assign o_register_0_strobe = bus_if.strobe;
         assign bus_if.ready = i_register_0_ready;
@@ -200,8 +200,8 @@ RSpec.describe 'register/type/external' do
           .bus_if       (bus_if)
         );
         assign o_register_1_valid = bus_if.valid;
+        assign o_register_1_access = bus_if.access;
         assign o_register_1_address = bus_if.address;
-        assign o_register_1_write = bus_if.write;
         assign o_register_1_data = bus_if.write_data;
         assign o_register_1_strobe = bus_if.strobe;
         assign bus_if.ready = i_register_1_ready;

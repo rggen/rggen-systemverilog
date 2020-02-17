@@ -14,13 +14,13 @@ RgGen.define_list_item_feature(:register, :type, :external) do
           name: "o_#{register.name}_valid",
           data_type: :logic, width: 1
         }
+        output :register_block, :access, {
+          name: "o_#{register.name}_access",
+          data_type: :logic, width: '$bits(rggen_access)'
+        }
         output :register_block, :address, {
           name: "o_#{register.name}_address",
           data_type: :logic, width: address_width
-        }
-        output :register_block, :write, {
-          name: "o_#{register.name}_write",
-          data_type: :logic, width: 1
         }
         output :register_block, :write_data, {
           name: "o_#{register.name}_data",
@@ -46,7 +46,7 @@ RgGen.define_list_item_feature(:register, :type, :external) do
           name: 'bus_if', interface_type: 'rggen_bus_if',
           parameter_values: [address_width, bus_width],
           variables: [
-            'valid', 'address', 'write', 'write_data', 'strobe',
+            'valid', 'access', 'address', 'write_data', 'strobe',
             'ready', 'status', 'read_data'
           ]
         }
@@ -58,8 +58,8 @@ RgGen.define_list_item_feature(:register, :type, :external) do
       unless configuration.fold_sv_interface_port?
         [
           [valid, bus_if.valid],
+          [access, bus_if.access],
           [address, bus_if.address],
-          [write, bus_if.write],
           [write_data, bus_if.write_data],
           [strobe, bus_if.strobe],
           [bus_if.ready, ready],
