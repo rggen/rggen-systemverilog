@@ -7,8 +7,7 @@ RgGen.define_simple_feature(:register, :sv_rtl_top) do
     export :loop_variables
 
     pre_build do
-      @base_index =
-        register_block.registers.map(&:count).sum
+      @base_index = register_block.registers.sum(&:count)
     end
 
     build do
