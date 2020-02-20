@@ -4,9 +4,7 @@ module RgGen
   module SystemVerilog
     module Common
       module Utility
-        class StructureDefinition <
-          Core::Utility::CodeUtility::StructureDefinition
-
+        class StructureDefinition < Core::Utility::CodeUtility::StructureDefinition
           include Core::Utility::AttributeSetter
 
           def initialize(default_attributes = {}, &block)
