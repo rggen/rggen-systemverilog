@@ -11,7 +11,7 @@ RgGen.define_simple_feature(:register, :sv_rtl_top) do
     end
 
     build do
-      if register.bit_fields?
+      unless register.bit_fields.empty?
         interface :register, :bit_field_if, {
           name: 'bit_field_if',
           interface_type: 'rggen_bit_field_if',

@@ -2,19 +2,19 @@
 
 RSpec.describe RgGen::SystemVerilog::Common::Component do
   let(:configuration) do
-    RgGen::Core::Configuration::Component.new('configuration', nil)
+    RgGen::Core::Configuration::Component.new(nil, 'configuration', nil)
   end
 
   let(:register_map) do
-    RgGen::Core::RegisterMap::Component.new('register_map', nil, configuration)
+    RgGen::Core::RegisterMap::Component.new(nil, 'register_map', nil, configuration)
   end
 
   let(:component) do
-    described_class.new('component', nil, configuration, register_map)
+    described_class.new(nil, 'component', nil, configuration, register_map)
   end
 
   def create_child_component
-    described_class.new('component', component, configuration, register_map) do |child_component|
+    described_class.new(component, 'component', nil, configuration, register_map) do |child_component|
       component.add_child(child_component)
       yield(child_component)
     end
