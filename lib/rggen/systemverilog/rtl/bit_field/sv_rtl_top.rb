@@ -9,19 +9,19 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
 
     build do
       if fixed_initial_value?
-        localparam :bit_field, :initial_value, {
+        localparam :initial_value, {
           name: initial_value_name, data_type: :bit, width: bit_field.width,
           array_size: initial_value_size, array_format: initial_value_format,
           default: initial_value_lhs
         }
       elsif initial_value?
-        parameter :register_block, :initial_value, {
+        parameter :initial_value, {
           name: initial_value_name, data_type: :bit, width: bit_field.width,
           array_size: initial_value_size, array_format: initial_value_format,
           default: initial_value_lhs
         }
       end
-      interface :bit_field, :bit_field_sub_if, {
+      interface :bit_field_sub_if, {
         name: 'bit_field_sub_if',
         interface_type: 'rggen_bit_field_if',
         parameter_values: [bit_field.width]
@@ -124,11 +124,11 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
     end
 
     def parameters
-      bit_field.declarations(:bit_field, :parameter)
+      bit_field.declarations[:parameter]
     end
 
     def variables
-      bit_field.declarations(:bit_field, :variable)
+      bit_field.declarations[:variable]
     end
 
     def body_code(code)

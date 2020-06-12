@@ -22,42 +22,41 @@ RgGen.define_list_item_feature(:register_block, :protocol, :apb) do
   sv_rtl do
     build do
       if configuration.fold_sv_interface_port?
-        interface_port :register_block, :apb_if, {
+        interface_port :apb_if, {
           name: 'apb_if', interface_type: 'rggen_apb_if', modport: 'slave'
         }
       else
-        input :register_block, :psel, {
+        input :psel, {
           name: 'i_psel', data_type: :logic, width: 1
         }
-        input :register_block, :penable, {
+        input :penable, {
           name: 'i_penable', data_type: :logic, width: 1
         }
-        input :register_block, :paddr, {
+        input :paddr, {
           name: 'i_paddr', data_type: :logic, width: address_width
         }
-        input :register_block, :pprot, {
+        input :pprot, {
           name: 'i_pprot', data_type: :logic, width: 3
         }
-        input :register_block, :pwrite, {
+        input :pwrite, {
           name: 'i_pwrite', data_type: :logic, width: 1
         }
-        input :register_block, :pstrb, {
-          name: 'i_pstrb', data_type: :logic,
-          width: byte_width
+        input :pstrb, {
+          name: 'i_pstrb', data_type: :logic, width: byte_width
         }
-        input :register_block, :pwdata, {
+        input :pwdata, {
           name: 'i_pwdata', data_type: :logic, width: bus_width
         }
-        output :register_block, :pready, {
+        output :pready, {
           name: 'o_pready', data_type: :logic, width: 1
         }
-        output :register_block, :prdata, {
+        output :prdata, {
           name: 'o_prdata', data_type: :logic, width: bus_width
         }
-        output :register_block, :pslverr, {
+        output :pslverr, {
           name: 'o_pslverr', data_type: :logic, width: 1
         }
-        interface :register_block, :apb_if, {
+        interface :apb_if, {
           name: 'apb_if', interface_type: 'rggen_apb_if',
           parameter_values: [address_width, bus_width],
           variables: [

@@ -47,11 +47,11 @@ RgGen.define_simple_feature(:register_block, :sv_ral_package) do
     end
 
     def parameters
-      register_block.declarations(:register_block, :parameter)
+      register_block.declarations[:parameter]
     end
 
     def variables
-      register_block.declarations(:register_block, :variable)
+      register_block.declarations[:variable]
     end
 
     def reg_model_constructors

@@ -17,9 +17,13 @@ module RgGen
           define_attribute :modport
           define_attribute :array_size
 
-          def modport(name, ports = nil)
-            @modport_name = name
-            @modport_ports = ports
+          def modport(name_and_ports, ports = nil)
+            @modport_name, @modport_ports =
+              if ports
+                [name_and_ports, ports]
+              else
+                Array(name_and_ports)[0..1]
+              end
           end
 
           def declaration

@@ -3,7 +3,7 @@
 RgGen.define_list_item_feature(:bit_field, :type, [:w0crs, :w1crs]) do
   sv_rtl do
     build do
-      output :register_block, :value_out, {
+      output :value_out, {
         name: "o_#{full_name}", data_type: :logic, width: width,
         array_size: array_size, array_format: array_port_format
       }

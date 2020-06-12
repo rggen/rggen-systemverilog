@@ -13,75 +13,73 @@ RgGen.define_list_item_feature(:register_block, :protocol, :axi4lite) do
 
   sv_rtl do
     build do
-      parameter :register_block, :write_first, {
-        name: 'WRITE_FIRST',
-        data_type: :bit,
-        default: 1
+      parameter :write_first, {
+        name: 'WRITE_FIRST', data_type: :bit, default: 1
       }
       if configuration.fold_sv_interface_port?
-        interface_port :register_block, :axi4lite_if, {
+        interface_port :axi4lite_if, {
           name: 'axi4lite_if',
           interface_type: 'rggen_axi4lite_if', modport: 'slave'
         }
       else
-        input :register_block, :awvalid, {
+        input :awvalid, {
           name: 'i_awvalid', data_type: :logic, width: 1
         }
-        output :register_block, :awready, {
+        output :awready, {
           name: 'o_awready', data_type: :logic, width: 1
         }
-        input :register_block, :awaddr, {
+        input :awaddr, {
           name: 'i_awaddr', data_type: :logic, width: address_width
         }
-        input :register_block, :awprot, {
+        input :awprot, {
           name: 'i_awprot', data_type: :logic, width: 3
         }
-        input :register_block, :wvalid, {
+        input :wvalid, {
           name: 'i_wvalid', data_type: :logic, width: 1
         }
-        output :register_block, :wready, {
+        output :wready, {
           name: 'o_wready', data_type: :logic, width: 1
         }
-        input :register_block, :wdata, {
+        input :wdata, {
           name: 'i_wdata', data_type: :logic, width: bus_width
         }
-        input :register_block, :wstrb, {
+        input :wstrb, {
           name: 'i_wstrb', data_type: :logic, width: byte_width
         }
-        output :register_block, :bvalid, {
+        output :bvalid, {
           name: 'o_bvalid', data_type: :logic, width: 1
         }
-        input :register_block, :bready, {
+        input :bready, {
           name: 'i_bready', data_type: :logic, width: 1
         }
-        output :register_block, :bresp, {
+        output :bresp, {
           name: 'o_bresp', data_type: :logic, width: 2
         }
-        input :register_block, :arvalid, {
+        input :arvalid, {
           name: 'i_arvalid', data_type: :logic, width: 1
         }
-        output :register_block, :arready, {
+        output :arready, {
           name: 'o_arready', data_type: :logic, width: 1
         }
-        input :register_block, :araddr, {
+        input :araddr, {
           name: 'i_araddr', data_type: :logic, width: address_width
         }
-        input :register_block, :arprot, {
+        input :arprot, {
           name: 'i_arprot', data_type: :logic, width: 3
         }
-        output :register_block, :rvalid, {
+        output :rvalid, {
           name: 'o_rvalid', data_type: :logic, width: 1
         }
-        input :register_block, :rready, {
+        input :rready, {
           name: 'i_rready', data_type: :logic, width: 1
         }
-        output :register_block, :rdata, {
+        output :rdata, {
           name: 'o_rdata', data_type: :logic, width: bus_width
         }
-        output :register_block, :rresp, {
+        output :rresp, {
           name: 'o_rresp', data_type: :logic, width: 2
         }
-        interface :register_block, :axi4lite_if, {
+        interface :axi4lite_if, {
           name: 'axi4lite_if', interface_type: 'rggen_axi4lite_if',
           parameter_values: [address_width, bus_width],
           variables: [

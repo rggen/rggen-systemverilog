@@ -8,24 +8,23 @@ module RgGen
         template_engine Core::OutputBase::ERBEngine
 
         EntityContext =
-          Struct.new(:entity_type, :creation_method, :declaration_type)
+          Struct.new(:entity_type, :method, :declaration_type, :default_layer)
 
         class << self
           private
 
-          def define_entity(entity_type, creation_method, declaration_type)
+          def define_entity(entity_type, method, declaration_type, default_layer)
             context =
-              EntityContext.new(entity_type, creation_method, declaration_type)
-            define_method(entity_type) do |domain, name, attributes = {}, &block|
-              entity =
-                create_entity(context, { name: name }.merge(attributes), &block)
-              add_entity(entity, context, domain, name)
+              EntityContext.new(entity_type, method, declaration_type, default_layer)
+            define_method(entity_type) do |name, *args, &block|
+              if args.size >= 3
+                message = 'wrong number of arguments ' \
+                          "(given #{args.size + 1}, expected 1..3)"
+                raise ArgumentError.new(message)
+              end
+              define_entity(context, name, args, &block)
             end
           end
-        end
-
-        def declarations(domain, type)
-          @declarations[domain][type]
         end
 
         def package_imports(domain)
@@ -36,30 +35,44 @@ module RgGen
 
         def post_initialize
           super
-          @declarations = Hash.new do |h0, k0|
-            h0[k0] = Hash.new { |h1, k1| h1[k1] = [] }
-          end
           @package_imports = Hash.new { |h, k| h[k] = [] }
         end
 
-        def create_entity(context, attributes, &block)
-          creation_method = context.creation_method
-          entity_type = context.entity_type
-          __send__(creation_method, entity_type, attributes, &block)
+        def define_entity(context, name, args, &block)
+          layer, attributes = parse_entity_arguments(args)
+          entity = create_entity(context, name, attributes, &block)
+          add_entity(context, entity, name, layer)
         end
 
-        def add_entity(entity, context, domain, name)
-          add_declaration(context, domain, entity.declaration)
-          add_identifier(name, entity.identifier)
+        def parse_entity_arguments(args)
+          if args.empty?
+            [nil, nil]
+          elsif args.size == 1 && args.first.is_a?(Hash)
+            [nil, args.first]
+          elsif args.size == 1
+            [args.first, nil]
+          else
+            args[0..1]
+          end
         end
 
-        def add_declaration(context, domain, declaration)
-          declaration_type = context.declaration_type
-          @declarations[domain][declaration_type] << declaration
+        def create_entity(context, name, attributes, &block)
+          merged_attributes = { name: name }.merge(Hash(attributes))
+          __send__(context.method, context.entity_type, merged_attributes, &block)
         end
 
-        def add_identifier(name, identifier)
-          instance_variable_set("@#{name}", identifier)
+        def add_entity(context, entity, name, layer)
+          add_declaration(context, entity, layer)
+          add_identifier(entity, name)
+        end
+
+        def add_declaration(context, entity, layer)
+          (layer || instance_exec(&context.default_layer))
+            .declarations[context.declaration_type] << entity.declaration
+        end
+
+        def add_identifier(entity, name)
+          instance_variable_set("@#{name}", entity.identifier)
           attr_singleton_reader(name)
           export(name)
         end

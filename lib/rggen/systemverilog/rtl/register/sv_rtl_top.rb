@@ -12,7 +12,7 @@ RgGen.define_simple_feature(:register, :sv_rtl_top) do
 
     build do
       unless register.bit_fields.empty?
-        interface :register, :bit_field_if, {
+        interface :bit_field_if, {
           name: 'bit_field_if',
           interface_type: 'rggen_bit_field_if',
           parameter_values: [register.width]
@@ -71,7 +71,7 @@ RgGen.define_simple_feature(:register, :sv_rtl_top) do
     end
 
     def variables
-      register.declarations(:register, :variable)
+      register.declarations[:variable]
     end
 
     def body_code(code)

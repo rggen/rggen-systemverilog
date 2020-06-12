@@ -31,11 +31,9 @@ RgGen.define_list_feature(:register, :type) do
       export :constructors
 
       build do
-        variable :register_block, :ral_model, {
-          name: register.name,
-          data_type: model_name,
-          array_size: register.array_size,
-          random: true
+        variable :ral_model, {
+          name: register.name, data_type: model_name,
+          array_size: register.array_size, random: true
         }
       end
 
@@ -121,7 +119,7 @@ RgGen.define_list_feature(:register, :type) do
       end
 
       def variables
-        register.declarations(:register, :variable)
+        register.declarations[:variable]
       end
 
       def field_model_constructors
