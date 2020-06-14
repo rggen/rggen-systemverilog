@@ -132,7 +132,7 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
     end
 
     def body_code(code)
-      bit_field.generate_code(:bit_field, :top_down, code)
+      bit_field.generate_code(code, :bit_field, :top_down)
     end
 
     def bit_field_if_connection

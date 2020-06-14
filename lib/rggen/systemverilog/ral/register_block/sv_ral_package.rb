@@ -8,7 +8,7 @@ RgGen.define_simple_feature(:register_block, :sv_ral_package) do
           package.package_imports packages
           package.include_files include_files
           package.body do |code|
-            register_block.generate_code(:ral_package, :bottom_up, code)
+            register_block.generate_code(code, :ral_package, :bottom_up)
           end
         end
       end

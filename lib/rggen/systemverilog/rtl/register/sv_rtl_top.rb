@@ -75,7 +75,7 @@ RgGen.define_simple_feature(:register, :sv_rtl_top) do
     end
 
     def body_code(code)
-      register.generate_code(:register, :top_down, code)
+      register.generate_code(code, :register, :top_down)
     end
   end
 end

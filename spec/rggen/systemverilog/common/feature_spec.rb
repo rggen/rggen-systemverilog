@@ -140,6 +140,9 @@ RSpec.describe RgGen::SystemVerilog::Common::Feature do
       def foo; 'foo!'; end
     end
 
-    expect(feature.generate_code(:main_code, :test)).to match_string("#{feature.object_id}foo!")
+    code = double('code')
+    expect(code).to receive(:<<).with("#{feature.object_id}foo!")
+
+    feature.generate_code(code, :main_code, :test)
   end
 end
