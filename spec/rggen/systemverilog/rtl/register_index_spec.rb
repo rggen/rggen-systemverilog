@@ -1,0 +1,254 @@
+# frozen_string_literal: true
+
+RSpec.describe RgGen::SystemVerilog::RTL::RegisterIndex do
+  include_context 'clean-up builder'
+  include_context 'sv rtl common'
+
+  before(:all) do
+    RgGen.define_simple_feature(:register_file, :index) do
+      sv_rtl do
+        include RgGen::SystemVerilog::RTL::RegisterIndex
+      end
+    end
+
+    RgGen.define_simple_feature(:register, :index) do
+      sv_rtl do
+        include RgGen::SystemVerilog::RTL::RegisterIndex
+      end
+    end
+  end
+
+  before(:all) do
+    RgGen.enable(:global, [:bus_width, :address_width, :array_port_format])
+    RgGen.enable(:register_block, [:byte_size])
+    RgGen.enable(:register_file, [:name, :offset_address, :size, :index])
+    RgGen.enable(:register, [:name, :offset_address, :size, :type, :index])
+    RgGen.enable(:bit_field, [:name, :bit_assignment, :type, :initial_value, :reference, :sv_rtl_top])
+    RgGen.enable(:bit_field, :type, [:rw])
+  end
+
+  after(:all) do
+    RgGen.delete(:register_file, :index)
+    RgGen.delete(:register, :index)
+  end
+
+  let(:register_block) do
+    root = create_sv_rtl do
+      byte_size 512
+
+      register do
+        name 'register_0'
+        bit_field { bit_assignment width: 1; type :rw; initial_value 0 }
+      end
+
+      register do
+        name 'register_1'
+        size [2, 3]
+        bit_field { bit_assignment width: 1; type :rw; initial_value 0 }
+      end
+
+      register_file do
+        name 'register_file_2'
+        register do
+          name 'register_2_0'
+          bit_field { bit_assignment width: 1; type :rw; initial_value 0 }
+        end
+        register do
+          name 'register_2_1'
+          bit_field { bit_assignment width: 1; type :rw; initial_value 0 }
+        end
+        register_file do
+          name 'register_file_2_2'
+          register do
+            name 'register_2_2_0'
+            bit_field { bit_assignment width: 1; type :rw; initial_value 0 }
+          end
+          register do
+            name 'register_2_2_1'
+            bit_field { bit_assignment width: 1; type :rw; initial_value 0 }
+          end
+        end
+      end
+
+      register_file do
+        name 'register_file_3'
+        size [2]
+        register do
+          name 'register_3_0'
+          size [2, 2]
+          bit_field { bit_assignment width: 1; type :rw; initial_value 0 }
+        end
+        register_file do
+          name 'register_file_3_1'
+          size [2, 2]
+          register do
+            size [2, 2]
+            name 'register_3_1_0'
+            bit_field { bit_assignment width: 1; type :rw; initial_value 0 }
+          end
+          register do
+            name 'register_3_1_1'
+            bit_field { bit_assignment width: 1; type :rw; initial_value 0 }
+          end
+        end
+      end
+
+      register_file do
+        name 'register_file_4'
+        size [2, 2]
+        register_file do
+          name 'register_file_4_0'
+          register do
+            size [2, 2]
+            name 'register_4_0_0'
+            bit_field { bit_assignment width: 1; type :rw; initial_value 0 }
+          end
+        end
+      end
+
+      register do
+        name 'register_5'
+        bit_field { bit_assignment width: 1; type :rw; initial_value 0 }
+      end
+    end
+    root.register_blocks[0]
+  end
+
+  let(:components) do
+    collect_register_file_and_register(register_block)
+  end
+
+  def collect_register_file_and_register(component)
+    [
+      *((component.register_file? || component.register?) ? component : nil),
+      *component.children.flat_map { |child| collect_register_file_and_register(child) }
+    ]
+  end
+
+  describe '#index' do
+    context '無引数の場合' do
+      it 'レジスタブロック内でのインデックスを返す' do
+        expect(components[0].index).to eq 0
+        expect(components[1].index).to eq '1+3*i+j'
+        expect(components[2].index).to eq 7
+        expect(components[3].index).to eq 7
+        expect(components[4].index).to eq 8
+        expect(components[5].index).to eq 9
+        expect(components[6].index).to eq 9
+        expect(components[7].index).to eq 10
+        expect(components[8].index).to eq '11+24*(i)'
+        expect(components[9].index).to eq '11+24*(i)+2*j+k'
+        expect(components[10].index).to eq '11+24*(i)+4+5*(2*j+k)'
+        expect(components[11].index).to eq '11+24*(i)+4+5*(2*j+k)+2*l+m'
+        expect(components[12].index).to eq '11+24*(i)+4+5*(2*j+k)+4'
+        expect(components[13].index).to eq '59+4*(2*i+j)'
+        expect(components[14].index).to eq '59+4*(2*i+j)'
+        expect(components[15].index).to eq '59+4*(2*i+j)+2*k+l'
+        expect(components[16].index).to eq 75
+      end
+    end
+
+    context '引数にオフセットが指定された場合' do
+      it '指定されたオフセットでのインデックスを返す' do
+        expect(components[0].index(1)).to eq 0
+        expect(components[0].index('i')).to eq 0
+
+        expect(components[1].index(1)).to eq 2
+        expect(components[1].index('i')).to eq '1+i'
+
+        expect(components[2].index(1)).to eq 7
+        expect(components[2].index('i')).to eq 7
+
+        expect(components[3].index(1)).to eq 7
+        expect(components[3].index('i')).to eq 7
+
+        expect(components[5].index(1)).to eq 9
+        expect(components[5].index('i')).to eq 9
+
+        expect(components[6].index([1, 1])).to eq 9
+        expect(components[6].index(['i', 'j'])).to eq 9
+
+        expect(components[8].index(1)).to eq 35
+        expect(components[8].index('i')).to eq '11+24*(i)'
+
+        expect(components[9].index([1, 1])).to eq 36
+        expect(components[9].index(['i', 'j'])).to eq '11+24*(i)+j'
+
+        expect(components[10].index([1, 1])).to eq 44
+        expect(components[10].index(['i', 'j'])).to eq '11+24*(i)+4+5*(j)'
+
+        expect(components[11].index([1, 1, 1])).to eq 45
+        expect(components[11].index(['i', 'j', 'k'])).to eq '11+24*(i)+4+5*(j)+k'
+
+        expect(components[12].index([1, 1, 1])).to eq 48
+        expect(components[12].index(['i', 'j', 'k'])).to eq '11+24*(i)+4+5*(j)+4'
+
+        expect(components[13].index(1)).to eq 63
+        expect(components[13].index('i')).to eq '59+4*(i)'
+
+        expect(components[14].index([1, 1])).to eq 63
+        expect(components[14].index(['i', 'j'])).to eq '59+4*(i)'
+
+        expect(components[15].index([1, 1, 1])).to eq 64
+        expect(components[15].index(['i', 'j', 'k'])).to eq '59+4*(i)+k'
+
+        expect(components[16].index(1)).to eq 75
+        expect(components[16].index('i')).to eq 75
+      end
+    end
+  end
+
+  describe '#local_index' do
+    context '配列レジスタファイル/配列レジスタではない場合' do
+      it 'nilを返す' do
+        expect(components[0].local_index).to be_nil
+        expect(components[2].local_index).to be_nil
+        expect(components[3].local_index).to be_nil
+        expect(components[5].local_index).to be_nil
+        expect(components[6].local_index).to be_nil
+        expect(components[12].local_index).to be_nil
+        expect(components[14].local_index).to be_nil
+        expect(components[16].local_index).to be_nil
+      end
+    end
+
+    context '配列レジスタファイル/配列レジスタの場合' do
+      it 'スコープ中でのインデックスを返す' do
+        expect(components[1].local_index).to eq '3*i+j'
+        expect(components[8].local_index).to eq 'i'
+        expect(components[9].local_index).to eq '2*j+k'
+        expect(components[10].local_index).to eq '2*j+k'
+        expect(components[11].local_index).to eq '2*l+m'
+        expect(components[13].local_index).to eq '2*i+j'
+        expect(components[15].local_index).to eq '2*k+l'
+      end
+    end
+  end
+
+  describe '#loop_variables' do
+    context '配列レジスタファイル/配列レジスタ外の場合' do
+      it 'nilを返す' do
+        expect(components[0].loop_variables).to be_nil
+        expect(components[2].loop_variables).to be_nil
+        expect(components[3].loop_variables).to be_nil
+        expect(components[5].loop_variables).to be_nil
+        expect(components[6].loop_variables).to be_nil
+        expect(components[16].loop_variables).to be_nil
+      end
+    end
+
+    context '配列レジスタファイル/配列レジスタの場合' do
+      it 'ループ変数の一覧を返す' do
+        expect(components[1].loop_variables).to match([match_identifier('i'), match_identifier('j')])
+        expect(components[8].loop_variables).to match([match_identifier('i')])
+        expect(components[9].loop_variables).to match([match_identifier('i'), match_identifier('j'), match_identifier('k')])
+        expect(components[10].loop_variables).to match([match_identifier('i'), match_identifier('j'), match_identifier('k')])
+        expect(components[11].loop_variables).to match([match_identifier('i'), match_identifier('j'), match_identifier('k'), match_identifier('l'), match_identifier('m')])
+        expect(components[12].loop_variables).to match([match_identifier('i'), match_identifier('j'), match_identifier('k')])
+        expect(components[13].loop_variables).to match([match_identifier('i'), match_identifier('j')])
+        expect(components[14].loop_variables).to match([match_identifier('i'), match_identifier('j')])
+        expect(components[15].loop_variables).to match([match_identifier('i'), match_identifier('j'), match_identifier('k'), match_identifier('l')])
+      end
+    end
+  end
+end
