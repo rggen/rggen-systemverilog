@@ -225,6 +225,26 @@ RSpec.describe RgGen::SystemVerilog::RTL::RegisterIndex do
     end
   end
 
+  describe '#local_indices' do
+    it '上位階層からの#local_indexの一覧を返す' do
+      expect(components[0].local_indices).to match([nil])
+      expect(components[1].local_indices).to match(['3*i+j'])
+      expect(components[2].local_indices).to match([nil])
+      expect(components[3].local_indices).to match([nil, nil])
+      expect(components[5].local_indices).to match([nil, nil])
+      expect(components[6].local_indices).to match([nil, nil, nil])
+      expect(components[8].local_indices).to match(['i'])
+      expect(components[9].local_indices).to match(['i', '2*j+k'])
+      expect(components[10].local_indices).to match(['i', '2*j+k'])
+      expect(components[11].local_indices).to match(['i', '2*j+k', '2*l+m'])
+      expect(components[12].local_indices).to match(['i', '2*j+k', nil])
+      expect(components[13].local_indices).to match(['2*i+j'])
+      expect(components[14].local_indices).to match(['2*i+j', nil])
+      expect(components[15].local_indices).to match(['2*i+j', nil, '2*k+l'])
+      expect(components[16].local_indices).to match([nil])
+    end
+  end
+
   describe '#loop_variables' do
     context '配列レジスタファイル/配列レジスタ外の場合' do
       it 'nilを返す' do

@@ -8,6 +8,7 @@ module RgGen
           feature.module_eval do
             export :loop_variables
             export :local_index
+            export :local_indices
             export :index
             export :inside_roop?
 
@@ -28,6 +29,10 @@ module RgGen
               .zip(local_loop_variables)
               .map { |c, v| [c, v].compact.join('*') }
               .join('+')
+        end
+
+        def local_indices
+          [*upper_register_file&.local_indices, local_index]
         end
 
         def index(offset_or_offsets = nil)
