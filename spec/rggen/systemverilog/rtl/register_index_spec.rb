@@ -97,17 +97,29 @@ RSpec.describe RgGen::SystemVerilog::RTL::RegisterIndex do
         name 'register_file_4'
         size [2, 2]
         register_file do
-          name 'register_file_4_0'
+          name 'regsiter_file_4_0'
           register do
-            size [2, 2]
             name 'register_4_0_0'
             bit_field { bit_assignment width: 1; type :rw; initial_value 0 }
           end
         end
       end
 
+      register_file do
+        name 'register_file_5'
+        size [2, 2]
+        register_file do
+          name 'register_file_5_0'
+          register do
+            size [2, 2]
+            name 'register_5_0_0'
+            bit_field { bit_assignment width: 1; type :rw; initial_value 0 }
+          end
+        end
+      end
+
       register do
-        name 'register_5'
+        name 'register_6'
         bit_field { bit_assignment width: 1; type :rw; initial_value 0 }
       end
     end
@@ -141,10 +153,13 @@ RSpec.describe RgGen::SystemVerilog::RTL::RegisterIndex do
         expect(components[10].index).to eq '11+24*(i)+4+5*(2*j+k)'
         expect(components[11].index).to eq '11+24*(i)+4+5*(2*j+k)+2*l+m'
         expect(components[12].index).to eq '11+24*(i)+4+5*(2*j+k)+4'
-        expect(components[13].index).to eq '59+4*(2*i+j)'
-        expect(components[14].index).to eq '59+4*(2*i+j)'
-        expect(components[15].index).to eq '59+4*(2*i+j)+2*k+l'
-        expect(components[16].index).to eq 75
+        expect(components[13].index).to eq '59+2*i+j'
+        expect(components[14].index).to eq '59+2*i+j'
+        expect(components[15].index).to eq '59+2*i+j'
+        expect(components[16].index).to eq '63+4*(2*i+j)'
+        expect(components[17].index).to eq '63+4*(2*i+j)'
+        expect(components[18].index).to eq '63+4*(2*i+j)+2*k+l'
+        expect(components[19].index).to eq 79
       end
     end
 
@@ -183,17 +198,26 @@ RSpec.describe RgGen::SystemVerilog::RTL::RegisterIndex do
         expect(components[12].index([1, 1, 1])).to eq 48
         expect(components[12].index(['i', 'j', 'k'])).to eq '11+24*(i)+4+5*(j)+4'
 
-        expect(components[13].index(1)).to eq 63
-        expect(components[13].index('i')).to eq '59+4*(i)'
+        expect(components[13].index(1)).to eq 60
+        expect(components[13].index('i')).to eq '59+i'
 
-        expect(components[14].index([1, 1])).to eq 63
-        expect(components[14].index(['i', 'j'])).to eq '59+4*(i)'
+        expect(components[14].index([1, 1])).to eq 60
+        expect(components[14].index(['i', 'j'])).to eq '59+i'
 
-        expect(components[15].index([1, 1, 1])).to eq 64
-        expect(components[15].index(['i', 'j', 'k'])).to eq '59+4*(i)+k'
+        expect(components[15].index([1, 1, 1])).to eq 60
+        expect(components[15].index(['i', 'j', 'k'])).to eq '59+i'
 
-        expect(components[16].index(1)).to eq 75
-        expect(components[16].index('i')).to eq 75
+        expect(components[16].index(1)).to eq 67
+        expect(components[16].index('i')).to eq '63+4*(i)'
+
+        expect(components[17].index([1, 1])).to eq 67
+        expect(components[17].index(['i', 'j'])).to eq '63+4*(i)'
+
+        expect(components[18].index([1, 1, 1])).to eq 68
+        expect(components[18].index(['i', 'j', 'k'])).to eq '63+4*(i)+k'
+
+        expect(components[19].index(1)).to eq 79
+        expect(components[19].index('i')).to eq 79
       end
     end
   end
@@ -208,7 +232,9 @@ RSpec.describe RgGen::SystemVerilog::RTL::RegisterIndex do
         expect(components[6].local_index).to be_nil
         expect(components[12].local_index).to be_nil
         expect(components[14].local_index).to be_nil
-        expect(components[16].local_index).to be_nil
+        expect(components[15].local_index).to be_nil
+        expect(components[17].local_index).to be_nil
+        expect(components[19].local_index).to be_nil
       end
     end
 
@@ -220,7 +246,8 @@ RSpec.describe RgGen::SystemVerilog::RTL::RegisterIndex do
         expect(components[10].local_index).to eq '2*j+k'
         expect(components[11].local_index).to eq '2*l+m'
         expect(components[13].local_index).to eq '2*i+j'
-        expect(components[15].local_index).to eq '2*k+l'
+        expect(components[16].local_index).to eq '2*i+j'
+        expect(components[18].local_index).to eq '2*k+l'
       end
     end
   end
@@ -240,8 +267,11 @@ RSpec.describe RgGen::SystemVerilog::RTL::RegisterIndex do
       expect(components[12].local_indices).to match(['i', '2*j+k', nil])
       expect(components[13].local_indices).to match(['2*i+j'])
       expect(components[14].local_indices).to match(['2*i+j', nil])
-      expect(components[15].local_indices).to match(['2*i+j', nil, '2*k+l'])
-      expect(components[16].local_indices).to match([nil])
+      expect(components[15].local_indices).to match(['2*i+j', nil, nil])
+      expect(components[16].local_indices).to match(['2*i+j'])
+      expect(components[17].local_indices).to match(['2*i+j', nil])
+      expect(components[18].local_indices).to match(['2*i+j', nil, '2*k+l'])
+      expect(components[19].local_indices).to match([nil])
     end
   end
 
@@ -253,7 +283,7 @@ RSpec.describe RgGen::SystemVerilog::RTL::RegisterIndex do
         expect(components[3].loop_variables).to be_nil
         expect(components[5].loop_variables).to be_nil
         expect(components[6].loop_variables).to be_nil
-        expect(components[16].loop_variables).to be_nil
+        expect(components[19].loop_variables).to be_nil
       end
     end
 
@@ -267,7 +297,10 @@ RSpec.describe RgGen::SystemVerilog::RTL::RegisterIndex do
         expect(components[12].loop_variables).to match([match_identifier('i'), match_identifier('j'), match_identifier('k')])
         expect(components[13].loop_variables).to match([match_identifier('i'), match_identifier('j')])
         expect(components[14].loop_variables).to match([match_identifier('i'), match_identifier('j')])
-        expect(components[15].loop_variables).to match([match_identifier('i'), match_identifier('j'), match_identifier('k'), match_identifier('l')])
+        expect(components[15].loop_variables).to match([match_identifier('i'), match_identifier('j')])
+        expect(components[16].loop_variables).to match([match_identifier('i'), match_identifier('j')])
+        expect(components[17].loop_variables).to match([match_identifier('i'), match_identifier('j')])
+        expect(components[18].loop_variables).to match([match_identifier('i'), match_identifier('j'), match_identifier('k'), match_identifier('l')])
       end
     end
   end

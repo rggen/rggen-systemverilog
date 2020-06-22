@@ -27,7 +27,7 @@ module RgGen
           (component.array? || nil) &&
             local_index_coefficients
               .zip(local_loop_variables)
-              .map { |c, v| [c, v].compact.join('*') }
+              .map { |operands| product(operands, false) }
               .join('+')
         end
 
@@ -70,27 +70,36 @@ module RgGen
             coefficients.unshift(total)
             total * size
           end
-          [*coefficients[0..-2], nil]
+          coefficients
         end
 
         def index_operands(offset_or_offsets)
           offsets = offset_or_offsets && Array(offset_or_offsets)
           [
-            upper_register_file&.index(offsets&.slice(0..-2)),
+            *upper_register_file&.index(offsets&.slice(0..-2)),
             @base_index,
-            local_register_index(offsets&.slice(-1))
-          ].compact.reject { |operand| operand.is_a?(Integer) && operand.zero? }
+            *local_register_index(offsets&.slice(-1))
+          ].reject { |operand| operand.is_a?(Integer) && operand.zero? }
         end
 
         def local_register_index(offset)
           (component.array? || nil) &&
-            if register? || component.count == 1
-              offset || local_index
-            elsif offset.is_a?(Integer)
-              register_file.count(false) * offset
-            else
-              "#{register_file.count(false)}*(#{offset || local_index})"
+            begin
+              operands = [component.count(false), offset || local_index]
+              product(operands, true)
             end
+        end
+
+        def product(operands, need_bracket)
+          if operands.all? { |operand| operand.is_a?(Integer) }
+            operands.reduce(:*)
+          elsif operands.first == 1
+            operands.last
+          elsif need_bracket
+            "#{operands.first}*(#{operands.last})"
+          else
+            operands.join('*')
+          end
         end
       end
     end

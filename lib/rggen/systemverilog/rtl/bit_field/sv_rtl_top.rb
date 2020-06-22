@@ -58,7 +58,11 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
 
     def array_size
       (inside_loop? || nil) &&
-        [*register.array_size, bit_field.sequence_size].compact
+        [
+          *register_files.flat_map(&:array_size),
+          *register.array_size,
+          *bit_field.sequence_size
+        ].compact
     end
 
     def value(offsets = nil, width = nil)
