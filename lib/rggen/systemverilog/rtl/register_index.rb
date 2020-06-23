@@ -4,13 +4,15 @@ module RgGen
   module SystemVerilog
     module RTL
       module RegisterIndex
+        EXPORTED_METHODS = [
+          :loop_variables, :local_loop_variables,
+          :local_index, :local_indices,
+          :index, :inside_roop?
+        ].freeze
+
         def self.included(feature)
           feature.module_eval do
-            export :loop_variables
-            export :local_index
-            export :local_indices
-            export :index
-            export :inside_roop?
+            export *EXPORTED_METHODS
 
             pre_build do
               @base_index = files_and_registers.sum(&:count)
@@ -21,6 +23,16 @@ module RgGen
         def loop_variables
           (inside_roop? || nil) &&
             [*upper_register_file&.loop_variables, *local_loop_variables]
+        end
+
+        def local_loop_variables
+          (component.array? || nil) &&
+            begin
+              start_depth = (upper_register_file&.loop_variables&.size || 0) + 1
+              Array.new(component.array_size.size) do |i|
+                create_identifier(loop_index(i + start_depth))
+              end
+            end
         end
 
         def local_index
@@ -52,16 +64,6 @@ module RgGen
 
         def upper_register_file
           component.register_file
-        end
-
-        def local_loop_variables
-          (component.array? || nil) &&
-            begin
-              start_depth = (upper_register_file&.loop_variables&.size || 0) + 1
-              Array.new(component.array_size.size) do |i|
-                create_identifier(loop_index(i + start_depth))
-              end
-            end
         end
 
         def local_index_coefficients

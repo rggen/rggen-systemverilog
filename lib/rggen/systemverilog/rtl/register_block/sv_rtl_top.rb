@@ -77,7 +77,9 @@ RgGen.define_simple_feature(:register_block, :sv_rtl_top) do
     end
 
     def sv_module_body(code)
-      register_block.generate_code(code, :register_block, :top_down)
+      { register_block: nil, register_file: 1 }.each do |kind, target|
+        register_block.generate_code(code, kind, :top_down, target)
+      end
     end
   end
 end

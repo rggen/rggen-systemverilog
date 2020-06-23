@@ -22,7 +22,31 @@ RgGen.define_list_feature(:register, :type) do
       end
 
       def offset_address
-        hex(register.offset_address, address_width)
+        [*register_files, register]
+          .flat_map(&method(:collect_offsets))
+          .reject.with_index { |offset, i| purge_offset?(offset, i) }
+          .map(&method(:format_offset))
+          .join('+')
+      end
+
+      def collect_offsets(component)
+        if component.register_file? && component.array?
+          [component.offset_address, byte_offset(component)]
+        else
+          component.offset_address
+        end
+      end
+
+      def byte_offset(component)
+        "#{component.byte_size(false)}*(#{component.local_index})"
+      end
+
+      def purge_offset?(offset, index)
+        index.positive? && offset.is_a?(Integer) && offset.zero?
+      end
+
+      def format_offset(offset)
+        offset.is_a?(Integer) && hex(offset, address_width) || offset
       end
 
       def width

@@ -10,8 +10,8 @@ module RgGen
           define_attribute :variables
           define_attribute :loop_size
 
-          def top_scope
-            @top_scope = true
+          def top_scope(value = true)
+            @top_scope = value
           end
 
           private

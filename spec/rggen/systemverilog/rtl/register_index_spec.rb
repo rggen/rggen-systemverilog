@@ -304,4 +304,30 @@ RSpec.describe RgGen::SystemVerilog::RTL::RegisterIndex do
       end
     end
   end
+
+  describe '#local_loop_variables' do
+    context '配列レジスタファイル/配列レジスタではない場合' do
+      it 'nilを返す' do
+        expect(components[0].local_loop_variables).to be_nil
+        expect(components[2].local_loop_variables).to be_nil
+        expect(components[3].local_loop_variables).to be_nil
+        expect(components[5].local_loop_variables).to be_nil
+        expect(components[6].local_loop_variables).to be_nil
+        expect(components[12].local_loop_variables).to be_nil
+        expect(components[14].local_loop_variables).to be_nil
+        expect(components[15].local_loop_variables).to be_nil
+        expect(components[19].local_loop_variables).to be_nil
+      end
+    end
+
+    context '配列レジスタファイル/配列レジスタの場合' do
+      it 'スコープ中のループ変数の一覧を返す' do
+        expect(components[1].local_loop_variables).to match([match_identifier('i'), match_identifier('j')])
+        expect(components[8].local_loop_variables).to match([match_identifier('i')])
+        expect(components[9].local_loop_variables).to match([match_identifier('j'), match_identifier('k')])
+        expect(components[11].local_loop_variables).to match([match_identifier('l'), match_identifier('m')])
+        expect(components[18].local_loop_variables).to match([match_identifier('k'), match_identifier('l')])
+      end
+    end
+  end
 end

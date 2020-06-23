@@ -23,7 +23,7 @@ RgGen.define_list_item_feature(:register, :type, :indirect) do
     end
 
     def index_values
-      loop_variables = register.loop_variables
+      loop_variables = register.local_loop_variables
       register.index_entries.zip(index_fields).map do |entry, field|
         if entry.array_index?
           loop_variables.shift[0, field.width]

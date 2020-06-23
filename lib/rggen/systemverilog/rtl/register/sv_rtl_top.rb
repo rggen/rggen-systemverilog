@@ -14,9 +14,9 @@ RgGen.define_simple_feature(:register, :sv_rtl_top) do
       end
     end
 
-    main_code :register_block do
+    main_code :register_file do
       local_scope("g_#{register.name}") do |scope|
-        scope.top_scope
+        scope.top_scope top_scope?
         scope.loop_size loop_size
         scope.variables variables
         scope.body(&method(:body_code))
@@ -25,9 +25,13 @@ RgGen.define_simple_feature(:register, :sv_rtl_top) do
 
     private
 
+    def top_scope?
+      register_file.nil?
+    end
+
     def loop_size
       (register.array? || nil) &&
-        loop_variables.zip(register.array_size).to_h
+        local_loop_variables.zip(register.array_size).to_h
     end
 
     def variables
