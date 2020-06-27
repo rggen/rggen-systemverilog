@@ -3,6 +3,8 @@
 RgGen.define_list_feature(:register, :type) do
   sv_rtl do
     base_feature do
+      include RgGen::SystemVerilog::RTL::PartialSum
+
       private
 
       def readable
@@ -22,11 +24,9 @@ RgGen.define_list_feature(:register, :type) do
       end
 
       def offset_address
-        [*register_files, register]
-          .flat_map(&method(:collect_offsets))
-          .reject.with_index { |offset, i| purge_offset?(offset, i) }
-          .map(&method(:format_offset))
-          .join('+')
+        offsets = [*register_files, register].flat_map(&method(:collect_offsets))
+        offsets = partial_sums(offsets)
+        format_offsets(offsets)
       end
 
       def collect_offsets(component)
@@ -41,12 +41,12 @@ RgGen.define_list_feature(:register, :type) do
         "#{component.byte_size(false)}*(#{component.local_index})"
       end
 
-      def purge_offset?(offset, index)
-        index.positive? && offset.is_a?(Integer) && offset.zero?
+      def format_offsets(offsets)
+        offsets.map(&method(:format_offset)).join('+')
       end
 
       def format_offset(offset)
-        offset.is_a?(Integer) && hex(offset, address_width) || offset
+        offset.is_a?(Integer) ? hex(offset, address_width) : offset
       end
 
       def width

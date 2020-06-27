@@ -4,6 +4,8 @@ module RgGen
   module SystemVerilog
     module RTL
       module RegisterIndex
+        include PartialSum
+
         EXPORTED_METHODS = [
           :loop_variables, :local_loop_variables,
           :local_index, :local_indices,
@@ -12,7 +14,7 @@ module RgGen
 
         def self.included(feature)
           feature.module_eval do
-            export *EXPORTED_METHODS
+            EXPORTED_METHODS.each { |m| export m }
 
             pre_build do
               @base_index = files_and_registers.sum(&:count)
@@ -49,10 +51,11 @@ module RgGen
 
         def index(offset_or_offsets = nil)
           operands = index_operands(offset_or_offsets)
-          if operands.empty? || operands.all? { |operand| operand.is_a?(Integer) }
-            operands.sum
+          partial_indices = partial_sums(operands)
+          if partial_indices.empty? || partial_indices.all?(&method(:integer?))
+            partial_indices.sum
           else
-            operands.join('+')
+            partial_indices.join('+')
           end
         end
 
@@ -81,7 +84,7 @@ module RgGen
             *upper_register_file&.index(offsets&.slice(0..-2)),
             @base_index,
             *local_register_index(offsets&.slice(-1))
-          ].reject { |operand| operand.is_a?(Integer) && operand.zero? }
+          ]
         end
 
         def local_register_index(offset)
@@ -93,7 +96,7 @@ module RgGen
         end
 
         def product(operands, need_bracket)
-          if operands.all? { |operand| operand.is_a?(Integer) }
+          if operands.all?(&method(:integer?))
             operands.reduce(:*)
           elsif operands.first == 1
             operands.last
