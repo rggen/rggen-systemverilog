@@ -5,13 +5,16 @@ RSpec.describe 'bit_field/type' do
   include_context 'sv ral common'
 
   before(:all) do
-    RgGen.enable(:register, [:name, :size, :type])
+    RgGen.enable(:global, [:bus_width, :address_width])
+    RgGen.enable(:register_block, [:byte_size])
+    RgGen.enable(:register_file, [:name, :size, :offset_address])
+    RgGen.enable(:register, [:name, :size, :offset_address, :type])
     RgGen.enable(:bit_field, [:name, :bit_assignment, :initial_value, :reference, :type])
     RgGen.enable(:bit_field, :type, [:foo, :bar, :baz])
   end
 
   def create_bit_fields(&body)
-    create_sv_ral(&body).bit_fields
+    create_sv_ral { byte_size 256; instance_eval(&body) }.bit_fields
   end
 
   describe '#access' do
@@ -190,7 +193,7 @@ RSpec.describe 'bit_field/type' do
   describe '#constructors' do
     before(:all) do
       RgGen.define_list_item_feature(:bit_field, :type, :foo) do
-        register_map { volatile }
+        register_map { volatile; reference use: true }
         sv_ral {}
       end
       RgGen.define_list_item_feature(:bit_field, :type, :bar) do
@@ -236,6 +239,30 @@ RSpec.describe 'bit_field/type' do
           name 'register_3'
           bit_field { bit_assignment lsb: 0; type :foo }
         end
+
+        register_file do
+          name 'register_file_3'
+          register do
+            name 'register_0'
+            bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :foo }
+            bit_field { name 'bit_field_1'; bit_assignment lsb: 1, sequence_size: 4; type :foo }
+          end
+        end
+
+        register do
+          name 'register_4'
+          bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :foo; reference 'register_0.bit_field_0' }
+          bit_field { name 'bit_field_1'; bit_assignment lsb: 1, sequence_size: 4; type :foo; reference 'register_2.bit_field_0' }
+        end
+
+        register_file do
+          name 'register_file_5'
+          register do
+            name 'register_0'
+            bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :foo; reference 'register_file_3.register_0.bit_field_0' }
+            bit_field { name 'bit_field_1'; bit_assignment lsb: 1, sequence_size: 4; type :foo; reference 'register_file_3.register_0.bit_field_1' }
+          end
+        end
       end
 
       code_block = RgGen::Core::Utility::CodeUtility::CodeBlock.new
@@ -244,25 +271,40 @@ RSpec.describe 'bit_field/type' do
       end
 
       expect(code_block).to match_string(<<~'CODE')
-        `rggen_ral_create_field_model(bit_field_0, 0, 1, FOO, 1, 1'h0, 0)
-        `rggen_ral_create_field_model(bit_field_1, 8, 8, FOO, 1, 8'h00, 0)
-        `rggen_ral_create_field_model(bit_field_2, 16, 1, FOO, 1, 1'h0, 1)
-        `rggen_ral_create_field_model(bit_field_3, 24, 8, FOO, 1, 8'hab, 1)
-        `rggen_ral_create_field_model(bit_field_0, 0, 1, BAR, 0, 1'h0, 0)
-        `rggen_ral_create_field_model(bit_field_1, 1, 1, RW, 1, 1'h0, 0)
-        `rggen_ral_create_field_model(bit_field_0[0], 0, 4, FOO, 1, 4'h0, 1)
-        `rggen_ral_create_field_model(bit_field_0[1], 12, 4, FOO, 1, 4'h0, 1)
-        `rggen_ral_create_field_model(bit_field_0[2], 24, 4, FOO, 1, 4'h0, 1)
-        `rggen_ral_create_field_model(bit_field_0[3], 36, 4, FOO, 1, 4'h0, 1)
-        `rggen_ral_create_field_model(bit_field_1[0], 4, 4, FOO, 1, 4'h1, 1)
-        `rggen_ral_create_field_model(bit_field_1[1], 16, 4, FOO, 1, 4'h1, 1)
-        `rggen_ral_create_field_model(bit_field_1[2], 28, 4, FOO, 1, 4'h1, 1)
-        `rggen_ral_create_field_model(bit_field_1[3], 40, 4, FOO, 1, 4'h1, 1)
-        `rggen_ral_create_field_model(bit_field_2[0], 8, 4, FOO, 1, 4'h0, 1)
-        `rggen_ral_create_field_model(bit_field_2[1], 20, 4, FOO, 1, 4'h1, 1)
-        `rggen_ral_create_field_model(bit_field_2[2], 32, 4, FOO, 1, 4'h2, 1)
-        `rggen_ral_create_field_model(bit_field_2[3], 44, 4, FOO, 1, 4'h3, 1)
-        `rggen_ral_create_field_model(register_3, 0, 1, FOO, 1, 1'h0, 0)
+        `rggen_ral_create_field_model(bit_field_0, 0, 1, "FOO", 1, 1'h0, 0, 0, "")
+        `rggen_ral_create_field_model(bit_field_1, 8, 8, "FOO", 1, 8'h00, 0, 0, "")
+        `rggen_ral_create_field_model(bit_field_2, 16, 1, "FOO", 1, 1'h0, 1, 0, "")
+        `rggen_ral_create_field_model(bit_field_3, 24, 8, "FOO", 1, 8'hab, 1, 0, "")
+        `rggen_ral_create_field_model(bit_field_0, 0, 1, "BAR", 0, 1'h0, 0, 0, "")
+        `rggen_ral_create_field_model(bit_field_1, 1, 1, "RW", 1, 1'h0, 0, 0, "")
+        `rggen_ral_create_field_model(bit_field_0[0], 0, 4, "FOO", 1, 4'h0, 1, 0, "")
+        `rggen_ral_create_field_model(bit_field_0[1], 12, 4, "FOO", 1, 4'h0, 1, 1, "")
+        `rggen_ral_create_field_model(bit_field_0[2], 24, 4, "FOO", 1, 4'h0, 1, 2, "")
+        `rggen_ral_create_field_model(bit_field_0[3], 36, 4, "FOO", 1, 4'h0, 1, 3, "")
+        `rggen_ral_create_field_model(bit_field_1[0], 4, 4, "FOO", 1, 4'h1, 1, 0, "")
+        `rggen_ral_create_field_model(bit_field_1[1], 16, 4, "FOO", 1, 4'h1, 1, 1, "")
+        `rggen_ral_create_field_model(bit_field_1[2], 28, 4, "FOO", 1, 4'h1, 1, 2, "")
+        `rggen_ral_create_field_model(bit_field_1[3], 40, 4, "FOO", 1, 4'h1, 1, 3, "")
+        `rggen_ral_create_field_model(bit_field_2[0], 8, 4, "FOO", 1, 4'h0, 1, 0, "")
+        `rggen_ral_create_field_model(bit_field_2[1], 20, 4, "FOO", 1, 4'h1, 1, 1, "")
+        `rggen_ral_create_field_model(bit_field_2[2], 32, 4, "FOO", 1, 4'h2, 1, 2, "")
+        `rggen_ral_create_field_model(bit_field_2[3], 44, 4, "FOO", 1, 4'h3, 1, 3, "")
+        `rggen_ral_create_field_model(register_3, 0, 1, "FOO", 1, 1'h0, 0, 0, "")
+        `rggen_ral_create_field_model(bit_field_0, 0, 1, "FOO", 1, 1'h0, 0, 0, "")
+        `rggen_ral_create_field_model(bit_field_1[0], 1, 1, "FOO", 1, 1'h0, 0, 0, "")
+        `rggen_ral_create_field_model(bit_field_1[1], 2, 1, "FOO", 1, 1'h0, 0, 1, "")
+        `rggen_ral_create_field_model(bit_field_1[2], 3, 1, "FOO", 1, 1'h0, 0, 2, "")
+        `rggen_ral_create_field_model(bit_field_1[3], 4, 1, "FOO", 1, 1'h0, 0, 3, "")
+        `rggen_ral_create_field_model(bit_field_0, 0, 1, "FOO", 1, 1'h0, 0, 0, "register_0.bit_field_0")
+        `rggen_ral_create_field_model(bit_field_1[0], 1, 1, "FOO", 1, 1'h0, 0, 0, "register_2.bit_field_0")
+        `rggen_ral_create_field_model(bit_field_1[1], 2, 1, "FOO", 1, 1'h0, 0, 1, "register_2.bit_field_0")
+        `rggen_ral_create_field_model(bit_field_1[2], 3, 1, "FOO", 1, 1'h0, 0, 2, "register_2.bit_field_0")
+        `rggen_ral_create_field_model(bit_field_1[3], 4, 1, "FOO", 1, 1'h0, 0, 3, "register_2.bit_field_0")
+        `rggen_ral_create_field_model(bit_field_0, 0, 1, "FOO", 1, 1'h0, 0, 0, "register_file_3.register_0.bit_field_0")
+        `rggen_ral_create_field_model(bit_field_1[0], 1, 1, "FOO", 1, 1'h0, 0, 0, "register_file_3.register_0.bit_field_1")
+        `rggen_ral_create_field_model(bit_field_1[1], 2, 1, "FOO", 1, 1'h0, 0, 1, "register_file_3.register_0.bit_field_1")
+        `rggen_ral_create_field_model(bit_field_1[2], 3, 1, "FOO", 1, 1'h0, 0, 2, "register_file_3.register_0.bit_field_1")
+        `rggen_ral_create_field_model(bit_field_1[3], 4, 1, "FOO", 1, 1'h0, 0, 3, "register_file_3.register_0.bit_field_1")
       CODE
     end
   end
