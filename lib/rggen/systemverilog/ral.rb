@@ -2,6 +2,7 @@
 
 require_relative 'common'
 require_relative 'ral/feature'
+require_relative 'ral/register_common'
 
 module RgGen
   module SystemVerilog

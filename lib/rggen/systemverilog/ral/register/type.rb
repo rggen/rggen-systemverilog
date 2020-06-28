@@ -3,6 +3,8 @@
 RgGen.define_list_feature(:register, :type) do
   sv_ral do
     base_feature do
+      include RgGen::SystemVerilog::RAL::RegisterCommon
+
       define_helpers do
         def model_name(&body)
           @model_name = body if block_given?
@@ -12,14 +14,6 @@ RgGen.define_list_feature(:register, :type) do
         def offset_address(&body)
           @offset_address = body if block_given?
           @offset_address
-        end
-
-        def unmapped
-          @unmapped = true
-        end
-
-        def unmapped?
-          !@unmapped.nil?
         end
 
         def constructor(&body)
@@ -38,9 +32,7 @@ RgGen.define_list_feature(:register, :type) do
       end
 
       def constructors
-        (array_index_list || [nil]).map.with_index do |array_index, i|
-          constructor_code(array_index, i)
-        end
+        array_indices.map.with_index(&method(:constructor_code))
       end
 
       private
@@ -49,16 +41,8 @@ RgGen.define_list_feature(:register, :type) do
         if helper.model_name
           instance_eval(&helper.model_name)
         else
-          "#{register.name}_reg_model"
+          "#{register.full_name('_')}_reg_model"
         end
-      end
-
-      def array_index_list
-        (register.array? || nil) &&
-          begin
-            index_table = register.array_size.map { |size| (0...size).to_a }
-            index_table[0].product(*index_table[1..-1])
-          end
       end
 
       def constructor_code(array_index, index)
@@ -74,18 +58,8 @@ RgGen.define_list_feature(:register, :type) do
       def arguments(array_index, index)
         [
           ral_model[array_index], array(array_index), offset_address(index),
-          access_rights, unmapped, hdl_path(array_index)
+          string(access_rights), string(hdl_path(array_index))
         ]
-      end
-
-      def offset_address(index = 0)
-        address =
-          if helper.offset_address
-            instance_exec(index, &helper.offset_address)
-          else
-            register.offset_address + register.byte_width * index
-          end
-        hex(address, register_block.local_address_width)
       end
 
       def access_rights
@@ -104,18 +78,6 @@ RgGen.define_list_feature(:register, :type) do
 
       def write_only?
         register.writable? && !register.readable?
-      end
-
-      def unmapped
-        helper.unmapped? && 1 || 0
-      end
-
-      def hdl_path(array_index)
-        [
-          "g_#{register.name}",
-          *Array(array_index).map { |i| "g[#{i}]" },
-          'u_register'
-        ].join('.')
       end
 
       def variables

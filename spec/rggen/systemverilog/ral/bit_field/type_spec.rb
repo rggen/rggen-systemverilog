@@ -252,7 +252,8 @@ RSpec.describe 'bit_field/type' do
         register do
           name 'register_4'
           bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :foo; reference 'register_0.bit_field_0' }
-          bit_field { name 'bit_field_1'; bit_assignment lsb: 1, sequence_size: 4; type :foo; reference 'register_2.bit_field_0' }
+          bit_field { name 'bit_field_1'; bit_assignment lsb: 4, sequence_size: 4; type :foo; reference 'register_2.bit_field_0' }
+          bit_field { name 'bit_field_2'; bit_assignment lsb: 8; type :foo; reference 'register_3' }
         end
 
         register_file do
@@ -296,10 +297,11 @@ RSpec.describe 'bit_field/type' do
         `rggen_ral_create_field_model(bit_field_1[2], 3, 1, "FOO", 1, 1'h0, 0, 2, "")
         `rggen_ral_create_field_model(bit_field_1[3], 4, 1, "FOO", 1, 1'h0, 0, 3, "")
         `rggen_ral_create_field_model(bit_field_0, 0, 1, "FOO", 1, 1'h0, 0, 0, "register_0.bit_field_0")
-        `rggen_ral_create_field_model(bit_field_1[0], 1, 1, "FOO", 1, 1'h0, 0, 0, "register_2.bit_field_0")
-        `rggen_ral_create_field_model(bit_field_1[1], 2, 1, "FOO", 1, 1'h0, 0, 1, "register_2.bit_field_0")
-        `rggen_ral_create_field_model(bit_field_1[2], 3, 1, "FOO", 1, 1'h0, 0, 2, "register_2.bit_field_0")
-        `rggen_ral_create_field_model(bit_field_1[3], 4, 1, "FOO", 1, 1'h0, 0, 3, "register_2.bit_field_0")
+        `rggen_ral_create_field_model(bit_field_1[0], 4, 1, "FOO", 1, 1'h0, 0, 0, "register_2.bit_field_0")
+        `rggen_ral_create_field_model(bit_field_1[1], 5, 1, "FOO", 1, 1'h0, 0, 1, "register_2.bit_field_0")
+        `rggen_ral_create_field_model(bit_field_1[2], 6, 1, "FOO", 1, 1'h0, 0, 2, "register_2.bit_field_0")
+        `rggen_ral_create_field_model(bit_field_1[3], 7, 1, "FOO", 1, 1'h0, 0, 3, "register_2.bit_field_0")
+        `rggen_ral_create_field_model(bit_field_2, 8, 1, "FOO", 1, 1'h0, 0, 0, "register_3.register_3")
         `rggen_ral_create_field_model(bit_field_0, 0, 1, "FOO", 1, 1'h0, 0, 0, "register_file_3.register_0.bit_field_0")
         `rggen_ral_create_field_model(bit_field_1[0], 1, 1, "FOO", 1, 1'h0, 0, 0, "register_file_3.register_0.bit_field_1")
         `rggen_ral_create_field_model(bit_field_1[1], 2, 1, "FOO", 1, 1'h0, 0, 1, "register_file_3.register_0.bit_field_1")

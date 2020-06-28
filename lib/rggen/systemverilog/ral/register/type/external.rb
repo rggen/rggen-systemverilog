@@ -16,7 +16,7 @@ RgGen.define_list_item_feature(:register, :type, :external) do
     constructor do
       macro_call(
         'rggen_ral_create_block_model',
-        [ral_model, offset_address, 'this', integrate_model]
+        [ral_model, offset_address(0), 'this', integrate_model]
       )
     end
   end

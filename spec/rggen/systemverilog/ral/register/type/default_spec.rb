@@ -7,6 +7,7 @@ RSpec.describe 'register/type/default' do
   before(:all) do
     RgGen.enable(:global, [:bus_width, :address_width, :array_port_format])
     RgGen.enable(:register_block, [:name, :byte_size])
+    RgGen.enable(:register_file, [:name, :offset_address, :size])
     RgGen.enable(:register, [:name, :offset_address, :size, :type])
     RgGen.enable(:bit_field, [:name, :bit_assignment, :type, :initial_value, :reference])
     RgGen.enable(:bit_field, :type, [:rw, :ro, :wo])
@@ -78,6 +79,33 @@ RSpec.describe 'register/type/default' do
         offset_address 0x90
         bit_field { bit_assignment lsb: 0; type :rw; initial_value 0 }
       end
+
+      register_file do
+        name 'register_file_10'
+        offset_address 0xa0
+        register do
+          name 'register_0'
+          offset_address 0x00
+          bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+        end
+      end
+
+      register_file do
+        name 'register_file_11'
+        offset_address 0xb0
+        size [2]
+        register_file do
+          name 'register_file_0'
+          offset_address 0x00
+          register do
+            name 'register_0'
+            size [2, 2]
+            offset_address 0x00
+            bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+            bit_field { name 'bit_field_1'; bit_assignment lsb: 1; type :ro; reference 'register_file_11.register_file_0.register_0.bit_field_0' }
+          end
+        end
+      end
     end
     sv_ral.registers
   end
@@ -95,6 +123,15 @@ RSpec.describe 'register/type/default' do
       :register_block, :ral_model,
       name: 'register_2', data_type: 'register_2_reg_model', array_size: [2, 2], array_format: :unpacked, random: true
     )
+    expect(registers[10]).to have_variable(
+      :register_file, :ral_model,
+      name: 'register_0', data_type: 'register_file_10_register_0_reg_model', random: true
+    )
+    expect(registers[11]).to have_variable(
+      :register_file, :ral_model,
+      name: 'register_0', data_type: 'register_file_11_register_file_0_register_0_reg_model',
+      array_size: [2, 2], array_format: :unpacked, random: true
+    )
   end
 
   describe '#constructors' do
@@ -105,22 +142,27 @@ RSpec.describe 'register/type/default' do
       end
 
       expect(code_block).to match_string(<<~'CODE')
-        `rggen_ral_create_reg_model(register_0, '{}, 8'h00, RW, 0, g_register_0.u_register)
-        `rggen_ral_create_reg_model(register_1[0], '{0}, 8'h10, RW, 0, g_register_1.g[0].u_register)
-        `rggen_ral_create_reg_model(register_1[1], '{1}, 8'h14, RW, 0, g_register_1.g[1].u_register)
-        `rggen_ral_create_reg_model(register_1[2], '{2}, 8'h18, RW, 0, g_register_1.g[2].u_register)
-        `rggen_ral_create_reg_model(register_1[3], '{3}, 8'h1c, RW, 0, g_register_1.g[3].u_register)
-        `rggen_ral_create_reg_model(register_2[0][0], '{0, 0}, 8'h20, RW, 0, g_register_2.g[0].g[0].u_register)
-        `rggen_ral_create_reg_model(register_2[0][1], '{0, 1}, 8'h24, RW, 0, g_register_2.g[0].g[1].u_register)
-        `rggen_ral_create_reg_model(register_2[1][0], '{1, 0}, 8'h28, RW, 0, g_register_2.g[1].g[0].u_register)
-        `rggen_ral_create_reg_model(register_2[1][1], '{1, 1}, 8'h2c, RW, 0, g_register_2.g[1].g[1].u_register)
-        `rggen_ral_create_reg_model(register_3, '{}, 8'h30, RW, 0, g_register_3.u_register)
-        `rggen_ral_create_reg_model(register_4, '{}, 8'h40, RW, 0, g_register_4.u_register)
-        `rggen_ral_create_reg_model(register_5, '{}, 8'h50, RW, 0, g_register_5.u_register)
-        `rggen_ral_create_reg_model(register_6, '{}, 8'h60, RW, 0, g_register_6.u_register)
-        `rggen_ral_create_reg_model(register_7, '{}, 8'h70, RO, 0, g_register_7.u_register)
-        `rggen_ral_create_reg_model(register_8, '{}, 8'h80, WO, 0, g_register_8.u_register)
-        `rggen_ral_create_reg_model(register_9, '{}, 8'h90, RW, 0, g_register_9.u_register)
+        `rggen_ral_create_reg_model(register_0, '{}, 8'h00, "RW", "g_register_0.u_register")
+        `rggen_ral_create_reg_model(register_1[0], '{0}, 8'h10, "RW", "g_register_1.g[0].u_register")
+        `rggen_ral_create_reg_model(register_1[1], '{1}, 8'h14, "RW", "g_register_1.g[1].u_register")
+        `rggen_ral_create_reg_model(register_1[2], '{2}, 8'h18, "RW", "g_register_1.g[2].u_register")
+        `rggen_ral_create_reg_model(register_1[3], '{3}, 8'h1c, "RW", "g_register_1.g[3].u_register")
+        `rggen_ral_create_reg_model(register_2[0][0], '{0, 0}, 8'h20, "RW", "g_register_2.g[0].g[0].u_register")
+        `rggen_ral_create_reg_model(register_2[0][1], '{0, 1}, 8'h24, "RW", "g_register_2.g[0].g[1].u_register")
+        `rggen_ral_create_reg_model(register_2[1][0], '{1, 0}, 8'h28, "RW", "g_register_2.g[1].g[0].u_register")
+        `rggen_ral_create_reg_model(register_2[1][1], '{1, 1}, 8'h2c, "RW", "g_register_2.g[1].g[1].u_register")
+        `rggen_ral_create_reg_model(register_3, '{}, 8'h30, "RW", "g_register_3.u_register")
+        `rggen_ral_create_reg_model(register_4, '{}, 8'h40, "RW", "g_register_4.u_register")
+        `rggen_ral_create_reg_model(register_5, '{}, 8'h50, "RW", "g_register_5.u_register")
+        `rggen_ral_create_reg_model(register_6, '{}, 8'h60, "RW", "g_register_6.u_register")
+        `rggen_ral_create_reg_model(register_7, '{}, 8'h70, "RO", "g_register_7.u_register")
+        `rggen_ral_create_reg_model(register_8, '{}, 8'h80, "WO", "g_register_8.u_register")
+        `rggen_ral_create_reg_model(register_9, '{}, 8'h90, "RW", "g_register_9.u_register")
+        `rggen_ral_create_reg_model(register_0, '{}, 8'h00, "RW", "g_register_0.u_register")
+        `rggen_ral_create_reg_model(register_0[0][0], '{0, 0}, 8'h00, "RW", "g_register_0.g[0].g[0].u_register")
+        `rggen_ral_create_reg_model(register_0[0][1], '{0, 1}, 8'h04, "RW", "g_register_0.g[0].g[1].u_register")
+        `rggen_ral_create_reg_model(register_0[1][0], '{1, 0}, 8'h08, "RW", "g_register_0.g[1].g[0].u_register")
+        `rggen_ral_create_reg_model(register_0[1][1], '{1, 1}, 8'h0c, "RW", "g_register_0.g[1].g[1].u_register")
       CODE
     end
   end
@@ -134,7 +176,7 @@ RSpec.describe 'register/type/default' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field_model(bit_field_0, 0, 1, RW, 0, 1'h0, 1)
+            `rggen_ral_create_field_model(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, 0, "")
           endfunction
         endclass
       CODE
@@ -146,7 +188,7 @@ RSpec.describe 'register/type/default' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field_model(bit_field_0, 0, 1, RW, 0, 1'h0, 1)
+            `rggen_ral_create_field_model(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, 0, "")
           endfunction
         endclass
       CODE
@@ -158,7 +200,7 @@ RSpec.describe 'register/type/default' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field_model(bit_field_0, 0, 1, RW, 0, 1'h0, 1)
+            `rggen_ral_create_field_model(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, 0, "")
           endfunction
         endclass
       CODE
@@ -170,7 +212,7 @@ RSpec.describe 'register/type/default' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field_model(bit_field_0, 0, 32, RW, 0, 32'h00000000, 1)
+            `rggen_ral_create_field_model(bit_field_0, 0, 32, "RW", 0, 32'h00000000, 1, 0, "")
           endfunction
         endclass
       CODE
@@ -182,10 +224,10 @@ RSpec.describe 'register/type/default' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field_model(bit_field_0[0], 4, 4, RW, 0, 4'h0, 1)
-            `rggen_ral_create_field_model(bit_field_0[1], 12, 4, RW, 0, 4'h0, 1)
-            `rggen_ral_create_field_model(bit_field_0[2], 20, 4, RW, 0, 4'h0, 1)
-            `rggen_ral_create_field_model(bit_field_0[3], 28, 4, RW, 0, 4'h0, 1)
+            `rggen_ral_create_field_model(bit_field_0[0], 4, 4, "RW", 0, 4'h0, 1, 0, "")
+            `rggen_ral_create_field_model(bit_field_0[1], 12, 4, "RW", 0, 4'h0, 1, 1, "")
+            `rggen_ral_create_field_model(bit_field_0[2], 20, 4, "RW", 0, 4'h0, 1, 2, "")
+            `rggen_ral_create_field_model(bit_field_0[3], 28, 4, "RW", 0, 4'h0, 1, 3, "")
           endfunction
         endclass
       CODE
@@ -197,7 +239,7 @@ RSpec.describe 'register/type/default' do
             super.new(name, 64, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field_model(bit_field_0, 32, 1, RW, 0, 1'h0, 1)
+            `rggen_ral_create_field_model(bit_field_0, 32, 1, "RW", 0, 1'h0, 1, 0, "")
           endfunction
         endclass
       CODE
@@ -209,14 +251,14 @@ RSpec.describe 'register/type/default' do
             super.new(name, 64, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field_model(bit_field_0[0], 4, 4, RW, 0, 4'h0, 1)
-            `rggen_ral_create_field_model(bit_field_0[1], 12, 4, RW, 0, 4'h0, 1)
-            `rggen_ral_create_field_model(bit_field_0[2], 20, 4, RW, 0, 4'h0, 1)
-            `rggen_ral_create_field_model(bit_field_0[3], 28, 4, RW, 0, 4'h0, 1)
-            `rggen_ral_create_field_model(bit_field_0[4], 36, 4, RW, 0, 4'h0, 1)
-            `rggen_ral_create_field_model(bit_field_0[5], 44, 4, RW, 0, 4'h0, 1)
-            `rggen_ral_create_field_model(bit_field_0[6], 52, 4, RW, 0, 4'h0, 1)
-            `rggen_ral_create_field_model(bit_field_0[7], 60, 4, RW, 0, 4'h0, 1)
+            `rggen_ral_create_field_model(bit_field_0[0], 4, 4, "RW", 0, 4'h0, 1, 0, "")
+            `rggen_ral_create_field_model(bit_field_0[1], 12, 4, "RW", 0, 4'h0, 1, 1, "")
+            `rggen_ral_create_field_model(bit_field_0[2], 20, 4, "RW", 0, 4'h0, 1, 2, "")
+            `rggen_ral_create_field_model(bit_field_0[3], 28, 4, "RW", 0, 4'h0, 1, 3, "")
+            `rggen_ral_create_field_model(bit_field_0[4], 36, 4, "RW", 0, 4'h0, 1, 4, "")
+            `rggen_ral_create_field_model(bit_field_0[5], 44, 4, "RW", 0, 4'h0, 1, 5, "")
+            `rggen_ral_create_field_model(bit_field_0[6], 52, 4, "RW", 0, 4'h0, 1, 6, "")
+            `rggen_ral_create_field_model(bit_field_0[7], 60, 4, "RW", 0, 4'h0, 1, 7, "")
           endfunction
         endclass
       CODE
@@ -228,7 +270,7 @@ RSpec.describe 'register/type/default' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field_model(bit_field_0, 0, 1, RO, 1, 1'h0, 0)
+            `rggen_ral_create_field_model(bit_field_0, 0, 1, "RO", 1, 1'h0, 0, 0, "")
           endfunction
         endclass
       CODE
@@ -240,7 +282,7 @@ RSpec.describe 'register/type/default' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field_model(bit_field_0, 0, 1, WO, 0, 1'h0, 1)
+            `rggen_ral_create_field_model(bit_field_0, 0, 1, "WO", 0, 1'h0, 1, 0, "")
           endfunction
         endclass
       CODE
@@ -252,7 +294,33 @@ RSpec.describe 'register/type/default' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field_model(register_9, 0, 1, RW, 0, 1'h0, 1)
+            `rggen_ral_create_field_model(register_9, 0, 1, "RW", 0, 1'h0, 1, 0, "")
+          endfunction
+        endclass
+      CODE
+
+      expect(registers[10]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
+        class register_file_10_register_0_reg_model extends rggen_ral_reg;
+          rand rggen_ral_field bit_field_0;
+          function new(string name);
+            super.new(name, 32, 0);
+          endfunction
+          function void build();
+            `rggen_ral_create_field_model(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, 0, "")
+          endfunction
+        endclass
+      CODE
+
+      expect(registers[11]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
+        class register_file_11_register_file_0_register_0_reg_model extends rggen_ral_reg;
+          rand rggen_ral_field bit_field_0;
+          rand rggen_ral_field bit_field_1;
+          function new(string name);
+            super.new(name, 32, 0);
+          endfunction
+          function void build();
+            `rggen_ral_create_field_model(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, 0, "")
+            `rggen_ral_create_field_model(bit_field_1, 1, 1, "RO", 1, 1'h0, 0, 0, "register_file_11.register_file_0.register_0.bit_field_0")
           endfunction
         endclass
       CODE
