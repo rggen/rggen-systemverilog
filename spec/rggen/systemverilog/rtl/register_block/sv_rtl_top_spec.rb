@@ -31,9 +31,9 @@ RSpec.describe 'register_block/sv_rtl_top' do
     it 'clock/resetを持つ' do
       register_block = create_register_block { name 'block_0'; byte_size 256 }
       expect(register_block)
-        .to have_port(:register_block, :clock) { |p| p.name 'i_clk'; p.direction :input; p.data_type :logic; p.width 1; }
+        .to have_port(:clock) { |p| p.name 'i_clk'; p.direction :input; p.data_type :logic; p.width 1; }
       expect(register_block)
-        .to have_port(:register_block, :reset) { |p| p.name 'i_rst_n'; p.direction :input; p.data_type :logic; p.width 1; }
+        .to have_port(:reset) { |p| p.name 'i_rst_n'; p.direction :input; p.data_type :logic; p.width 1; }
     end
   end
 
@@ -49,7 +49,7 @@ RSpec.describe 'register_block/sv_rtl_top' do
         end
       end
       expect(register_block).to have_interface(
-        :register_block, :register_if,
+        :register_if,
         name: 'register_if', interface_type: 'rggen_register_if',
         parameter_values: [address_width, bus_width, 1 * bus_width], array_size: [1]
       )
@@ -65,7 +65,7 @@ RSpec.describe 'register_block/sv_rtl_top' do
         end
       end
       expect(register_block).to have_interface(
-        :register_block, :register_if,
+        :register_if,
         name: 'register_if', interface_type: 'rggen_register_if',
         parameter_values: [address_width, bus_width, 1 * bus_width], array_size: [8]
       )
@@ -90,7 +90,7 @@ RSpec.describe 'register_block/sv_rtl_top' do
         end
       end
       expect(register_block).to have_interface(
-        :register_block, :register_if,
+        :register_if,
         name: 'register_if', interface_type: 'rggen_register_if',
         parameter_values: [address_width, bus_width, 3 * bus_width], array_size: [3]
       )
@@ -130,7 +130,7 @@ RSpec.describe 'register_block/sv_rtl_top' do
         end
       end
       expect(register_block).to have_interface(
-        :register_block, :register_if,
+        :register_if,
         name: 'register_if', interface_type: 'rggen_register_if',
         parameter_values: [address_width, bus_width, 2 * bus_width], array_size: [25]
       )

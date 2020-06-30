@@ -70,65 +70,65 @@ RSpec.describe 'bit_field/sv_rtl_top' do
         end
 
         expect(bit_fields[0]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: 'INITIAL_VALUE', parameter_type: :localparam,
           data_type: :bit, width: 1, default: "1'h0"
         )
         expect(bit_fields[1]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: 'INITIAL_VALUE', parameter_type: :localparam,
           data_type: :bit, width: 8, default: "8'h01"
         )
         expect(bit_fields[2]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: 'INITIAL_VALUE', parameter_type: :localparam,
           data_type: :bit, width: 8, default: "8'h02"
         )
 
         expect(bit_fields[3]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: 'INITIAL_VALUE', parameter_type: :localparam,
           data_type: :bit, width: 1, default: "1'h0"
         )
         expect(bit_fields[4]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: 'INITIAL_VALUE', parameter_type: :localparam,
           data_type: :bit, width: 8, default: "8'h01"
         )
         expect(bit_fields[5]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: 'INITIAL_VALUE', parameter_type: :localparam,
           data_type: :bit, width: 8, default: "8'h02"
         )
 
         expect(bit_fields[6]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: 'INITIAL_VALUE', parameter_type: :localparam,
           data_type: :bit, width: 1, default: "1'h0"
         )
         expect(bit_fields[7]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: 'INITIAL_VALUE', parameter_type: :localparam,
           data_type: :bit, width: 8, default: "8'h01"
         )
         expect(bit_fields[8]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: 'INITIAL_VALUE', parameter_type: :localparam,
           data_type: :bit, width: 8, default: "8'h02"
         )
 
         expect(bit_fields[9]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: 'INITIAL_VALUE', parameter_type: :localparam,
           data_type: :bit, width: 1, default: "1'h0"
         )
         expect(bit_fields[10]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: 'INITIAL_VALUE', parameter_type: :localparam,
           data_type: :bit, width: 8, default: "8'h01"
         )
         expect(bit_fields[11]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: 'INITIAL_VALUE', parameter_type: :localparam,
           data_type: :bit, width: 8, default: "8'h02"
         )
@@ -412,42 +412,42 @@ RSpec.describe 'bit_field/sv_rtl_top' do
         end
 
         expect(bit_fields[0]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: "INITIAL_VALUE", parameter_type: :localparam,
           data_type: :bit, width: 8, array_size: [1], array_format: :unpacked, default: "'{8'h00}"
         )
         expect(bit_fields[1]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: "INITIAL_VALUE", parameter_type: :localparam,
           data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{8'h01, 8'h02}"
         )
         expect(bit_fields[2]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: "INITIAL_VALUE", parameter_type: :localparam,
           data_type: :bit, width: 8, array_size: [1], array_format: :unpacked, default: "'{8'h00}"
         )
         expect(bit_fields[3]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: "INITIAL_VALUE", parameter_type: :localparam,
           data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{8'h01, 8'h02}"
         )
         expect(bit_fields[4]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: "INITIAL_VALUE", parameter_type: :localparam,
           data_type: :bit, width: 8, array_size: [1], array_format: :unpacked, default: "'{8'h00}"
         )
         expect(bit_fields[5]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: "INITIAL_VALUE", parameter_type: :localparam,
           data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{8'h01, 8'h02}"
         )
         expect(bit_fields[6]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: "INITIAL_VALUE", parameter_type: :localparam,
           data_type: :bit, width: 8, array_size: [1], array_format: :unpacked, default: "'{8'h00}"
         )
         expect(bit_fields[7]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: "INITIAL_VALUE", parameter_type: :localparam,
           data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{8'h01, 8'h02}"
         )
@@ -472,19 +472,19 @@ RSpec.describe 'bit_field/sv_rtl_top' do
       end
 
       expect(bit_fields[0]).to have_interface(
-        :bit_field, :bit_field_sub_if,
+        :bit_field_sub_if,
         name: 'bit_field_sub_if', interface_type: 'rggen_bit_field_if', parameter_values: [1]
       )
       expect(bit_fields[1]).to have_interface(
-        :bit_field, :bit_field_sub_if,
+        :bit_field_sub_if,
         name: 'bit_field_sub_if', interface_type: 'rggen_bit_field_if', parameter_values: [8]
       )
       expect(bit_fields[2]).to have_interface(
-        :bit_field, :bit_field_sub_if,
+        :bit_field_sub_if,
         name: 'bit_field_sub_if', interface_type: 'rggen_bit_field_if', parameter_values: [8]
       )
       expect(bit_fields[3]).to have_interface(
-        :bit_field, :bit_field_sub_if,
+        :bit_field_sub_if,
         name: 'bit_field_sub_if', interface_type: 'rggen_bit_field_if', parameter_values: [64]
       )
     end

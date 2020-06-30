@@ -161,22 +161,22 @@ RSpec.describe 'register/type/indirect' do
 
   it 'logic変数#indirect_indexを持つ' do
     expect(registers[4]).to have_variable(
-      :register, :indirect_index,
+      :indirect_index,
       name: 'indirect_index', data_type: :logic, width: 1
     )
 
     expect(registers[5]).to have_variable(
-      :register, :indirect_index,
+      :indirect_index,
       name: 'indirect_index', data_type: :logic, width: 2
     )
 
     expect(registers[6]).to have_variable(
-      :register, :indirect_index,
+      :indirect_index,
       name: 'indirect_index', data_type: :logic, width: 6
     )
 
     expect(registers[7]).to have_variable(
-      :register, :indirect_index,
+      :indirect_index,
       name: 'indirect_index', data_type: :logic, width: 7
     )
   end

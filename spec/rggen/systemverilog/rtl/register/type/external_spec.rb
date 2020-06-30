@@ -117,7 +117,7 @@ RSpec.describe 'register/type/external' do
 
     it 'rggen_bus_ifのインスタンスを持つ' do
       expect(register).to have_interface(
-        :register, :bus_if,
+        :bus_if,
         name: 'bus_if', interface_type: 'rggen_bus_if', parameter_values: [8, 32]
       )
     end

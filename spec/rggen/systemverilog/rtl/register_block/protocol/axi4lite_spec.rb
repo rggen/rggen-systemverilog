@@ -66,86 +66,86 @@ RSpec.describe 'register_block/protocol/apb' do
 
       it 'インターフェースポート#axi4lite_ifを持つ' do
         expect(register_block).to have_interface_port(
-          :register_block, :axi4lite_if,
+          :axi4lite_if,
           name: 'axi4lite_if', interface_type: 'rggen_axi4lite_if', modport: 'slave'
         )
       end
 
       specify '#axi4lite_ifは個別ポートに展開されない' do
         expect(register_block).to not_have_port(
-          :register_block, :awvalid,
+          :awvalid,
           name: 'i_awvalid', direction: :input, data_type: :logic, width: 1
         )
         expect(register_block).to not_have_port(
-          :register_block, :awready,
+          :awready,
           name: 'o_awready', direction: :output, data_type: :logic, width: 1
         )
         expect(register_block).to not_have_port(
-          :register_block, :awaddr,
+          :awaddr,
           name: 'i_awaddr', direction: :input, data_type: :logic, width: address_width
         )
         expect(register_block).to not_have_port(
-          :register_block, :awprot,
+          :awprot,
           name: 'i_awprot', direction: :input, data_type: :logic, width: 3
         )
         expect(register_block).to not_have_port(
-          :register_block, :wvalid,
+          :wvalid,
           name: 'i_wvalid', direction: :input, data_type: :logic, width: 1
         )
         expect(register_block).to not_have_port(
-          :register_block, :wready,
+          :wready,
           name: 'o_wready', direction: :output, data_type: :logic, width: 1
         )
         expect(register_block).to not_have_port(
-          :register_block, :wdata,
+          :wdata,
           name: 'i_wdata', direction: :input, data_type: :logic, width: bus_width
         )
         expect(register_block).to not_have_port(
-          :register_block, :wstrb,
+          :wstrb,
           name: 'i_wstrb', direction: :input, data_type: :logic, width: bus_width / 8
         )
         expect(register_block).to not_have_port(
-          :register_block, :bvalid,
+          :bvalid,
           name: 'o_bvalid', direction: :output, data_type: :logic, width: 1
         )
         expect(register_block).to not_have_port(
-          :register_block, :bready,
+          :bready,
           name: 'i_bready', direction: :input, data_type: :logic, width: 1
         )
         expect(register_block).to not_have_port(
-          :register_block, :bresp,
+          :bresp,
           name: 'o_bresp', direction: :output, data_type: :logic, width: 2
         )
         expect(register_block).to not_have_port(
-          :register_block, :arvalid,
+          :arvalid,
           name: 'i_arvalid', direction: :input, data_type: :logic, width: 1
         )
         expect(register_block).to not_have_port(
-          :register_block, :arready,
+          :arready,
           name: 'o_arready', direction: :output, data_type: :logic, width: 1
         )
         expect(register_block).to not_have_port(
-          :register_block, :araddr,
+          :araddr,
           name: 'i_araddr', direction: :input, data_type: :logic, width: address_width
         )
         expect(register_block).to not_have_port(
-          :register_block, :arprot,
+          :arprot,
           name: 'i_arprot', direction: :input, data_type: :logic, width: 3
         )
         expect(register_block).to not_have_port(
-          :register_block, :rvalid,
+          :rvalid,
           name: 'o_rvalid', direction: :output, data_type: :logic, width: 1
         )
         expect(register_block).to not_have_port(
-          :register_block, :rready,
+          :rready,
           name: 'i_rready', direction: :input, data_type: :logic, width: 1
         )
         expect(register_block).to not_have_port(
-          :register_block, :rdata,
+          :rdata,
           name: 'o_rdata', direction: :output, data_type: :logic, width: bus_width
         )
         expect(register_block).to not_have_port(
-          :register_block, :rresp,
+          :rresp,
           name: 'o_rresp', direction: :output, data_type: :input, width: 2
         )
       end
@@ -162,86 +162,86 @@ RSpec.describe 'register_block/protocol/apb' do
 
       it '個別ポートに展開された#axi4lite_ifを持つ' do
         expect(register_block).to have_port(
-          :register_block, :awvalid,
+          :awvalid,
           name: 'i_awvalid', direction: :input, data_type: :logic, width: 1
         )
         expect(register_block).to have_port(
-          :register_block, :awready,
+          :awready,
           name: 'o_awready', direction: :output, data_type: :logic, width: 1
         )
         expect(register_block).to have_port(
-          :register_block, :awaddr,
+          :awaddr,
           name: 'i_awaddr', direction: :input, data_type: :logic, width: address_width
         )
         expect(register_block).to have_port(
-          :register_block, :awprot,
+          :awprot,
           name: 'i_awprot', direction: :input, data_type: :logic, width: 3
         )
         expect(register_block).to have_port(
-          :register_block, :wvalid,
+          :wvalid,
           name: 'i_wvalid', direction: :input, data_type: :logic, width: 1
         )
         expect(register_block).to have_port(
-          :register_block, :wready,
+          :wready,
           name: 'o_wready', direction: :output, data_type: :logic, width: 1
         )
         expect(register_block).to have_port(
-          :register_block, :wdata,
+          :wdata,
           name: 'i_wdata', direction: :input, data_type: :logic, width: bus_width
         )
         expect(register_block).to have_port(
-          :register_block, :wstrb,
+          :wstrb,
           name: 'i_wstrb', direction: :input, data_type: :logic, width: bus_width / 8
         )
         expect(register_block).to have_port(
-          :register_block, :bvalid,
+          :bvalid,
           name: 'o_bvalid', direction: :output, data_type: :logic, width: 1
         )
         expect(register_block).to have_port(
-          :register_block, :bready,
+          :bready,
           name: 'i_bready', direction: :input, data_type: :logic, width: 1
         )
         expect(register_block).to have_port(
-          :register_block, :bresp,
+          :bresp,
           name: 'o_bresp', direction: :output, data_type: :logic, width: 2
         )
         expect(register_block).to have_port(
-          :register_block, :arvalid,
+          :arvalid,
           name: 'i_arvalid', direction: :input, data_type: :logic, width: 1
         )
         expect(register_block).to have_port(
-          :register_block, :arready,
+          :arready,
           name: 'o_arready', direction: :output, data_type: :logic, width: 1
         )
         expect(register_block).to have_port(
-          :register_block, :araddr,
+          :araddr,
           name: 'i_araddr', direction: :input, data_type: :logic, width: address_width
         )
         expect(register_block).to have_port(
-          :register_block, :arprot,
+          :arprot,
           name: 'i_arprot', direction: :input, data_type: :logic, width: 3
         )
         expect(register_block).to have_port(
-          :register_block, :rvalid,
+          :rvalid,
           name: 'o_rvalid', direction: :output, data_type: :logic, width: 1
         )
         expect(register_block).to have_port(
-          :register_block, :rready,
+          :rready,
           name: 'i_rready', direction: :input, data_type: :logic, width: 1
         )
         expect(register_block).to have_port(
-          :register_block, :rdata,
+          :rdata,
           name: 'o_rdata', direction: :output, data_type: :logic, width: bus_width
         )
         expect(register_block).to have_port(
-          :register_block, :rresp,
+          :rresp,
           name: 'o_rresp', direction: :output, data_type: :logic, width: 2
         )
       end
 
       it 'rggen_ax4lite_ifのインスタンス#axi4lite_ifを持つ' do
         expect(register_block).to have_interface(
-          :register_block, :axi4lite_if,
+          :axi4lite_if,
           name: 'axi4lite_if', interface_type: 'rggen_axi4lite_if', parameter_values: [address_width, bus_width]
         )
       end
@@ -255,7 +255,7 @@ RSpec.describe 'register_block/protocol/apb' do
       end
 
       expect(register_block).to have_parameter(
-        :register_block, :write_first,
+        :write_first,
         name: 'WRITE_FIRST', parameter_type: :parameter, data_type: :bit, default: 1
       )
     end

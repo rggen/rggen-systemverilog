@@ -73,27 +73,27 @@ RSpec.describe 'register/sv_rtl_top' do
         end
 
         expect(registers[0]).to have_interface(
-          :register, :bit_field_if,
+          :bit_field_if,
           name: 'bit_field_if', interface_type: 'rggen_bit_field_if', parameter_values: [32]
         )
         expect(registers[1]).to have_interface(
-          :register, :bit_field_if,
+          :bit_field_if,
           name: 'bit_field_if', interface_type: 'rggen_bit_field_if', parameter_values: [64]
         )
         expect(registers[2]).to have_interface(
-          :register, :bit_field_if,
+          :bit_field_if,
           name: 'bit_field_if', interface_type: 'rggen_bit_field_if', parameter_values: [32]
         )
         expect(registers[3]).to have_interface(
-          :register, :bit_field_if,
+          :bit_field_if,
           name: 'bit_field_if', interface_type: 'rggen_bit_field_if', parameter_values: [64]
         )
         expect(registers[4]).to have_interface(
-          :register, :bit_field_if,
+          :bit_field_if,
           name: 'bit_field_if', interface_type: 'rggen_bit_field_if', parameter_values: [32]
         )
         expect(registers[5]).to have_interface(
-          :register, :bit_field_if,
+          :bit_field_if,
           name: 'bit_field_if', interface_type: 'rggen_bit_field_if', parameter_values: [64]
         )
       end
@@ -113,7 +113,7 @@ RSpec.describe 'register/sv_rtl_top' do
         end
 
         expect(registers[0]).to not_have_interface(
-          :register, :bit_field_if,
+          :bit_field_if,
           name: 'bit_field_if', interface_type: 'rggen_bit_field_if', parameter_values: [32]
         )
       end
