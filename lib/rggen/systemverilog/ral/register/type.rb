@@ -41,7 +41,7 @@ RgGen.define_list_feature(:register, :type) do
         if helper.model_name
           instance_eval(&helper.model_name)
         else
-          "#{register.full_name('_')}_reg_model"
+          "#{register.full_name('_')}_ral_model"
         end
       end
 

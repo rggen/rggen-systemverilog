@@ -135,44 +135,44 @@ RSpec.describe 'register/type/indirect' do
   it 'レジスタモデル変数#ral_modelを持つ' do
     expect(registers[4]).to have_variable(
       :register_block, :ral_model,
-      name: 'register_4', data_type: 'register_4_reg_model', random: true
+      name: 'register_4', data_type: 'register_4_ral_model', random: true
     )
     expect(registers[5]).to have_variable(
       :register_block, :ral_model,
-      name: 'register_5', data_type: 'register_5_reg_model',
+      name: 'register_5', data_type: 'register_5_ral_model',
       array_size: [2], array_format: :unpacked, random: true
     )
     expect(registers[6]).to have_variable(
       :register_block, :ral_model,
-      name: 'register_6', data_type: 'register_6_reg_model',
+      name: 'register_6', data_type: 'register_6_ral_model',
       array_size: [2, 4], array_format: :unpacked, random: true
     )
     expect(registers[7]).to have_variable(
       :register_block, :ral_model,
-      name: 'register_7', data_type: 'register_7_reg_model',
+      name: 'register_7', data_type: 'register_7_ral_model',
       array_size: [2, 4], array_format: :unpacked, random: true
     )
     expect(registers[8]).to have_variable(
       :register_block, :ral_model,
-      name: 'register_8', data_type: 'register_8_reg_model', random: true
+      name: 'register_8', data_type: 'register_8_ral_model', random: true
     )
     expect(registers[9]).to have_variable(
       :register_block, :ral_model,
-      name: 'register_9', data_type: 'register_9_reg_model', random: true
+      name: 'register_9', data_type: 'register_9_ral_model', random: true
     )
     expect(registers[10]).to have_variable(
       :register_block, :ral_model,
-      name: 'register_10', data_type: 'register_10_reg_model',
+      name: 'register_10', data_type: 'register_10_ral_model',
       array_size: [2], array_format: :unpacked, random: true
     )
     expect(registers[11]).to have_variable(
       :register_file, :ral_model,
-      name: 'register_0', data_type: 'register_file_11_register_0_reg_model',
+      name: 'register_0', data_type: 'register_file_11_register_0_ral_model',
       array_size: [2, 2], array_format: :unpacked, random: true
     )
     expect(registers[12]).to have_variable(
       :register_file, :ral_model,
-      name: 'register_0', data_type: 'register_file_12_register_file_0_register_0_reg_model',
+      name: 'register_0', data_type: 'register_file_12_register_file_0_register_0_ral_model',
       array_size: [2, 2], array_format: :unpacked, random: true
     )
   end
@@ -223,7 +223,7 @@ RSpec.describe 'register/type/indirect' do
   describe '#generate_code' do
     it 'レジスタレベルのRALモデルの定義を出力する' do
       expect(registers[4]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_4_reg_model extends rggen_ral_indirect_reg;
+        class register_4_ral_model extends rggen_ral_indirect_reg;
           rand rggen_ral_field bit_field_0;
           function new(string name);
             super.new(name, 32, 0);
@@ -238,7 +238,7 @@ RSpec.describe 'register/type/indirect' do
       CODE
 
       expect(registers[5]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_5_reg_model extends rggen_ral_indirect_reg;
+        class register_5_ral_model extends rggen_ral_indirect_reg;
           rand rggen_ral_field bit_field_0;
           function new(string name);
             super.new(name, 32, 0);
@@ -253,7 +253,7 @@ RSpec.describe 'register/type/indirect' do
       CODE
 
       expect(registers[6]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_6_reg_model extends rggen_ral_indirect_reg;
+        class register_6_ral_model extends rggen_ral_indirect_reg;
           rand rggen_ral_field bit_field_0;
           function new(string name);
             super.new(name, 32, 0);
@@ -269,7 +269,7 @@ RSpec.describe 'register/type/indirect' do
       CODE
 
       expect(registers[7]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_7_reg_model extends rggen_ral_indirect_reg;
+        class register_7_ral_model extends rggen_ral_indirect_reg;
           rand rggen_ral_field bit_field_0;
           function new(string name);
             super.new(name, 32, 0);
@@ -286,7 +286,7 @@ RSpec.describe 'register/type/indirect' do
       CODE
 
       expect(registers[8]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_8_reg_model extends rggen_ral_indirect_reg;
+        class register_8_ral_model extends rggen_ral_indirect_reg;
           rand rggen_ral_field bit_field_0;
           function new(string name);
             super.new(name, 32, 0);
@@ -301,7 +301,7 @@ RSpec.describe 'register/type/indirect' do
       CODE
 
       expect(registers[9]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_9_reg_model extends rggen_ral_indirect_reg;
+        class register_9_ral_model extends rggen_ral_indirect_reg;
           rand rggen_ral_field bit_field_0;
           function new(string name);
             super.new(name, 32, 0);
@@ -316,7 +316,7 @@ RSpec.describe 'register/type/indirect' do
       CODE
 
       expect(registers[10]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_10_reg_model extends rggen_ral_indirect_reg;
+        class register_10_ral_model extends rggen_ral_indirect_reg;
           rand rggen_ral_field bit_field_0;
           function new(string name);
             super.new(name, 32, 0);
@@ -332,7 +332,7 @@ RSpec.describe 'register/type/indirect' do
       CODE
 
       expect(registers[11]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_file_11_register_0_reg_model extends rggen_ral_indirect_reg;
+        class register_file_11_register_0_ral_model extends rggen_ral_indirect_reg;
           rand rggen_ral_field bit_field_0;
           function new(string name);
             super.new(name, 32, 0);
@@ -348,7 +348,7 @@ RSpec.describe 'register/type/indirect' do
       CODE
 
       expect(registers[12]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_file_12_register_file_0_register_0_reg_model extends rggen_ral_indirect_reg;
+        class register_file_12_register_file_0_register_0_ral_model extends rggen_ral_indirect_reg;
           rand rggen_ral_field bit_field_0;
           function new(string name);
             super.new(name, 32, 0);
