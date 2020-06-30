@@ -125,18 +125,18 @@ RSpec.describe 'register_file/sv_ral_model' do
       end
 
       expect(code_block).to match_string(<<~'CODE')
-        `rggen_ral_create_reg_file_model(register_file_0, '{}, 8'h00, "g_register_file_0")
-        `rggen_ral_create_reg_file_model(register_file_1, '{}, 8'h10, "g_register_file_1")
-        `rggen_ral_create_reg_file_model(register_file_1, '{}, 8'h04, "g_register_file_1")
-        `rggen_ral_create_reg_file_model(register_file_2[0][0], '{0, 0}, 8'h20, "g_register_file_2.g[0].g[0]")
-        `rggen_ral_create_reg_file_model(register_file_2[0][1], '{0, 1}, 8'h30, "g_register_file_2.g[0].g[1]")
-        `rggen_ral_create_reg_file_model(register_file_2[1][0], '{1, 0}, 8'h40, "g_register_file_2.g[1].g[0]")
-        `rggen_ral_create_reg_file_model(register_file_2[1][1], '{1, 1}, 8'h50, "g_register_file_2.g[1].g[1]")
-        `rggen_ral_create_reg_file_model(register_file_3[0][0], '{0, 0}, 8'h60, "g_register_file_3.g[0].g[0]")
-        `rggen_ral_create_reg_file_model(register_file_3[0][1], '{0, 1}, 8'h70, "g_register_file_3.g[0].g[1]")
-        `rggen_ral_create_reg_file_model(register_file_3[1][0], '{1, 0}, 8'h80, "g_register_file_3.g[1].g[0]")
-        `rggen_ral_create_reg_file_model(register_file_3[1][1], '{1, 1}, 8'h90, "g_register_file_3.g[1].g[1]")
-        `rggen_ral_create_reg_file_model(register_file_0, '{}, 8'h00, "g_register_file_0")
+        `rggen_ral_create_reg_file(register_file_0, '{}, 8'h00, "g_register_file_0")
+        `rggen_ral_create_reg_file(register_file_1, '{}, 8'h10, "g_register_file_1")
+        `rggen_ral_create_reg_file(register_file_1, '{}, 8'h04, "g_register_file_1")
+        `rggen_ral_create_reg_file(register_file_2[0][0], '{0, 0}, 8'h20, "g_register_file_2.g[0].g[0]")
+        `rggen_ral_create_reg_file(register_file_2[0][1], '{0, 1}, 8'h30, "g_register_file_2.g[0].g[1]")
+        `rggen_ral_create_reg_file(register_file_2[1][0], '{1, 0}, 8'h40, "g_register_file_2.g[1].g[0]")
+        `rggen_ral_create_reg_file(register_file_2[1][1], '{1, 1}, 8'h50, "g_register_file_2.g[1].g[1]")
+        `rggen_ral_create_reg_file(register_file_3[0][0], '{0, 0}, 8'h60, "g_register_file_3.g[0].g[0]")
+        `rggen_ral_create_reg_file(register_file_3[0][1], '{0, 1}, 8'h70, "g_register_file_3.g[0].g[1]")
+        `rggen_ral_create_reg_file(register_file_3[1][0], '{1, 0}, 8'h80, "g_register_file_3.g[1].g[0]")
+        `rggen_ral_create_reg_file(register_file_3[1][1], '{1, 1}, 8'h90, "g_register_file_3.g[1].g[1]")
+        `rggen_ral_create_reg_file(register_file_0, '{}, 8'h00, "g_register_file_0")
       CODE
     end
   end
@@ -151,8 +151,8 @@ RSpec.describe 'register_file/sv_ral_model' do
             super.new(name, 4);
           endfunction
           function void build();
-            `rggen_ral_create_reg_model(register_0, '{}, 8'h00, "RW", "g_register_0.u_register")
-            `rggen_ral_create_reg_model(register_1, '{}, 8'h04, "RW", "g_register_1.u_register")
+            `rggen_ral_create_reg(register_0, '{}, 8'h00, "RW", "g_register_0.u_register")
+            `rggen_ral_create_reg(register_1, '{}, 8'h04, "RW", "g_register_1.u_register")
           endfunction
         endclass
       CODE
@@ -165,8 +165,8 @@ RSpec.describe 'register_file/sv_ral_model' do
             super.new(name, 4);
           endfunction
           function void build();
-            `rggen_ral_create_reg_model(register_0, '{}, 8'h00, "RW", "g_register_0.u_register")
-            `rggen_ral_create_reg_file_model(register_file_1, '{}, 8'h04, "g_register_file_1")
+            `rggen_ral_create_reg(register_0, '{}, 8'h00, "RW", "g_register_0.u_register")
+            `rggen_ral_create_reg_file(register_file_1, '{}, 8'h04, "g_register_file_1")
           endfunction
         endclass
       CODE
@@ -178,7 +178,7 @@ RSpec.describe 'register_file/sv_ral_model' do
             super.new(name, 4);
           endfunction
           function void build();
-            `rggen_ral_create_reg_model(register_0, '{}, 8'h00, "RW", "g_register_0.u_register")
+            `rggen_ral_create_reg(register_0, '{}, 8'h00, "RW", "g_register_0.u_register")
           endfunction
         endclass
       CODE
@@ -190,10 +190,10 @@ RSpec.describe 'register_file/sv_ral_model' do
             super.new(name, 4);
           endfunction
           function void build();
-            `rggen_ral_create_reg_model(register_0[0][0], '{0, 0}, 8'h00, "RW", "g_register_0.g[0].g[0].u_register")
-            `rggen_ral_create_reg_model(register_0[0][1], '{0, 1}, 8'h04, "RW", "g_register_0.g[0].g[1].u_register")
-            `rggen_ral_create_reg_model(register_0[1][0], '{1, 0}, 8'h08, "RW", "g_register_0.g[1].g[0].u_register")
-            `rggen_ral_create_reg_model(register_0[1][1], '{1, 1}, 8'h0c, "RW", "g_register_0.g[1].g[1].u_register")
+            `rggen_ral_create_reg(register_0[0][0], '{0, 0}, 8'h00, "RW", "g_register_0.g[0].g[0].u_register")
+            `rggen_ral_create_reg(register_0[0][1], '{0, 1}, 8'h04, "RW", "g_register_0.g[0].g[1].u_register")
+            `rggen_ral_create_reg(register_0[1][0], '{1, 0}, 8'h08, "RW", "g_register_0.g[1].g[0].u_register")
+            `rggen_ral_create_reg(register_0[1][1], '{1, 1}, 8'h0c, "RW", "g_register_0.g[1].g[1].u_register")
           endfunction
         endclass
       CODE
@@ -205,7 +205,7 @@ RSpec.describe 'register_file/sv_ral_model' do
             super.new(name, 4);
           endfunction
           function void build();
-            `rggen_ral_create_reg_file_model(register_file_0, '{}, 8'h00, "g_register_file_0")
+            `rggen_ral_create_reg_file(register_file_0, '{}, 8'h00, "g_register_file_0")
           endfunction
         endclass
       CODE
@@ -217,10 +217,10 @@ RSpec.describe 'register_file/sv_ral_model' do
             super.new(name, 4);
           endfunction
           function void build();
-            `rggen_ral_create_reg_model(register_0[0][0], '{0, 0}, 8'h00, "RW", "g_register_0.g[0].g[0].u_register")
-            `rggen_ral_create_reg_model(register_0[0][1], '{0, 1}, 8'h04, "RW", "g_register_0.g[0].g[1].u_register")
-            `rggen_ral_create_reg_model(register_0[1][0], '{1, 0}, 8'h08, "RW", "g_register_0.g[1].g[0].u_register")
-            `rggen_ral_create_reg_model(register_0[1][1], '{1, 1}, 8'h0c, "RW", "g_register_0.g[1].g[1].u_register")
+            `rggen_ral_create_reg(register_0[0][0], '{0, 0}, 8'h00, "RW", "g_register_0.g[0].g[0].u_register")
+            `rggen_ral_create_reg(register_0[0][1], '{0, 1}, 8'h04, "RW", "g_register_0.g[0].g[1].u_register")
+            `rggen_ral_create_reg(register_0[1][0], '{1, 0}, 8'h08, "RW", "g_register_0.g[1].g[0].u_register")
+            `rggen_ral_create_reg(register_0[1][1], '{1, 1}, 8'h0c, "RW", "g_register_0.g[1].g[1].u_register")
           endfunction
         endclass
       CODE

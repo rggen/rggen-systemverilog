@@ -34,9 +34,7 @@ RgGen.define_list_feature(:bit_field, :type) do
 
       def constructors
         (bit_field.sequence_size&.times || [nil]).map do |index|
-          macro_call(
-            :rggen_ral_create_field_model, arguments(index)
-          )
+          macro_call(:rggen_ral_create_field, arguments(index))
         end
       end
 

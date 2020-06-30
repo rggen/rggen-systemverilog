@@ -49,9 +49,7 @@ RgGen.define_list_feature(:register, :type) do
         if helper.constructor
           instance_exec(array_index, index, &helper.constructor)
         else
-          macro_call(
-            :rggen_ral_create_reg_model, arguments(array_index, index)
-          )
+          macro_call(:rggen_ral_create_reg, arguments(array_index, index))
         end
       end
 

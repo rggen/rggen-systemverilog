@@ -32,9 +32,7 @@ RgGen.define_simple_feature(:register_file, :sv_ral_model) do
     end
 
     def constructor_code(array_index, index)
-      macro_call(
-        :rggen_ral_create_reg_file_model, arguments(array_index, index)
-      )
+      macro_call(:rggen_ral_create_reg_file, arguments(array_index, index))
     end
 
     def arguments(array_index, index)

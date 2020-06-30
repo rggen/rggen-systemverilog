@@ -59,8 +59,8 @@ RSpec.describe 'register/type/external' do
       end
 
       expect(code_block).to match_string(<<~'CODE')
-        `rggen_ral_create_block_model(register_0, 8'h00, this, INTEGRATE_REGISTER_0)
-        `rggen_ral_create_block_model(register_1, 8'h80, this, INTEGRATE_REGISTER_1)
+        `rggen_ral_create_block(register_0, 8'h00, this, INTEGRATE_REGISTER_0)
+        `rggen_ral_create_block(register_1, 8'h80, this, INTEGRATE_REGISTER_1)
       CODE
     end
   end
