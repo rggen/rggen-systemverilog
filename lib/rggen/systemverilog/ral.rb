@@ -16,6 +16,7 @@ module RgGen
         'ral/register/type',
         'ral/register/type/external',
         'ral/register/type/indirect',
+        'ral/register_block/sv_ral_model',
         'ral/register_block/sv_ral_package',
         'ral/register_file/sv_ral_model'
       ].freeze

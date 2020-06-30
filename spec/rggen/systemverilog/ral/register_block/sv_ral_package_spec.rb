@@ -11,7 +11,7 @@ RSpec.describe 'register_block/sv_ral_package' do
     RgGen.enable(:register, :type, [:external, :indirect])
     RgGen.enable(:bit_field, [:name, :bit_assignment, :type, :initial_value, :reference])
     RgGen.enable(:bit_field, :type, [:rc, :reserved, :ro, :rof, :rs, :rw, :rwc, :rwe, :rwl, :rws, :w0c, :w1c, :w0s, :w1, :w1s, :w0crs, :w1crs, :w0src, :w1src, :w0trg, :w1trg, :wo, :wo1])
-    RgGen.enable(:register_block, :sv_ral_package)
+    RgGen.enable(:register_block, [:sv_ral_model, :sv_ral_package])
   end
 
   describe '#write_file' do
