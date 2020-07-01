@@ -8,6 +8,7 @@ RgGen.setup :'rggen-sv-rtl', RgGen::SystemVerilog::RTL do |builder|
   ]
   builder.enable :register_block, [:sv_rtl_top, :protocol]
   builder.enable :register_block, :protocol, [:apb, :axi4lite]
+  builder.enable :register_file, [:sv_rtl_top]
   builder.enable :register, [:sv_rtl_top]
   builder.enable :bit_field, [:sv_rtl_top]
 end
