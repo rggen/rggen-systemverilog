@@ -4,19 +4,14 @@ RSpec.describe 'register_block/sv_ral_package' do
   include_context 'sv ral common'
   include_context 'clean-up builder'
 
-  before(:all) do
-    RgGen.enable(:global, [:bus_width, :address_width])
-    RgGen.enable(:register_block, [:name, :byte_size])
-    RgGen.enable(:register_file, [:name, :offset_address, :size])
-    RgGen.enable(:register, [:name, :offset_address, :size, :type])
-    RgGen.enable(:register, :type, [:external, :indirect])
-    RgGen.enable(:bit_field, [:name, :bit_assignment, :type, :initial_value, :reference])
-    RgGen.enable(:bit_field, :type, [:rc, :reserved, :ro, :rof, :rs, :rw, :rwc, :rwe, :rwl, :rws, :w0c, :w1c, :w0s, :w1, :w1s, :w0crs, :w1crs, :w0src, :w1src, :w0trg, :w1trg, :wo, :wo1])
-    RgGen.enable(:register_block, [:sv_ral_model, :sv_ral_package])
-    RgGen.enable(:register_file, [:sv_ral_model])
-  end
-
   describe '#write_file' do
+    before do
+      load_setup_files(RgGen.builder, [
+        File.join(RGGEN_ROOT, 'rggen-default-register-map/lib/rggen/default_register_map/setup.rb'),
+        File.join(RGGEN_SYSTEMVERILOG_ROOT, 'lib/rggen/systemverilog/ral/setup.rb')
+      ])
+    end
+
     before do
       allow(FileUtils).to receive(:mkpath)
     end
