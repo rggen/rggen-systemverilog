@@ -148,7 +148,7 @@ RSpec.describe 'register_file/sv_ral_model' do
           rand register_file_0_register_0_reg_model register_0;
           rand register_file_0_register_1_reg_model register_1;
           function new(string name);
-            super.new(name, 4);
+            super.new(name, 4, 0);
           endfunction
           function void build();
             `rggen_ral_create_reg(register_0, '{}, 8'h00, "RW", "g_register_0.u_register")
@@ -162,7 +162,7 @@ RSpec.describe 'register_file/sv_ral_model' do
           rand register_file_1_register_0_reg_model register_0;
           rand register_file_1_register_file_1_reg_file_model register_file_1;
           function new(string name);
-            super.new(name, 4);
+            super.new(name, 4, 0);
           endfunction
           function void build();
             `rggen_ral_create_reg(register_0, '{}, 8'h00, "RW", "g_register_0.u_register")
@@ -175,7 +175,7 @@ RSpec.describe 'register_file/sv_ral_model' do
         class register_file_1_register_file_1_reg_file_model extends rggen_ral_reg_file;
           rand register_file_1_register_file_1_register_0_reg_model register_0;
           function new(string name);
-            super.new(name, 4);
+            super.new(name, 4, 0);
           endfunction
           function void build();
             `rggen_ral_create_reg(register_0, '{}, 8'h00, "RW", "g_register_0.u_register")
@@ -187,7 +187,7 @@ RSpec.describe 'register_file/sv_ral_model' do
         class register_file_2_reg_file_model extends rggen_ral_reg_file;
           rand register_file_2_register_0_reg_model register_0[2][2];
           function new(string name);
-            super.new(name, 4);
+            super.new(name, 4, 0);
           endfunction
           function void build();
             `rggen_ral_create_reg(register_0[0][0], '{0, 0}, 8'h00, "RW", "g_register_0.g[0].g[0].u_register")
@@ -202,7 +202,7 @@ RSpec.describe 'register_file/sv_ral_model' do
         class register_file_3_reg_file_model extends rggen_ral_reg_file;
           rand register_file_3_register_file_0_reg_file_model register_file_0;
           function new(string name);
-            super.new(name, 4);
+            super.new(name, 4, 0);
           endfunction
           function void build();
             `rggen_ral_create_reg_file(register_file_0, '{}, 8'h00, "g_register_file_0")
@@ -214,7 +214,7 @@ RSpec.describe 'register_file/sv_ral_model' do
         class register_file_3_register_file_0_reg_file_model extends rggen_ral_reg_file;
           rand register_file_3_register_file_0_register_0_reg_model register_0[2][2];
           function new(string name);
-            super.new(name, 4);
+            super.new(name, 4, 0);
           endfunction
           function void build();
             `rggen_ral_create_reg(register_0[0][0], '{0, 0}, 8'h00, "RW", "g_register_0.g[0].g[0].u_register")

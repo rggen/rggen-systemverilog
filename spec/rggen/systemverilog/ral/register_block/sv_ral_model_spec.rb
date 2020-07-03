@@ -78,7 +78,7 @@ RSpec.describe 'register_block/sv_ral_model' do
           rand register_file_3_reg_file_model register_file_3[2][2];
           rand REGISTER_4 register_4;
           function new(string name);
-            super.new(name, 4);
+            super.new(name, 4, 0);
           endfunction
           function void build();
             `rggen_ral_create_reg(register_0, '{}, 8'h00, "RW", "g_register_0.u_register")
