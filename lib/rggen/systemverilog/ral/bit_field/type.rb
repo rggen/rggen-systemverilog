@@ -46,9 +46,8 @@ RgGen.define_list_feature(:bit_field, :type) do
 
       def arguments(index)
         [
-          ral_model[index], bit_field.lsb(index), bit_field.width,
-          string(access), volatile, reset_value(index), valid_reset,
-          sequence_index(index), string(reference)
+          ral_model[index], bit_field.lsb(index), bit_field.width, string(access),
+          volatile, reset_value(index), valid_reset, index || -1, string(reference)
         ]
       end
 
@@ -64,10 +63,6 @@ RgGen.define_list_feature(:bit_field, :type) do
 
       def valid_reset
         bit_field.initial_value? && 1 || 0
-      end
-
-      def sequence_index(index)
-        index || 0
       end
 
       def reference

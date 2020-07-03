@@ -229,7 +229,7 @@ RSpec.describe 'register/type/indirect' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, 0, "")
+            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, -1, "")
           endfunction
           function void setup_index_fields();
             setup_index_field("register_0.bit_field_0", 1'h1);
@@ -244,7 +244,7 @@ RSpec.describe 'register/type/indirect' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, 0, "")
+            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, -1, "")
           endfunction
           function void setup_index_fields();
             setup_index_field("register_0.bit_field_1", array_index[0]);
@@ -259,7 +259,7 @@ RSpec.describe 'register/type/indirect' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, 0, "")
+            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, -1, "")
           endfunction
           function void setup_index_fields();
             setup_index_field("register_0.bit_field_1", array_index[0]);
@@ -275,7 +275,7 @@ RSpec.describe 'register/type/indirect' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, 0, "")
+            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, -1, "")
           endfunction
           function void setup_index_fields();
             setup_index_field("register_0.bit_field_0", 1'h0);
@@ -292,7 +292,7 @@ RSpec.describe 'register/type/indirect' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field(bit_field_0, 0, 1, "RO", 1, 1'h0, 0, 0, "")
+            `rggen_ral_create_field(bit_field_0, 0, 1, "RO", 1, 1'h0, 0, -1, "")
           endfunction
           function void setup_index_fields();
             setup_index_field("register_0.bit_field_0", 1'h0);
@@ -307,7 +307,7 @@ RSpec.describe 'register/type/indirect' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field(bit_field_0, 0, 1, "WO", 0, 1'h0, 1, 0, "")
+            `rggen_ral_create_field(bit_field_0, 0, 1, "WO", 0, 1'h0, 1, -1, "")
           endfunction
           function void setup_index_fields();
             setup_index_field("register_0.bit_field_0", 1'h0);
@@ -322,7 +322,7 @@ RSpec.describe 'register/type/indirect' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, 0, "")
+            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, -1, "")
           endfunction
           function void setup_index_fields();
             setup_index_field("register_1.register_1", array_index[0]);
@@ -338,7 +338,7 @@ RSpec.describe 'register/type/indirect' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, 0, "")
+            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, -1, "")
           endfunction
           function void setup_index_fields();
             setup_index_field("register_0.bit_field_0", array_index[0]);
@@ -354,7 +354,7 @@ RSpec.describe 'register/type/indirect' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, 0, "")
+            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, -1, "")
           endfunction
           function void setup_index_fields();
             setup_index_field("register_0.bit_field_0", array_index[0]);
