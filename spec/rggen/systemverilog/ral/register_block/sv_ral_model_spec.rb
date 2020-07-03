@@ -68,14 +68,14 @@ RSpec.describe 'register_block/sv_ral_model' do
   describe '#generate_code' do
     it 'レジスタブロックレベルのRALモデルの定義を出力する' do
       expect(register_block).to generate_code(:ral_package, :bottom_up, 0, <<~'CODE')
-        class block_0_ral_model #(
+        class block_0_block_model #(
           type REGISTER_4 = rggen_ral_block,
           bit INTEGRATE_REGISTER_4 = 1
         ) extends rggen_ral_block;
-          rand register_0_ral_model register_0;
-          rand register_1_ral_model register_1[2][2];
-          rand register_file_2_ral_model register_file_2;
-          rand register_file_3_ral_model register_file_3[2][2];
+          rand register_0_reg_model register_0;
+          rand register_1_reg_model register_1[2][2];
+          rand register_file_2_reg_file_model register_file_2;
+          rand register_file_3_reg_file_model register_file_3[2][2];
           rand REGISTER_4 register_4;
           function new(string name);
             super.new(name, 4);

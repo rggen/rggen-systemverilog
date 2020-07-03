@@ -28,7 +28,7 @@ RgGen.define_simple_feature(:register_file, :sv_ral_model) do
     private
 
     def model_name
-      "#{register_file.full_name('_')}_ral_model"
+      "#{register_file.full_name('_')}_reg_file_model"
     end
 
     def constructor_code(array_index, index)

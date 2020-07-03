@@ -113,23 +113,23 @@ RSpec.describe 'register/type/default' do
   it 'レジスタモデル変数#ral_modelを持つ' do
     expect(registers[0]).to have_variable(
       :register_block, :ral_model,
-      name: 'register_0', data_type: 'register_0_ral_model', random: true
+      name: 'register_0', data_type: 'register_0_reg_model', random: true
     )
     expect(registers[1]).to have_variable(
       :register_block, :ral_model,
-      name: 'register_1', data_type: 'register_1_ral_model', array_size: [4], array_format: :unpacked, random: true
+      name: 'register_1', data_type: 'register_1_reg_model', array_size: [4], array_format: :unpacked, random: true
     )
     expect(registers[2]).to have_variable(
       :register_block, :ral_model,
-      name: 'register_2', data_type: 'register_2_ral_model', array_size: [2, 2], array_format: :unpacked, random: true
+      name: 'register_2', data_type: 'register_2_reg_model', array_size: [2, 2], array_format: :unpacked, random: true
     )
     expect(registers[10]).to have_variable(
       :register_file, :ral_model,
-      name: 'register_0', data_type: 'register_file_10_register_0_ral_model', random: true
+      name: 'register_0', data_type: 'register_file_10_register_0_reg_model', random: true
     )
     expect(registers[11]).to have_variable(
       :register_file, :ral_model,
-      name: 'register_0', data_type: 'register_file_11_register_file_0_register_0_ral_model',
+      name: 'register_0', data_type: 'register_file_11_register_file_0_register_0_reg_model',
       array_size: [2, 2], array_format: :unpacked, random: true
     )
   end
@@ -170,7 +170,7 @@ RSpec.describe 'register/type/default' do
   describe '#generate_code' do
     it 'レジスタレベルのRALモデルの定義を出力する' do
       expect(registers[0]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_0_ral_model extends rggen_ral_reg;
+        class register_0_reg_model extends rggen_ral_reg;
           rand rggen_ral_field bit_field_0;
           function new(string name);
             super.new(name, 32, 0);
@@ -182,7 +182,7 @@ RSpec.describe 'register/type/default' do
       CODE
 
       expect(registers[1]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_1_ral_model extends rggen_ral_reg;
+        class register_1_reg_model extends rggen_ral_reg;
           rand rggen_ral_field bit_field_0;
           function new(string name);
             super.new(name, 32, 0);
@@ -194,7 +194,7 @@ RSpec.describe 'register/type/default' do
       CODE
 
       expect(registers[2]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_2_ral_model extends rggen_ral_reg;
+        class register_2_reg_model extends rggen_ral_reg;
           rand rggen_ral_field bit_field_0;
           function new(string name);
             super.new(name, 32, 0);
@@ -206,7 +206,7 @@ RSpec.describe 'register/type/default' do
       CODE
 
       expect(registers[3]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_3_ral_model extends rggen_ral_reg;
+        class register_3_reg_model extends rggen_ral_reg;
           rand rggen_ral_field bit_field_0;
           function new(string name);
             super.new(name, 32, 0);
@@ -218,7 +218,7 @@ RSpec.describe 'register/type/default' do
       CODE
 
       expect(registers[4]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_4_ral_model extends rggen_ral_reg;
+        class register_4_reg_model extends rggen_ral_reg;
           rand rggen_ral_field bit_field_0[4];
           function new(string name);
             super.new(name, 32, 0);
@@ -233,7 +233,7 @@ RSpec.describe 'register/type/default' do
       CODE
 
       expect(registers[5]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_5_ral_model extends rggen_ral_reg;
+        class register_5_reg_model extends rggen_ral_reg;
           rand rggen_ral_field bit_field_0;
           function new(string name);
             super.new(name, 64, 0);
@@ -245,7 +245,7 @@ RSpec.describe 'register/type/default' do
       CODE
 
       expect(registers[6]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_6_ral_model extends rggen_ral_reg;
+        class register_6_reg_model extends rggen_ral_reg;
           rand rggen_ral_field bit_field_0[8];
           function new(string name);
             super.new(name, 64, 0);
@@ -264,7 +264,7 @@ RSpec.describe 'register/type/default' do
       CODE
 
       expect(registers[7]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_7_ral_model extends rggen_ral_reg;
+        class register_7_reg_model extends rggen_ral_reg;
           rand rggen_ral_field bit_field_0;
           function new(string name);
             super.new(name, 32, 0);
@@ -276,7 +276,7 @@ RSpec.describe 'register/type/default' do
       CODE
 
       expect(registers[8]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_8_ral_model extends rggen_ral_reg;
+        class register_8_reg_model extends rggen_ral_reg;
           rand rggen_ral_field bit_field_0;
           function new(string name);
             super.new(name, 32, 0);
@@ -288,7 +288,7 @@ RSpec.describe 'register/type/default' do
       CODE
 
       expect(registers[9]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_9_ral_model extends rggen_ral_reg;
+        class register_9_reg_model extends rggen_ral_reg;
           rand rggen_ral_field register_9;
           function new(string name);
             super.new(name, 32, 0);
@@ -300,7 +300,7 @@ RSpec.describe 'register/type/default' do
       CODE
 
       expect(registers[10]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_file_10_register_0_ral_model extends rggen_ral_reg;
+        class register_file_10_register_0_reg_model extends rggen_ral_reg;
           rand rggen_ral_field bit_field_0;
           function new(string name);
             super.new(name, 32, 0);
@@ -312,7 +312,7 @@ RSpec.describe 'register/type/default' do
       CODE
 
       expect(registers[11]).to generate_code(:ral_package, :bottom_up, <<~'CODE')
-        class register_file_11_register_file_0_register_0_ral_model extends rggen_ral_reg;
+        class register_file_11_register_file_0_register_0_reg_model extends rggen_ral_reg;
           rand rggen_ral_field bit_field_0;
           rand rggen_ral_field bit_field_1;
           function new(string name);

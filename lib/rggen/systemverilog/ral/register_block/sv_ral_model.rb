@@ -14,7 +14,7 @@ RgGen.define_simple_feature(:register_block, :sv_ral_model) do
     private
 
     def model_name
-      "#{register_block.name}_ral_model"
+      "#{register_block.name}_block_model"
     end
 
     def parameters
