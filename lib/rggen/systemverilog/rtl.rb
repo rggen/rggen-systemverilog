@@ -2,6 +2,8 @@
 
 require_relative 'common'
 require_relative 'rtl/feature'
+require_relative 'rtl/partial_sum'
+require_relative 'rtl/register_index'
 
 module RgGen
   module SystemVerilog
@@ -31,7 +33,8 @@ module RgGen
         'rtl/register_block/protocol',
         'rtl/register_block/protocol/apb',
         'rtl/register_block/protocol/axi4lite',
-        'rtl/register_block/sv_rtl_top'
+        'rtl/register_block/sv_rtl_top',
+        'rtl/register_file/sv_rtl_top'
       ].freeze
 
       def self.version

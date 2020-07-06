@@ -30,7 +30,8 @@ RSpec.describe RgGen::SystemVerilog::RAL do
     end
 
     it 'フィーチャーの有効化を行う' do
-      expect(builder).to receive(:enable).with(:register_block, [:sv_ral_package])
+      expect(builder).to receive(:enable).with(:register_block, [:sv_ral_model, :sv_ral_package])
+      expect(builder).to receive(:enable).with(:register_file, [:sv_ral_model])
       require 'rggen/systemverilog/ral/setup'
       builder.activate_plugins
     end

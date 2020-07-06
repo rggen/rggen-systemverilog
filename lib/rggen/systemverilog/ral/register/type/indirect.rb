@@ -2,7 +2,6 @@
 
 RgGen.define_list_item_feature(:register, :type, :indirect) do
   sv_ral do
-    unmapped
     offset_address { register.offset_address }
 
     main_code :ral_package do
@@ -24,12 +23,16 @@ RgGen.define_list_item_feature(:register, :type, :indirect) do
           else
             "array_index[#{array_position += 1}]"
           end
-        [field.register.name, field.name, value]
+        [field_full_name(field), value]
       end
     end
 
     def index_fields
       register.collect_index_fields(register_block.bit_fields)
+    end
+
+    def field_full_name(field)
+      [field.register.full_name('.'), field.name].join('.')
     end
   end
 end

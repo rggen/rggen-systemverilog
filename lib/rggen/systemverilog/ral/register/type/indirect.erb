@@ -4,10 +4,10 @@ endfunction
 function void build();
 <% field_model_constructors.each do |constructor| %>
   <%= constructor %>
-<% end%>
+<% end %>
 endfunction
 function void setup_index_fields();
-<% index_properties.each do |reg_name, field_name, value| %>
-  setup_index_field("<%= reg_name %>", "<%= field_name%>", <%= value %>);
+<% index_properties.each do |field_name, value| %>
+  setup_index_field("<%= field_name %>", <%= value %>);
 <% end %>
 endfunction

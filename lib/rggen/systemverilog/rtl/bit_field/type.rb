@@ -43,11 +43,7 @@ RgGen.define_list_feature(:bit_field, :type) do
         bit_field.reference? &&
           bit_field
             .find_reference(register_block.bit_fields)
-            .value(
-              register.local_index,
-              bit_field.local_index,
-              bit_field.reference_width
-            )
+            .value(bit_field.local_indices, bit_field.reference_width)
       end
 
       def bit_field_if

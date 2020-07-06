@@ -2,6 +2,7 @@
 
 require_relative 'common'
 require_relative 'ral/feature'
+require_relative 'ral/register_common'
 
 module RgGen
   module SystemVerilog
@@ -15,7 +16,9 @@ module RgGen
         'ral/register/type',
         'ral/register/type/external',
         'ral/register/type/indirect',
-        'ral/register_block/sv_ral_package'
+        'ral/register_block/sv_ral_model',
+        'ral/register_block/sv_ral_package',
+        'ral/register_file/sv_ral_model'
       ].freeze
 
       def self.version

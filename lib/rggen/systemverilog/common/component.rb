@@ -4,12 +4,8 @@ module RgGen
   module SystemVerilog
     module Common
       class Component < Core::OutputBase::Component
-        def declarations(domain, type)
-          body = ->(r) { r.declarations(domain, type) }
-          [
-            @features.each_value.map(&body),
-            @children.map(&body)
-          ].flatten
+        def declarations
+          @declarations ||= Hash.new { |h, k| h[k] = [] }
         end
 
         def package_imports(domain)

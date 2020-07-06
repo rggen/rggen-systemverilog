@@ -6,43 +6,39 @@ module RgGen
       class Feature < Common::Feature
         private
 
-        def create_variable(data_type, attributes = {}, &block)
+        def create_variable(data_type, attributes, &block)
           DataObject.new(
             :variable, attributes.merge(data_type: data_type), &block
           )
         end
 
-        def create_interface(_, attributes = {}, &block)
+        def create_if_instance(_, attributes, &block)
           InterfaceInstance.new(attributes, &block)
         end
 
-        def create_argument(direction, attributes = {}, &block)
+        def create_argument(direction, attributes, &block)
           DataObject.new(
             :argument, attributes.merge(direction: direction), &block
           )
         end
 
-        def create_interface_port(_, attributes = {}, &block)
+        def create_if_port(_, attributes, &block)
           InterfacePort.new(attributes, &block)
         end
 
-        def create_parameter(parameter_type, attributes = {}, &block)
+        def create_parameter(parameter_type, attributes, &block)
           DataObject.new(
             :parameter, attributes.merge(parameter_type: parameter_type), &block
           )
         end
 
-        [
-          [:logic, :create_variable, :variable],
-          [:interface, :create_interface, :variable],
-          [:input, :create_argument, :port],
-          [:output, :create_argument, :port],
-          [:interface_port, :create_interface_port, :port],
-          [:parameter, :create_parameter, :parameter],
-          [:localparam, :create_parameter, :parameter]
-        ].each do |entity, creation_method, declaration_type|
-          define_entity(entity, creation_method, declaration_type)
-        end
+        define_entity :logic, :create_variable, :variable, -> { component }
+        define_entity :interface, :create_if_instance, :variable, -> { component }
+        define_entity :input, :create_argument, :port, -> { register_block }
+        define_entity :output, :create_argument, :port, -> { register_block }
+        define_entity :interface_port, :create_if_port, :port, -> { register_block }
+        define_entity :parameter, :create_parameter, :parameter, -> { register_block }
+        define_entity :localparam, :create_parameter, :parameter, -> { component }
       end
     end
   end

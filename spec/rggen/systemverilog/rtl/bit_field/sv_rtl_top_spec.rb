@@ -7,10 +7,12 @@ RSpec.describe 'bit_field/sv_rtl_top' do
   before(:all) do
     RgGen.enable(:global, [:bus_width, :address_width, :array_port_format])
     RgGen.enable(:register_block, [:name, :byte_size])
+    RgGen.enable(:register_file, [:name, :offset_address, :size])
     RgGen.enable(:register, [:name, :offset_address, :size, :type])
     RgGen.enable(:bit_field, [:name, :bit_assignment, :type, :initial_value, :reference])
     RgGen.enable(:bit_field, :type, :rw)
     RgGen.enable(:register_block, :sv_rtl_top)
+    RgGen.enable(:register_file, :sv_rtl_top)
     RgGen.enable(:register, :sv_rtl_top)
     RgGen.enable(:bit_field, :sv_rtl_top)
   end
@@ -31,7 +33,6 @@ RSpec.describe 'bit_field/sv_rtl_top' do
 
           register do
             name 'register_0'
-            offset_address 0x00
             bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
             bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :rw; initial_value 1 }
             bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 8, sequence_size: 2; type :rw; initial_value 2 }
@@ -39,42 +40,95 @@ RSpec.describe 'bit_field/sv_rtl_top' do
 
           register do
             name 'register_1'
-            offset_address 0x04
             size [2]
             bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
             bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :rw; initial_value 1 }
             bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 8, sequence_size: 2; type :rw; initial_value 2 }
           end
+
+          register_file do
+            name 'register_file_2'
+            register do
+              name 'register_0'
+              bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+              bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :rw; initial_value 1 }
+              bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 8, sequence_size: 2; type :rw; initial_value 2 }
+            end
+          end
+
+          register_file do
+            name 'register_file_3'
+            size [2]
+            register do
+              name 'register_0'
+              size [2]
+              bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+              bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :rw; initial_value 1 }
+              bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 8, sequence_size: 2; type :rw; initial_value 2 }
+            end
+          end
         end
 
         expect(bit_fields[0]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: 'INITIAL_VALUE', parameter_type: :localparam,
           data_type: :bit, width: 1, default: "1'h0"
         )
         expect(bit_fields[1]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: 'INITIAL_VALUE', parameter_type: :localparam,
           data_type: :bit, width: 8, default: "8'h01"
         )
         expect(bit_fields[2]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: 'INITIAL_VALUE', parameter_type: :localparam,
           data_type: :bit, width: 8, default: "8'h02"
         )
 
         expect(bit_fields[3]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: 'INITIAL_VALUE', parameter_type: :localparam,
           data_type: :bit, width: 1, default: "1'h0"
         )
         expect(bit_fields[4]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: 'INITIAL_VALUE', parameter_type: :localparam,
           data_type: :bit, width: 8, default: "8'h01"
         )
         expect(bit_fields[5]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
+          name: 'INITIAL_VALUE', parameter_type: :localparam,
+          data_type: :bit, width: 8, default: "8'h02"
+        )
+
+        expect(bit_fields[6]).to have_parameter(
+          :initial_value,
+          name: 'INITIAL_VALUE', parameter_type: :localparam,
+          data_type: :bit, width: 1, default: "1'h0"
+        )
+        expect(bit_fields[7]).to have_parameter(
+          :initial_value,
+          name: 'INITIAL_VALUE', parameter_type: :localparam,
+          data_type: :bit, width: 8, default: "8'h01"
+        )
+        expect(bit_fields[8]).to have_parameter(
+          :initial_value,
+          name: 'INITIAL_VALUE', parameter_type: :localparam,
+          data_type: :bit, width: 8, default: "8'h02"
+        )
+
+        expect(bit_fields[9]).to have_parameter(
+          :initial_value,
+          name: 'INITIAL_VALUE', parameter_type: :localparam,
+          data_type: :bit, width: 1, default: "1'h0"
+        )
+        expect(bit_fields[10]).to have_parameter(
+          :initial_value,
+          name: 'INITIAL_VALUE', parameter_type: :localparam,
+          data_type: :bit, width: 8, default: "8'h01"
+        )
+        expect(bit_fields[11]).to have_parameter(
+          :initial_value,
           name: 'INITIAL_VALUE', parameter_type: :localparam,
           data_type: :bit, width: 8, default: "8'h02"
         )
@@ -82,29 +136,52 @@ RSpec.describe 'bit_field/sv_rtl_top' do
     end
 
     context 'パラメータ化された初期値が指定されている場合' do
+      let(:register_map_body) do
+        proc do
+          name 'block_0'
+          byte_size 256
+
+          register do
+            name 'register_0'
+            bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value default: 0 }
+            bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :rw; initial_value default: 1 }
+            bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 8, sequence_size: 2; type :rw; initial_value default: 2 }
+          end
+
+          register do
+            name 'register_1'
+            size [2]
+            bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value default: 0 }
+            bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :rw; initial_value default: 1 }
+            bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 8, sequence_size: 2; type :rw; initial_value default: 2 }
+          end
+
+          register_file do
+            name 'register_file_2'
+            register do
+              name 'register_0'
+              bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value default: 0 }
+              bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :rw; initial_value default: 1 }
+              bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 8, sequence_size: 2; type :rw; initial_value default: 2 }
+            end
+          end
+
+          register_file do
+            name 'register_file_3'
+            size [2]
+            register do
+              name 'register_0'
+              size [2]
+              bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value default: 0 }
+              bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :rw; initial_value default: 1 }
+              bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 8, sequence_size: 2; type :rw; initial_value default: 2 }
+            end
+          end
+        end
+      end
+
       it 'パラメータinitial_valueを持つ' do
-        bit_fields = create_bit_fields(:packed) do
-          name 'block_0'
-          byte_size 256
-
-          register do
-            name 'register_0'
-            offset_address 0x00
-            bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value default: 0 }
-            bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :rw; initial_value default: 1 }
-            bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 8, sequence_size: 2; type :rw; initial_value default: 2 }
-          end
-
-          register do
-            name 'register_1'
-            offset_address 0x04
-            size [2]
-            bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value default: 0 }
-            bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :rw; initial_value default: 1 }
-            bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 8, sequence_size: 2; type :rw; initial_value default: 2 }
-          end
-        end
-
+        bit_fields = create_bit_fields(:packed, &register_map_body)
         expect(bit_fields[0]).to have_parameter(
           :register_block, :initial_value,
           name: "REGISTER_0_BIT_FIELD_0_INITIAL_VALUE", parameter_type: :parameter,
@@ -135,29 +212,38 @@ RSpec.describe 'bit_field/sv_rtl_top' do
           name: "REGISTER_1_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
           data_type: :bit, width: 8, array_size: [2], array_format: :packed, default: "{2{8'h02}}"
         )
+        expect(bit_fields[6]).to have_parameter(
+          :register_block, :initial_value,
+          name: "REGISTER_FILE_2_REGISTER_0_BIT_FIELD_0_INITIAL_VALUE", parameter_type: :parameter,
+          data_type: :bit, width: 1, default: "1'h0"
+        )
+        expect(bit_fields[7]).to have_parameter(
+          :register_block, :initial_value,
+          name: "REGISTER_FILE_2_REGISTER_0_BIT_FIELD_1_INITIAL_VALUE", parameter_type: :parameter,
+          data_type: :bit, width: 8, default: "8'h01"
+        )
+        expect(bit_fields[8]).to have_parameter(
+          :register_block, :initial_value,
+          name: "REGISTER_FILE_2_REGISTER_0_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
+          data_type: :bit, width: 8, array_size: [2], array_format: :packed, default: "{2{8'h02}}"
+        )
+        expect(bit_fields[9]).to have_parameter(
+          :register_block, :initial_value,
+          name: "REGISTER_FILE_3_REGISTER_0_BIT_FIELD_0_INITIAL_VALUE", parameter_type: :parameter,
+          data_type: :bit, width: 1, default: "1'h0"
+        )
+        expect(bit_fields[10]).to have_parameter(
+          :register_block, :initial_value,
+          name: "REGISTER_FILE_3_REGISTER_0_BIT_FIELD_1_INITIAL_VALUE", parameter_type: :parameter,
+          data_type: :bit, width: 8, default: "8'h01"
+        )
+        expect(bit_fields[11]).to have_parameter(
+          :register_block, :initial_value,
+          name: "REGISTER_FILE_3_REGISTER_0_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
+          data_type: :bit, width: 8, array_size: [2], array_format: :packed, default: "{2{8'h02}}"
+        )
 
-        bit_fields = create_bit_fields(:unpacked) do
-          name 'block_0'
-          byte_size 256
-
-          register do
-            name 'register_0'
-            offset_address 0x00
-            bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value default: 0 }
-            bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :rw; initial_value default: 1 }
-            bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 8, sequence_size: 2; type :rw; initial_value default: 2 }
-          end
-
-          register do
-            name 'register_1'
-            offset_address 0x04
-            size [2]
-            bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value default: 0 }
-            bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :rw; initial_value default: 1 }
-            bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 8, sequence_size: 2; type :rw; initial_value default: 2 }
-          end
-        end
-
+        bit_fields = create_bit_fields(:unpacked, &register_map_body)
         expect(bit_fields[0]).to have_parameter(
           :register_block, :initial_value,
           name: "REGISTER_0_BIT_FIELD_0_INITIAL_VALUE", parameter_type: :parameter,
@@ -188,29 +274,38 @@ RSpec.describe 'bit_field/sv_rtl_top' do
           name: "REGISTER_1_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
           data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{default: 8'h02}"
         )
+        expect(bit_fields[6]).to have_parameter(
+          :register_block, :initial_value,
+          name: "REGISTER_FILE_2_REGISTER_0_BIT_FIELD_0_INITIAL_VALUE", parameter_type: :parameter,
+          data_type: :bit, width: 1, default: "1'h0"
+        )
+        expect(bit_fields[7]).to have_parameter(
+          :register_block, :initial_value,
+          name: "REGISTER_FILE_2_REGISTER_0_BIT_FIELD_1_INITIAL_VALUE", parameter_type: :parameter,
+          data_type: :bit, width: 8, default: "8'h01"
+        )
+        expect(bit_fields[8]).to have_parameter(
+          :register_block, :initial_value,
+          name: "REGISTER_FILE_2_REGISTER_0_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
+          data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{default: 8'h02}"
+        )
+        expect(bit_fields[9]).to have_parameter(
+          :register_block, :initial_value,
+          name: "REGISTER_FILE_3_REGISTER_0_BIT_FIELD_0_INITIAL_VALUE", parameter_type: :parameter,
+          data_type: :bit, width: 1, default: "1'h0"
+        )
+        expect(bit_fields[10]).to have_parameter(
+          :register_block, :initial_value,
+          name: "REGISTER_FILE_3_REGISTER_0_BIT_FIELD_1_INITIAL_VALUE", parameter_type: :parameter,
+          data_type: :bit, width: 8, default: "8'h01"
+        )
+        expect(bit_fields[11]).to have_parameter(
+          :register_block, :initial_value,
+          name: "REGISTER_FILE_3_REGISTER_0_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
+          data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{default: 8'h02}"
+        )
 
-        bit_fields = create_bit_fields(:serialized) do
-          name 'block_0'
-          byte_size 256
-
-          register do
-            name 'register_0'
-            offset_address 0x00
-            bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value default: 0 }
-            bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :rw; initial_value default: 1 }
-            bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 8, sequence_size: 2; type :rw; initial_value default: 2 }
-          end
-
-          register do
-            name 'register_1'
-            offset_address 0x04
-            size [2]
-            bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value default: 0 }
-            bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :rw; initial_value default: 1 }
-            bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 8, sequence_size: 2; type :rw; initial_value default: 2 }
-          end
-        end
-
+        bit_fields = create_bit_fields(:serialized, &register_map_body)
         expect(bit_fields[0]).to have_parameter(
           :register_block, :initial_value,
           name: "REGISTER_0_BIT_FIELD_0_INITIAL_VALUE", parameter_type: :parameter,
@@ -239,6 +334,36 @@ RSpec.describe 'bit_field/sv_rtl_top' do
         expect(bit_fields[5]).to have_parameter(
           :register_block, :initial_value,
           name: "REGISTER_1_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
+          data_type: :bit, width: 8, array_size: [2], array_format: :serialized, default: "{2{8'h02}}"
+        )
+        expect(bit_fields[6]).to have_parameter(
+          :register_block, :initial_value,
+          name: "REGISTER_FILE_2_REGISTER_0_BIT_FIELD_0_INITIAL_VALUE", parameter_type: :parameter,
+          data_type: :bit, width: 1, default: "1'h0"
+        )
+        expect(bit_fields[7]).to have_parameter(
+          :register_block, :initial_value,
+          name: "REGISTER_FILE_2_REGISTER_0_BIT_FIELD_1_INITIAL_VALUE", parameter_type: :parameter,
+          data_type: :bit, width: 8, default: "8'h01"
+        )
+        expect(bit_fields[8]).to have_parameter(
+          :register_block, :initial_value,
+          name: "REGISTER_FILE_2_REGISTER_0_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
+          data_type: :bit, width: 8, array_size: [2], array_format: :serialized, default: "{2{8'h02}}"
+        )
+        expect(bit_fields[9]).to have_parameter(
+          :register_block, :initial_value,
+          name: "REGISTER_FILE_3_REGISTER_0_BIT_FIELD_0_INITIAL_VALUE", parameter_type: :parameter,
+          data_type: :bit, width: 1, default: "1'h0"
+        )
+        expect(bit_fields[10]).to have_parameter(
+          :register_block, :initial_value,
+          name: "REGISTER_FILE_3_REGISTER_0_BIT_FIELD_1_INITIAL_VALUE", parameter_type: :parameter,
+          data_type: :bit, width: 8, default: "8'h01"
+        )
+        expect(bit_fields[11]).to have_parameter(
+          :register_block, :initial_value,
+          name: "REGISTER_FILE_3_REGISTER_0_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
           data_type: :bit, width: 8, array_size: [2], array_format: :serialized, default: "{2{8'h02}}"
         )
       end
@@ -254,37 +379,75 @@ RSpec.describe 'bit_field/sv_rtl_top' do
 
           register do
             name 'register_0'
-            offset_address 0x00
             bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 8, sequence_size: 1; type :rw; initial_value [0] }
             bit_field { name 'bit_field_1'; bit_assignment lsb: 16, width: 8, sequence_size: 2; type :rw; initial_value [1, 2] }
           end
 
           register do
             name 'register_1'
-            offset_address 0x04
             size [2]
             bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 8, sequence_size: 1; type :rw; initial_value [0] }
             bit_field { name 'bit_field_1'; bit_assignment lsb: 16, width: 8, sequence_size: 2; type :rw; initial_value [1, 2] }
           end
+
+          register_file do
+            name 'register_file_2'
+            register do
+              name 'register_0'
+              bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 8, sequence_size: 1; type :rw; initial_value [0] }
+              bit_field { name 'bit_field_1'; bit_assignment lsb: 16, width: 8, sequence_size: 2; type :rw; initial_value [1, 2] }
+            end
+          end
+
+          register_file do
+            name 'register_file_3'
+            size [2]
+            register do
+              name 'register_0'
+              size [2]
+              bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 8, sequence_size: 1; type :rw; initial_value [0] }
+              bit_field { name 'bit_field_1'; bit_assignment lsb: 16, width: 8, sequence_size: 2; type :rw; initial_value [1, 2] }
+            end
+          end
         end
 
         expect(bit_fields[0]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: "INITIAL_VALUE", parameter_type: :localparam,
           data_type: :bit, width: 8, array_size: [1], array_format: :unpacked, default: "'{8'h00}"
         )
         expect(bit_fields[1]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: "INITIAL_VALUE", parameter_type: :localparam,
           data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{8'h01, 8'h02}"
         )
         expect(bit_fields[2]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
           name: "INITIAL_VALUE", parameter_type: :localparam,
           data_type: :bit, width: 8, array_size: [1], array_format: :unpacked, default: "'{8'h00}"
         )
         expect(bit_fields[3]).to have_parameter(
-          :bit_field, :initial_value,
+          :initial_value,
+          name: "INITIAL_VALUE", parameter_type: :localparam,
+          data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{8'h01, 8'h02}"
+        )
+        expect(bit_fields[4]).to have_parameter(
+          :initial_value,
+          name: "INITIAL_VALUE", parameter_type: :localparam,
+          data_type: :bit, width: 8, array_size: [1], array_format: :unpacked, default: "'{8'h00}"
+        )
+        expect(bit_fields[5]).to have_parameter(
+          :initial_value,
+          name: "INITIAL_VALUE", parameter_type: :localparam,
+          data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{8'h01, 8'h02}"
+        )
+        expect(bit_fields[6]).to have_parameter(
+          :initial_value,
+          name: "INITIAL_VALUE", parameter_type: :localparam,
+          data_type: :bit, width: 8, array_size: [1], array_format: :unpacked, default: "'{8'h00}"
+        )
+        expect(bit_fields[7]).to have_parameter(
+          :initial_value,
           name: "INITIAL_VALUE", parameter_type: :localparam,
           data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{8'h01, 8'h02}"
         )
@@ -309,88 +472,111 @@ RSpec.describe 'bit_field/sv_rtl_top' do
       end
 
       expect(bit_fields[0]).to have_interface(
-        :bit_field, :bit_field_sub_if,
+        :bit_field_sub_if,
         name: 'bit_field_sub_if', interface_type: 'rggen_bit_field_if', parameter_values: [1]
       )
       expect(bit_fields[1]).to have_interface(
-        :bit_field, :bit_field_sub_if,
+        :bit_field_sub_if,
         name: 'bit_field_sub_if', interface_type: 'rggen_bit_field_if', parameter_values: [8]
       )
       expect(bit_fields[2]).to have_interface(
-        :bit_field, :bit_field_sub_if,
+        :bit_field_sub_if,
         name: 'bit_field_sub_if', interface_type: 'rggen_bit_field_if', parameter_values: [8]
       )
       expect(bit_fields[3]).to have_interface(
-        :bit_field, :bit_field_sub_if,
+        :bit_field_sub_if,
         name: 'bit_field_sub_if', interface_type: 'rggen_bit_field_if', parameter_values: [64]
       )
     end
   end
 
-  describe '#local_index' do
-    context 'ビットフィールドが連番ではない場合' do
-      it 'nilを返す' do
-        bit_fields = create_bit_fields do
-          name 'block_0'
-          byte_size 256
+  describe '#local_index/#local_indices' do
+    let(:bit_fields) do
+      create_bit_fields do
+        name 'block_0'
+        byte_size 256
 
+        register do
+          name 'register_0'
+          bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+          bit_field { name 'bit_field_1'; bit_assignment lsb: 1, sequence_size: 2; type :rw; initial_value 0 }
+        end
+
+        register do
+          name 'register_1'
+          size [4]
+          bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+          bit_field { name 'bit_field_1'; bit_assignment lsb: 1, sequence_size: 2; type :rw; initial_value 0 }
+        end
+
+        register do
+          name 'register_2'
+          size [2, 2]
+          bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+          bit_field { name 'bit_field_1'; bit_assignment lsb: 1, sequence_size: 2; type :rw; initial_value 0 }
+        end
+
+        register_file do
+          name 'register_file_3'
+          size [2]
           register do
             name 'register_0'
-            offset_address 0x00
+            size [2]
             bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
-          end
-
-          register do
-            name 'register_1'
-            offset_address 0x10
-            size [4]
-            bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
-          end
-
-          register do
-            name 'register_2'
-            offset_address 0x20
-            size [2, 2]
-            bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+            bit_field { name 'bit_field_1'; bit_assignment lsb: 1, sequence_size: 2; type :rw; initial_value 0 }
           end
         end
 
-        expect(bit_fields[0].local_index).to be_nil
-        expect(bit_fields[1].local_index).to be_nil
-        expect(bit_fields[2].local_index).to be_nil
+        register_file do
+          name 'register_file_4'
+          size [2]
+          register_file do
+            name 'register_file_0'
+            register do
+              name 'register_0'
+              size [2]
+              bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+              bit_field { name 'bit_field_1'; bit_assignment lsb: 1, sequence_size: 2; type :rw; initial_value 0 }
+            end
+          end
+        end
       end
     end
 
-    context 'ビットフィールドが連番になっている場合' do
-      it 'スコープ中のインデックスを返す' do
-        bit_fields = create_bit_fields do
-          name 'block_0'
-          byte_size 256
-
-          register do
-            name 'register_0'
-            offset_address 0x00
-            bit_field { name 'bit_field_0'; bit_assignment lsb: 0, sequence_size: 2; type :rw; initial_value 0 }
-          end
-
-          register do
-            name 'register_1'
-            offset_address 0x10
-            size [4]
-            bit_field { name 'bit_field_0'; bit_assignment lsb: 0, sequence_size: 2; type :rw; initial_value 0 }
-          end
-
-          register do
-            name 'register_2'
-            offset_address 0x20
-            size [2, 2]
-            bit_field { name 'bit_field_0'; bit_assignment lsb: 0, sequence_size: 2; type :rw; initial_value 0 }
-          end
+    describe '#local_index' do
+      context 'ビットフィールドが連番ではない場合' do
+        it 'nilを返す' do
+          expect(bit_fields[0].local_index).to be_nil
+          expect(bit_fields[2].local_index).to be_nil
+          expect(bit_fields[4].local_index).to be_nil
+          expect(bit_fields[6].local_index).to be_nil
+          expect(bit_fields[8].local_index).to be_nil
         end
+      end
 
-        expect(bit_fields[0].local_index).to match_identifier('i')
-        expect(bit_fields[1].local_index).to match_identifier('j')
-        expect(bit_fields[2].local_index).to match_identifier('k')
+      context 'ビットフィールドが連番になっている場合' do
+        it 'スコープ中のインデックスを返す' do
+          expect(bit_fields[1].local_index).to match_identifier('i')
+          expect(bit_fields[3].local_index).to match_identifier('j')
+          expect(bit_fields[5].local_index).to match_identifier('k')
+          expect(bit_fields[7].local_index).to match_identifier('k')
+          expect(bit_fields[9].local_index).to match_identifier('k')
+        end
+      end
+    end
+
+    describe '#local_indices' do
+      it '上位階層も含た#local_indexの一覧を返す' do
+        expect(bit_fields[0].local_indices).to match([nil, nil])
+        expect(bit_fields[1].local_indices).to match([nil, 'i'])
+        expect(bit_fields[2].local_indices).to match(['i', nil])
+        expect(bit_fields[3].local_indices).to match(['i', 'j'])
+        expect(bit_fields[4].local_indices).to match(['2*i+j', nil])
+        expect(bit_fields[5].local_indices).to match(['2*i+j', 'k'])
+        expect(bit_fields[6].local_indices).to match(['i', 'j', nil])
+        expect(bit_fields[7].local_indices).to match(['i', 'j', 'k'])
+        expect(bit_fields[8].local_indices).to match(['i', nil, 'j', nil])
+        expect(bit_fields[9].local_indices).to match(['i', nil, 'j', 'k'])
       end
     end
   end
@@ -404,36 +590,56 @@ RSpec.describe 'bit_field/sv_rtl_top' do
 
           register do
             name 'register_0'
-            offset_address 0x00
             size [4]
             bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
           end
 
           register do
             name 'register_1'
-            offset_address 0x10
             size [2, 2]
             bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
           end
 
           register do
             name 'register_2'
-            offset_address 0x20
             bit_field { name 'bit_field_0'; bit_assignment lsb: 0, sequence_size: 2; type :rw; initial_value 0 }
           end
 
           register do
             name 'register_3'
-            offset_address 0x30
             size [4]
             bit_field { name 'bit_field_0'; bit_assignment lsb: 0, sequence_size: 2; type :rw; initial_value 0 }
           end
 
           register do
             name 'register_4'
-            offset_address 0x40
             size [2, 2]
             bit_field { name 'bit_field_0'; bit_assignment lsb: 0, sequence_size: 2; type :rw; initial_value 0 }
+          end
+
+          register_file do
+            name 'register_file_5'
+            size [2]
+            register do
+              name 'register_0'
+              size [2]
+              bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+              bit_field { name 'bit_field_1'; bit_assignment lsb: 1, sequence_size: 2; type :rw; initial_value 0 }
+            end
+          end
+
+          register_file do
+            name 'register_file_6'
+            size [2]
+            register_file do
+              name 'register_file_0'
+              register do
+                name 'register_0'
+                size [2]
+                bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+                bit_field { name 'bit_field_1'; bit_assignment lsb: 1, sequence_size: 2; type :rw; initial_value 0 }
+              end
+            end
           end
         end
 
@@ -452,6 +658,18 @@ RSpec.describe 'bit_field/sv_rtl_top' do
         expect(bit_fields[4].loop_variables).to match([
           match_identifier('i'), match_identifier('j'), match_identifier('k')
         ])
+        expect(bit_fields[5].loop_variables).to match([
+          match_identifier('i'), match_identifier('j')
+        ])
+        expect(bit_fields[6].loop_variables).to match([
+          match_identifier('i'), match_identifier('j'), match_identifier('k')
+        ])
+        expect(bit_fields[7].loop_variables).to match([
+          match_identifier('i'), match_identifier('j')
+        ])
+        expect(bit_fields[8].loop_variables).to match([
+          match_identifier('i'), match_identifier('j'), match_identifier('k')
+        ])
       end
     end
 
@@ -463,11 +681,19 @@ RSpec.describe 'bit_field/sv_rtl_top' do
 
           register do
             name 'register_0'
-            offset_address 0x00
             bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+          end
+
+          register_file do
+            name 'register_file_1'
+            register do
+              name 'register_0'
+              bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+            end
           end
         end
         expect(bit_fields[0].loop_variables).to be_nil
+        expect(bit_fields[1].loop_variables).to be_nil
       end
     end
   end
@@ -480,7 +706,6 @@ RSpec.describe 'bit_field/sv_rtl_top' do
 
         register do
           name 'register_0'
-          offset_address 0x00
           bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
           bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :rw; initial_value 0 }
           bit_field { name 'bit_field_2'; bit_assignment lsb: 16, sequence_size: 2; type :rw; initial_value 0 }
@@ -490,7 +715,6 @@ RSpec.describe 'bit_field/sv_rtl_top' do
 
         register do
           name 'register_1'
-          offset_address 0x10
           size [4]
           bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
           bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :rw; initial_value 0 }
@@ -501,13 +725,43 @@ RSpec.describe 'bit_field/sv_rtl_top' do
 
         register do
           name 'register_2'
-          offset_address 0x20
           size [2, 2]
           bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
           bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :rw; initial_value 0 }
           bit_field { name 'bit_field_2'; bit_assignment lsb: 16, sequence_size: 2; type :rw; initial_value 0 }
           bit_field { name 'bit_field_3'; bit_assignment lsb: 20, width: 2, sequence_size: 2; type :rw; initial_value 0 }
           bit_field { name 'bit_field_4'; bit_assignment lsb: 24, width: 2, sequence_size: 2, step: 4; type :rw; initial_value 0 }
+        end
+
+        register_file do
+          name 'register_file_3'
+          size [2]
+          register do
+            name 'register_0'
+            size [2]
+            bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+            bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :rw; initial_value 0 }
+            bit_field { name 'bit_field_2'; bit_assignment lsb: 16, sequence_size: 2; type :rw; initial_value 0 }
+            bit_field { name 'bit_field_3'; bit_assignment lsb: 20, width: 2, sequence_size: 2; type :rw; initial_value 0 }
+            bit_field { name 'bit_field_4'; bit_assignment lsb: 24, width: 2, sequence_size: 2, step: 4; type :rw; initial_value 0 }
+          end
+        end
+
+        register_file do
+          name 'register_file_4'
+          size [2]
+          register_file do
+            name 'register_file_0'
+            register do
+              name 'register_0'
+              size [2]
+              bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+              bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 8; type :rw; initial_value 0 }
+              bit_field { name 'bit_field_2'; bit_assignment lsb: 16, sequence_size: 2; type :rw; initial_value 0 }
+              bit_field { name 'bit_field_3'; bit_assignment lsb: 20, width: 2, sequence_size: 2; type :rw; initial_value 0 }
+              bit_field { name 'bit_field_4'; bit_assignment lsb: 24, width: 2, sequence_size: 2, step: 4; type :rw; initial_value 0 }
+            end
+          end
         end
       end
     end
@@ -531,40 +785,82 @@ RSpec.describe 'bit_field/sv_rtl_top' do
         expect(bit_fields[12].value).to match_identifier('register_if[5+2*i+j].value[16+1*k+:1]')
         expect(bit_fields[13].value).to match_identifier('register_if[5+2*i+j].value[20+2*k+:2]')
         expect(bit_fields[14].value).to match_identifier('register_if[5+2*i+j].value[24+4*k+:2]')
+
+        expect(bit_fields[15].value).to match_identifier('register_if[9+2*(i)+j].value[0+:1]')
+        expect(bit_fields[16].value).to match_identifier('register_if[9+2*(i)+j].value[8+:8]')
+        expect(bit_fields[17].value).to match_identifier('register_if[9+2*(i)+j].value[16+1*k+:1]')
+        expect(bit_fields[18].value).to match_identifier('register_if[9+2*(i)+j].value[20+2*k+:2]')
+        expect(bit_fields[19].value).to match_identifier('register_if[9+2*(i)+j].value[24+4*k+:2]')
+
+        expect(bit_fields[20].value).to match_identifier('register_if[13+2*(i)+j].value[0+:1]')
+        expect(bit_fields[21].value).to match_identifier('register_if[13+2*(i)+j].value[8+:8]')
+        expect(bit_fields[22].value).to match_identifier('register_if[13+2*(i)+j].value[16+1*k+:1]')
+        expect(bit_fields[23].value).to match_identifier('register_if[13+2*(i)+j].value[20+2*k+:2]')
+        expect(bit_fields[24].value).to match_identifier('register_if[13+2*(i)+j].value[24+4*k+:2]')
       end
     end
 
     context '引数でレジスタのオフセット/ビットフィールドのオフセット/幅が指定された場合' do
       it '指定されたオフセット/幅での自身が保持する値への参照を返す' do
-        expect(bit_fields[0].value(1, 1, 1)).to match_identifier('register_if[0].value[0+:1]')
-        expect(bit_fields[0].value('i', 'j', 1)).to match_identifier('register_if[0].value[0+:1]')
+        expect(bit_fields[0].value([1, 1], 1)).to match_identifier('register_if[0].value[0+:1]')
+        expect(bit_fields[0].value(['i', 'j'], 1)).to match_identifier('register_if[0].value[0+:1]')
 
-        expect(bit_fields[1].value(1, 1, 4)).to match_identifier('register_if[0].value[8+:4]')
-        expect(bit_fields[1].value('i', 'j', 4)).to match_identifier('register_if[0].value[8+:4]')
+        expect(bit_fields[1].value([1, 1], 4)).to match_identifier('register_if[0].value[8+:4]')
+        expect(bit_fields[1].value(['i', 'j'], 4)).to match_identifier('register_if[0].value[8+:4]')
 
-        expect(bit_fields[2].value(1, 1, 1)).to match_identifier('register_if[0].value[17+:1]')
-        expect(bit_fields[2].value('i', 'j', 1)).to match_identifier('register_if[0].value[16+1*j+:1]')
+        expect(bit_fields[2].value([1, 1], 1)).to match_identifier('register_if[0].value[17+:1]')
+        expect(bit_fields[2].value(['i', 'j'], 1)).to match_identifier('register_if[0].value[16+1*j+:1]')
 
-        expect(bit_fields[3].value(1, 1, 1)).to match_identifier('register_if[0].value[22+:1]')
-        expect(bit_fields[3].value('i', 'j', 1)).to match_identifier('register_if[0].value[20+2*j+:1]')
+        expect(bit_fields[3].value([1, 1], 1)).to match_identifier('register_if[0].value[22+:1]')
+        expect(bit_fields[3].value(['i', 'j'], 1)).to match_identifier('register_if[0].value[20+2*j+:1]')
 
-        expect(bit_fields[4].value(1, 1, 1)).to match_identifier('register_if[0].value[28+:1]')
-        expect(bit_fields[4].value('i', 'j', 1)).to match_identifier('register_if[0].value[24+4*j+:1]')
+        expect(bit_fields[4].value([1, 1], 1)).to match_identifier('register_if[0].value[28+:1]')
+        expect(bit_fields[4].value(['i', 'j'], 1)).to match_identifier('register_if[0].value[24+4*j+:1]')
 
-        expect(bit_fields[5].value(1, 1, 1)).to match_identifier('register_if[2].value[0+:1]')
-        expect(bit_fields[5].value('i', 'j', 1)).to match_identifier('register_if[1+i].value[0+:1]')
+        expect(bit_fields[5].value([1, 1], 1)).to match_identifier('register_if[2].value[0+:1]')
+        expect(bit_fields[5].value(['i', 'j'], 1)).to match_identifier('register_if[1+i].value[0+:1]')
 
-        expect(bit_fields[6].value(1, 1, 4)).to match_identifier('register_if[2].value[8+:4]')
-        expect(bit_fields[6].value('i', 'j', 4)).to match_identifier('register_if[1+i].value[8+:4]')
+        expect(bit_fields[6].value([1, 1], 4)).to match_identifier('register_if[2].value[8+:4]')
+        expect(bit_fields[6].value(['i', 'j'], 4)).to match_identifier('register_if[1+i].value[8+:4]')
 
-        expect(bit_fields[7].value(1, 1, 1)).to match_identifier('register_if[2].value[17+:1]')
-        expect(bit_fields[7].value('i', 'j', 1)).to match_identifier('register_if[1+i].value[16+1*j+:1]')
+        expect(bit_fields[7].value([1, 1], 1)).to match_identifier('register_if[2].value[17+:1]')
+        expect(bit_fields[7].value(['i', 'j'], 1)).to match_identifier('register_if[1+i].value[16+1*j+:1]')
 
-        expect(bit_fields[8].value(1, 1, 1)).to match_identifier('register_if[2].value[22+:1]')
-        expect(bit_fields[8].value('i', 'j', 1)).to match_identifier('register_if[1+i].value[20+2*j+:1]')
+        expect(bit_fields[8].value([1, 1], 1)).to match_identifier('register_if[2].value[22+:1]')
+        expect(bit_fields[8].value(['i', 'j'], 1)).to match_identifier('register_if[1+i].value[20+2*j+:1]')
 
-        expect(bit_fields[9].value(1, 1, 1)).to match_identifier('register_if[2].value[28+:1]')
-        expect(bit_fields[9].value('i', 'j', 1)).to match_identifier('register_if[1+i].value[24+4*j+:1]')
+        expect(bit_fields[9].value([1, 1], 1)).to match_identifier('register_if[2].value[28+:1]')
+        expect(bit_fields[9].value(['i', 'j'], 1)).to match_identifier('register_if[1+i].value[24+4*j+:1]')
+
+        expect(bit_fields[15].value([1, 1, 1], 1)).to match_identifier('register_if[12].value[0+:1]')
+        expect(bit_fields[15].value(['i', 'j', 'k'], 1)).to match_identifier('register_if[9+2*(i)+j].value[0+:1]')
+
+        expect(bit_fields[16].value([1, 1, 1], 4)).to match_identifier('register_if[12].value[8+:4]')
+        expect(bit_fields[16].value(['i', 'j', 'k'], 4)).to match_identifier('register_if[9+2*(i)+j].value[8+:4]')
+
+        expect(bit_fields[17].value([1, 1, 1], 1)).to match_identifier('register_if[12].value[17+:1]')
+        expect(bit_fields[17].value(['i', 'j', 'k'], 1)).to match_identifier('register_if[9+2*(i)+j].value[16+1*k+:1]')
+
+        expect(bit_fields[18].value([1, 1, 1], 1)).to match_identifier('register_if[12].value[22+:1]')
+        expect(bit_fields[18].value(['i', 'j', 'k'], 1)).to match_identifier('register_if[9+2*(i)+j].value[20+2*k+:1]')
+
+        expect(bit_fields[19].value([1, 1, 1], 1)).to match_identifier('register_if[12].value[28+:1]')
+        expect(bit_fields[19].value(['i', 'j', 'k'], 1)).to match_identifier('register_if[9+2*(i)+j].value[24+4*k+:1]')
+
+        expect(bit_fields[20].value([1, 1, 1, 1], 1)).to match_identifier('register_if[16].value[0+:1]')
+        expect(bit_fields[20].value(['i', 'j', 'k', 'l'], 1)).to match_identifier('register_if[13+2*(i)+k].value[0+:1]')
+
+        expect(bit_fields[21].value([1, 1, 1, 1], 4)).to match_identifier('register_if[16].value[8+:4]')
+        expect(bit_fields[21].value(['i', 'j', 'k', 'l'], 4)).to match_identifier('register_if[13+2*(i)+k].value[8+:4]')
+
+        expect(bit_fields[22].value([1, 1, 1, 1], 1)).to match_identifier('register_if[16].value[17+:1]')
+        expect(bit_fields[22].value(['i', 'j', 'k', 'l'], 1)).to match_identifier('register_if[13+2*(i)+k].value[16+1*l+:1]')
+
+        expect(bit_fields[23].value([1, 1, 1, 1], 1)).to match_identifier('register_if[16].value[22+:1]')
+        expect(bit_fields[23].value(['i', 'j', 'k', 'l'], 1)).to match_identifier('register_if[13+2*(i)+k].value[20+2*l+:1]')
+
+        expect(bit_fields[24].value([1, 1, 1, 1], 1)).to match_identifier('register_if[16].value[28+:1]')
+        expect(bit_fields[24].value(['i', 'j', 'k', 'l'], 1)).to match_identifier('register_if[13+2*(i)+k].value[24+4*l+:1]')
       end
     end
   end

@@ -7,10 +7,12 @@ RSpec.describe 'bit_field/type/rw' do
   before(:all) do
     RgGen.enable(:global, [:bus_width, :address_width, :array_port_format])
     RgGen.enable(:register_block, :byte_size)
-    RgGen.enable(:register, [:name, :size, :type])
+    RgGen.enable(:register_file, [:name, :size, :offset_address])
+    RgGen.enable(:register, [:name, :size, :type, :offset_address])
     RgGen.enable(:bit_field, [:name, :bit_assignment, :initial_value, :reference, :type])
     RgGen.enable(:bit_field, :type, [:rw])
     RgGen.enable(:register_block, :sv_rtl_top)
+    RgGen.enable(:register_file, :sv_rtl_top)
     RgGen.enable(:register, :sv_rtl_top)
     RgGen.enable(:bit_field, :sv_rtl_top)
   end
@@ -54,6 +56,21 @@ RSpec.describe 'bit_field/type/rw' do
         bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
         bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 2; type :rw; initial_value 0 }
         bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 4, sequence_size: 2, step: 8; type :rw; initial_value 0 }
+      end
+
+      register_file do
+        name 'register_file_4'
+        size [2, 2]
+        register_file do
+          name 'register_file_0'
+          register do
+            name 'register_0'
+            size [2, 2]
+            bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+            bit_field { name 'bit_field_1'; bit_assignment lsb: 8, width: 2; type :rw; initial_value 0 }
+            bit_field { name 'bit_field_2'; bit_assignment lsb: 16, width: 4, sequence_size: 2, step: 8; type :rw; initial_value 0 }
+          end
+        end
       end
     end
 
@@ -107,6 +124,22 @@ RSpec.describe 'bit_field/type/rw' do
       name: 'o_register_3_bit_field_2', direction: :output, data_type: :logic, width: 4,
       array_size: [2, 2, 2], array_format: array_port_format
     )
+
+    expect(bit_fields[10]).to have_port(
+      :register_block, :value_out,
+      name: 'o_register_file_4_register_file_0_register_0_bit_field_0', direction: :output, data_type: :logic, width: 1,
+      array_size: [2, 2, 2, 2], array_format: array_port_format
+    )
+    expect(bit_fields[11]).to have_port(
+      :register_block, :value_out,
+      name: 'o_register_file_4_register_file_0_register_0_bit_field_1', direction: :output, data_type: :logic, width: 2,
+      array_size: [2, 2, 2, 2], array_format: array_port_format
+    )
+    expect(bit_fields[12]).to have_port(
+      :register_block, :value_out,
+      name: 'o_register_file_4_register_file_0_register_0_bit_field_2', direction: :output, data_type: :logic, width: 4,
+      array_size: [2, 2, 2, 2, 2], array_format: array_port_format
+    )
   end
 
   describe '#generate_code' do
@@ -142,6 +175,19 @@ RSpec.describe 'bit_field/type/rw' do
           name 'register_4'
           size [2, 2]
           bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 4, sequence_size: 4, step: 8; type :rw; initial_value 0 }
+        end
+
+        register_file do
+          name 'register_file_5'
+          size [2, 2]
+          register_file do
+            name 'register_file_0'
+            register do
+              name 'register_0'
+              size [2, 2]
+              bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 4, sequence_size: 4, step: 8; type :rw; initial_value 0 }
+            end
+          end
         end
       end
 
@@ -226,6 +272,20 @@ RSpec.describe 'bit_field/type/rw' do
           .i_rst_n      (i_rst_n),
           .bit_field_if (bit_field_sub_if),
           .o_value      (o_register_4_bit_field_0[i][j][k])
+        );
+      CODE
+
+      expect(bit_fields[6]).to generate_code(:bit_field, :top_down, <<~'CODE')
+        rggen_bit_field_rw_wo #(
+          .WIDTH          (4),
+          .INITIAL_VALUE  (INITIAL_VALUE),
+          .WRITE_ONLY     (0),
+          .WRITE_ONCE     (0)
+        ) u_bit_field (
+          .i_clk        (i_clk),
+          .i_rst_n      (i_rst_n),
+          .bit_field_if (bit_field_sub_if),
+          .o_value      (o_register_file_5_register_file_0_register_0_bit_field_0[i][j][k][l][m])
         );
       CODE
     end

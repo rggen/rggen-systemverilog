@@ -5,17 +5,16 @@ RgGen.define_simple_feature(:register_block, :sv_rtl_top) do
     export :total_registers
 
     build do
-      input :register_block, :clock, {
+      input :clock, {
         name: 'i_clk', data_type: :logic, width: 1
       }
-      input :register_block, :reset, {
+      input :reset, {
         name: 'i_rst_n', data_type: :logic, width: 1
       }
-      interface :register_block, :register_if, {
+      interface :register_if, {
         name: 'register_if', interface_type: 'rggen_register_if',
         parameter_values: [address_width, bus_width, value_width],
-        array_size: [total_registers],
-        variables: ['value']
+        array_size: [total_registers], variables: ['value']
       }
     end
 
@@ -24,7 +23,7 @@ RgGen.define_simple_feature(:register_block, :sv_rtl_top) do
     end
 
     def total_registers
-      register_block.registers.map(&:count).sum
+      register_block.files_and_registers.map(&:count).sum
     end
 
     private
@@ -65,19 +64,21 @@ RgGen.define_simple_feature(:register_block, :sv_rtl_top) do
     end
 
     def parameters
-      register_block.declarations(:register_block, :parameter)
+      register_block.declarations[:parameter]
     end
 
     def ports
-      register_block.declarations(:register_block, :port)
+      register_block.declarations[:port]
     end
 
     def variables
-      register_block.declarations(:register_block, :variable)
+      register_block.declarations[:variable]
     end
 
     def sv_module_body(code)
-      register_block.generate_code(:register_block, :top_down, code)
+      { register_block: nil, register_file: 1 }.each do |kind, depth|
+        register_block.generate_code(code, kind, :top_down, depth)
+      end
     end
   end
 end

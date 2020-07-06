@@ -25,8 +25,6 @@ require 'rggen/systemverilog/ral'
 RgGen::SystemVerilog::RAL.register_component(builder)
 RgGen::SystemVerilog::RAL.load_features
 
-RGGEN_SAMPLE_DIRECTORY =
-  File.join(
-    ENV['RGGEN_ROOT'] || File.expand_path('../..', __dir__),
-    'rggen-sample'
-  )
+RGGEN_ROOT = ENV['RGGEN_ROOT'] || File.expand_path('../..', __dir__)
+RGGEN_SYSTEMVERILOG_ROOT = File.expand_path('..', __dir__)
+RGGEN_SAMPLE_DIRECTORY = File.join(RGGEN_ROOT, 'rggen-sample')

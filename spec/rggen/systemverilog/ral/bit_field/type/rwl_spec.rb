@@ -30,8 +30,8 @@ RSpec.describe 'bit_field/type/rwl' do
       end
     end
 
-    expect(sv_ral.bit_fields[0].model_name).to eq 'rggen_ral_rwl_field #("", "")'
-    expect(sv_ral.bit_fields[1].model_name).to eq 'rggen_ral_rwl_field #("register_1", "bit_field_0")'
-    expect(sv_ral.bit_fields[2].model_name).to eq 'rggen_ral_rwl_field #("register_2", "register_2")'
+    expect(sv_ral.bit_fields[0].model_name).to eq 'rggen_ral_rwl_field'
+    expect(sv_ral.bit_fields[1].model_name).to eq 'rggen_ral_rwl_field'
+    expect(sv_ral.bit_fields[2].model_name).to eq 'rggen_ral_rwl_field'
   end
 end

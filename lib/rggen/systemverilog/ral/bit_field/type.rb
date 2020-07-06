@@ -17,11 +17,9 @@ RgGen.define_list_feature(:bit_field, :type) do
       export :constructors
 
       build do
-        variable :register, :ral_model, {
-          name: bit_field.name,
-          data_type: model_name,
-          array_size: array_size,
-          random: true
+        variable :ral_model, {
+          name: bit_field.name, data_type: model_name,
+          array_size: array_size, random: true
         }
       end
 
@@ -36,9 +34,7 @@ RgGen.define_list_feature(:bit_field, :type) do
 
       def constructors
         (bit_field.sequence_size&.times || [nil]).map do |index|
-          macro_call(
-            :rggen_ral_create_field_model, arguments(index)
-          )
+          macro_call(:rggen_ral_create_field, arguments(index))
         end
       end
 
@@ -50,8 +46,8 @@ RgGen.define_list_feature(:bit_field, :type) do
 
       def arguments(index)
         [
-          ral_model[index], bit_field.lsb(index), bit_field.width,
-          access, volatile, reset_value(index), valid_reset
+          ral_model[index], bit_field.lsb(index), bit_field.width, string(access),
+          volatile, reset_value(index), valid_reset, index || -1, string(reference)
         ]
       end
 
@@ -67,6 +63,15 @@ RgGen.define_list_feature(:bit_field, :type) do
 
       def valid_reset
         bit_field.initial_value? && 1 || 0
+      end
+
+      def reference
+        if bit_field.reference?
+          reference_field = bit_field.reference
+          [reference_field.register.full_name('.'), reference_field.name].join('.')
+        else
+          ''
+        end
       end
     end
 

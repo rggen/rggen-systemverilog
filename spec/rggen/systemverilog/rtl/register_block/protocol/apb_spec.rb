@@ -80,50 +80,50 @@ RSpec.describe 'register_block/protocol/apb' do
 
       it 'インターフェースポート#apb_ifを持つ' do
         expect(register_block).to have_interface_port(
-          :register_block, :apb_if,
+          :apb_if,
           name: 'apb_if', interface_type: 'rggen_apb_if', modport: 'slave'
         )
       end
 
       specify '#apb_ifは個別ポートに展開されない' do
         expect(register_block).to not_have_port(
-          :register_block, :psel,
+          :psel,
           name: 'i_psel', direction: :input, data_type: :logic, width: 1
         )
         expect(register_block).to not_have_port(
-          :register_block, :penable,
+          :penable,
           name: 'i_penable', direction: :input, data_type: :logic, width: 1
         )
         expect(register_block).to not_have_port(
-          :register_block, :paddr,
+          :paddr,
           name: 'i_paddr', direction: :input, data_type: :logic, width: address_width
         )
         expect(register_block).to not_have_port(
-          :register_block, :pprot,
+          :pprot,
           name: 'i_pprot', direction: :input, data_type: :logic, width: 3
         )
         expect(register_block).to not_have_port(
-          :register_block, :pwrite,
+          :pwrite,
           name: 'i_pwrite', direction: :input, data_type: :logic, width: 1
         )
         expect(register_block).to not_have_port(
-          :register_block, :pstrb,
+          :pstrb,
           name: 'i_pstrb', direction: :input, data_type: :logic, width: bus_width / 8
         )
         expect(register_block).to not_have_port(
-          :register_block, :pwdata,
+          :pwdata,
           name: 'i_pwdata', direction: :input, data_type: :logic, width: bus_width
         )
         expect(register_block).to not_have_port(
-          :register_block, :pready,
+          :pready,
           name: 'o_pready', direction: :output, data_type: :logic, width: 1
         )
         expect(register_block).to not_have_port(
-          :register_block, :prdata,
+          :prdata,
           name: 'o_prdata', direction: :output, data_type: :logic, width: bus_width
         )
         expect(register_block).to not_have_port(
-          :register_block, :pslverr,
+          :pslverr,
           name: 'o_pslverr', direction: :output, data_type: :logic, width: 1
         )
       end
@@ -140,50 +140,50 @@ RSpec.describe 'register_block/protocol/apb' do
 
       it '個別ポートに展開された#apb_ifを持つ' do
         expect(register_block).to have_port(
-          :register_block, :psel,
+          :psel,
           name: 'i_psel', direction: :input, data_type: :logic, width: 1
         )
         expect(register_block).to have_port(
-          :register_block, :penable,
+          :penable,
           name: 'i_penable', direction: :input, data_type: :logic, width: 1
         )
         expect(register_block).to have_port(
-          :register_block, :paddr,
+          :paddr,
           name: 'i_paddr', direction: :input, data_type: :logic, width: address_width
         )
         expect(register_block).to have_port(
-          :register_block, :pprot,
+          :pprot,
           name: 'i_pprot', direction: :input, data_type: :logic, width: 3
         )
         expect(register_block).to have_port(
-          :register_block, :pwrite,
+          :pwrite,
           name: 'i_pwrite', direction: :input, data_type: :logic, width: 1
         )
         expect(register_block).to have_port(
-          :register_block, :pstrb,
+          :pstrb,
           name: 'i_pstrb', direction: :input, data_type: :logic, width: bus_width / 8
         )
         expect(register_block).to have_port(
-          :register_block, :pwdata,
+          :pwdata,
           name: 'i_pwdata', direction: :input, data_type: :logic, width: bus_width
         )
         expect(register_block).to have_port(
-          :register_block, :pready,
+          :pready,
           name: 'o_pready', direction: :output, data_type: :logic, width: 1
         )
         expect(register_block).to have_port(
-          :register_block, :prdata,
+          :prdata,
           name: 'o_prdata', direction: :output, data_type: :logic, width: bus_width
         )
         expect(register_block).to have_port(
-          :register_block, :pslverr,
+          :pslverr,
           name: 'o_pslverr', direction: :output, data_type: :logic, width: 1
         )
       end
 
       it 'rggen_apb_ifのインスタンス#apb_ifを持つ' do
         expect(register_block).to have_interface(
-          :register_block, :apb_if,
+          :apb_if,
           name: 'apb_if', interface_type: 'rggen_apb_if', parameter_values: [address_width, bus_width]
         )
       end

@@ -5,16 +5,10 @@ RSpec.describe 'register_block/sv_rtl_top' do
   include_context 'clean-up builder'
 
   before(:all) do
-    RgGen.enable(:global, [:bus_width, :address_width, :array_port_format, :fold_sv_interface_port])
-    RgGen.enable(:register_block, [:name, :byte_size])
-    RgGen.enable(:register, [:name, :offset_address, :size, :type])
-    RgGen.enable(:register, :type, [:external, :indirect])
-    RgGen.enable(:bit_field, [:name, :bit_assignment, :type, :initial_value, :reference])
-    RgGen.enable(:bit_field, :type, [:rc, :reserved, :ro, :rof, :rs, :rw, :rwc, :rwe, :rwl, :rws, :w0c, :w1c, :w0s, :w1s, :w0crs, :w1, :w1crs, :w0src, :w1src, :w0trg, :w1trg, :wo, :wo1])
-    RgGen.enable(:register_block, [:sv_rtl_top, :protocol])
-    RgGen.enable(:register_block, :protocol, :apb)
-    RgGen.enable(:register, :sv_rtl_top)
-    RgGen.enable(:bit_field, :sv_rtl_top)
+    load_setup_files(RgGen.builder, [
+      File.join(RGGEN_ROOT, 'rggen-default-register-map/lib/rggen/default_register_map/setup.rb'),
+      File.join(RGGEN_SYSTEMVERILOG_ROOT, 'lib/rggen/systemverilog/rtl/setup.rb')
+    ])
   end
 
   def create_register_block(&body)
@@ -29,9 +23,9 @@ RSpec.describe 'register_block/sv_rtl_top' do
     it 'clock/resetを持つ' do
       register_block = create_register_block { name 'block_0'; byte_size 256 }
       expect(register_block)
-        .to have_port(:register_block, :clock) { |p| p.name 'i_clk'; p.direction :input; p.data_type :logic; p.width 1; }
+        .to have_port(:clock) { |p| p.name 'i_clk'; p.direction :input; p.data_type :logic; p.width 1; }
       expect(register_block)
-        .to have_port(:register_block, :reset) { |p| p.name 'i_rst_n'; p.direction :input; p.data_type :logic; p.width 1; }
+        .to have_port(:reset) { |p| p.name 'i_rst_n'; p.direction :input; p.data_type :logic; p.width 1; }
     end
   end
 
@@ -47,7 +41,7 @@ RSpec.describe 'register_block/sv_rtl_top' do
         end
       end
       expect(register_block).to have_interface(
-        :register_block, :register_if,
+        :register_if,
         name: 'register_if', interface_type: 'rggen_register_if',
         parameter_values: [address_width, bus_width, 1 * bus_width], array_size: [1]
       )
@@ -63,7 +57,7 @@ RSpec.describe 'register_block/sv_rtl_top' do
         end
       end
       expect(register_block).to have_interface(
-        :register_block, :register_if,
+        :register_if,
         name: 'register_if', interface_type: 'rggen_register_if',
         parameter_values: [address_width, bus_width, 1 * bus_width], array_size: [8]
       )
@@ -88,9 +82,49 @@ RSpec.describe 'register_block/sv_rtl_top' do
         end
       end
       expect(register_block).to have_interface(
-        :register_block, :register_if,
+        :register_if,
         name: 'register_if', interface_type: 'rggen_register_if',
         parameter_values: [address_width, bus_width, 3 * bus_width], array_size: [3]
+      )
+
+      register_block = create_register_block do
+        name 'block_0'
+        byte_size 256
+
+        register_file do
+          name 'register_file_0'
+          register do
+            name 'register_0'
+            bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+          end
+          register do
+            name 'register_1'
+            size [2, 2]
+            bit_field { name 'bit_field_0'; bit_assignment lsb: 32; type :rw; initial_value 0 }
+          end
+        end
+
+        register_file do
+          name 'register_file_1'
+          size [2, 2]
+          register_file do
+            name 'register_file_0'
+            register do
+              name 'register_0'
+              bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+            end
+            register do
+              name 'register_1'
+              size [2, 2]
+              bit_field { name 'bit_field_0'; bit_assignment lsb: 32; type :rw; initial_value 0 }
+            end
+          end
+        end
+      end
+      expect(register_block).to have_interface(
+        :register_if,
+        name: 'register_if', interface_type: 'rggen_register_if',
+        parameter_values: [address_width, bus_width, 2 * bus_width], array_size: [25]
       )
     end
 
@@ -120,24 +154,31 @@ RSpec.describe 'register_block/sv_rtl_top' do
     end
 
     let(:register_map) do
-      file = ['block_0.rb', 'block_0.xlsx', 'block_0.yml'].sample
-      path = File.join(RGGEN_SAMPLE_DIRECTORY, file)
-      build_register_map_factory(RgGen.builder, false).create(configuration, [path])
+      file_0 = ['block_0.rb', 'block_0.xlsx', 'block_0.yml'].sample
+      file_1 = ['block_1.rb', 'block_1.yml'].sample
+      path = [file_0, file_1].map { |file| File.join(RGGEN_SAMPLE_DIRECTORY, file) }
+      build_register_map_factory(RgGen.builder, false).create(configuration, path)
     end
 
-    let(:sv_rtl) do
-      build_sv_rtl_factory(RgGen.builder).create(configuration, register_map).register_blocks[0]
+    let(:register_blocks) do
+      build_sv_rtl_factory(RgGen.builder).create(configuration, register_map).register_blocks
     end
 
     let(:expected_code) do
-      path = File.join(RGGEN_SAMPLE_DIRECTORY, 'block_0.sv')
-      File.binread(path)
+      [
+        File.join(RGGEN_SAMPLE_DIRECTORY, 'block_0.sv'),
+        File.join(RGGEN_SAMPLE_DIRECTORY, 'block_1.sv')
+      ].map { |path| File.binread(path) }
     end
 
     it 'RTLのソースファイルを書き出す' do
       expect {
-        sv_rtl.write_file('foo')
-      }.to write_file match_string('foo/block_0.sv'), expected_code
+        register_blocks[0].write_file('foo')
+      }.to write_file match_string('foo/block_0.sv'), expected_code[0]
+
+      expect {
+        register_blocks[1].write_file('bar')
+      }.to write_file match_string('bar/block_1.sv'), expected_code[1]
     end
   end
 end

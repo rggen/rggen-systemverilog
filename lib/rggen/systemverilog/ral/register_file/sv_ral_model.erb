@@ -1,0 +1,8 @@
+function new(string name);
+  super.new(name, <%= byte_width %>, 0);
+endfunction
+function void build();
+<% child_model_constructors.each do |constructor| %>
+  <%= constructor %>
+<% end %>
+endfunction

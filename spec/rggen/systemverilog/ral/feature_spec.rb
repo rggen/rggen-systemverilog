@@ -2,115 +2,52 @@
 
 RSpec.describe RgGen::SystemVerilog::RAL::Feature do
   let(:configuration) do
-    RgGen::Core::Configuration::Component.new('configuration', nil)
+    RgGen::Core::Configuration::Component.new(nil, 'configuration', nil)
   end
 
   let(:register_map) do
-    RgGen::Core::RegisterMap::Component.new('register_map', nil, configuration)
+    RgGen::Core::RegisterMap::Component.new(nil, 'register_map', nil, configuration)
   end
 
-  let(:component) do
-    RgGen::Core::OutputBase::Component.new('component', nil, configuration, register_map)
+  let(:components) do
+    register_block = create_component(nil, :register_block)
+    register_file = create_component(register_block, :register_file)
+    register = create_component(register_file, :register)
+    bit_field = create_component(register, :bit_field)
+    [register_block, register_file, register, bit_field]
   end
 
-  let(:feature) do
-    described_class.new(:foo, nil, component) do |f|
-      component.add_feature(f)
+  let(:features) do
+    components.map do |component|
+      described_class.new(:foo, nil, component) { |f| component.add_feature(f) }
     end
+  end
+
+  def create_component(parent, layer)
+    RgGen::SystemVerilog::Common::Component.new(parent, 'component', layer, configuration, register_map)
   end
 
   describe '#variable' do
-    specify 'ハンドル名で、定義した変数の識別子を参照できる' do
-      feature.send(:variable, :domain_a, :foo, data_type: :bit)
-      expect(feature).to have_identifier(:foo, 'foo')
+    specify '規定の宣言追加先は一段上の階層' do
+      features[1].instance_eval { variable :foo, data_type: :bit }
+      features[2].instance_eval { variable :bar, name: 'barbar', data_type: :bit, random: :rand }
+      features[3].instance_eval { variable :baz, name: 'bazbaz', data_type: :bit, width: 2, array_size: [2] }
 
-      feature.send(:variable, :domain_a, :bar, name: 'barbar', data_type: :bit, random: :rand)
-      expect(feature).to have_identifier(:bar, 'barbar')
-
-      feature.send(:variable, :domain_b, :baz) { |v|
-        v.data_type :bit
-        v.name 'bazbaz'
-        v.width 2
-        v.array_size [2]
-      }
-      expect(feature).to have_identifier(:baz, 'bazbaz')
-    end
-
-    specify '定義した変数の識別子はコンポーネント経由で参照できる' do
-      feature.send(:variable, :domain_a, :foo, data_type: :bit)
-      feature.send(:variable, :domain_a, :bar, name: 'barbar', data_type: :bit, random: true)
-      feature.send(:variable, :domain_b, :baz) { |v|
-        v.data_type :bit
-        v.name 'bazbaz'
-        v.width 2
-        v.array_size [2]
-      }
-      component.build
-
-      expect(component).to have_identifier(:foo, 'foo')
-      expect(component).to have_identifier(:bar, 'barbar')
-      expect(component).to have_identifier(:baz, 'bazbaz')
-    end
-
-    specify '定義した変数の宣言は#declarationsで参照できる' do
-      feature.send(:variable, :domain_a, :foo, data_type: :bit)
-      feature.send(:variable, :domain_a, :bar, name: 'barbar', data_type: :bit, random: true)
-      feature.send(:variable, :domain_b, :baz) { |v|
-        v.data_type :bit
-        v.name 'bazbaz'
-        v.width 2
-        v.array_size [2]
-      }
-
-      expect(feature).to have_declaration(:domain_a, :variable, 'bit foo')
-      expect(feature).to have_declaration(:domain_a, :variable, 'rand bit barbar')
-      expect(feature).to have_declaration(:domain_b, :variable, 'bit [1:0] bazbaz[2]')
+      expect(components[0]).to have_declaration(:variable, 'bit foo')
+      expect(components[1]).to have_declaration(:variable, 'rand bit barbar')
+      expect(components[2]).to have_declaration(:variable, 'bit [1:0] bazbaz[2]')
     end
   end
 
   describe '#parameter' do
-    specify 'ハンドル名で、定義したパラメータの識別子を参照できる' do
-      feature.send(:parameter, :domain_a, :foo, default: 1)
-      expect(feature).to have_identifier(:foo, 'foo')
+    specify '規定の宣言追加先は一段上の階層' do
+      features[1].instance_eval { parameter :foo, default: 1 }
+      features[2].instance_eval { parameter :bar, name: 'BAR', data_type: :int, default: 2 }
+      features[3].instance_eval { parameter :baz, name: 'BAZ', data_type: :int, default: 3 }
 
-      feature.send(:parameter, :domain_a, :bar, name: 'BAR',data_type: :int, default: 2)
-      expect(feature).to have_identifier(:bar, 'BAR')
-
-      feature.send(:parameter, :domain_b, :baz) { |p|
-        p.name 'BAZ'
-        p.data_type :int
-        p.default 3
-      }
-      expect(feature).to have_identifier(:baz, 'BAZ')
-    end
-
-    specify '定義したパラメータの識別子はコンポーネント経由で参照できる' do
-      feature.send(:parameter, :domain_a, :foo, default: 1)
-      feature.send(:parameter, :domain_a, :bar, name: 'BAR',data_type: :int, default: 2)
-      feature.send(:parameter, :domain_b, :baz) { |p|
-        p.name 'BAZ'
-        p.data_type :int
-        p.default 3
-      }
-      component.build
-
-      expect(component).to have_identifier(:foo, 'foo')
-      expect(component).to have_identifier(:bar, 'BAR')
-      expect(component).to have_identifier(:baz, 'BAZ')
-    end
-
-    specify '定義したパラメータの宣言は#declarationsで参照できる' do
-      feature.send(:parameter, :domain_a, :foo, default: 1)
-      feature.send(:parameter, :domain_a, :bar, name: 'BAR',data_type: :int, default: 2)
-      feature.send(:parameter, :domain_b, :baz) { |p|
-        p.name 'BAZ'
-        p.data_type :int
-        p.default 3
-      }
-
-      expect(feature).to have_declaration(:domain_a, :parameter, 'foo = 1')
-      expect(feature).to have_declaration(:domain_a, :parameter, 'int BAR = 2')
-      expect(feature).to have_declaration(:domain_b, :parameter, 'int BAZ = 3')
+      expect(components[0]).to have_declaration(:parameter, 'foo = 1')
+      expect(components[1]).to have_declaration(:parameter, 'int BAR = 2')
+      expect(components[2]).to have_declaration(:parameter, 'int BAZ = 3')
     end
   end
 end

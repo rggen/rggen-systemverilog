@@ -3,25 +3,26 @@
 RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
   sv_rtl do
     export :local_index
+    export :local_indices
     export :loop_variables
     export :array_size
     export :value
 
     build do
       if fixed_initial_value?
-        localparam :bit_field, :initial_value, {
+        localparam :initial_value, {
           name: initial_value_name, data_type: :bit, width: bit_field.width,
           array_size: initial_value_size, array_format: initial_value_format,
           default: initial_value_lhs
         }
       elsif initial_value?
-        parameter :register_block, :initial_value, {
+        parameter :initial_value, {
           name: initial_value_name, data_type: :bit, width: bit_field.width,
           array_size: initial_value_size, array_format: initial_value_format,
           default: initial_value_lhs
         }
       end
-      interface :bit_field, :bit_field_sub_if, {
+      interface :bit_field_sub_if, {
         name: 'bit_field_sub_if',
         interface_type: 'rggen_bit_field_if',
         parameter_values: [bit_field.width]
@@ -42,13 +43,12 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
     end
 
     def local_index
-      (bit_field.sequential? || nil) &&
+      (index_name = local_index_name) &&
         create_identifier(index_name)
     end
 
-    def index_name
-      depth = (register.loop_variables&.size || 0) + 1
-      loop_index(depth)
+    def local_indices
+      [*register.local_indices, local_index_name]
     end
 
     def loop_variables
@@ -58,21 +58,36 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
 
     def array_size
       (inside_loop? || nil) &&
-        [*register.array_size, bit_field.sequence_size].compact
+        [
+          *register_files.flat_map(&:array_size),
+          *register.array_size,
+          *bit_field.sequence_size
+        ].compact
     end
 
-    def value(register_offset = nil, bit_field_offset = nil, width = nil)
-      bit_field_offset ||= local_index
-      width ||= bit_field.width
-      register_block
-        .register_if[register.index(register_offset)]
-        .value[bit_field.lsb(bit_field_offset), width]
+    def value(offsets = nil, width = nil)
+      value_lsb = bit_field.lsb(offsets&.last || local_index_name)
+      value_width = width || bit_field.width
+      register_if(offsets&.slice(0..-2)).value[value_lsb, value_width]
     end
 
     private
 
     [:fixed_initial_value?, :initial_value_array?, :initial_value?].each do |m|
       define_method(m) { bit_field.__send__(__method__) }
+    end
+
+    def local_index_name
+      (bit_field.sequential? || nil) &&
+        begin
+          depth = (register.loop_variables&.size || 0) + 1
+          loop_index(depth)
+        end
+    end
+
+    def register_if(offsets)
+      index = register.index(offsets || register.local_indices)
+      register_block.register_if[index]
     end
 
     def initial_value_name
@@ -119,20 +134,20 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
     end
 
     def loop_size
-      (bit_field.sequential? || nil) &&
-        { index_name => bit_field.sequence_size }
+      (loop_variable = local_index_name) &&
+        { loop_variable => bit_field.sequence_size }
     end
 
     def parameters
-      bit_field.declarations(:bit_field, :parameter)
+      bit_field.declarations[:parameter]
     end
 
     def variables
-      bit_field.declarations(:bit_field, :variable)
+      bit_field.declarations[:variable]
     end
 
     def body_code(code)
-      bit_field.generate_code(:bit_field, :top_down, code)
+      bit_field.generate_code(code, :bit_field, :top_down)
     end
 
     def bit_field_if_connection

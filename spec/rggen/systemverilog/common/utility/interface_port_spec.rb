@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 
 RSpec.describe RgGen::SystemVerilog::Common::Utility::InterfacePort do
-  def interface_port(interface_type, name, &block)
-    described_class.new(interface_type: interface_type, name: name, &block)
+  def interface_port(interface_type, name, attributes = {}, &block)
+    described_class.new(
+      { interface_type: interface_type, name: name }.merge(attributes), &block
+    )
   end
 
   describe '#declaration' do
     it 'インターフェースポートの宣言を返す' do
       expect(interface_port(:foo_if, :foo)).to match_declaration('foo_if foo')
+      expect(interface_port(:foo_if, :foo, modport: :slave)).to match_declaration('foo_if.slave foo')
+      expect(interface_port(:foo_if, :foo, modport: [:slave, [:bar, :baz]])).to match_declaration('foo_if.slave foo')
       expect(interface_port(:foo_if, :foo) { |i| i.modport :slave }).to match_declaration('foo_if.slave foo')
       expect(interface_port(:foo_if, :foo) { |i| i.modport :slave, [:bar, :baz] }).to match_declaration('foo_if.slave foo')
       expect(interface_port(:foo_if, :foo) { |i| i.array_size [2, 3] }).to match_declaration('foo_if foo[2][3]')
@@ -25,6 +29,10 @@ RSpec.describe RgGen::SystemVerilog::Common::Utility::InterfacePort do
 
     context '#modportで下位ポートが設定された場合' do
       specify '下位ポートの識別子を取得できる' do
+        identifier = interface_port(:foo_if, :foo, modport: [:slave, [:bar, :baz]]).identifier
+        expect(identifier.bar).to match_identifier('foo.bar')
+        expect(identifier.baz).to match_identifier('foo.baz')
+
         identifier = interface_port(:foo_if, :foo) { |i| i.modport :slave, [:bar, :baz] }.identifier
         expect(identifier.bar).to match_identifier('foo.bar')
         expect(identifier.baz).to match_identifier('foo.baz')

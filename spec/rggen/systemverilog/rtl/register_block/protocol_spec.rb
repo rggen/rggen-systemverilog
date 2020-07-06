@@ -139,11 +139,11 @@ RSpec.describe 'register_block/protocol' do
 
     it 'パラメータERROR_STATUSとDEFAULT_READ_DATAを持つ' do
       expect(sv_rtl).to have_parameter(
-        :register_block, :error_status,
+        :error_status,
         name: 'ERROR_STATUS', parameter_type: :parameter, data_type: :bit, width: 1, default: 0
       )
       expect(sv_rtl).to have_parameter(
-        :register_block, :default_read_data,
+        :default_read_data,
         name: 'DEFAULT_READ_DATA', parameter_type: :parameter, data_type: :bit, width: bus_width, default: "32'h00000000"
       )
     end

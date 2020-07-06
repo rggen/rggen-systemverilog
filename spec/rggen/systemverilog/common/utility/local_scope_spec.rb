@@ -42,6 +42,24 @@ RSpec.describe RgGen::SystemVerilog::Common::Utility::LocalScope do
 
     expect(
       local_scope(:foo) do |s|
+        s.top_scope(true)
+      end
+    ).to match_string(<<~'SCOPE')
+      generate if (1) begin : foo
+      end endgenerate
+    SCOPE
+
+    expect(
+      local_scope(:foo) do |s|
+        s.top_scope(false)
+      end
+    ).to match_string(<<~'SCOPE')
+      if (1) begin : foo
+      end
+    SCOPE
+
+    expect(
+      local_scope(:foo) do |s|
         s.parameters parameters
       end
     ).to match_string(<<~'SCOPE')
