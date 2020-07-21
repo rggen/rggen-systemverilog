@@ -65,6 +65,16 @@ RgGen.define_list_feature(:register_block, :protocol) do
 
     base_feature do
       build do
+        parameter :address_width, {
+          name: 'ADDRESS_WIDTH', data_type: :int, default: global_address_width
+        }
+        parameter :pre_decode, {
+          name: 'PRE_DECODE', data_type: :bit, width: 1, default: 0
+        }
+        parameter :base_address, {
+          name: 'BASE_ADDRESS', data_type: :bit, width: address_width,
+          default: all_bits_0
+        }
         parameter :error_status, {
           name: 'ERROR_STATUS', data_type: :bit, width: 1, default: 0
         }
@@ -76,7 +86,7 @@ RgGen.define_list_feature(:register_block, :protocol) do
 
       private
 
-      def address_width
+      def global_address_width
         configuration.address_width
       end
 

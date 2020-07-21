@@ -45,6 +45,10 @@ module RgGen
           end
         end
 
+        def all_bits_0
+          "'0"
+        end
+
         def bin(value, width = nil)
           if width
             width = bit_width(value, width)

@@ -96,7 +96,7 @@ RSpec.describe 'register_block/protocol/apb' do
         )
         expect(register_block).to not_have_port(
           :paddr,
-          name: 'i_paddr', direction: :input, data_type: :logic, width: address_width
+          name: 'i_paddr', direction: :input, data_type: :logic, width: 'ADDRESS_WIDTH'
         )
         expect(register_block).to not_have_port(
           :pprot,
@@ -149,7 +149,7 @@ RSpec.describe 'register_block/protocol/apb' do
         )
         expect(register_block).to have_port(
           :paddr,
-          name: 'i_paddr', direction: :input, data_type: :logic, width: address_width
+          name: 'i_paddr', direction: :input, data_type: :logic, width: 'ADDRESS_WIDTH'
         )
         expect(register_block).to have_port(
           :pprot,
@@ -184,7 +184,7 @@ RSpec.describe 'register_block/protocol/apb' do
       it 'rggen_apb_ifのインスタンス#apb_ifを持つ' do
         expect(register_block).to have_interface(
           :apb_if,
-          name: 'apb_if', interface_type: 'rggen_apb_if', parameter_values: [address_width, bus_width]
+          name: 'apb_if', interface_type: 'rggen_apb_if', parameter_values: ['ADDRESS_WIDTH', bus_width]
         )
       end
     end
@@ -201,11 +201,14 @@ RSpec.describe 'register_block/protocol/apb' do
 
         expect(register_block).to generate_code(:register_block, :top_down, <<~'CODE')
           rggen_apb_adapter #(
-            .ADDRESS_WIDTH      (8),
-            .BUS_WIDTH          (32),
-            .REGISTERS          (3),
-            .ERROR_STATUS       (ERROR_STATUS),
-            .DEFAULT_READ_DATA  (DEFAULT_READ_DATA)
+            .ADDRESS_WIDTH        (ADDRESS_WIDTH),
+            .LOCAL_ADDRESS_WIDTH  (8),
+            .BUS_WIDTH            (32),
+            .REGISTERS            (3),
+            .PRE_DECODE           (PRE_DECODE),
+            .BASE_ADDRESS         (BASE_ADDRESS),
+            .ERROR_STATUS         (ERROR_STATUS),
+            .DEFAULT_READ_DATA    (DEFAULT_READ_DATA)
           ) u_adapter (
             .i_clk        (i_clk),
             .i_rst_n      (i_rst_n),
@@ -224,11 +227,14 @@ RSpec.describe 'register_block/protocol/apb' do
 
         expect(register_block).to generate_code(:register_block, :top_down, <<~'CODE')
           rggen_apb_adapter #(
-            .ADDRESS_WIDTH      (8),
-            .BUS_WIDTH          (32),
-            .REGISTERS          (3),
-            .ERROR_STATUS       (ERROR_STATUS),
-            .DEFAULT_READ_DATA  (DEFAULT_READ_DATA)
+            .ADDRESS_WIDTH        (ADDRESS_WIDTH),
+            .LOCAL_ADDRESS_WIDTH  (8),
+            .BUS_WIDTH            (32),
+            .REGISTERS            (3),
+            .PRE_DECODE           (PRE_DECODE),
+            .BASE_ADDRESS         (BASE_ADDRESS),
+            .ERROR_STATUS         (ERROR_STATUS),
+            .DEFAULT_READ_DATA    (DEFAULT_READ_DATA)
           ) u_adapter (
             .i_clk        (i_clk),
             .i_rst_n      (i_rst_n),

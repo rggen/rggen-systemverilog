@@ -5,7 +5,7 @@ RSpec.describe 'register_block/protocol' do
   include_context 'clean-up builder'
 
   before(:all) do
-    RgGen.enable(:register_block, :bus_width)
+    RgGen.enable(:register_block, [:bus_width, :address_width])
     RgGen.define_list_item_feature(:register_block, :protocol, [:foo, :bar, :baz]) do
       sv_rtl {}
     end
@@ -132,12 +132,26 @@ RSpec.describe 'register_block/protocol' do
 
     let(:bus_width) { 32 }
 
+    let(:address_width) { 32 }
+
     let(:sv_rtl) do
-      configuration = create_configuration(protocol: :foo, bus_width: bus_width)
+      configuration = create_configuration(protocol: :foo, bus_width: bus_width, address_width: address_width)
       create_sv_rtl(configuration).register_blocks.first
     end
 
-    it 'パラメータERROR_STATUSとDEFAULT_READ_DATAを持つ' do
+    it 'パラメータADDRESS_WIDTH/PRE_DECODE/BASE_ADDRESS/ERROR_STATUS/DEFAULT_READ_DATAを持つ' do
+      expect(sv_rtl).to have_parameter(
+        :address_width,
+        name: 'ADDRESS_WIDTH', parameter_type: :parameter, data_type: :int, default: address_width
+      )
+      expect(sv_rtl).to have_parameter(
+        :pre_decode,
+        name: 'PRE_DECODE', parameter_type: :parameter, data_type: :bit, width: 1, default: 0
+      )
+      expect(sv_rtl).to have_parameter(
+        :base_address,
+        name: 'BASE_ADDRESS', parameter_type: :parameter, data_type: :bit, width: 'ADDRESS_WIDTH', default: "'0"
+      )
       expect(sv_rtl).to have_parameter(
         :error_status,
         name: 'ERROR_STATUS', parameter_type: :parameter, data_type: :bit, width: 1, default: 0
