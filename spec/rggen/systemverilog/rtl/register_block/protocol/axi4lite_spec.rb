@@ -278,6 +278,7 @@ RSpec.describe 'register_block/protocol/apb' do
             .REGISTERS            (3),
             .PRE_DECODE           (PRE_DECODE),
             .BASE_ADDRESS         (BASE_ADDRESS),
+            .BYTE_SIZE            (256),
             .ERROR_STATUS         (ERROR_STATUS),
             .DEFAULT_READ_DATA    (DEFAULT_READ_DATA),
             .WRITE_FIRST          (WRITE_FIRST)
@@ -305,6 +306,7 @@ RSpec.describe 'register_block/protocol/apb' do
             .REGISTERS            (3),
             .PRE_DECODE           (PRE_DECODE),
             .BASE_ADDRESS         (BASE_ADDRESS),
+            .BYTE_SIZE            (256),
             .ERROR_STATUS         (ERROR_STATUS),
             .DEFAULT_READ_DATA    (DEFAULT_READ_DATA),
             .WRITE_FIRST          (WRITE_FIRST)
