@@ -5,6 +5,7 @@ rggen_apb_adapter #(
   .REGISTERS            (<%= total_registers %>),
   .PRE_DECODE           (<%= pre_decode %>),
   .BASE_ADDRESS         (<%= base_address %>),
+  .BYTE_SIZE            (<%= byte_size %>),
   .ERROR_STATUS         (<%= error_status %>),
   .DEFAULT_READ_DATA    (<%= default_read_data %>)
 ) u_adapter (

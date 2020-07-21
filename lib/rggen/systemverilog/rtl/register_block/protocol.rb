@@ -106,6 +106,10 @@ RgGen.define_list_feature(:register_block, :protocol) do
         register_block.total_registers
       end
 
+      def byte_size
+        register_block.byte_size
+      end
+
       def clock
         register_block.clock
       end
