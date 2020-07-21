@@ -31,6 +31,15 @@ Metrics/BlockLength:
     - sv_rtl
     - sv_ral
 
+Metrics/ClassLength:
+  Max: 130
+
+Metrics/MethodLength:
+  Max: 15
+
+Metrics/ModuleLength:
+  Max: 130
+
 Style/Alias:
   EnforcedStyle: prefer_alias_method
 
