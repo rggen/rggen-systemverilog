@@ -82,7 +82,7 @@ RSpec.describe 'register_block/protocol/apb' do
         )
         expect(register_block).to not_have_port(
           :awaddr,
-          name: 'i_awaddr', direction: :input, data_type: :logic, width: address_width
+          name: 'i_awaddr', direction: :input, data_type: :logic, width: 'ADDRESS_WIDTH'
         )
         expect(register_block).to not_have_port(
           :awprot,
@@ -126,7 +126,7 @@ RSpec.describe 'register_block/protocol/apb' do
         )
         expect(register_block).to not_have_port(
           :araddr,
-          name: 'i_araddr', direction: :input, data_type: :logic, width: address_width
+          name: 'i_araddr', direction: :input, data_type: :logic, width: 'ADDRESS_WIDTH'
         )
         expect(register_block).to not_have_port(
           :arprot,
@@ -171,7 +171,7 @@ RSpec.describe 'register_block/protocol/apb' do
         )
         expect(register_block).to have_port(
           :awaddr,
-          name: 'i_awaddr', direction: :input, data_type: :logic, width: address_width
+          name: 'i_awaddr', direction: :input, data_type: :logic, width: 'ADDRESS_WIDTH'
         )
         expect(register_block).to have_port(
           :awprot,
@@ -215,7 +215,7 @@ RSpec.describe 'register_block/protocol/apb' do
         )
         expect(register_block).to have_port(
           :araddr,
-          name: 'i_araddr', direction: :input, data_type: :logic, width: address_width
+          name: 'i_araddr', direction: :input, data_type: :logic, width: 'ADDRESS_WIDTH'
         )
         expect(register_block).to have_port(
           :arprot,
@@ -242,7 +242,7 @@ RSpec.describe 'register_block/protocol/apb' do
       it 'rggen_ax4lite_ifのインスタンス#axi4lite_ifを持つ' do
         expect(register_block).to have_interface(
           :axi4lite_if,
-          name: 'axi4lite_if', interface_type: 'rggen_axi4lite_if', parameter_values: [address_width, bus_width]
+          name: 'axi4lite_if', interface_type: 'rggen_axi4lite_if', parameter_values: ['ADDRESS_WIDTH', bus_width]
         )
       end
     end
@@ -272,12 +272,15 @@ RSpec.describe 'register_block/protocol/apb' do
 
         expect(register_block).to generate_code(:register_block, :top_down, <<~'CODE')
           rggen_axi4lite_adapter #(
-            .ADDRESS_WIDTH      (8),
-            .BUS_WIDTH          (32),
-            .REGISTERS          (3),
-            .ERROR_STATUS       (ERROR_STATUS),
-            .DEFAULT_READ_DATA  (DEFAULT_READ_DATA),
-            .WRITE_FIRST        (WRITE_FIRST)
+            .ADDRESS_WIDTH        (ADDRESS_WIDTH),
+            .LOCAL_ADDRESS_WIDTH  (8),
+            .BUS_WIDTH            (32),
+            .REGISTERS            (3),
+            .PRE_DECODE           (PRE_DECODE),
+            .BASE_ADDRESS         (BASE_ADDRESS),
+            .ERROR_STATUS         (ERROR_STATUS),
+            .DEFAULT_READ_DATA    (DEFAULT_READ_DATA),
+            .WRITE_FIRST          (WRITE_FIRST)
           ) u_adapter (
             .i_clk        (i_clk),
             .i_rst_n      (i_rst_n),
@@ -296,12 +299,15 @@ RSpec.describe 'register_block/protocol/apb' do
 
         expect(register_block).to generate_code(:register_block, :top_down, <<~'CODE')
           rggen_axi4lite_adapter #(
-            .ADDRESS_WIDTH      (8),
-            .BUS_WIDTH          (32),
-            .REGISTERS          (3),
-            .ERROR_STATUS       (ERROR_STATUS),
-            .DEFAULT_READ_DATA  (DEFAULT_READ_DATA),
-            .WRITE_FIRST        (WRITE_FIRST)
+            .ADDRESS_WIDTH        (ADDRESS_WIDTH),
+            .LOCAL_ADDRESS_WIDTH  (8),
+            .BUS_WIDTH            (32),
+            .REGISTERS            (3),
+            .PRE_DECODE           (PRE_DECODE),
+            .BASE_ADDRESS         (BASE_ADDRESS),
+            .ERROR_STATUS         (ERROR_STATUS),
+            .DEFAULT_READ_DATA    (DEFAULT_READ_DATA),
+            .WRITE_FIRST          (WRITE_FIRST)
           ) u_adapter (
             .i_clk        (i_clk),
             .i_rst_n      (i_rst_n),
