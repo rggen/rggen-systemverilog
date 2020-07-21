@@ -158,7 +158,7 @@ RSpec.describe 'register_block/protocol' do
       )
       expect(sv_rtl).to have_parameter(
         :default_read_data,
-        name: 'DEFAULT_READ_DATA', parameter_type: :parameter, data_type: :bit, width: bus_width, default: "32'h00000000"
+        name: 'DEFAULT_READ_DATA', parameter_type: :parameter, data_type: :bit, width: bus_width, default: "'0"
       )
     end
   end

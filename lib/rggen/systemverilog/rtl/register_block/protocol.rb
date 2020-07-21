@@ -80,7 +80,7 @@ RgGen.define_list_feature(:register_block, :protocol) do
         }
         parameter :default_read_data, {
           name: 'DEFAULT_READ_DATA', data_type: :bit, width: bus_width,
-          default: hex(0, bus_width)
+          default: all_bits_0
         }
       end
 
