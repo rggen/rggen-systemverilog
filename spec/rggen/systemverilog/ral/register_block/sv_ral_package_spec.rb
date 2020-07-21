@@ -8,6 +8,7 @@ RSpec.describe 'register_block/sv_ral_package' do
     before do
       load_setup_files(RgGen.builder, [
         File.join(RGGEN_ROOT, 'rggen-default-register-map/lib/rggen/default_register_map/setup.rb'),
+        File.join(RGGEN_ROOT, 'rggen-spreadsheet-loader/lib/rggen/spreadsheet_loader/setup.rb'),
         File.join(RGGEN_SYSTEMVERILOG_ROOT, 'lib/rggen/systemverilog/ral/setup.rb')
       ])
     end
