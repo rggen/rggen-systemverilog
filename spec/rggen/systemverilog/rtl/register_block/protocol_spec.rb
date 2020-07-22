@@ -127,6 +127,7 @@ RSpec.describe 'register_block/protocol' do
     include_context 'sv rtl common'
 
     before do
+      RgGen.enable(:register_block, :byte_size)
       RgGen.enable(:register_block, :protocol, :foo)
     end
 
@@ -134,15 +135,17 @@ RSpec.describe 'register_block/protocol' do
 
     let(:address_width) { 32 }
 
+    let(:local_address_width) { 8 }
+
     let(:sv_rtl) do
       configuration = create_configuration(protocol: :foo, bus_width: bus_width, address_width: address_width)
-      create_sv_rtl(configuration).register_blocks.first
+      create_sv_rtl(configuration) { byte_size 256 }.register_blocks.first
     end
 
     it 'パラメータADDRESS_WIDTH/PRE_DECODE/BASE_ADDRESS/ERROR_STATUS/DEFAULT_READ_DATAを持つ' do
       expect(sv_rtl).to have_parameter(
         :address_width,
-        name: 'ADDRESS_WIDTH', parameter_type: :parameter, data_type: :int, default: address_width
+        name: 'ADDRESS_WIDTH', parameter_type: :parameter, data_type: :int, default: local_address_width
       )
       expect(sv_rtl).to have_parameter(
         :pre_decode,
