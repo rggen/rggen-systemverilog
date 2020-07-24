@@ -55,6 +55,24 @@ RSpec.describe 'register_block/protocol/apb' do
       create_sv_rtl(configuration, &body).register_blocks.first
     end
 
+    it 'パラメータ#id_width/#write_firstを持つ' do
+      register_block = create_register_block([true, false].sample) do
+        name 'block_0'
+        byte_size 256
+        register { name 'register_0'; offset_address 0x00; size [1]; type :external }
+      end
+
+      expect(register_block).to have_parameter(
+        :id_width,
+        name: 'ID_WIDTH', parameter_type: :parameter, data_type: :int, default: 0
+      )
+
+      expect(register_block).to have_parameter(
+        :write_first,
+        name: 'WRITE_FIRST', parameter_type: :parameter, data_type: :bit, default: 1
+      )
+    end
+
     context 'fold_sv_interface_portが有効になっている場合' do
       let(:register_block) do
         create_register_block(true) do
@@ -79,6 +97,10 @@ RSpec.describe 'register_block/protocol/apb' do
         expect(register_block).to not_have_port(
           :awready,
           name: 'o_awready', direction: :output, data_type: :logic, width: 1
+        )
+        expect(register_block).to not_have_port(
+          :awid,
+          name: 'i_awid', direction: :input, data_type: :logic, width: '((ID_WIDTH>0)?ID_WIDTH:1)'
         )
         expect(register_block).to not_have_port(
           :awaddr,
@@ -113,6 +135,10 @@ RSpec.describe 'register_block/protocol/apb' do
           name: 'i_bready', direction: :input, data_type: :logic, width: 1
         )
         expect(register_block).to not_have_port(
+          :bid,
+          name: 'o_bid', direction: :output, data_type: :logic, width: '((ID_WIDTH>0)?ID_WIDTH:1)'
+        )
+        expect(register_block).to not_have_port(
           :bresp,
           name: 'o_bresp', direction: :output, data_type: :logic, width: 2
         )
@@ -123,6 +149,10 @@ RSpec.describe 'register_block/protocol/apb' do
         expect(register_block).to not_have_port(
           :arready,
           name: 'o_arready', direction: :output, data_type: :logic, width: 1
+        )
+        expect(register_block).to not_have_port(
+          :arid,
+          name: 'i_arid', direction: :input, data_type: :logic, width: '((ID_WIDTH>0)?ID_WIDTH:1)'
         )
         expect(register_block).to not_have_port(
           :araddr,
@@ -139,6 +169,10 @@ RSpec.describe 'register_block/protocol/apb' do
         expect(register_block).to not_have_port(
           :rready,
           name: 'i_rready', direction: :input, data_type: :logic, width: 1
+        )
+        expect(register_block).to not_have_port(
+          :rid,
+          name: 'o_rid', direction: :output, data_type: :logic, width: '((ID_WIDTH>0)?ID_WIDTH:1)'
         )
         expect(register_block).to not_have_port(
           :rdata,
@@ -170,6 +204,10 @@ RSpec.describe 'register_block/protocol/apb' do
           name: 'o_awready', direction: :output, data_type: :logic, width: 1
         )
         expect(register_block).to have_port(
+          :awid,
+          name: 'i_awid', direction: :input, data_type: :logic, width: '((ID_WIDTH>0)?ID_WIDTH:1)'
+        )
+        expect(register_block).to have_port(
           :awaddr,
           name: 'i_awaddr', direction: :input, data_type: :logic, width: 'ADDRESS_WIDTH'
         )
@@ -202,6 +240,10 @@ RSpec.describe 'register_block/protocol/apb' do
           name: 'i_bready', direction: :input, data_type: :logic, width: 1
         )
         expect(register_block).to have_port(
+          :bid,
+          name: 'o_bid', direction: :output, data_type: :logic, width: '((ID_WIDTH>0)?ID_WIDTH:1)'
+        )
+        expect(register_block).to have_port(
           :bresp,
           name: 'o_bresp', direction: :output, data_type: :logic, width: 2
         )
@@ -212,6 +254,10 @@ RSpec.describe 'register_block/protocol/apb' do
         expect(register_block).to have_port(
           :arready,
           name: 'o_arready', direction: :output, data_type: :logic, width: 1
+        )
+        expect(register_block).to have_port(
+          :arid,
+          name: 'i_arid', direction: :input, data_type: :logic, width: '((ID_WIDTH>0)?ID_WIDTH:1)'
         )
         expect(register_block).to have_port(
           :araddr,
@@ -230,6 +276,10 @@ RSpec.describe 'register_block/protocol/apb' do
           name: 'i_rready', direction: :input, data_type: :logic, width: 1
         )
         expect(register_block).to have_port(
+          :rid,
+          name: 'o_rid', direction: :output, data_type: :logic, width: '((ID_WIDTH>0)?ID_WIDTH:1)'
+        )
+        expect(register_block).to have_port(
           :rdata,
           name: 'o_rdata', direction: :output, data_type: :logic, width: bus_width
         )
@@ -242,22 +292,10 @@ RSpec.describe 'register_block/protocol/apb' do
       it 'rggen_ax4lite_ifのインスタンス#axi4lite_ifを持つ' do
         expect(register_block).to have_interface(
           :axi4lite_if,
-          name: 'axi4lite_if', interface_type: 'rggen_axi4lite_if', parameter_values: ['ADDRESS_WIDTH', bus_width]
+          name: 'axi4lite_if', interface_type: 'rggen_axi4lite_if',
+          parameter_values: ['ID_WIDTH', 'ADDRESS_WIDTH', bus_width]
         )
       end
-    end
-
-    it 'パラメータ#write_firstを持つ' do
-      register_block = create_register_block([true, false].sample) do
-        name 'block_0'
-        byte_size 256
-        register { name 'register_0'; offset_address 0x00; size [1]; type :external }
-      end
-
-      expect(register_block).to have_parameter(
-        :write_first,
-        name: 'WRITE_FIRST', parameter_type: :parameter, data_type: :bit, default: 1
-      )
     end
 
     describe '#generate_code' do
@@ -272,6 +310,7 @@ RSpec.describe 'register_block/protocol/apb' do
 
         expect(register_block).to generate_code(:register_block, :top_down, <<~'CODE')
           rggen_axi4lite_adapter #(
+            .ID_WIDTH             (ID_WIDTH),
             .ADDRESS_WIDTH        (ADDRESS_WIDTH),
             .LOCAL_ADDRESS_WIDTH  (8),
             .BUS_WIDTH            (32),
@@ -300,6 +339,7 @@ RSpec.describe 'register_block/protocol/apb' do
 
         expect(register_block).to generate_code(:register_block, :top_down, <<~'CODE')
           rggen_axi4lite_adapter #(
+            .ID_WIDTH             (ID_WIDTH),
             .ADDRESS_WIDTH        (ADDRESS_WIDTH),
             .LOCAL_ADDRESS_WIDTH  (8),
             .BUS_WIDTH            (32),
@@ -318,6 +358,7 @@ RSpec.describe 'register_block/protocol/apb' do
           );
           assign axi4lite_if.awvalid = i_awvalid;
           assign o_awready = axi4lite_if.awready;
+          assign axi4lite_if.awid = i_awid;
           assign axi4lite_if.awaddr = i_awaddr;
           assign axi4lite_if.awprot = i_awprot;
           assign axi4lite_if.wvalid = i_wvalid;
@@ -326,13 +367,16 @@ RSpec.describe 'register_block/protocol/apb' do
           assign axi4lite_if.wstrb = i_wstrb;
           assign o_bvalid = axi4lite_if.bvalid;
           assign axi4lite_if.bready = i_bready;
+          assign o_bid = axi4lite_if.bid;
           assign o_bresp = axi4lite_if.bresp;
           assign axi4lite_if.arvalid = i_arvalid;
           assign o_arready = axi4lite_if.arready;
+          assign axi4lite_if.arid = i_arid;
           assign axi4lite_if.araddr = i_araddr;
           assign axi4lite_if.arprot = i_arprot;
           assign o_rvalid = axi4lite_if.rvalid;
           assign axi4lite_if.rready = i_rready;
+          assign o_rid = axi4lite_if.rid;
           assign o_rdata = axi4lite_if.rdata;
           assign o_rresp = axi4lite_if.rresp;
         CODE
