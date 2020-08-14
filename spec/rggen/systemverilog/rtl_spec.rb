@@ -36,8 +36,7 @@ RSpec.describe RgGen::SystemVerilog::RTL do
       expect(builder).to receive(:enable).with(:register_file, [:sv_rtl_top])
       expect(builder).to receive(:enable).with(:register, [:sv_rtl_top])
       expect(builder).to receive(:enable).with(:bit_field, [:sv_rtl_top])
-      require 'rggen/systemverilog/rtl/setup'
-      builder.activate_plugins
+      builder.load_plugins(['rggen/systemverilog/rtl/setup'], true)
     end
   end
 end
