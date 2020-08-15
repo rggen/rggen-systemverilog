@@ -8,6 +8,8 @@ require_relative 'rtl/register_index'
 module RgGen
   module SystemVerilog
     module RTL
+      PLUGIN_NAME = :'rggen-sv-rtl'
+
       FEATURES = [
         'rtl/bit_field/sv_rtl_top',
         'rtl/bit_field/type',

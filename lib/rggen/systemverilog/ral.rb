@@ -7,6 +7,8 @@ require_relative 'ral/register_common'
 module RgGen
   module SystemVerilog
     module RAL
+      PLUGIN_NAME = :'rggen-sv-ral'
+
       FEATURES = [
         'ral/bit_field/type',
         'ral/bit_field/type/reserved_rof',
