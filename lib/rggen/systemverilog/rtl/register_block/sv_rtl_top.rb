@@ -23,7 +23,7 @@ RgGen.define_simple_feature(:register_block, :sv_rtl_top) do
     end
 
     def total_registers
-      register_block.files_and_registers.map(&:count).sum
+      register_block.files_and_registers.sum(&:count)
     end
 
     private
