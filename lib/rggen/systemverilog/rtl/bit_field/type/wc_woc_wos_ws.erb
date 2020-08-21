@@ -1,0 +1,10 @@
+<%= module_name %> #(
+  .WIDTH          (<%= width %>),
+  .INITIAL_VALUE  (<%= initial_value %>),
+  .WRITE_ONLY     (<%= write_only %>)
+) u_bit_field (
+  .i_clk        (<%= clock %>),
+  .i_rst_n      (<%= reset %>),
+  .bit_field_if (<%= bit_field_if %>),
+  .o_value      (<%= value_out[loop_variables] %>)
+);
