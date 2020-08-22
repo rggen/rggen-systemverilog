@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RgGen.define_list_item_feature(:bit_field, :type, [:rc, :w0c, :w1c]) do
+RgGen.define_list_item_feature(:bit_field, :type, [:rc, :w0c, :w1c, :wc, :woc]) do
   sv_rtl do
     build do
       input :set, {
@@ -24,15 +24,16 @@ RgGen.define_list_item_feature(:bit_field, :type, [:rc, :w0c, :w1c]) do
     private
 
     def module_name
-      if bit_field.type == :rc
-        'rggen_bit_field_rc'
-      else
-        'rggen_bit_field_w01c'
-      end
+      bit_field.type == :rc && 'rggen_bit_field_rc' || 'rggen_bit_field_w01c_wc_woc'
     end
 
     def clear_value
-      bin({ w0c: 0, w1c: 1 }[bit_field.type], 1)
+      value = { w0c: 0b00, w1c: 0b01, wc: 0b10, woc: 0b10 }[bit_field.type]
+      bin(value, 2)
+    end
+
+    def write_only
+      bit_field.write_only? && 1 || 0
     end
 
     def value_out_unmasked
