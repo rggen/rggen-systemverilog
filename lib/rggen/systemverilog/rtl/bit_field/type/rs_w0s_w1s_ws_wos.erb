@@ -1,10 +1,14 @@
-rggen_bit_field_w01crs #(
-  .CLEAR_VALUE    (<%= clear_value %>),
+<%= module_name %> #(
+<% if bit_field.type != :rs %>
+  .SET_VALUE      (<%= set_value %>),
+  .WRITE_ONLY     (<%= write_only %>),
+<% end %>
   .WIDTH          (<%= width %>),
   .INITIAL_VALUE  (<%= initial_value %>)
 ) u_bit_field (
   .i_clk        (<%= clock %>),
   .i_rst_n      (<%= reset %>),
   .bit_field_if (<%= bit_field_if %>),
+  .i_clear      (<%= clear[loop_variables] %>),
   .o_value      (<%= value_out[loop_variables] %>)
 );

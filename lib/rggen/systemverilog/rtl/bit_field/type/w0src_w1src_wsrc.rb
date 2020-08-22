@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RgGen.define_list_item_feature(:bit_field, :type, [:w0crs, :w1crs]) do
+RgGen.define_list_item_feature(:bit_field, :type, [:w0src, :w1src, :wsrc]) do
   sv_rtl do
     build do
       output :value_out, {
@@ -13,9 +13,9 @@ RgGen.define_list_item_feature(:bit_field, :type, [:w0crs, :w1crs]) do
 
     private
 
-    def clear_value
-      value = (bit_field.type == :w0crs && 0) || 1
-      bin(value, 1)
+    def set_value
+      value = { w0src: 0b00, w1src: 0b01, wsrc: 0b10 }[bit_field.type]
+      bin(value, 2)
     end
   end
 end

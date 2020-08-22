@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RgGen.define_list_item_feature(:bit_field, :type, [:wcrs, :wrc, :wrs, :wsrc]) do
+RgGen.define_list_item_feature(:bit_field, :type, [:wrc, :wrs]) do
   sv_rtl do
     build do
       output :value_out, {

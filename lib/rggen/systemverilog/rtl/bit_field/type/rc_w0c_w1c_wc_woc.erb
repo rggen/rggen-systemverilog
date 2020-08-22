@@ -1,6 +1,7 @@
 <%= module_name %> #(
-<% if [:w0c, :w1c].include?(bit_field.type) %>
+<% if bit_field.type != :rc %>
   .CLEAR_VALUE    (<%= clear_value %>),
+  .WRITE_ONLY     (<%= write_only %>),
 <% end %>
   .WIDTH          (<%= width %>),
   .INITIAL_VALUE  (<%= initial_value %>)

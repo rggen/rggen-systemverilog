@@ -454,7 +454,7 @@ RSpec.describe 'bit_field/type/w0c' do
   describe '#generate_code' do
     let(:array_port_format) { :packed }
 
-    it 'rggen_bit_field_w01cをインスタンスするコードを生成する' do
+    it 'rggen_bit_field_w01c_wc_wocをインスタンスするコードを生成する' do
       bit_fields = create_bit_fields do
         byte_size 256
 
@@ -526,8 +526,9 @@ RSpec.describe 'bit_field/type/w0c' do
       end
 
       expect(bit_fields[0]).to generate_code(:bit_field, :top_down, <<~'CODE')
-        rggen_bit_field_w01c #(
-          .CLEAR_VALUE    (1'b0),
+        rggen_bit_field_w01c_wc_woc #(
+          .CLEAR_VALUE    (2'b00),
+          .WRITE_ONLY     (0),
           .WIDTH          (1),
           .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
@@ -542,8 +543,9 @@ RSpec.describe 'bit_field/type/w0c' do
       CODE
 
       expect(bit_fields[1]).to generate_code(:bit_field, :top_down, <<~'CODE')
-        rggen_bit_field_w01c #(
-          .CLEAR_VALUE    (1'b0),
+        rggen_bit_field_w01c_wc_woc #(
+          .CLEAR_VALUE    (2'b00),
+          .WRITE_ONLY     (0),
           .WIDTH          (1),
           .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
@@ -558,8 +560,9 @@ RSpec.describe 'bit_field/type/w0c' do
       CODE
 
       expect(bit_fields[2]).to generate_code(:bit_field, :top_down, <<~'CODE')
-        rggen_bit_field_w01c #(
-          .CLEAR_VALUE    (1'b0),
+        rggen_bit_field_w01c_wc_woc #(
+          .CLEAR_VALUE    (2'b00),
+          .WRITE_ONLY     (0),
           .WIDTH          (8),
           .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
@@ -574,8 +577,9 @@ RSpec.describe 'bit_field/type/w0c' do
       CODE
 
       expect(bit_fields[3]).to generate_code(:bit_field, :top_down, <<~'CODE')
-        rggen_bit_field_w01c #(
-          .CLEAR_VALUE    (1'b0),
+        rggen_bit_field_w01c_wc_woc #(
+          .CLEAR_VALUE    (2'b00),
+          .WRITE_ONLY     (0),
           .WIDTH          (8),
           .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
@@ -590,8 +594,9 @@ RSpec.describe 'bit_field/type/w0c' do
       CODE
 
       expect(bit_fields[4]).to generate_code(:bit_field, :top_down, <<~'CODE')
-        rggen_bit_field_w01c #(
-          .CLEAR_VALUE    (1'b0),
+        rggen_bit_field_w01c_wc_woc #(
+          .CLEAR_VALUE    (2'b00),
+          .WRITE_ONLY     (0),
           .WIDTH          (64),
           .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
@@ -606,8 +611,9 @@ RSpec.describe 'bit_field/type/w0c' do
       CODE
 
       expect(bit_fields[5]).to generate_code(:bit_field, :top_down, <<~'CODE')
-        rggen_bit_field_w01c #(
-          .CLEAR_VALUE    (1'b0),
+        rggen_bit_field_w01c_wc_woc #(
+          .CLEAR_VALUE    (2'b00),
+          .WRITE_ONLY     (0),
           .WIDTH          (4),
           .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
@@ -622,8 +628,9 @@ RSpec.describe 'bit_field/type/w0c' do
       CODE
 
       expect(bit_fields[6]).to generate_code(:bit_field, :top_down, <<~'CODE')
-        rggen_bit_field_w01c #(
-          .CLEAR_VALUE    (1'b0),
+        rggen_bit_field_w01c_wc_woc #(
+          .CLEAR_VALUE    (2'b00),
+          .WRITE_ONLY     (0),
           .WIDTH          (4),
           .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
@@ -638,8 +645,9 @@ RSpec.describe 'bit_field/type/w0c' do
       CODE
 
       expect(bit_fields[7]).to generate_code(:bit_field, :top_down, <<~'CODE')
-        rggen_bit_field_w01c #(
-          .CLEAR_VALUE    (1'b0),
+        rggen_bit_field_w01c_wc_woc #(
+          .CLEAR_VALUE    (2'b00),
+          .WRITE_ONLY     (0),
           .WIDTH          (4),
           .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
@@ -654,8 +662,9 @@ RSpec.describe 'bit_field/type/w0c' do
       CODE
 
       expect(bit_fields[8]).to generate_code(:bit_field, :top_down, <<~'CODE')
-        rggen_bit_field_w01c #(
-          .CLEAR_VALUE    (1'b0),
+        rggen_bit_field_w01c_wc_woc #(
+          .CLEAR_VALUE    (2'b00),
+          .WRITE_ONLY     (0),
           .WIDTH          (4),
           .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
@@ -670,8 +679,9 @@ RSpec.describe 'bit_field/type/w0c' do
       CODE
 
       expect(bit_fields[9]).to generate_code(:bit_field, :top_down, <<~'CODE')
-        rggen_bit_field_w01c #(
-          .CLEAR_VALUE    (1'b0),
+        rggen_bit_field_w01c_wc_woc #(
+          .CLEAR_VALUE    (2'b00),
+          .WRITE_ONLY     (0),
           .WIDTH          (4),
           .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
@@ -686,8 +696,9 @@ RSpec.describe 'bit_field/type/w0c' do
       CODE
 
       expect(bit_fields[10]).to generate_code(:bit_field, :top_down, <<~'CODE')
-        rggen_bit_field_w01c #(
-          .CLEAR_VALUE    (1'b0),
+        rggen_bit_field_w01c_wc_woc #(
+          .CLEAR_VALUE    (2'b00),
+          .WRITE_ONLY     (0),
           .WIDTH          (4),
           .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
@@ -702,8 +713,9 @@ RSpec.describe 'bit_field/type/w0c' do
       CODE
 
       expect(bit_fields[11]).to generate_code(:bit_field, :top_down, <<~'CODE')
-        rggen_bit_field_w01c #(
-          .CLEAR_VALUE    (1'b0),
+        rggen_bit_field_w01c_wc_woc #(
+          .CLEAR_VALUE    (2'b00),
+          .WRITE_ONLY     (0),
           .WIDTH          (4),
           .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
@@ -718,8 +730,9 @@ RSpec.describe 'bit_field/type/w0c' do
       CODE
 
       expect(bit_fields[12]).to generate_code(:bit_field, :top_down, <<~'CODE')
-        rggen_bit_field_w01c #(
-          .CLEAR_VALUE    (1'b0),
+        rggen_bit_field_w01c_wc_woc #(
+          .CLEAR_VALUE    (2'b00),
+          .WRITE_ONLY     (0),
           .WIDTH          (4),
           .INITIAL_VALUE  (INITIAL_VALUE)
         ) u_bit_field (
