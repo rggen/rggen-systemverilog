@@ -622,7 +622,6 @@ RSpec.describe 'bit_field/sv_rtl_top' do
             size [2]
             register do
               name 'register_0'
-              size [2]
               bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
               bit_field { name 'bit_field_1'; bit_assignment lsb: 1, sequence_size: 2; type :rw; initial_value 0 }
             end
@@ -630,6 +629,17 @@ RSpec.describe 'bit_field/sv_rtl_top' do
 
           register_file do
             name 'register_file_6'
+            size [2]
+            register do
+              name 'register_0'
+              size [2]
+              bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+              bit_field { name 'bit_field_1'; bit_assignment lsb: 1, sequence_size: 2; type :rw; initial_value 0 }
+            end
+          end
+
+          register_file do
+            name 'register_file_7'
             size [2]
             register_file do
               name 'register_file_0'
@@ -659,15 +669,21 @@ RSpec.describe 'bit_field/sv_rtl_top' do
           match_identifier('i'), match_identifier('j'), match_identifier('k')
         ])
         expect(bit_fields[5].loop_variables).to match([
-          match_identifier('i'), match_identifier('j')
+          match_identifier('i')
         ])
         expect(bit_fields[6].loop_variables).to match([
-          match_identifier('i'), match_identifier('j'), match_identifier('k')
+          match_identifier('i'), match_identifier('j')
         ])
         expect(bit_fields[7].loop_variables).to match([
           match_identifier('i'), match_identifier('j')
         ])
         expect(bit_fields[8].loop_variables).to match([
+          match_identifier('i'), match_identifier('j'), match_identifier('k')
+        ])
+        expect(bit_fields[9].loop_variables).to match([
+          match_identifier('i'), match_identifier('j')
+        ])
+        expect(bit_fields[10].loop_variables).to match([
           match_identifier('i'), match_identifier('j'), match_identifier('k')
         ])
       end

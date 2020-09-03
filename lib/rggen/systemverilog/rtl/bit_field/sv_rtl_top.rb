@@ -130,7 +130,7 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
     end
 
     def inside_loop?
-      register.array? || bit_field.sequential?
+      register.inside_loop? || bit_field.sequential?
     end
 
     def loop_size
