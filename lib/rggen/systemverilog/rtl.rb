@@ -4,6 +4,7 @@ require_relative 'common'
 require_relative 'rtl/feature'
 require_relative 'rtl/partial_sum'
 require_relative 'rtl/register_index'
+require_relative 'rtl/bit_field_index'
 
 module RgGen
   module SystemVerilog

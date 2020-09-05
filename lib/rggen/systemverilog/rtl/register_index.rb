@@ -9,7 +9,7 @@ module RgGen
         EXPORTED_METHODS = [
           :loop_variables, :local_loop_variables,
           :local_index, :local_indices,
-          :index, :inside_roop?
+          :index, :inside_loop?
         ].freeze
 
         def self.included(feature)
@@ -23,7 +23,7 @@ module RgGen
         end
 
         def loop_variables
-          (inside_roop? || nil) &&
+          (inside_loop? || nil) &&
             [*upper_register_file&.loop_variables, *local_loop_variables]
         end
 
@@ -59,8 +59,8 @@ module RgGen
           end
         end
 
-        def inside_roop?
-          component.array? || upper_register_file&.inside_roop? || false
+        def inside_loop?
+          component.array? || upper_register_file&.inside_loop? || false
         end
 
         private
