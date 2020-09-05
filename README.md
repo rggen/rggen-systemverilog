@@ -7,7 +7,7 @@
 
 # RgGen::SystemVerilog
 
-RgGen::SystemVerilog privides SystemVerilog RTL generator and UVM RAL model generator for RgGen.
+RgGen::SystemVerilog provides SystemVerilog RTL and UVM register model (UVM RAL) generators for RgGen.
 
 ## Installation
 
