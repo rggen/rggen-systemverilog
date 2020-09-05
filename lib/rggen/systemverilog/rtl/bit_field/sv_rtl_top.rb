@@ -2,10 +2,8 @@
 
 RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
   sv_rtl do
-    export :local_index
-    export :local_indices
-    export :loop_variables
-    export :array_size
+    include RgGen::SystemVerilog::RTL::BitFieldIndex
+
     export :value
 
     build do
@@ -42,31 +40,8 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
       code << bit_field_if_connection << nl
     end
 
-    def local_index
-      (index_name = local_index_name) &&
-        create_identifier(index_name)
-    end
-
-    def local_indices
-      [*register.local_indices, local_index_name]
-    end
-
-    def loop_variables
-      (inside_loop? || nil) &&
-        [*register.loop_variables, local_index].compact
-    end
-
-    def array_size
-      (inside_loop? || nil) &&
-        [
-          *register_files.flat_map(&:array_size),
-          *register.array_size,
-          *bit_field.sequence_size
-        ].compact
-    end
-
     def value(offsets = nil, width = nil)
-      value_lsb = bit_field.lsb(offsets&.last || local_index_name)
+      value_lsb = bit_field.lsb(offsets&.last || local_index)
       value_width = width || bit_field.width
       register_if(offsets&.slice(0..-2)).value[value_lsb, value_width]
     end
@@ -75,14 +50,6 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
 
     [:fixed_initial_value?, :initial_value_array?, :initial_value?].each do |m|
       define_method(m) { bit_field.__send__(__method__) }
-    end
-
-    def local_index_name
-      (bit_field.sequential? || nil) &&
-        begin
-          depth = (register.loop_variables&.size || 0) + 1
-          loop_index(depth)
-        end
     end
 
     def register_if(offsets)
@@ -129,12 +96,9 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
       bit_field.initial_values&.map { |v| hex(v, bit_field.width) }
     end
 
-    def inside_loop?
-      register.inside_loop? || bit_field.sequential?
-    end
-
     def loop_size
-      (loop_variable = local_index_name) &&
+      loop_variable = local_index
+      loop_variable &&
         { loop_variable => bit_field.sequence_size }
     end
 
