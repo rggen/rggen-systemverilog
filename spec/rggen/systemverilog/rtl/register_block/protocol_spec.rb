@@ -5,10 +5,38 @@ RSpec.describe 'register_block/protocol' do
   include_context 'clean-up builder'
 
   before(:all) do
-    RgGen.enable(:register_block, [:bus_width, :address_width])
-    RgGen.define_list_item_feature(:register_block, :protocol, [:foo, :bar, :baz]) do
+    RgGen.builder.output_component_registry(:verilog) do
+      register_component :register_block do
+        component RgGen::Core::OutputBase::Component, RgGen::Core::OutputBase::ComponentFactory
+        feature RgGen::Core::OutputBase::Feature, RgGen::Core::OutputBase::FeatureFactory
+      end
+    end
+
+    @shared_contexts = []
+    shared_contexts = @shared_contexts
+    RgGen.define_list_feature(:register_block, :protocol) do
+      verilog do
+        shared_contexts << shared_context
+        shared_context.feature_registry(registry)
+      end
+    end
+
+    RgGen.define_list_item_feature(:register_block, :protocol, [:foo, :bar, :foobar, :baz]) do
       sv_rtl {}
     end
+
+    RgGen.define_list_item_feature(:register_block, :protocol, [:foo, :bar, :foobar, :qux]) do
+      verilog {}
+    end
+  end
+
+  before(:all) do
+    RgGen.enable(:register_block, [:bus_width, :address_width])
+  end
+
+  after(:all) do
+    registries = @shared_contexts[0].__send__(:feature_registries)
+    registries.pop
   end
 
   before do
@@ -23,18 +51,18 @@ RSpec.describe 'register_block/protocol' do
   describe 'configuration' do
     describe '#protocol' do
       before do
-        RgGen.enable(:register_block, :protocol, [:qux, :baz, :foo])
+        RgGen.enable(:register_block, :protocol, [:qux, :foobar, :foo])
       end
 
       specify '既定値は定義されているプロトコルで、最初に有効になったプロトコル' do
         configuration = create_configuration
-        expect(configuration).to have_property(:protocol, :baz)
+        expect(configuration).to have_property(:protocol, :foobar)
 
         configuration = create_configuration(protocol: nil)
-        expect(configuration).to have_property(:protocol, :baz)
+        expect(configuration).to have_property(:protocol, :foobar)
 
         configuration = create_configuration(protocol: '')
-        expect(configuration).to have_property(:protocol, :baz)
+        expect(configuration).to have_property(:protocol, :foobar)
       end
 
       it '指定されたホストプロトコルを返す' do
@@ -42,8 +70,8 @@ RSpec.describe 'register_block/protocol' do
           foo: [
             'foo', 'FOO', random_string(/foo/i)
           ],
-          baz: [
-            'baz', 'BAZ', random_string(/baz/i)
+          foobar: [
+            'foobar', 'FOOBAR', random_string(/foobar/i)
           ]
         }.each do |protocol, values|
           values.each do |value|
@@ -58,16 +86,16 @@ RSpec.describe 'register_block/protocol' do
     end
 
     it '表示可能オブジェクトとして、設定されたプロトコル名を返す' do
-      RgGen.enable(:register_block, :protocol, [:foo, :bar, :baz])
-      protocol =  [:foo, :bar, :baz].sample
+      RgGen.enable(:register_block, :protocol, [:foo, :bar, :foobar])
+      protocol =  [:foo, :bar, :foobar].sample
       configuration = create_configuration(protocol: protocol)
       expect(configuration.printables[:protocol]).to eq protocol
     end
 
     describe 'エラーチェック' do
-      context '使用可能なプロトコルがない場合' do
+      context '対象の全生成器で、使用可能なプロトコルがない場合' do
         before do
-          RgGen.enable(:register_block, :protocol, :qux)
+          RgGen.enable(:register_block, :protocol, [:buz, :qux])
         end
 
         it 'ConfigurationErrorを起こす' do
@@ -87,10 +115,20 @@ RSpec.describe 'register_block/protocol' do
 
       context '有効になっていないプロトコルを指定した場合' do
         before do
-          RgGen.enable(:register_block, :protocol, [:foo, :bar, :qux])
+          RgGen.enable(:register_block, :protocol, [:foo, :bar, :baz, :qux])
         end
 
         it 'ConfigurationErrorを起こす' do
+          value = random_string(/foobar/i)
+          expect {
+            create_configuration(protocol: value)
+          }.to raise_configuration_error "unknown protocol: #{value.inspect}"
+
+          value = random_string(/foobar/i).to_sym
+          expect {
+            create_configuration(protocol: value)
+          }.to raise_configuration_error "unknown protocol: #{value.inspect}"
+
           value = random_string(/baz/i)
           expect {
             create_configuration(protocol: value)
@@ -100,21 +138,31 @@ RSpec.describe 'register_block/protocol' do
           expect {
             create_configuration(protocol: value)
           }.to raise_configuration_error "unknown protocol: #{value.inspect}"
-        end
-      end
 
-      context '定義されていないプロトコルを指定した場合' do
-        before do
-          RgGen.enable(:register_block, :protocol, [:foo, :bar, :qux])
-        end
-
-        it 'ConfigurationErrorを起こす' do
           value = random_string(/qux/i)
           expect {
             create_configuration(protocol: value)
           }.to raise_configuration_error "unknown protocol: #{value.inspect}"
 
           value = random_string(/qux/i).to_sym
+          expect {
+            create_configuration(protocol: value)
+          }.to raise_configuration_error "unknown protocol: #{value.inspect}"
+        end
+      end
+
+      context '定義されていないプロトコルを指定した場合' do
+        before do
+          RgGen.enable(:register_block, :protocol, [:foo, :bar, :fizz])
+        end
+
+        it 'ConfigurationErrorを起こす' do
+          value = random_string(/fizz/i)
+          expect {
+            create_configuration(protocol: value)
+          }.to raise_configuration_error "unknown protocol: #{value.inspect}"
+
+          value = random_string(/fizz/i).to_sym
           expect {
             create_configuration(protocol: value)
           }.to raise_configuration_error "unknown protocol: #{value.inspect}"
