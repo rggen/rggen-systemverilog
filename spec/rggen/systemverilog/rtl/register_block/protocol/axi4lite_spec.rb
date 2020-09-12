@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'register_block/protocol/apb' do
+RSpec.describe 'register_block/protocol/axi4lite' do
   include_context 'configuration common'
   include_context 'clean-up builder'
 
