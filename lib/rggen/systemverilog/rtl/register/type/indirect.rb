@@ -2,6 +2,8 @@
 
 RgGen.define_list_item_feature(:register, :type, :indirect) do
   sv_rtl do
+    include RgGen::SystemVerilog::RTL::IndirectIndex
+
     build do
       logic :indirect_index, { width: index_width }
     end
@@ -9,32 +11,6 @@ RgGen.define_list_item_feature(:register, :type, :indirect) do
     main_code :register do |code|
       code << indirect_index_assignment << nl
       code << process_template
-    end
-
-    private
-
-    def index_fields
-      @index_fields ||=
-        register.collect_index_fields(register_block.bit_fields)
-    end
-
-    def index_width
-      @index_width ||= index_fields.sum(&:width)
-    end
-
-    def index_values
-      loop_variables = register.local_loop_variables
-      register.index_entries.zip(index_fields).map do |entry, field|
-        if entry.array_index?
-          loop_variables.shift[0, field.width]
-        else
-          hex(entry.value, field.width)
-        end
-      end
-    end
-
-    def indirect_index_assignment
-      assign(indirect_index, concat(index_fields.map(&:value)))
     end
   end
 end
