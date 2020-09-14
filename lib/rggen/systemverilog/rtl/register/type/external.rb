@@ -71,10 +71,6 @@ RgGen.define_list_item_feature(:register, :type, :external) do
 
     private
 
-    def address_width
-      register_block.local_address_width
-    end
-
     def byte_width
       configuration.byte_width
     end
