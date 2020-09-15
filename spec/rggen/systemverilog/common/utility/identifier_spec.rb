@@ -53,20 +53,35 @@ RSpec.describe RgGen::SystemVerilog::Common::Utility::Identifier do
         it '配列形式で選択された識別子を返す' do
           apply_array_attributes(width[0], array_size[0], array_format)
           expect(identifier[array_index[0]]).to match_identifier("#{name}[0][1][2]")
+          expect(identifier[array_index[0], 1, 2]).to match_identifier("#{name}[0][1][2][1+:2]")
+
           apply_array_attributes(width[0], array_size[0], array_format)
           expect(identifier[array_index[1]]).to match_identifier("#{name}[i][j][k]")
+          expect(identifier[array_index[1], 1, 2]).to match_identifier("#{name}[i][j][k][1+:2]")
+
           apply_array_attributes(width[0], array_size[1], array_format)
           expect(identifier[array_index[0]]).to match_identifier("#{name}[0][1][2]")
+          expect(identifier[array_index[0], 1, 2]).to match_identifier("#{name}[0][1][2][1+:2]")
+
           apply_array_attributes(width[0], array_size[1], array_format)
           expect(identifier[array_index[1]]).to match_identifier("#{name}[i][j][k]")
+          expect(identifier[array_index[1], 1, 2]).to match_identifier("#{name}[i][j][k][1+:2]")
+
           apply_array_attributes(width[1], array_size[0], array_format)
           expect(identifier[array_index[0]]).to match_identifier("#{name}[0][1][2]")
+          expect(identifier[array_index[0], 1, 2]).to match_identifier("#{name}[0][1][2][1+:2]")
+
           apply_array_attributes(width[1], array_size[0], array_format)
           expect(identifier[array_index[1]]).to match_identifier("#{name}[i][j][k]")
+          expect(identifier[array_index[1], 1, 2]).to match_identifier("#{name}[i][j][k][1+:2]")
+
           apply_array_attributes(width[1], array_size[1], array_format)
           expect(identifier[array_index[0]]).to match_identifier("#{name}[0][1][2]")
+          expect(identifier[array_index[0], 1, 2]).to match_identifier("#{name}[0][1][2][1+:2]")
+
           apply_array_attributes(width[1], array_size[1], array_format)
           expect(identifier[array_index[1]]).to match_identifier("#{name}[i][j][k]")
+          expect(identifier[array_index[1], 1, 2]).to match_identifier("#{name}[i][j][k][1+:2]")
         end
       end
 
@@ -76,20 +91,35 @@ RSpec.describe RgGen::SystemVerilog::Common::Utility::Identifier do
         it '配列形式で選択された識別子を返す' do
           apply_array_attributes(width[0], array_size[0], array_format)
           expect(identifier[array_index[0]]).to match_identifier("#{name}[0][1][2]")
+          expect(identifier[array_index[0], 1, 2]).to match_identifier("#{name}[0][1][2][1+:2]")
+
           apply_array_attributes(width[0], array_size[0], array_format)
           expect(identifier[array_index[1]]).to match_identifier("#{name}[i][j][k]")
+          expect(identifier[array_index[1], 1, 2]).to match_identifier("#{name}[i][j][k][1+:2]")
+
           apply_array_attributes(width[0], array_size[1], array_format)
           expect(identifier[array_index[0]]).to match_identifier("#{name}[0][1][2]")
+          expect(identifier[array_index[0], 1, 2]).to match_identifier("#{name}[0][1][2][1+:2]")
+
           apply_array_attributes(width[0], array_size[1], array_format)
           expect(identifier[array_index[1]]).to match_identifier("#{name}[i][j][k]")
+          expect(identifier[array_index[1], 1, 2]).to match_identifier("#{name}[i][j][k][1+:2]")
+
           apply_array_attributes(width[1], array_size[0], array_format)
           expect(identifier[array_index[0]]).to match_identifier("#{name}[0][1][2]")
+          expect(identifier[array_index[0], 1, 2]).to match_identifier("#{name}[0][1][2][1+:2]")
+
           apply_array_attributes(width[1], array_size[0], array_format)
           expect(identifier[array_index[1]]).to match_identifier("#{name}[i][j][k]")
+          expect(identifier[array_index[1], 1, 2]).to match_identifier("#{name}[i][j][k][1+:2]")
+
           apply_array_attributes(width[1], array_size[1], array_format)
           expect(identifier[array_index[0]]).to match_identifier("#{name}[0][1][2]")
+          expect(identifier[array_index[0], 1, 2]).to match_identifier("#{name}[0][1][2][1+:2]")
+
           apply_array_attributes(width[1], array_size[1], array_format)
           expect(identifier[array_index[1]]).to match_identifier("#{name}[i][j][k]")
+          expect(identifier[array_index[1], 1, 2]).to match_identifier("#{name}[i][j][k][1+:2]")
         end
       end
 
@@ -99,20 +129,35 @@ RSpec.describe RgGen::SystemVerilog::Common::Utility::Identifier do
         it 'ベクトル形式で選択された識別子を返す' do
           apply_array_attributes(width[0], array_size[0], array_format)
           expect(identifier[array_index[0]]).to match_identifier("#{name}[96+:16]")
+          expect(identifier[array_index[0], 1, 2]).to match_identifier("#{name}[97+:2]")
+
           apply_array_attributes(width[0], array_size[0], array_format)
           expect(identifier[array_index[1]]).to match_identifier("#{name}[16*(12*i+4*j+k)+:16]")
+          expect(identifier[array_index[1], 1, 2]).to match_identifier("#{name}[16*(12*i+4*j+k)+1+:2]")
+
           apply_array_attributes(width[0], array_size[1], array_format)
           expect(identifier[array_index[0]]).to match_identifier("#{name}[16*(BAR_SIZE*BAZ_SIZE*0+BAZ_SIZE*1+2)+:16]")
+          expect(identifier[array_index[0], 1, 2]).to match_identifier("#{name}[16*(BAR_SIZE*BAZ_SIZE*0+BAZ_SIZE*1+2)+1+:2]")
+
           apply_array_attributes(width[0], array_size[1], array_format)
           expect(identifier[array_index[1]]).to match_identifier("#{name}[16*(BAR_SIZE*BAZ_SIZE*i+BAZ_SIZE*j+k)+:16]")
+          expect(identifier[array_index[1], 1, 2]).to match_identifier("#{name}[16*(BAR_SIZE*BAZ_SIZE*i+BAZ_SIZE*j+k)+1+:2]")
+
           apply_array_attributes(width[1], array_size[0], array_format)
           expect(identifier[array_index[0]]).to match_identifier("#{name}[WIDTH*6+:WIDTH]")
+          expect(identifier[array_index[0], 1, 2]).to match_identifier("#{name}[WIDTH*6+1+:2]")
+
           apply_array_attributes(width[1], array_size[0], array_format)
           expect(identifier[array_index[1]]).to match_identifier("#{name}[WIDTH*(12*i+4*j+k)+:WIDTH]")
+          expect(identifier[array_index[1], 1, 2]).to match_identifier("#{name}[WIDTH*(12*i+4*j+k)+1+:2]")
+
           apply_array_attributes(width[1], array_size[1], array_format)
           expect(identifier[array_index[0]]).to match_identifier("#{name}[WIDTH*(BAR_SIZE*BAZ_SIZE*0+BAZ_SIZE*1+2)+:WIDTH]")
+          expect(identifier[array_index[0], 1, 2]).to match_identifier("#{name}[WIDTH*(BAR_SIZE*BAZ_SIZE*0+BAZ_SIZE*1+2)+1+:2]")
+
           apply_array_attributes(width[1], array_size[1], array_format)
           expect(identifier[array_index[1]]).to match_identifier("#{name}[WIDTH*(BAR_SIZE*BAZ_SIZE*i+BAZ_SIZE*j+k)+:WIDTH]")
+          expect(identifier[array_index[1], 1, 2]).to match_identifier("#{name}[WIDTH*(BAR_SIZE*BAZ_SIZE*i+BAZ_SIZE*j+k)+1+:2]")
         end
       end
     end

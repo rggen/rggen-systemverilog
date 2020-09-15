@@ -35,9 +35,9 @@ module RgGen
             @name.to_s
           end
 
-          def [](array_index_or_lsb, width = nil)
+          def [](array_index_or_lsb, lsb_or_width = nil, width = nil)
             if array_index_or_lsb
-              __create_new_identifier__(array_index_or_lsb, width)
+              __create_new_identifier__(array_index_or_lsb, lsb_or_width, width)
             else
               self
             end
@@ -45,35 +45,38 @@ module RgGen
 
           private
 
-          def __create_new_identifier__(array_index_or_lsb, width)
-            select = __create_select__(array_index_or_lsb, width)
+          def __create_new_identifier__(array_index_or_lsb, lsb_or_width, width)
+            select = __create_select__(array_index_or_lsb, lsb_or_width, width)
             Identifier.new("#{@name}#{select}") do |identifier|
               identifier.__sub_identifiers__(@sub_identifiers)
             end
           end
 
-          def __create_select__(array_index_or_lsb, width)
+          def __create_select__(array_index_or_lsb, lsb_or_width, width)
             if array_index_or_lsb.is_a?(::Array)
-              __array_select__(array_index_or_lsb)
-            elsif width
-              "[#{array_index_or_lsb}+:#{width}]"
+              __array_select__(array_index_or_lsb, lsb_or_width, width)
+            elsif lsb_or_width
+              "[#{array_index_or_lsb}+:#{lsb_or_width}]"
             else
               "[#{array_index_or_lsb}]"
             end
           end
 
-          def __array_select__(array_index)
+          def __array_select__(array_index, lsb, width)
             if @array_format == :serialized
-              "[#{__serialized_lsb__(array_index)}+:#{@width}]"
+              "[#{__serialized_lsb__(array_index, lsb)}+:#{width || @width}]"
             else
-              array_index
-                .map { |index| "[#{index}]" }
-                .join
+              [
+                *array_index.map { |index| "[#{index}]" },
+                lsb && __create_select__(lsb, width, nil)
+              ].compact.join
             end
           end
 
-          def __serialized_lsb__(array_index)
-            __reduce_array__([@width, __serialized_index__(array_index)], :*, 1)
+          def __serialized_lsb__(array_index, lsb)
+            serialized_index = __serialized_index__(array_index)
+            array_lsb = __reduce_array__([@width, serialized_index], :*, 1)
+            __reduce_array__([array_lsb, lsb], :+, 0)
           end
 
           def __serialized_index__(array_index)
@@ -97,6 +100,7 @@ module RgGen
           end
 
           def __reduce_array__(array, operator, initial_value)
+            array = array.compact
             if array.all?(&method(:integer?))
               array.reduce(initial_value, &operator)
             else
