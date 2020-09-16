@@ -11,13 +11,13 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
         localparam :initial_value, {
           name: initial_value_name, data_type: :bit, width: bit_field.width,
           array_size: initial_value_size, array_format: initial_value_format,
-          default: initial_value_lhs
+          default: initial_value_rhs
         }
       elsif initial_value?
         parameter :initial_value, {
           name: initial_value_name, data_type: :bit, width: bit_field.width,
           array_size: initial_value_size, array_format: initial_value_format,
-          default: initial_value_lhs
+          default: initial_value_rhs
         }
       end
       interface :bit_field_sub_if, {
@@ -73,11 +73,11 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
         configuration.array_port_format
     end
 
-    def initial_value_lhs
-      initial_value_array? && initial_value_array_lhs || sized_initial_value
+    def initial_value_rhs
+      initial_value_array? && initial_value_array_rhs || sized_initial_value
     end
 
-    def initial_value_array_lhs
+    def initial_value_array_rhs
       if fixed_initial_value?
         array(sized_initial_values)
       elsif initial_value_format == :unpacked
