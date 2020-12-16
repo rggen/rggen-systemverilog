@@ -2,7 +2,7 @@
 
 require 'rggen/systemverilog/rtl'
 
-RgGen.setup RgGen::SystemVerilog::RTL do |builder|
+RgGen.register_plugin RgGen::SystemVerilog::RTL do |builder|
   builder.enable :global, [
     :array_port_format, :fold_sv_interface_port
   ]
