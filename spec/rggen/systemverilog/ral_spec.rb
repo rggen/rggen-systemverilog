@@ -5,20 +5,6 @@ RSpec.describe RgGen::SystemVerilog::RAL do
 
   let(:builder) { RgGen.builder }
 
-  describe '.version' do
-    it 'RgGen::SystemVerilogと同じバージョンを返す' do
-      expect(RgGen::SystemVerilog::RAL.version).to eq RgGen::SystemVerilog::VERSION
-    end
-  end
-
-  describe '.default_setup' do
-    it '.register_component/.load_featureを呼び出す' do
-      expect(RgGen::SystemVerilog::RAL).to receive(:register_component)
-      expect(RgGen::SystemVerilog::RAL).to receive(:load_features)
-      RgGen::SystemVerilog::RAL.default_setup(builder)
-    end
-  end
-
   describe '既定セットアップ' do
     before do
       @original_builder = RgGen.builder
@@ -30,6 +16,7 @@ RSpec.describe RgGen::SystemVerilog::RAL do
     end
 
     it 'フィーチャーの有効化を行う' do
+      expect(RgGen::SystemVerilog::RAL.plugin_spec).to receive(:activate).with(equal(builder))
       expect(builder).to receive(:enable).with(:register_block, [:sv_ral_model, :sv_ral_package])
       expect(builder).to receive(:enable).with(:register_file, [:sv_ral_model])
       builder.load_plugins(['rggen/systemverilog/ral/setup'], true)

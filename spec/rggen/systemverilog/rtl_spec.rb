@@ -5,20 +5,6 @@ RSpec.describe RgGen::SystemVerilog::RTL do
 
   let(:builder) { RgGen.builder }
 
-  describe '.version' do
-    it 'RgGen::SystemVerilogと同じバージョンを返す' do
-      expect(RgGen::SystemVerilog::RTL.version).to eq RgGen::SystemVerilog::VERSION
-    end
-  end
-
-  describe '.default_setup' do
-    it '.register_component/.load_featureを呼び出す' do
-      expect(RgGen::SystemVerilog::RTL).to receive(:register_component)
-      expect(RgGen::SystemVerilog::RTL).to receive(:load_features)
-      RgGen::SystemVerilog::RTL.default_setup(builder)
-    end
-  end
-
   describe '既定セットアップ' do
     before do
       @original_builder = RgGen.builder
@@ -30,6 +16,7 @@ RSpec.describe RgGen::SystemVerilog::RTL do
     end
 
     it 'フィーチャーの有効化を行う' do
+      expect(RgGen::SystemVerilog::RTL.plugin_spec).to receive(:activate).with(equal(builder))
       expect(builder).to receive(:enable).with(:global, [:array_port_format, :fold_sv_interface_port])
       expect(builder).to receive(:enable).with(:register_block, [:sv_rtl_top, :protocol])
       expect(builder).to receive(:enable).with(:register_block, :protocol, [:apb, :axi4lite])

@@ -7,37 +7,29 @@ require_relative 'ral/register_common'
 module RgGen
   module SystemVerilog
     module RAL
-      PLUGIN_NAME = :'rggen-sv-ral'
+      extend Core::Plugin
 
-      FEATURES = [
-        'ral/bit_field/type',
-        'ral/bit_field/type/reserved_rof',
-        'ral/bit_field/type/rwc_rws',
-        'ral/bit_field/type/rwe_rwl',
-        'ral/bit_field/type/w0trg_w1trg',
-        'ral/register/type',
-        'ral/register/type/external',
-        'ral/register/type/indirect',
-        'ral/register_block/sv_ral_model',
-        'ral/register_block/sv_ral_package',
-        'ral/register_file/sv_ral_model'
-      ].freeze
+      setup_plugin :'rggen-sv-ral' do |plugin|
+        plugin.version SystemVerilog::VERSION
 
-      def self.version
-        SystemVerilog::VERSION
-      end
+        plugin.register_component :sv_ral do
+          component Common::Component, Common::ComponentFactory
+          feature Feature, Common::FeatureFactory
+        end
 
-      def self.register_component(builder)
-        Common.register_component(builder, :sv_ral, Feature)
-      end
-
-      def self.load_features
-        Common.load_features(FEATURES, __dir__)
-      end
-
-      def self.default_setup(builder)
-        register_component(builder)
-        load_features
+        plugin.files [
+          'ral/bit_field/type',
+          'ral/bit_field/type/reserved_rof',
+          'ral/bit_field/type/rwc_rws',
+          'ral/bit_field/type/rwe_rwl',
+          'ral/bit_field/type/w0trg_w1trg',
+          'ral/register/type',
+          'ral/register/type/external',
+          'ral/register/type/indirect',
+          'ral/register_block/sv_ral_model',
+          'ral/register_block/sv_ral_package',
+          'ral/register_file/sv_ral_model'
+        ]
       end
     end
   end
