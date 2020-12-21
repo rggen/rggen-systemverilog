@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'docile'
 require 'facets/kernel/attr_singleton'
 
 require_relative 'version'
