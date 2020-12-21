@@ -18,14 +18,14 @@ RSpec.describe 'register_block/sv_ral_package' do
     end
 
     let(:configuration) do
-      file = ['config.yml', 'config.json'].sample
+      file = ['config.json', 'config.toml', 'config.yml'].sample
       path = File.join(RGGEN_SAMPLE_DIRECTORY, file)
       build_configuration_factory(RgGen.builder, false).create([path])
     end
 
     let(:register_map) do
-      file_0 = ['block_0.rb', 'block_0.yml', 'block_0.xlsx'].sample
-      file_1 = ['block_1.rb', 'block_1.yml'].sample
+      file_0 = ['block_0.rb', 'block_0.toml', 'block_0.xlsx', 'block_0.yml'].sample
+      file_1 = ['block_1.rb', 'block_1.toml', 'block_1.yml'].sample
       path = [file_0, file_1].map { |file| File.join(RGGEN_SAMPLE_DIRECTORY, file)}
       build_register_map_factory(RgGen.builder, false).create(configuration, path)
     end
