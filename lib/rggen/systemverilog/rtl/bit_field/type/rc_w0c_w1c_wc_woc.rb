@@ -23,22 +23,32 @@ RgGen.define_list_item_feature(:bit_field, :type, [:rc, :w0c, :w1c, :wc, :woc]) 
 
     private
 
-    def module_name
-      bit_field.type == :rc && 'rggen_bit_field_rc' || 'rggen_bit_field_w01c_wc_woc'
+    def read_action
+      {
+        rc: 'RGGEN_READ_CLEAR',
+        w0c: 'RGGEN_READ_DEFAULT',
+        w1c: 'RGGEN_READ_DEFAULT',
+        wc: 'RGGEN_READ_DEFAULT',
+        woc: 'RGGEN_READ_NONE'
+      }[bit_field.type]
     end
 
-    def clear_value
-      value = { w0c: 0b00, w1c: 0b01, wc: 0b10, woc: 0b10 }[bit_field.type]
-      bin(value, 2)
+    def write_action
+      {
+        rc: 'RGGEN_WRITE_NONE',
+        w0c: 'RGGEN_WRITE_0_CLEAR',
+        w1c: 'RGGEN_WRITE_1_CLEAR',
+        wc: 'RGGEN_WRITE_CLEAR',
+        woc: 'RGGEN_WRITE_CLEAR'
+      }[bit_field.type]
     end
 
-    def write_only
-      bit_field.write_only? && 1 || 0
+    def write_enable
+      bit_field.writable? && all_bits_1 || all_bits_0
     end
 
     def value_out_unmasked
-      (bit_field.reference? || nil) &&
-        value_unmasked[loop_variables]
+      (bit_field.reference? || nil) && value_unmasked[loop_variables]
     end
   end
 end

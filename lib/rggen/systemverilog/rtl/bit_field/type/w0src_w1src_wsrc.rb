@@ -13,9 +13,12 @@ RgGen.define_list_item_feature(:bit_field, :type, [:w0src, :w1src, :wsrc]) do
 
     private
 
-    def set_value
-      value = { w0src: 0b00, w1src: 0b01, wsrc: 0b10 }[bit_field.type]
-      bin(value, 2)
+    def write_action
+      {
+        w0src: 'RGGEN_WRITE_0_SET',
+        w1src: 'RGGEN_WRITE_1_SET',
+        wsrc: 'RGGEN_WRITE_SET'
+      }[bit_field.type]
     end
   end
 end

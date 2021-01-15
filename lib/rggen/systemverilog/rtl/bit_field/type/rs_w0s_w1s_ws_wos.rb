@@ -17,17 +17,28 @@ RgGen.define_list_item_feature(:bit_field, :type, [:rs, :w0s, :w1s, :ws, :wos]) 
 
     private
 
-    def module_name
-      bit_field.type == :rs && 'rggen_bit_field_rs' || 'rggen_bit_field_w01s_ws_wos'
+    def read_action
+      {
+        rs: 'RGGEN_READ_SET',
+        w0s: 'RGGEN_READ_DEFAULT',
+        w1s: 'RGGEN_READ_DEFAULT',
+        ws: 'RGGEN_READ_DEFAULT',
+        wos: 'RGGEN_READ_NONE'
+      }[bit_field.type]
     end
 
-    def set_value
-      value = { w0s: 0b00, w1s: 0b01, ws: 0b10, wos: 0b10 }[bit_field.type]
-      bin(value, 2)
+    def write_action
+      {
+        rs: 'RGGEN_WRITE_NONE',
+        w0s: 'RGGEN_WRITE_0_SET',
+        w1s: 'RGGEN_WRITE_1_SET',
+        ws: 'RGGEN_WRITE_SET',
+        wos: 'RGGEN_WRITE_SET'
+      }[bit_field.type]
     end
 
-    def write_only
-      bit_field.write_only? && 1 || 0
+    def write_enable
+      bit_field.writable? && all_bits_1 || all_bits_0
     end
   end
 end

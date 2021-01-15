@@ -1,3 +1,18 @@
-rggen_bit_field_reserved u_bit_field (
-  .bit_field_if (<%= bit_field_if %>)
+rggen_bit_field #(
+  .WIDTH          (<%= width %>),
+  .SW_READ_ACTION (RGGEN_READ_NONE),
+  .STORAGE        (0)
+) u_bit_field (
+  .i_clk              ('0),
+  .i_rst_n            ('1),
+  .bit_field_if       (<%= bit_field_if %>),
+  .i_sw_write_enable  ('0),
+  .i_hw_write_enable  ('0),
+  .i_hw_write_data    ('0),
+  .i_hw_set           ('0),
+  .i_hw_clear         ('0),
+  .i_value            ('0),
+  .i_mask             ('0),
+  .o_value            (),
+  .o_value_unmasked   ()
 );

@@ -10,5 +10,14 @@ RgGen.define_list_item_feature(:bit_field, :type, [:wrc, :wrs]) do
     end
 
     main_code :bit_field, from_template: true
+
+    private
+
+    def read_action
+      {
+        wrc: 'RGGEN_READ_CLEAR',
+        wrs: 'RGGEN_READ_SET'
+      }[bit_field.type]
+    end
   end
 end

@@ -13,9 +13,12 @@ RgGen.define_list_item_feature(:bit_field, :type, [:w0crs, :w1crs, :wcrs]) do
 
     private
 
-    def clear_value
-      value = { w0crs: 0b00, w1crs: 0b01, wcrs: 0b10 }[bit_field.type]
-      bin(value, 2)
+    def write_action
+      {
+        w0crs: 'RGGEN_WRITE_0_CLEAR',
+        w1crs: 'RGGEN_WRITE_1_CLEAR',
+        wcrs: 'RGGEN_WRITE_CLEAR'
+      }[bit_field.type]
     end
   end
 end

@@ -106,16 +106,24 @@ RSpec.describe 'register_file/sv_rtl_top' do
               localparam bit INITIAL_VALUE = 1'h0;
               rggen_bit_field_if #(1) bit_field_sub_if();
               `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 0, 1)
-              rggen_bit_field_rw_wo #(
+              rggen_bit_field #(
                 .WIDTH          (1),
                 .INITIAL_VALUE  (INITIAL_VALUE),
-                .WRITE_ONLY     (0),
-                .WRITE_ONCE     (0)
+                .SW_READ_ACTION (RGGEN_READ_DEFAULT),
+                .SW_WRITE_ONCE  (0)
               ) u_bit_field (
-                .i_clk        (i_clk),
-                .i_rst_n      (i_rst_n),
-                .bit_field_if (bit_field_sub_if),
-                .o_value      (o_register_file_0_register_0_bit_field_0)
+                .i_clk              (i_clk),
+                .i_rst_n            (i_rst_n),
+                .bit_field_if       (bit_field_sub_if),
+                .i_sw_write_enable  ('1),
+                .i_hw_write_enable  ('0),
+                .i_hw_write_data    ('0),
+                .i_hw_set           ('0),
+                .i_hw_clear         ('0),
+                .i_value            ('0),
+                .i_mask             ('1),
+                .o_value            (o_register_file_0_register_0_bit_field_0),
+                .o_value_unmasked   ()
               );
             end
           end
@@ -140,16 +148,24 @@ RSpec.describe 'register_file/sv_rtl_top' do
               localparam bit INITIAL_VALUE = 1'h0;
               rggen_bit_field_if #(1) bit_field_sub_if();
               `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 0, 1)
-              rggen_bit_field_rw_wo #(
+              rggen_bit_field #(
                 .WIDTH          (1),
                 .INITIAL_VALUE  (INITIAL_VALUE),
-                .WRITE_ONLY     (0),
-                .WRITE_ONCE     (0)
+                .SW_READ_ACTION (RGGEN_READ_DEFAULT),
+                .SW_WRITE_ONCE  (0)
               ) u_bit_field (
-                .i_clk        (i_clk),
-                .i_rst_n      (i_rst_n),
-                .bit_field_if (bit_field_sub_if),
-                .o_value      (o_register_file_0_register_1_bit_field_0)
+                .i_clk              (i_clk),
+                .i_rst_n            (i_rst_n),
+                .bit_field_if       (bit_field_sub_if),
+                .i_sw_write_enable  ('1),
+                .i_hw_write_enable  ('0),
+                .i_hw_write_data    ('0),
+                .i_hw_set           ('0),
+                .i_hw_clear         ('0),
+                .i_value            ('0),
+                .i_mask             ('1),
+                .o_value            (o_register_file_0_register_1_bit_field_0),
+                .o_value_unmasked   ()
               );
             end
           end
@@ -180,16 +196,24 @@ RSpec.describe 'register_file/sv_rtl_top' do
                 localparam bit INITIAL_VALUE = 1'h0;
                 rggen_bit_field_if #(1) bit_field_sub_if();
                 `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 0, 1)
-                rggen_bit_field_rw_wo #(
+                rggen_bit_field #(
                   .WIDTH          (1),
                   .INITIAL_VALUE  (INITIAL_VALUE),
-                  .WRITE_ONLY     (0),
-                  .WRITE_ONCE     (0)
+                  .SW_READ_ACTION (RGGEN_READ_DEFAULT),
+                  .SW_WRITE_ONCE  (0)
                 ) u_bit_field (
-                  .i_clk        (i_clk),
-                  .i_rst_n      (i_rst_n),
-                  .bit_field_if (bit_field_sub_if),
-                  .o_value      (o_register_file_1_register_file_0_register_0_bit_field_0)
+                  .i_clk              (i_clk),
+                  .i_rst_n            (i_rst_n),
+                  .bit_field_if       (bit_field_sub_if),
+                  .i_sw_write_enable  ('1),
+                  .i_hw_write_enable  ('0),
+                  .i_hw_write_data    ('0),
+                  .i_hw_set           ('0),
+                  .i_hw_clear         ('0),
+                  .i_value            ('0),
+                  .i_mask             ('1),
+                  .o_value            (o_register_file_1_register_file_0_register_0_bit_field_0),
+                  .o_value_unmasked   ()
                 );
               end
             end
@@ -215,16 +239,24 @@ RSpec.describe 'register_file/sv_rtl_top' do
               localparam bit INITIAL_VALUE = 1'h0;
               rggen_bit_field_if #(1) bit_field_sub_if();
               `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 0, 1)
-              rggen_bit_field_rw_wo #(
+              rggen_bit_field #(
                 .WIDTH          (1),
                 .INITIAL_VALUE  (INITIAL_VALUE),
-                .WRITE_ONLY     (0),
-                .WRITE_ONCE     (0)
+                .SW_READ_ACTION (RGGEN_READ_DEFAULT),
+                .SW_WRITE_ONCE  (0)
               ) u_bit_field (
-                .i_clk        (i_clk),
-                .i_rst_n      (i_rst_n),
-                .bit_field_if (bit_field_sub_if),
-                .o_value      (o_register_file_1_register_1_bit_field_0)
+                .i_clk              (i_clk),
+                .i_rst_n            (i_rst_n),
+                .bit_field_if       (bit_field_sub_if),
+                .i_sw_write_enable  ('1),
+                .i_hw_write_enable  ('0),
+                .i_hw_write_data    ('0),
+                .i_hw_set           ('0),
+                .i_hw_clear         ('0),
+                .i_value            ('0),
+                .i_mask             ('1),
+                .o_value            (o_register_file_1_register_1_bit_field_0),
+                .o_value_unmasked   ()
               );
             end
           end
@@ -263,16 +295,24 @@ RSpec.describe 'register_file/sv_rtl_top' do
                         localparam bit INITIAL_VALUE = 1'h0;
                         rggen_bit_field_if #(1) bit_field_sub_if();
                         `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 0, 1)
-                        rggen_bit_field_rw_wo #(
+                        rggen_bit_field #(
                           .WIDTH          (1),
                           .INITIAL_VALUE  (INITIAL_VALUE),
-                          .WRITE_ONLY     (0),
-                          .WRITE_ONCE     (0)
+                          .SW_READ_ACTION (RGGEN_READ_DEFAULT),
+                          .SW_WRITE_ONCE  (0)
                         ) u_bit_field (
-                          .i_clk        (i_clk),
-                          .i_rst_n      (i_rst_n),
-                          .bit_field_if (bit_field_sub_if),
-                          .o_value      (o_register_file_2_register_file_0_register_0_bit_field_0[i][j][k][l])
+                          .i_clk              (i_clk),
+                          .i_rst_n            (i_rst_n),
+                          .bit_field_if       (bit_field_sub_if),
+                          .i_sw_write_enable  ('1),
+                          .i_hw_write_enable  ('0),
+                          .i_hw_write_data    ('0),
+                          .i_hw_set           ('0),
+                          .i_hw_clear         ('0),
+                          .i_value            ('0),
+                          .i_mask             ('1),
+                          .o_value            (o_register_file_2_register_file_0_register_0_bit_field_0[i][j][k][l]),
+                          .o_value_unmasked   ()
                         );
                       end
                     end
@@ -304,16 +344,24 @@ RSpec.describe 'register_file/sv_rtl_top' do
                       localparam bit INITIAL_VALUE = 1'h0;
                       rggen_bit_field_if #(1) bit_field_sub_if();
                       `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 0, 1)
-                      rggen_bit_field_rw_wo #(
+                      rggen_bit_field #(
                         .WIDTH          (1),
                         .INITIAL_VALUE  (INITIAL_VALUE),
-                        .WRITE_ONLY     (0),
-                        .WRITE_ONCE     (0)
+                        .SW_READ_ACTION (RGGEN_READ_DEFAULT),
+                        .SW_WRITE_ONCE  (0)
                       ) u_bit_field (
-                        .i_clk        (i_clk),
-                        .i_rst_n      (i_rst_n),
-                        .bit_field_if (bit_field_sub_if),
-                        .o_value      (o_register_file_2_register_1_bit_field_0[i][j][k][l])
+                        .i_clk              (i_clk),
+                        .i_rst_n            (i_rst_n),
+                        .bit_field_if       (bit_field_sub_if),
+                        .i_sw_write_enable  ('1),
+                        .i_hw_write_enable  ('0),
+                        .i_hw_write_data    ('0),
+                        .i_hw_set           ('0),
+                        .i_hw_clear         ('0),
+                        .i_value            ('0),
+                        .i_mask             ('1),
+                        .o_value            (o_register_file_2_register_1_bit_field_0[i][j][k][l]),
+                        .o_value_unmasked   ()
                       );
                     end
                   end
