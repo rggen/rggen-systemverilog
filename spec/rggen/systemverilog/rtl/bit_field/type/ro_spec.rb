@@ -388,7 +388,7 @@ RSpec.describe 'bit_field/type/ro' do
           .STORAGE  (0)
         ) u_bit_field (
           .i_clk              ('0),
-          .i_rst_n            ('1),
+          .i_rst_n            ('0),
           .bit_field_if       (bit_field_sub_if),
           .i_sw_write_enable  ('0),
           .i_hw_write_enable  ('0),
@@ -408,7 +408,7 @@ RSpec.describe 'bit_field/type/ro' do
           .STORAGE  (0)
         ) u_bit_field (
           .i_clk              ('0),
-          .i_rst_n            ('1),
+          .i_rst_n            ('0),
           .bit_field_if       (bit_field_sub_if),
           .i_sw_write_enable  ('0),
           .i_hw_write_enable  ('0),
@@ -428,7 +428,7 @@ RSpec.describe 'bit_field/type/ro' do
           .STORAGE  (0)
         ) u_bit_field (
           .i_clk              ('0),
-          .i_rst_n            ('1),
+          .i_rst_n            ('0),
           .bit_field_if       (bit_field_sub_if),
           .i_sw_write_enable  ('0),
           .i_hw_write_enable  ('0),
@@ -448,7 +448,7 @@ RSpec.describe 'bit_field/type/ro' do
           .STORAGE  (0)
         ) u_bit_field (
           .i_clk              ('0),
-          .i_rst_n            ('1),
+          .i_rst_n            ('0),
           .bit_field_if       (bit_field_sub_if),
           .i_sw_write_enable  ('0),
           .i_hw_write_enable  ('0),
@@ -468,7 +468,7 @@ RSpec.describe 'bit_field/type/ro' do
           .STORAGE  (0)
         ) u_bit_field (
           .i_clk              ('0),
-          .i_rst_n            ('1),
+          .i_rst_n            ('0),
           .bit_field_if       (bit_field_sub_if),
           .i_sw_write_enable  ('0),
           .i_hw_write_enable  ('0),
@@ -488,7 +488,7 @@ RSpec.describe 'bit_field/type/ro' do
           .STORAGE  (0)
         ) u_bit_field (
           .i_clk              ('0),
-          .i_rst_n            ('1),
+          .i_rst_n            ('0),
           .bit_field_if       (bit_field_sub_if),
           .i_sw_write_enable  ('0),
           .i_hw_write_enable  ('0),
@@ -508,7 +508,7 @@ RSpec.describe 'bit_field/type/ro' do
           .STORAGE  (0)
         ) u_bit_field (
           .i_clk              ('0),
-          .i_rst_n            ('1),
+          .i_rst_n            ('0),
           .bit_field_if       (bit_field_sub_if),
           .i_sw_write_enable  ('0),
           .i_hw_write_enable  ('0),
@@ -528,7 +528,7 @@ RSpec.describe 'bit_field/type/ro' do
           .STORAGE  (0)
         ) u_bit_field (
           .i_clk              ('0),
-          .i_rst_n            ('1),
+          .i_rst_n            ('0),
           .bit_field_if       (bit_field_sub_if),
           .i_sw_write_enable  ('0),
           .i_hw_write_enable  ('0),
@@ -548,7 +548,7 @@ RSpec.describe 'bit_field/type/ro' do
           .STORAGE  (0)
         ) u_bit_field (
           .i_clk              ('0),
-          .i_rst_n            ('1),
+          .i_rst_n            ('0),
           .bit_field_if       (bit_field_sub_if),
           .i_sw_write_enable  ('0),
           .i_hw_write_enable  ('0),
@@ -568,7 +568,7 @@ RSpec.describe 'bit_field/type/ro' do
           .STORAGE  (0)
         ) u_bit_field (
           .i_clk              ('0),
-          .i_rst_n            ('1),
+          .i_rst_n            ('0),
           .bit_field_if       (bit_field_sub_if),
           .i_sw_write_enable  ('0),
           .i_hw_write_enable  ('0),
@@ -588,7 +588,7 @@ RSpec.describe 'bit_field/type/ro' do
           .STORAGE  (0)
         ) u_bit_field (
           .i_clk              ('0),
-          .i_rst_n            ('1),
+          .i_rst_n            ('0),
           .bit_field_if       (bit_field_sub_if),
           .i_sw_write_enable  ('0),
           .i_hw_write_enable  ('0),
@@ -608,7 +608,7 @@ RSpec.describe 'bit_field/type/ro' do
           .STORAGE  (0)
         ) u_bit_field (
           .i_clk              ('0),
-          .i_rst_n            ('1),
+          .i_rst_n            ('0),
           .bit_field_if       (bit_field_sub_if),
           .i_sw_write_enable  ('0),
           .i_hw_write_enable  ('0),
@@ -628,7 +628,7 @@ RSpec.describe 'bit_field/type/ro' do
           .STORAGE  (0)
         ) u_bit_field (
           .i_clk              ('0),
-          .i_rst_n            ('1),
+          .i_rst_n            ('0),
           .bit_field_if       (bit_field_sub_if),
           .i_sw_write_enable  ('0),
           .i_hw_write_enable  ('0),
@@ -648,7 +648,7 @@ RSpec.describe 'bit_field/type/ro' do
           .STORAGE  (0)
         ) u_bit_field (
           .i_clk              ('0),
-          .i_rst_n            ('1),
+          .i_rst_n            ('0),
           .bit_field_if       (bit_field_sub_if),
           .i_sw_write_enable  ('0),
           .i_hw_write_enable  ('0),
@@ -668,7 +668,7 @@ RSpec.describe 'bit_field/type/ro' do
           .STORAGE  (0)
         ) u_bit_field (
           .i_clk              ('0),
-          .i_rst_n            ('1),
+          .i_rst_n            ('0),
           .bit_field_if       (bit_field_sub_if),
           .i_sw_write_enable  ('0),
           .i_hw_write_enable  ('0),
@@ -688,7 +688,7 @@ RSpec.describe 'bit_field/type/ro' do
           .STORAGE  (0)
         ) u_bit_field (
           .i_clk              ('0),
-          .i_rst_n            ('1),
+          .i_rst_n            ('0),
           .bit_field_if       (bit_field_sub_if),
           .i_sw_write_enable  ('0),
           .i_hw_write_enable  ('0),
@@ -708,7 +708,7 @@ RSpec.describe 'bit_field/type/ro' do
           .STORAGE  (0)
         ) u_bit_field (
           .i_clk              ('0),
-          .i_rst_n            ('1),
+          .i_rst_n            ('0),
           .bit_field_if       (bit_field_sub_if),
           .i_sw_write_enable  ('0),
           .i_hw_write_enable  ('0),
