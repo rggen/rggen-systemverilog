@@ -45,6 +45,10 @@ module RgGen
           end
         end
 
+        def all_bits_1
+          "'1"
+        end
+
         def all_bits_0
           "'0"
         end

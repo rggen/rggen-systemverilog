@@ -13,8 +13,11 @@ RgGen.define_list_item_feature(:bit_field, :type, [:w0t, :w1t]) do
 
     private
 
-    def toggle_value
-      bin({ w0t: 0, w1t: 1 }[bit_field.type], 1)
+    def write_action
+      {
+        w0t: 'RGGEN_WRITE_0_TOGGLE',
+        w1t: 'RGGEN_WRITE_1_TOGGLE'
+      }[bit_field.type]
     end
   end
 end

@@ -13,8 +13,8 @@ RgGen.define_list_item_feature(:bit_field, :type, [:rw, :w1, :wo, :wo1]) do
 
     private
 
-    def write_only
-      bit_field.write_only? && 1 || 0
+    def read_action
+      bit_field.readable? && 'RGGEN_READ_DEFAULT' || 'RGGEN_READ_NONE'
     end
 
     def write_once
