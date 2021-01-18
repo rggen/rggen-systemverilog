@@ -1,7 +1,7 @@
 rggen_bit_field #(
   .WIDTH            (<%= width %>),
   .INITIAL_VALUE    (<%= initial_value %>),
-  .SW_READ_ACTION   (RGGEN_READ_CLEAR),
+  .SW_READ_ACTION   (<%= read_action %>),
   .SW_WRITE_ACTION  (<%= write_action %>)
 ) u_bit_field (
   .i_clk              (<%= clock %>),
