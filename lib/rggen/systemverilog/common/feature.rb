@@ -8,7 +8,7 @@ module RgGen
         template_engine Core::OutputBase::ERBEngine
 
         EntityContext =
-          Struct.new(:entity_type, :method, :declaration_type, :default_layer)
+          Struct.new(:entity_type, :method_name, :declaration_type, :default_layer)
 
         class << self
           private
@@ -58,7 +58,7 @@ module RgGen
 
         def create_entity(context, name, attributes, &block)
           merged_attributes = { name: name }.merge(Hash(attributes))
-          __send__(context.method, context.entity_type, merged_attributes, &block)
+          __send__(context.method_name, context.entity_type, merged_attributes, &block)
         end
 
         def add_entity(context, entity, name, layer)

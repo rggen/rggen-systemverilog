@@ -110,39 +110,41 @@ RgGen.define_list_item_feature(:register_block, :protocol, :axi4lite) do
 
     main_code :register_block, from_template: true
     main_code :register_block do |code|
-      unless configuration.fold_sv_interface_port?
-        [
-          [axi4lite_if.awvalid, awvalid],
-          [awready, axi4lite_if.awready],
-          [axi4lite_if.awid, awid],
-          [axi4lite_if.awaddr, awaddr],
-          [axi4lite_if.awprot, awprot],
-          [axi4lite_if.wvalid, wvalid],
-          [wready, axi4lite_if.wready],
-          [axi4lite_if.wdata, wdata],
-          [axi4lite_if.wstrb, wstrb],
-          [bvalid, axi4lite_if.bvalid],
-          [axi4lite_if.bready, bready],
-          [bid, axi4lite_if.bid],
-          [bresp, axi4lite_if.bresp],
-          [axi4lite_if.arvalid, arvalid],
-          [arready, axi4lite_if.arready],
-          [axi4lite_if.arid, arid],
-          [axi4lite_if.araddr, araddr],
-          [axi4lite_if.arprot, arprot],
-          [rvalid, axi4lite_if.rvalid],
-          [axi4lite_if.rready, rready],
-          [rid, axi4lite_if.rid],
-          [rdata, axi4lite_if.rdata],
-          [rresp, axi4lite_if.rresp]
-        ].each { |lhs, rhs| code << assign(lhs, rhs) << nl }
-      end
+      configuration.fold_sv_interface_port? || assign_axi4lite_signals(code)
     end
 
     private
 
     def id_port_width
       "((#{id_width}>0)?#{id_width}:1)"
+    end
+
+    def assign_axi4lite_signals(code)
+      [
+        [axi4lite_if.awvalid, awvalid],
+        [awready, axi4lite_if.awready],
+        [axi4lite_if.awid, awid],
+        [axi4lite_if.awaddr, awaddr],
+        [axi4lite_if.awprot, awprot],
+        [axi4lite_if.wvalid, wvalid],
+        [wready, axi4lite_if.wready],
+        [axi4lite_if.wdata, wdata],
+        [axi4lite_if.wstrb, wstrb],
+        [bvalid, axi4lite_if.bvalid],
+        [axi4lite_if.bready, bready],
+        [bid, axi4lite_if.bid],
+        [bresp, axi4lite_if.bresp],
+        [axi4lite_if.arvalid, arvalid],
+        [arready, axi4lite_if.arready],
+        [axi4lite_if.arid, arid],
+        [axi4lite_if.araddr, araddr],
+        [axi4lite_if.arprot, arprot],
+        [rvalid, axi4lite_if.rvalid],
+        [axi4lite_if.rready, rready],
+        [rid, axi4lite_if.rid],
+        [rdata, axi4lite_if.rdata],
+        [rresp, axi4lite_if.rresp]
+      ].each { |lhs, rhs| code << assign(lhs, rhs) << nl }
     end
   end
 end
