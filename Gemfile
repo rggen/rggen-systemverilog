@@ -25,7 +25,8 @@ group :rggen do
 end
 
 group :develop do
-  gem 'rake'
+  gem 'bump', ' >= 0.10.0', require: false
+  gem 'rake', require: false
   gem 'rubocop', '>= 1.7.0', require: false
 end
 
