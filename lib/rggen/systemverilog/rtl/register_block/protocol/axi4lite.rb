@@ -26,73 +26,73 @@ RgGen.define_list_item_feature(:register_block, :protocol, :axi4lite) do
         }
       else
         input :awvalid, {
-          name: 'i_awvalid', data_type: :logic, width: 1
+          name: 'i_awvalid', width: 1
         }
         output :awready, {
-          name: 'o_awready', data_type: :logic, width: 1
+          name: 'o_awready', width: 1
         }
         input :awid, {
-          name: 'i_awid', data_type: :logic, width: id_port_width
+          name: 'i_awid', width: id_port_width
         }
         input :awaddr, {
-          name: 'i_awaddr', data_type: :logic, width: address_width
+          name: 'i_awaddr', width: address_width
         }
         input :awprot, {
-          name: 'i_awprot', data_type: :logic, width: 3
+          name: 'i_awprot', width: 3
         }
         input :wvalid, {
-          name: 'i_wvalid', data_type: :logic, width: 1
+          name: 'i_wvalid', width: 1
         }
         output :wready, {
-          name: 'o_wready', data_type: :logic, width: 1
+          name: 'o_wready', width: 1
         }
         input :wdata, {
-          name: 'i_wdata', data_type: :logic, width: bus_width
+          name: 'i_wdata', width: bus_width
         }
         input :wstrb, {
-          name: 'i_wstrb', data_type: :logic, width: byte_width
+          name: 'i_wstrb', width: byte_width
         }
         output :bvalid, {
-          name: 'o_bvalid', data_type: :logic, width: 1
+          name: 'o_bvalid', width: 1
         }
         output :bid, {
-          name: 'o_bid', data_type: :logic, width: id_port_width
+          name: 'o_bid', width: id_port_width
         }
         input :bready, {
-          name: 'i_bready', data_type: :logic, width: 1
+          name: 'i_bready', width: 1
         }
         output :bresp, {
-          name: 'o_bresp', data_type: :logic, width: 2
+          name: 'o_bresp', width: 2
         }
         input :arvalid, {
-          name: 'i_arvalid', data_type: :logic, width: 1
+          name: 'i_arvalid', width: 1
         }
         output :arready, {
-          name: 'o_arready', data_type: :logic, width: 1
+          name: 'o_arready', width: 1
         }
         input :arid, {
-          name: 'i_arid', data_type: :logic, width: id_port_width
+          name: 'i_arid', width: id_port_width
         }
         input :araddr, {
-          name: 'i_araddr', data_type: :logic, width: address_width
+          name: 'i_araddr', width: address_width
         }
         input :arprot, {
-          name: 'i_arprot', data_type: :logic, width: 3
+          name: 'i_arprot', width: 3
         }
         output :rvalid, {
-          name: 'o_rvalid', data_type: :logic, width: 1
+          name: 'o_rvalid', width: 1
         }
         input :rready, {
-          name: 'i_rready', data_type: :logic, width: 1
+          name: 'i_rready', width: 1
         }
         output :rid, {
-          name: 'o_rid', data_type: :logic, width: id_port_width
+          name: 'o_rid', width: id_port_width
         }
         output :rdata, {
-          name: 'o_rdata', data_type: :logic, width: bus_width
+          name: 'o_rdata', width: bus_width
         }
         output :rresp, {
-          name: 'o_rresp', data_type: :logic, width: 2
+          name: 'o_rresp', width: 2
         }
         interface :axi4lite_if, {
           name: 'axi4lite_if', interface_type: 'rggen_axi4lite_if',

@@ -50,13 +50,10 @@ module RgGen
         end
 
         def index(offset_or_offsets = nil)
-          operands = index_operands(offset_or_offsets)
-          partial_indices = partial_sums(operands)
-          if partial_indices.empty? || partial_indices.all?(&method(:integer?))
-            partial_indices.sum
-          else
-            partial_indices.join('+')
-          end
+          offset_or_offsets
+            .yield_self(&method(:index_operands))
+            .yield_self(&method(:partial_sums))
+            .yield_self(&method(:reduce_indices))
         end
 
         def inside_loop?
@@ -87,12 +84,17 @@ module RgGen
           ]
         end
 
+        def reduce_indices(indices)
+          if indices.empty? || indices.all?(&method(:integer?))
+            indices.sum
+          else
+            indices.join('+')
+          end
+        end
+
         def local_register_index(offset)
           (component.array? || nil) &&
-            begin
-              operands = [component.count(false), offset || local_index]
-              product(operands, true)
-            end
+            product([component.count(false), offset || local_index], true)
         end
 
         def product(operands, need_bracket)

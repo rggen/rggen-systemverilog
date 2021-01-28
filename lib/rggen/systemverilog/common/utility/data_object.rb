@@ -25,8 +25,7 @@ module RgGen
 
           def declaration
             declaration_snippets
-              .select(&:itself)
-              .reject(&:empty?)
+              .select { |snippet| snippet && !snippet.empty? }
               .join(' ')
           end
 

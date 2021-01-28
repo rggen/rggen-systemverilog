@@ -29,12 +29,12 @@ RgGen.define_list_feature(:bit_field, :type) do
 
       def model_name
         name = helper.model_name
-        name.is_a?(Proc) && instance_eval(&name) || name || :rggen_ral_field
+        name.is_a?(Proc) && instance_eval(&name) || name || 'rggen_ral_field'
       end
 
       def constructors
         (bit_field.sequence_size&.times || [nil]).map do |index|
-          macro_call(:rggen_ral_create_field, arguments(index))
+          macro_call('rggen_ral_create_field', arguments(index))
         end
       end
 

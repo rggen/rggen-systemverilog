@@ -17,13 +17,13 @@ module RgGen
           private
 
           def header_code(code)
-            code << [:generate, space] if @top_scope
+            code << ['generate', space] if @top_scope
             code << "if (1) begin : #{name}" << nl
           end
 
           def footer_code(code)
-            code << :end
-            code << [space, :endgenerate] if @top_scope
+            code << 'end'
+            code << [space, 'endgenerate'] if @top_scope
           end
 
           def pre_body_code(code)
@@ -58,10 +58,12 @@ module RgGen
           end
 
           def post_body_code(code)
-            (loop_size&.size || 0).times do
-              code.indent -= 2
-              code << :end << nl
-            end
+            loop_size&.size&.times { generate_for_end(code) }
+          end
+
+          def generate_for_end(code)
+            code.indent -= 2
+            code << 'end' << nl
           end
         end
       end

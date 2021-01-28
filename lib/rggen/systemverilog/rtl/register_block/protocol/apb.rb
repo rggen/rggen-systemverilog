@@ -27,34 +27,34 @@ RgGen.define_list_item_feature(:register_block, :protocol, :apb) do
         }
       else
         input :psel, {
-          name: 'i_psel', data_type: :logic, width: 1
+          name: 'i_psel', width: 1
         }
         input :penable, {
-          name: 'i_penable', data_type: :logic, width: 1
+          name: 'i_penable', width: 1
         }
         input :paddr, {
-          name: 'i_paddr', data_type: :logic, width: address_width
+          name: 'i_paddr', width: address_width
         }
         input :pprot, {
-          name: 'i_pprot', data_type: :logic, width: 3
+          name: 'i_pprot', width: 3
         }
         input :pwrite, {
-          name: 'i_pwrite', data_type: :logic, width: 1
+          name: 'i_pwrite', width: 1
         }
         input :pstrb, {
-          name: 'i_pstrb', data_type: :logic, width: byte_width
+          name: 'i_pstrb', width: byte_width
         }
         input :pwdata, {
-          name: 'i_pwdata', data_type: :logic, width: bus_width
+          name: 'i_pwdata', width: bus_width
         }
         output :pready, {
-          name: 'o_pready', data_type: :logic, width: 1
+          name: 'o_pready', width: 1
         }
         output :prdata, {
-          name: 'o_prdata', data_type: :logic, width: bus_width
+          name: 'o_prdata', width: bus_width
         }
         output :pslverr, {
-          name: 'o_pslverr', data_type: :logic, width: 1
+          name: 'o_pslverr', width: 1
         }
         interface :apb_if, {
           name: 'apb_if', interface_type: 'rggen_apb_if',

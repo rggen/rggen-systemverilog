@@ -15,8 +15,7 @@ module RgGen
         end
 
         def local_index
-          index_name = local_index_name
-          index_name && create_identifier(index_name)
+          create_identifier(local_index_name)
         end
 
         def local_indices

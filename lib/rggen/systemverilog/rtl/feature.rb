@@ -16,10 +16,12 @@ module RgGen
           InterfaceInstance.new(attributes, &block)
         end
 
-        def create_argument(direction, attributes, &block)
-          DataObject.new(
-            :argument, attributes.merge(direction: direction), &block
-          )
+        def create_port(direction, attributes, &block)
+          attributes =
+            { data_type: 'logic' }
+              .merge(attributes)
+              .merge(direction: direction)
+          DataObject.new(:argument, attributes, &block)
         end
 
         def create_if_port(_, attributes, &block)
@@ -34,8 +36,8 @@ module RgGen
 
         define_entity :logic, :create_variable, :variable, -> { component }
         define_entity :interface, :create_if_instance, :variable, -> { component }
-        define_entity :input, :create_argument, :port, -> { register_block }
-        define_entity :output, :create_argument, :port, -> { register_block }
+        define_entity :input, :create_port, :port, -> { register_block }
+        define_entity :output, :create_port, :port, -> { register_block }
         define_entity :interface_port, :create_if_port, :port, -> { register_block }
         define_entity :parameter, :create_parameter, :parameter, -> { register_block }
         define_entity :localparam, :create_parameter, :parameter, -> { component }

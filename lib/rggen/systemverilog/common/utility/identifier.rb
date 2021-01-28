@@ -80,13 +80,12 @@ module RgGen
           end
 
           def __serialized_index__(array_index)
-            index_values =
-              array_index
-                .reverse
-                .zip(__index_factors__)
-                .map { |i, f| __calc_index_value__(i, f) }
-            index = __reduce_array__(index_values.reverse, :+, 0)
-            integer?(index) ? index : "(#{index})"
+            array_index
+              .reverse
+              .zip(__index_factors__)
+              .map { |i, f| __calc_index_value__(i, f) }
+              .yield_self { |values| __reduce_array__(values.reverse, :+, 0) }
+              .yield_self { |index| integer?(index) && index || "(#{index})" }
           end
 
           def __index_factors__

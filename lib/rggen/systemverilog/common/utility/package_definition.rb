@@ -30,7 +30,7 @@ module RgGen
           private
 
           def header_code(code)
-            code << [:package, space, name, semicolon]
+            code << ['package', space, name, semicolon]
           end
 
           def pre_body_code(code)
@@ -41,18 +41,18 @@ module RgGen
           def package_import_declaration(code)
             declarations =
               Array(@package_imports)
-                .map { |package| [:import, space, package, '::*'] }
+                .map { |package| ['import', space, package, '::*'] }
             add_declarations_to_body(code, declarations)
           end
 
           def file_include_directives(code)
             Array(@include_files).each do |file|
-              code << [:'`include', space, string(file), nl]
+              code << ['`include', space, string(file), nl]
             end
           end
 
           def footer_code
-            :endpackage
+            'endpackage'
           end
         end
       end

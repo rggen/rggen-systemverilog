@@ -23,11 +23,15 @@ module RgGen
           private
 
           def header_code(code)
-            code << [:module, space, name]
+            module_header_begin(code)
             package_import_declaration(code)
             parameter_declarations(code)
             port_declarations(code)
-            code << semicolon
+            module_header_end(code)
+          end
+
+          def module_header_begin(code)
+            code << 'module' << space << name
           end
 
           def package_import_declaration(code)
@@ -41,7 +45,7 @@ module RgGen
           def pacakge_import_items
             Array(@package_imports).map.with_index do |package, i|
               if i.zero?
-                [:import, "#{package}::*"].join(space)
+                ['import', "#{package}::*"].join(space)
               else
                 [space(6), "#{package}::*"].join(space)
               end
@@ -62,12 +66,16 @@ module RgGen
             end
           end
 
+          def module_header_end(code)
+            code << semicolon
+          end
+
           def pre_body_code(code)
             add_declarations_to_body(code, Array(variables))
           end
 
           def footer_code
-            :endmodule
+            'endmodule'
           end
         end
       end

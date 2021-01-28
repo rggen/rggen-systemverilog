@@ -181,63 +181,63 @@ RSpec.describe 'bit_field/type/rwe' do
   context '参照ビットフィールドを持たない場合' do
     it '入力ポート#enableを持つ' do
       expect(bit_fields[0]).to have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_0_bit_field_0_enable', direction: :input, data_type: :logic, width: 1
       )
       expect(bit_fields[2]).to have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_0_bit_field_2_enable', direction: :input, data_type: :logic, width: 1
       )
       expect(bit_fields[4]).to have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_0_bit_field_4_enable', direction: :input, data_type: :logic, width: 1,
         array_size: [2], array_format: array_port_format
       )
 
       expect(bit_fields[6]).to have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_1_bit_field_0_enable', direction: :input, data_type: :logic, width: 1,
         array_size: [4], array_format: array_port_format
       )
       expect(bit_fields[8]).to have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_1_bit_field_2_enable', direction: :input, data_type: :logic, width: 1,
         array_size: [4], array_format: array_port_format
       )
       expect(bit_fields[10]).to have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_1_bit_field_4_enable', direction: :input, data_type: :logic, width: 1,
         array_size: [4, 2], array_format: array_port_format
       )
 
       expect(bit_fields[12]).to have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_2_bit_field_0_enable', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2], array_format: array_port_format
       )
       expect(bit_fields[14]).to have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_2_bit_field_2_enable', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2], array_format: array_port_format
       )
       expect(bit_fields[16]).to have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_2_bit_field_4_enable', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2, 2], array_format: array_port_format
       )
 
       expect(bit_fields[19]).to have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_file_4_register_file_0_register_0_bit_field_0_enable', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2, 2, 2], array_format: array_port_format
       )
       expect(bit_fields[21]).to have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_file_4_register_file_0_register_0_bit_field_2_enable', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2, 2, 2], array_format: array_port_format
       )
       expect(bit_fields[23]).to have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_file_4_register_file_0_register_0_bit_field_4_enable', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2, 2, 2, 2], array_format: array_port_format
       )
@@ -247,68 +247,68 @@ RSpec.describe 'bit_field/type/rwe' do
   context '参照ビットフィールドを持つ場合' do
     it '入力ポート#enableを持たない' do
       expect(bit_fields[1]).to not_have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_0_bit_field_1_enable', direction: :input, data_type: :logic, width: 1
       )
       expect(bit_fields[3]).to not_have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_0_bit_field_3_enable', direction: :input, data_type: :logic, width: 1
       )
       expect(bit_fields[5]).to not_have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_0_bit_field_5_enable', direction: :input, data_type: :logic, width: 1,
         array_size: [2], array_format: array_port_format
       )
 
       expect(bit_fields[7]).to not_have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_1_bit_field_1_enable', direction: :input, data_type: :logic, width: 1,
         array_size: [4], array_format: array_port_format
       )
       expect(bit_fields[9]).to not_have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_1_bit_field_3_enable', direction: :input, data_type: :logic, width: 1,
         array_size: [4], array_format: array_port_format
       )
       expect(bit_fields[11]).to not_have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_1_bit_field_5_enable', direction: :input, data_type: :logic, width: 1,
         array_size: [4, 2], array_format: array_port_format
       )
 
       expect(bit_fields[13]).to not_have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_2_bit_field_1_enable', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2], array_format: array_port_format
       )
       expect(bit_fields[15]).to not_have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_2_bit_field_3_enable', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2], array_format: array_port_format
       )
       expect(bit_fields[17]).to not_have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_2_bit_field_5_enable', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2, 2], array_format: array_port_format
       )
 
       expect(bit_fields[18]).to not_have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'o_register_3_bit_field_0_enable', direction: :input, data_type: :logic, width: 1
       )
 
       expect(bit_fields[20]).to not_have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_file_4_register_file_0_register_0_bit_field_1_enable', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2, 2, 2], array_format: array_port_format
       )
       expect(bit_fields[22]).to not_have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_file_4_register_file_0_register_0_bit_field_3_enable', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2, 2, 2], array_format: array_port_format
       )
       expect(bit_fields[24]).to not_have_port(
-        :register_block, :enable,
+        :register_block, :control,
         name: 'i_register_file_4_register_file_0_register_0_bit_field_5_enable', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2, 2, 2, 2], array_format: array_port_format
       )

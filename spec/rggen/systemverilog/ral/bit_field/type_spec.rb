@@ -90,7 +90,7 @@ RSpec.describe 'bit_field/type' do
             bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :foo }
           end
         end
-        expect(bit_fields[0].model_name).to eq :rggen_ral_field
+        expect(bit_fields[0].model_name).to eq 'rggen_ral_field'
       end
     end
 
