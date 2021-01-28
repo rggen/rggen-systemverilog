@@ -245,7 +245,7 @@ RSpec.describe 'bit_field/type/rwl' do
   end
 
   context '参照ビットフィールドを持つ場合' do
-    it '入力ポート#lockを持たない' do
+    it '入力ポート#controlを持たない' do
       expect(bit_fields[1]).to not_have_port(
         :register_block, :control,
         name: 'i_register_0_bit_field_1_lock', direction: :input, data_type: :logic, width: 1

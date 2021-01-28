@@ -179,7 +179,7 @@ RSpec.describe 'bit_field/type/rwe' do
   end
 
   context '参照ビットフィールドを持たない場合' do
-    it '入力ポート#enableを持つ' do
+    it '入力ポート#controlを持つ' do
       expect(bit_fields[0]).to have_port(
         :register_block, :control,
         name: 'i_register_0_bit_field_0_enable', direction: :input, data_type: :logic, width: 1
@@ -245,7 +245,7 @@ RSpec.describe 'bit_field/type/rwe' do
   end
 
   context '参照ビットフィールドを持つ場合' do
-    it '入力ポート#enableを持たない' do
+    it '入力ポート#controlを持たない' do
       expect(bit_fields[1]).to not_have_port(
         :register_block, :control,
         name: 'i_register_0_bit_field_1_enable', direction: :input, data_type: :logic, width: 1
