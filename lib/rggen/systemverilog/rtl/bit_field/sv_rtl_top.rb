@@ -116,7 +116,7 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
 
     def bit_field_if_connection
       macro_call(
-        :rggen_connect_bit_field_if,
+        'rggen_connect_bit_field_if',
         [
           register.bit_field_if,
           bit_field.bit_field_sub_if,

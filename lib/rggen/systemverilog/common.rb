@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'facets/kernel/attr_singleton'
-
 require_relative 'version'
 
 require_relative 'common/utility/identifier'

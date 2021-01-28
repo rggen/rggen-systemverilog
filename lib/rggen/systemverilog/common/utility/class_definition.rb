@@ -13,10 +13,14 @@ module RgGen
           private
 
           def header_code(code)
-            code << [:class, space, name]
+            class_header_begin(code)
             parameter_declarations(code)
             class_inheritance(code)
-            code << semicolon
+            class_header_end(code)
+          end
+
+          def class_header_begin(code)
+            code << ['class', space, name]
           end
 
           def parameter_declarations(code)
@@ -28,7 +32,11 @@ module RgGen
 
           def class_inheritance(code)
             return unless base
-            code << [space, :extends, space, base]
+            code << [space, 'extends', space, base]
+          end
+
+          def class_header_end(code)
+            code << semicolon
           end
 
           def pre_body_code(code)
@@ -36,7 +44,7 @@ module RgGen
           end
 
           def footer_code
-            :endclass
+            'endclass'
           end
         end
       end

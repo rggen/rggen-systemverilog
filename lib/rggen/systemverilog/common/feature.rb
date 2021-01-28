@@ -73,7 +73,7 @@ module RgGen
 
         def add_identifier(entity, name)
           instance_variable_set("@#{name}", entity.identifier)
-          attr_singleton_reader(name)
+          singleton_exec { attr_reader name }
           export(name)
         end
 

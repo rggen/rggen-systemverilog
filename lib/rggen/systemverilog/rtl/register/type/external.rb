@@ -11,36 +11,28 @@ RgGen.define_list_item_feature(:register, :type, :external) do
         }
       else
         output :valid, {
-          name: "o_#{register.name}_valid",
-          data_type: :logic, width: 1
+          name: "o_#{register.name}_valid", width: 1
         }
         output :access, {
-          name: "o_#{register.name}_access",
-          data_type: :logic, width: '$bits(rggen_access)'
+          name: "o_#{register.name}_access", width: '$bits(rggen_access)'
         }
         output :address, {
-          name: "o_#{register.name}_address",
-          data_type: :logic, width: address_width
+          name: "o_#{register.name}_address", width: address_width
         }
         output :write_data, {
-          name: "o_#{register.name}_data",
-          data_type: :logic, width: bus_width
+          name: "o_#{register.name}_data", width: bus_width
         }
         output :strobe, {
-          name: "o_#{register.name}_strobe",
-          data_type: :logic, width: byte_width
+          name: "o_#{register.name}_strobe", width: byte_width
         }
         input :ready, {
-          name: "i_#{register.name}_ready",
-          data_type: :logic, width: 1
+          name: "i_#{register.name}_ready", width: 1
         }
         input :status, {
-          name: "i_#{register.name}_status",
-          data_type: :logic, width: 2
+          name: "i_#{register.name}_status", width: 2
         }
         input :read_data, {
-          name: "i_#{register.name}_data",
-          data_type: :logic, width: bus_width
+          name: "i_#{register.name}_data", width: bus_width
         }
         interface :bus_if, {
           name: 'bus_if', interface_type: 'rggen_bus_if',

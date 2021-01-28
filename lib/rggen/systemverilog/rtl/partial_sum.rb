@@ -7,12 +7,11 @@ module RgGen
         private
 
         def partial_sums(operands)
-          sums =
-            operands
-              .chunk(&method(:integer?))
-              .flat_map(&method(:calc_partial_sum))
-              .reject { |value| integer?(value) && value.zero? }
-          sums.empty? && [0] || sums
+          operands
+            .chunk(&method(:integer?))
+            .flat_map(&method(:calc_partial_sum))
+            .reject { |value| integer?(value) && value.zero? }
+            .tap { |sums| sums.empty? && (sums << 0) }
         end
 
         def calc_partial_sum(kind_ans_values)

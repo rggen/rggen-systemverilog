@@ -56,9 +56,9 @@ RSpec.describe RgGen::SystemVerilog::RTL::Feature do
       features[1].instance_eval { input :bar, name: 'barbar', width: 2, array_size: [2] }
       features[2].instance_eval { input :baz, name: 'bazbaz', width: 3, array_size: [3, 2] }
 
-      expect(components[0]).to have_declaration(:port, 'input foo')
-      expect(components[0]).to have_declaration(:port, 'input [1:0][1:0] barbar')
-      expect(components[0]).to have_declaration(:port, 'input [2:0][1:0][2:0] bazbaz')
+      expect(components[0]).to have_declaration(:port, 'input logic foo')
+      expect(components[0]).to have_declaration(:port, 'input logic [1:0][1:0] barbar')
+      expect(components[0]).to have_declaration(:port, 'input logic [2:0][1:0][2:0] bazbaz')
     end
   end
 
@@ -68,9 +68,9 @@ RSpec.describe RgGen::SystemVerilog::RTL::Feature do
       features[1].instance_eval { output :bar, name: 'barbar', width: 2, array_size: [2] }
       features[2].instance_eval { output :baz, name: 'bazbaz', width: 3, array_size: [3, 2] }
 
-      expect(components[0]).to have_declaration(:port, 'output foo')
-      expect(components[0]).to have_declaration(:port, 'output [1:0][1:0] barbar')
-      expect(components[0]).to have_declaration(:port, 'output [2:0][1:0][2:0] bazbaz')
+      expect(components[0]).to have_declaration(:port, 'output logic foo')
+      expect(components[0]).to have_declaration(:port, 'output logic [1:0][1:0] barbar')
+      expect(components[0]).to have_declaration(:port, 'output logic [2:0][1:0][2:0] bazbaz')
     end
   end
 
