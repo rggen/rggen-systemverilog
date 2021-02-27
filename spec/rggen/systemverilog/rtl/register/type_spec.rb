@@ -12,11 +12,19 @@ RSpec.describe 'register/type' do
   context 'コード生成が実装されていないレジスタ型が指定された場合' do
     before(:all) do
       RgGen.define_list_item_feature(:register, :type, :foo) do
-        register_map { no_bit_fields }
+        register_map do
+          writable? { true }
+          readable? { true }
+          no_bit_fields
+        end
         sv_rtl {}
       end
       RgGen.define_list_item_feature(:register, :type, :bar) do
-        register_map { no_bit_fields }
+        register_map do
+          writable? { true }
+          readable? { true }
+          no_bit_fields
+        end
       end
     end
 
@@ -27,12 +35,6 @@ RSpec.describe 'register/type' do
     end
 
     it 'GeneratorErrorを起こす' do
-      expect {
-        create_sv_rtl do
-          register_block { register { bit_field } }
-        end
-      }.not_to raise_error
-
       expect {
         create_sv_rtl do
           register_block { register { type :foo } }
