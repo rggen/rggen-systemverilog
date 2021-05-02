@@ -47,7 +47,7 @@ module RgGen
 
           def __create_new_identifier__(array_index_or_lsb, lsb_or_width, width)
             select = __create_select__(array_index_or_lsb, lsb_or_width, width)
-            Identifier.new("#{@name}#{select}") do |identifier|
+            self.class.new("#{@name}#{select}") do |identifier|
               identifier.__sub_identifiers__(@sub_identifiers)
             end
           end
@@ -74,8 +74,11 @@ module RgGen
           end
 
           def __serialized_lsb__(array_index, lsb)
-            serialized_index = __serialized_index__(array_index)
-            array_lsb = __reduce_array__([@width, serialized_index], :*, 1)
+            index =
+              array_index
+                .yield_self(&method(:__serialized_index__))
+                .yield_self(&method(:__enclose_index_in_parenthesis))
+            array_lsb = __reduce_array__([@width, index], :*, 1)
             __reduce_array__([array_lsb, lsb], :+, 0)
           end
 
@@ -85,7 +88,10 @@ module RgGen
               .zip(__index_factors__)
               .map { |i, f| __calc_index_value__(i, f) }
               .yield_self { |values| __reduce_array__(values.reverse, :+, 0) }
-              .yield_self { |index| integer?(index) && index || "(#{index})" }
+          end
+
+          def __enclose_index_in_parenthesis(index)
+            integer?(index) && index || "(#{index})"
           end
 
           def __index_factors__
