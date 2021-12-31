@@ -9,7 +9,7 @@ module RgGen
         def array_indices
           if component.array?
             index_table = component.array_size.map { |size| (0...size).to_a }
-            index_table[0].product(*index_table[1..-1])
+            index_table[0].product(*index_table[1..])
           else
             [nil]
           end
