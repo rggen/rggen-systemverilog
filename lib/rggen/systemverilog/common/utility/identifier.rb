@@ -96,7 +96,7 @@ module RgGen
 
           def __index_factors__
             Array.new(@array_size.size) do |i|
-              i.zero? ? nil : __reduce_array__(@array_size[-i..-1], :*, 1)
+              i.zero? ? nil : __reduce_array__(@array_size[-i..], :*, 1)
             end
           end
 
