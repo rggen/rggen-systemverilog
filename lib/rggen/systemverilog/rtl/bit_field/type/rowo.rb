@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
-RgGen.define_list_item_feature(:bit_field, :type, :ro) do
+RgGen.define_list_item_feature(:bit_field, :type, :rowo) do
   sv_rtl do
     build do
+      output :value_out, {
+        name: "o_#{full_name}", width: width,
+        array_size: array_size, array_format: array_port_format
+      }
       unless bit_field.reference?
         input :value_in, {
           name: "i_#{full_name}", width: width,

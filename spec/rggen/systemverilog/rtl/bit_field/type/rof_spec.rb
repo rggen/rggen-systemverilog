@@ -49,8 +49,9 @@ RSpec.describe 'bit_field/type/rof' do
 
       expect(bit_fields[0]).to generate_code(:bit_field, :top_down, <<~'CODE')
         rggen_bit_field #(
-          .WIDTH    (1),
-          .STORAGE  (0)
+          .WIDTH              (1),
+          .STORAGE            (0),
+          .EXTERNAL_READ_DATA (1)
         ) u_bit_field (
           .i_clk              ('0),
           .i_rst_n            ('0),
@@ -69,8 +70,9 @@ RSpec.describe 'bit_field/type/rof' do
 
       expect(bit_fields[1]).to generate_code(:bit_field, :top_down, <<~'CODE')
         rggen_bit_field #(
-          .WIDTH    (16),
-          .STORAGE  (0)
+          .WIDTH              (16),
+          .STORAGE            (0),
+          .EXTERNAL_READ_DATA (1)
         ) u_bit_field (
           .i_clk              ('0),
           .i_rst_n            ('0),
@@ -89,8 +91,9 @@ RSpec.describe 'bit_field/type/rof' do
 
       expect(bit_fields[2]).to generate_code(:bit_field, :top_down, <<~'CODE')
         rggen_bit_field #(
-          .WIDTH    (1),
-          .STORAGE  (0)
+          .WIDTH              (1),
+          .STORAGE            (0),
+          .EXTERNAL_READ_DATA (1)
         ) u_bit_field (
           .i_clk              ('0),
           .i_rst_n            ('0),
@@ -109,8 +112,9 @@ RSpec.describe 'bit_field/type/rof' do
 
       expect(bit_fields[3]).to generate_code(:bit_field, :top_down, <<~'CODE')
         rggen_bit_field #(
-          .WIDTH    (16),
-          .STORAGE  (0)
+          .WIDTH              (16),
+          .STORAGE            (0),
+          .EXTERNAL_READ_DATA (1)
         ) u_bit_field (
           .i_clk              ('0),
           .i_rst_n            ('0),

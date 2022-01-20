@@ -27,6 +27,7 @@ module RgGen
           'rtl/bit_field/type/rc_w0c_w1c_wc_woc',
           'rtl/bit_field/type/ro',
           'rtl/bit_field/type/rof',
+          'rtl/bit_field/type/rowo',
           'rtl/bit_field/type/rs_w0s_w1s_ws_wos',
           'rtl/bit_field/type/rw_w1_wo_wo1',
           'rtl/bit_field/type/rwc',

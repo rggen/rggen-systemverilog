@@ -20,6 +20,7 @@ module RgGen
         plugin.files [
           'ral/bit_field/type',
           'ral/bit_field/type/rof',
+          'ral/bit_field/type/rowo',
           'ral/bit_field/type/rwc_rws',
           'ral/bit_field/type/rwe_rwl',
           'ral/bit_field/type/w0trg_w1trg',
