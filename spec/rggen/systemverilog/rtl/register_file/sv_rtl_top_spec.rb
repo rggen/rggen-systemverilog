@@ -109,12 +109,14 @@ RSpec.describe 'register_file/sv_rtl_top' do
               rggen_bit_field #(
                 .WIDTH          (1),
                 .INITIAL_VALUE  (INITIAL_VALUE),
-                .SW_READ_ACTION (RGGEN_READ_DEFAULT),
-                .SW_WRITE_ONCE  (0)
+                .SW_WRITE_ONCE  (0),
+                .TRIGGER        (0)
               ) u_bit_field (
                 .i_clk              (i_clk),
                 .i_rst_n            (i_rst_n),
                 .bit_field_if       (bit_field_sub_if),
+                .o_write_trigger    (),
+                .o_read_trigger     (),
                 .i_sw_write_enable  ('1),
                 .i_hw_write_enable  ('0),
                 .i_hw_write_data    ('0),
@@ -151,12 +153,14 @@ RSpec.describe 'register_file/sv_rtl_top' do
               rggen_bit_field #(
                 .WIDTH          (1),
                 .INITIAL_VALUE  (INITIAL_VALUE),
-                .SW_READ_ACTION (RGGEN_READ_DEFAULT),
-                .SW_WRITE_ONCE  (0)
+                .SW_WRITE_ONCE  (0),
+                .TRIGGER        (0)
               ) u_bit_field (
                 .i_clk              (i_clk),
                 .i_rst_n            (i_rst_n),
                 .bit_field_if       (bit_field_sub_if),
+                .o_write_trigger    (),
+                .o_read_trigger     (),
                 .i_sw_write_enable  ('1),
                 .i_hw_write_enable  ('0),
                 .i_hw_write_data    ('0),
@@ -199,12 +203,14 @@ RSpec.describe 'register_file/sv_rtl_top' do
                 rggen_bit_field #(
                   .WIDTH          (1),
                   .INITIAL_VALUE  (INITIAL_VALUE),
-                  .SW_READ_ACTION (RGGEN_READ_DEFAULT),
-                  .SW_WRITE_ONCE  (0)
+                  .SW_WRITE_ONCE  (0),
+                  .TRIGGER        (0)
                 ) u_bit_field (
                   .i_clk              (i_clk),
                   .i_rst_n            (i_rst_n),
                   .bit_field_if       (bit_field_sub_if),
+                  .o_write_trigger    (),
+                  .o_read_trigger     (),
                   .i_sw_write_enable  ('1),
                   .i_hw_write_enable  ('0),
                   .i_hw_write_data    ('0),
@@ -242,12 +248,14 @@ RSpec.describe 'register_file/sv_rtl_top' do
               rggen_bit_field #(
                 .WIDTH          (1),
                 .INITIAL_VALUE  (INITIAL_VALUE),
-                .SW_READ_ACTION (RGGEN_READ_DEFAULT),
-                .SW_WRITE_ONCE  (0)
+                .SW_WRITE_ONCE  (0),
+                .TRIGGER        (0)
               ) u_bit_field (
                 .i_clk              (i_clk),
                 .i_rst_n            (i_rst_n),
                 .bit_field_if       (bit_field_sub_if),
+                .o_write_trigger    (),
+                .o_read_trigger     (),
                 .i_sw_write_enable  ('1),
                 .i_hw_write_enable  ('0),
                 .i_hw_write_data    ('0),
@@ -298,12 +306,14 @@ RSpec.describe 'register_file/sv_rtl_top' do
                         rggen_bit_field #(
                           .WIDTH          (1),
                           .INITIAL_VALUE  (INITIAL_VALUE),
-                          .SW_READ_ACTION (RGGEN_READ_DEFAULT),
-                          .SW_WRITE_ONCE  (0)
+                          .SW_WRITE_ONCE  (0),
+                          .TRIGGER        (0)
                         ) u_bit_field (
                           .i_clk              (i_clk),
                           .i_rst_n            (i_rst_n),
                           .bit_field_if       (bit_field_sub_if),
+                          .o_write_trigger    (),
+                          .o_read_trigger     (),
                           .i_sw_write_enable  ('1),
                           .i_hw_write_enable  ('0),
                           .i_hw_write_data    ('0),
@@ -347,12 +357,14 @@ RSpec.describe 'register_file/sv_rtl_top' do
                       rggen_bit_field #(
                         .WIDTH          (1),
                         .INITIAL_VALUE  (INITIAL_VALUE),
-                        .SW_READ_ACTION (RGGEN_READ_DEFAULT),
-                        .SW_WRITE_ONCE  (0)
+                        .SW_WRITE_ONCE  (0),
+                        .TRIGGER        (0)
                       ) u_bit_field (
                         .i_clk              (i_clk),
                         .i_rst_n            (i_rst_n),
                         .bit_field_if       (bit_field_sub_if),
+                        .o_write_trigger    (),
+                        .o_read_trigger     (),
                         .i_sw_write_enable  ('1),
                         .i_hw_write_enable  ('0),
                         .i_hw_write_data    ('0),

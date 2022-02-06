@@ -1,11 +1,14 @@
 rggen_bit_field #(
   .WIDTH              (<%= width %>),
   .STORAGE            (0),
-  .EXTERNAL_READ_DATA (1)
+  .EXTERNAL_READ_DATA (1),
+  .TRIGGER            (<%= trigger %>)
 ) u_bit_field (
   .i_clk              ('0),
   .i_rst_n            ('0),
   .bit_field_if       (<%= bit_field_if %>),
+  .o_write_trigger    (),
+  .o_read_trigger     (<%= read_trigger_signal %>),
   .i_sw_write_enable  ('0),
   .i_hw_write_enable  ('0),
   .i_hw_write_data    ('0),
