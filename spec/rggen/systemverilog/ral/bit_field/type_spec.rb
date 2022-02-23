@@ -27,12 +27,16 @@ RSpec.describe 'bit_field/type' do
         register_map {}
         sv_ral { access :baz }
       end
+      RgGen.define_list_item_feature(:bit_field, :type, :baz) do
+        register_map {}
+        sv_ral { access { 'baz' * 2 } }
+      end
     end
 
     after(:all) do
       delete_register_map_factory
       delete_sv_ral_factory
-      RgGen.delete(:bit_field, :type, [:foo, :bar])
+      RgGen.delete(:bit_field, :type, [:foo, :bar, :baz])
     end
 
     context 'アクセス権の指定がない場合' do
@@ -56,6 +60,18 @@ RSpec.describe 'bit_field/type' do
           end
         end
         expect(bit_fields[0].access).to eq 'BAZ'
+      end
+    end
+
+    context '.accessにブロックが渡された場合' do
+      it 'ブロックの実行結果を大文字化してアクセス権として返す' do
+        bit_fields = create_bit_fields do
+          register do
+            name 'register_0'
+            bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :baz }
+          end
+        end
+        expect(bit_fields[0].access).to eq 'BAZBAZ'
       end
     end
   end
