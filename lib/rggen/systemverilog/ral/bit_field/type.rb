@@ -4,11 +4,20 @@ RgGen.define_list_feature(:bit_field, :type) do
   sv_ral do
     base_feature do
       define_helpers do
-        attr_setter :access
+        def access(access_type = nil, &block)
+          attribute_accessor('@access', access_type, &block)
+        end
 
         def model_name(name = nil, &block)
-          @model_name = name || block || @model_name
-          @model_name
+          attribute_accessor('@model_name', name, &block)
+        end
+
+        private
+
+        def attribute_accessor(variable_name, value, &block)
+          (new_value = value || block) &&
+            instance_variable_set(variable_name, new_value)
+          instance_variable_get(variable_name)
         end
       end
 
@@ -24,12 +33,11 @@ RgGen.define_list_feature(:bit_field, :type) do
       end
 
       def access
-        (helper.access || bit_field.type).to_s.upcase
+        eval_attribute(:access, bit_field.type).to_s.upcase
       end
 
       def model_name
-        name = helper.model_name
-        name.is_a?(Proc) && instance_eval(&name) || name || 'rggen_ral_field'
+        eval_attribute(:model_name, 'rggen_ral_field')
       end
 
       def constructors
@@ -72,6 +80,11 @@ RgGen.define_list_feature(:bit_field, :type) do
         else
           ''
         end
+      end
+
+      def eval_attribute(attribute, default_value)
+        value = helper.__send__(attribute)
+        value.is_a?(Proc) && instance_eval(&value) || value || default_value
       end
     end
 
