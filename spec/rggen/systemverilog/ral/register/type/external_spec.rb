@@ -5,7 +5,7 @@ RSpec.describe 'register/type/external' do
   include_context 'sv ral common'
 
   before(:all) do
-    RgGen.enable(:global, [:bus_width, :address_width, :fold_sv_interface_port])
+    RgGen.enable(:global, [:bus_width, :address_width])
     RgGen.enable(:register_block, :byte_size)
     RgGen.enable(:register, [:name, :type, :offset_address, :size])
     RgGen.enable(:register, :type, :external)
