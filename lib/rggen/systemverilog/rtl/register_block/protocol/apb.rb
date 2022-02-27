@@ -21,68 +21,11 @@ RgGen.define_list_item_feature(:register_block, :protocol, :apb) do
 
   sv_rtl do
     build do
-      if configuration.fold_sv_interface_port?
-        interface_port :apb_if, {
-          name: 'apb_if', interface_type: 'rggen_apb_if', modport: 'slave'
-        }
-      else
-        input :psel, {
-          name: 'i_psel', width: 1
-        }
-        input :penable, {
-          name: 'i_penable', width: 1
-        }
-        input :paddr, {
-          name: 'i_paddr', width: address_width
-        }
-        input :pprot, {
-          name: 'i_pprot', width: 3
-        }
-        input :pwrite, {
-          name: 'i_pwrite', width: 1
-        }
-        input :pstrb, {
-          name: 'i_pstrb', width: byte_width
-        }
-        input :pwdata, {
-          name: 'i_pwdata', width: bus_width
-        }
-        output :pready, {
-          name: 'o_pready', width: 1
-        }
-        output :prdata, {
-          name: 'o_prdata', width: bus_width
-        }
-        output :pslverr, {
-          name: 'o_pslverr', width: 1
-        }
-        interface :apb_if, {
-          name: 'apb_if', interface_type: 'rggen_apb_if',
-          parameter_values: [address_width, bus_width],
-          variables: [
-            'psel', 'penable', 'paddr', 'pprot', 'pwrite', 'pstrb', 'pwdata',
-            'pready', 'prdata', 'pslverr'
-          ]
-        }
-      end
+      interface_port :apb_if, {
+        name: 'apb_if', interface_type: 'rggen_apb_if', modport: 'slave'
+      }
     end
 
     main_code :register_block, from_template: true
-    main_code :register_block do |code|
-      unless configuration.fold_sv_interface_port?
-        [
-          [apb_if.psel, psel],
-          [apb_if.penable, penable],
-          [apb_if.paddr, paddr],
-          [apb_if.pprot, pprot],
-          [apb_if.pwrite, pwrite],
-          [apb_if.pstrb, pstrb],
-          [apb_if.pwdata, pwdata],
-          [pready, apb_if.pready],
-          [prdata, apb_if.prdata],
-          [pslverr, apb_if.pslverr]
-        ].each { |lhs, rhs| code << assign(lhs, rhs) << nl }
-      end
-    end
   end
 end

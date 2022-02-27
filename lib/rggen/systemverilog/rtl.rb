@@ -39,7 +39,6 @@ module RgGen
           'rtl/bit_field/type/wo_wo1_wotrg',
           'rtl/bit_field/type/wrc_wrs',
           'rtl/global/array_port_format',
-          'rtl/global/fold_sv_interface_port',
           'rtl/register/sv_rtl_top',
           'rtl/register/type',
           'rtl/register/type/external',
