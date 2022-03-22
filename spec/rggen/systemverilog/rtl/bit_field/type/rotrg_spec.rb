@@ -505,8 +505,8 @@ RSpec.describe 'bit_field/type/rotrg' do
           .EXTERNAL_READ_DATA (1),
           .TRIGGER            (1)
         ) u_bit_field (
-          .i_clk              ('0),
-          .i_rst_n            ('0),
+          .i_clk              (i_clk),
+          .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (o_register_0_bit_field_0_read_trigger),
@@ -529,8 +529,8 @@ RSpec.describe 'bit_field/type/rotrg' do
           .EXTERNAL_READ_DATA (1),
           .TRIGGER            (1)
         ) u_bit_field (
-          .i_clk              ('0),
-          .i_rst_n            ('0),
+          .i_clk              (i_clk),
+          .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (o_register_0_bit_field_1_read_trigger),
@@ -553,8 +553,8 @@ RSpec.describe 'bit_field/type/rotrg' do
           .EXTERNAL_READ_DATA (1),
           .TRIGGER            (1)
         ) u_bit_field (
-          .i_clk              ('0),
-          .i_rst_n            ('0),
+          .i_clk              (i_clk),
+          .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (o_register_0_bit_field_2_read_trigger),
@@ -577,8 +577,8 @@ RSpec.describe 'bit_field/type/rotrg' do
           .EXTERNAL_READ_DATA (1),
           .TRIGGER            (1)
         ) u_bit_field (
-          .i_clk              ('0),
-          .i_rst_n            ('0),
+          .i_clk              (i_clk),
+          .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (o_register_0_bit_field_3_read_trigger),
@@ -601,8 +601,8 @@ RSpec.describe 'bit_field/type/rotrg' do
           .EXTERNAL_READ_DATA (1),
           .TRIGGER            (1)
         ) u_bit_field (
-          .i_clk              ('0),
-          .i_rst_n            ('0),
+          .i_clk              (i_clk),
+          .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (o_register_2_bit_field_0_read_trigger),
@@ -625,8 +625,8 @@ RSpec.describe 'bit_field/type/rotrg' do
           .EXTERNAL_READ_DATA (1),
           .TRIGGER            (1)
         ) u_bit_field (
-          .i_clk              ('0),
-          .i_rst_n            ('0),
+          .i_clk              (i_clk),
+          .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (o_register_3_bit_field_0_read_trigger[i]),
@@ -649,8 +649,8 @@ RSpec.describe 'bit_field/type/rotrg' do
           .EXTERNAL_READ_DATA (1),
           .TRIGGER            (1)
         ) u_bit_field (
-          .i_clk              ('0),
-          .i_rst_n            ('0),
+          .i_clk              (i_clk),
+          .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (o_register_3_bit_field_1_read_trigger[i]),
@@ -673,8 +673,8 @@ RSpec.describe 'bit_field/type/rotrg' do
           .EXTERNAL_READ_DATA (1),
           .TRIGGER            (1)
         ) u_bit_field (
-          .i_clk              ('0),
-          .i_rst_n            ('0),
+          .i_clk              (i_clk),
+          .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (o_register_3_bit_field_2_read_trigger[i]),
@@ -697,8 +697,8 @@ RSpec.describe 'bit_field/type/rotrg' do
           .EXTERNAL_READ_DATA (1),
           .TRIGGER            (1)
         ) u_bit_field (
-          .i_clk              ('0),
-          .i_rst_n            ('0),
+          .i_clk              (i_clk),
+          .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (o_register_5_bit_field_0_read_trigger[i][j]),
@@ -721,8 +721,8 @@ RSpec.describe 'bit_field/type/rotrg' do
           .EXTERNAL_READ_DATA (1),
           .TRIGGER            (1)
         ) u_bit_field (
-          .i_clk              ('0),
-          .i_rst_n            ('0),
+          .i_clk              (i_clk),
+          .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (o_register_5_bit_field_1_read_trigger[i][j]),
@@ -745,8 +745,8 @@ RSpec.describe 'bit_field/type/rotrg' do
           .EXTERNAL_READ_DATA (1),
           .TRIGGER            (1)
         ) u_bit_field (
-          .i_clk              ('0),
-          .i_rst_n            ('0),
+          .i_clk              (i_clk),
+          .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (o_register_5_bit_field_2_read_trigger[i][j]),
@@ -769,8 +769,8 @@ RSpec.describe 'bit_field/type/rotrg' do
           .EXTERNAL_READ_DATA (1),
           .TRIGGER            (1)
         ) u_bit_field (
-          .i_clk              ('0),
-          .i_rst_n            ('0),
+          .i_clk              (i_clk),
+          .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (o_register_8_bit_field_0_read_trigger[i][j][k]),
@@ -793,8 +793,8 @@ RSpec.describe 'bit_field/type/rotrg' do
           .EXTERNAL_READ_DATA (1),
           .TRIGGER            (1)
         ) u_bit_field (
-          .i_clk              ('0),
-          .i_rst_n            ('0),
+          .i_clk              (i_clk),
+          .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (o_register_8_bit_field_1_read_trigger[i][j][k]),
@@ -817,8 +817,8 @@ RSpec.describe 'bit_field/type/rotrg' do
           .EXTERNAL_READ_DATA (1),
           .TRIGGER            (1)
         ) u_bit_field (
-          .i_clk              ('0),
-          .i_rst_n            ('0),
+          .i_clk              (i_clk),
+          .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (o_register_8_bit_field_2_read_trigger[i][j][k]),
@@ -841,8 +841,8 @@ RSpec.describe 'bit_field/type/rotrg' do
           .EXTERNAL_READ_DATA (1),
           .TRIGGER            (1)
         ) u_bit_field (
-          .i_clk              ('0),
-          .i_rst_n            ('0),
+          .i_clk              (i_clk),
+          .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (o_register_file_11_register_file_0_register_0_bit_field_0_read_trigger[i][j][k][l][m]),
@@ -865,8 +865,8 @@ RSpec.describe 'bit_field/type/rotrg' do
           .EXTERNAL_READ_DATA (1),
           .TRIGGER            (1)
         ) u_bit_field (
-          .i_clk              ('0),
-          .i_rst_n            ('0),
+          .i_clk              (i_clk),
+          .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (o_register_file_11_register_file_0_register_0_bit_field_1_read_trigger[i][j][k][l][m]),
@@ -889,8 +889,8 @@ RSpec.describe 'bit_field/type/rotrg' do
           .EXTERNAL_READ_DATA (1),
           .TRIGGER            (1)
         ) u_bit_field (
-          .i_clk              ('0),
-          .i_rst_n            ('0),
+          .i_clk              (i_clk),
+          .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (o_register_file_11_register_file_0_register_0_bit_field_2_read_trigger[i][j][k][l][m]),
