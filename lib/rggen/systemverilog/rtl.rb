@@ -46,6 +46,7 @@ module RgGen
           'rtl/register_block/protocol',
           'rtl/register_block/protocol/apb',
           'rtl/register_block/protocol/axi4lite',
+          'rtl/register_block/protocol/wishbone',
           'rtl/register_block/sv_rtl_top',
           'rtl/register_file/sv_rtl_top'
         ]
