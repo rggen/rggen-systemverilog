@@ -183,6 +183,7 @@ RSpec.describe 'register/sv_rtl_top' do
       expect(registers[0]).to generate_code(:register_file, :top_down, <<~'CODE')
         generate if (1) begin : g_register_0
           rggen_bit_field_if #(32) bit_field_if();
+          `rggen_tie_off_unused_signals(32, 32'h00000303, bit_field_if)
           rggen_default_register #(
             .READABLE       (1),
             .WRITABLE       (1),
@@ -190,7 +191,6 @@ RSpec.describe 'register/sv_rtl_top' do
             .OFFSET_ADDRESS (8'h00),
             .BUS_WIDTH      (32),
             .DATA_WIDTH     (32),
-            .VALID_BITS     (32'h00000303),
             .REGISTER_INDEX (0)
           ) u_register (
             .i_clk        (i_clk),
@@ -274,6 +274,7 @@ RSpec.describe 'register/sv_rtl_top' do
           genvar i;
           for (i = 0;i < 4;++i) begin : g
             rggen_bit_field_if #(32) bit_field_if();
+            `rggen_tie_off_unused_signals(32, 32'h00000303, bit_field_if)
             rggen_default_register #(
               .READABLE       (1),
               .WRITABLE       (1),
@@ -281,7 +282,6 @@ RSpec.describe 'register/sv_rtl_top' do
               .OFFSET_ADDRESS (8'h20),
               .BUS_WIDTH      (32),
               .DATA_WIDTH     (32),
-              .VALID_BITS     (32'h00000303),
               .REGISTER_INDEX (i)
             ) u_register (
               .i_clk        (i_clk),
@@ -353,6 +353,7 @@ RSpec.describe 'register/sv_rtl_top' do
             for (j = 0;j < 2;++j) begin : g
               logic [3:0] indirect_index;
               rggen_bit_field_if #(32) bit_field_if();
+              `rggen_tie_off_unused_signals(32, 32'h00000303, bit_field_if)
               assign indirect_index = {register_if[0].value[0+:2], register_if[0].value[8+:2]};
               rggen_indirect_register #(
                 .READABLE             (1),
@@ -361,7 +362,6 @@ RSpec.describe 'register/sv_rtl_top' do
                 .OFFSET_ADDRESS       (8'h30),
                 .BUS_WIDTH            (32),
                 .DATA_WIDTH           (32),
-                .VALID_BITS           (32'h00000303),
                 .INDIRECT_INDEX_WIDTH (4),
                 .INDIRECT_INDEX_VALUE ({i[0+:2], j[0+:2]})
               ) u_register (
@@ -431,6 +431,7 @@ RSpec.describe 'register/sv_rtl_top' do
       expect(registers[4]).to generate_code(:register_file, :top_down, <<~'CODE')
         generate if (1) begin : g_register_4
           rggen_bit_field_if #(32) bit_field_if();
+          `rggen_tie_off_unused_signals(32, 32'h00000003, bit_field_if)
           rggen_default_register #(
             .READABLE       (1),
             .WRITABLE       (1),
@@ -438,7 +439,6 @@ RSpec.describe 'register/sv_rtl_top' do
             .OFFSET_ADDRESS (8'h40),
             .BUS_WIDTH      (32),
             .DATA_WIDTH     (32),
-            .VALID_BITS     (32'h00000003),
             .REGISTER_INDEX (0)
           ) u_register (
             .i_clk        (i_clk),
@@ -482,6 +482,7 @@ RSpec.describe 'register/sv_rtl_top' do
           for (k = 0;k < 2;++k) begin : g
             for (l = 0;l < 2;++l) begin : g
               rggen_bit_field_if #(32) bit_field_if();
+              `rggen_tie_off_unused_signals(32, 32'h00000003, bit_field_if)
               rggen_default_register #(
                 .READABLE       (1),
                 .WRITABLE       (1),
@@ -489,7 +490,6 @@ RSpec.describe 'register/sv_rtl_top' do
                 .OFFSET_ADDRESS (8'h50+16*(2*i+j)),
                 .BUS_WIDTH      (32),
                 .DATA_WIDTH     (32),
-                .VALID_BITS     (32'h00000003),
                 .REGISTER_INDEX (2*k+l)
               ) u_register (
                 .i_clk        (i_clk),
