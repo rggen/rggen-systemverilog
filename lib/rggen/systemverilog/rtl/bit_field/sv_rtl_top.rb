@@ -36,10 +36,6 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
       end
     end
 
-    pre_code :bit_field do |code|
-      code << bit_field_if_connection << nl
-    end
-
     def value(offsets = nil, width = nil)
       value_lsb = bit_field.lsb(offsets&.last || local_index)
       value_width = width || bit_field.width
@@ -112,18 +108,6 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
 
     def body_code(code)
       bit_field.generate_code(code, :bit_field, :top_down)
-    end
-
-    def bit_field_if_connection
-      macro_call(
-        'rggen_connect_bit_field_if',
-        [
-          register.bit_field_if,
-          bit_field.bit_field_sub_if,
-          bit_field.lsb(local_index),
-          bit_field.width
-        ]
-      )
     end
   end
 end

@@ -3,6 +3,10 @@
 RgGen.define_list_feature(:bit_field, :type) do
   sv_rtl do
     base_feature do
+      pre_code :bit_field do |code|
+        code << bit_field_if_connection << nl
+      end
+
       private
 
       def array_port_format
@@ -15,6 +19,10 @@ RgGen.define_list_feature(:bit_field, :type) do
 
       def width
         bit_field.width
+      end
+
+      def lsb
+        bit_field.lsb(bit_field.local_index)
       end
 
       def clock
@@ -51,6 +59,13 @@ RgGen.define_list_feature(:bit_field, :type) do
 
       def loop_variables
         bit_field.loop_variables
+      end
+
+      def bit_field_if_connection
+        macro_call(
+          'rggen_connect_bit_field_if',
+          [register.bit_field_if, bit_field_if, lsb, width]
+        )
       end
     end
 

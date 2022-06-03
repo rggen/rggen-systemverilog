@@ -7,3 +7,15 @@
   assign  RIF.read_data[LSB+:WIDTH] = FIF.read_data; \
   assign  RIF.value[LSB+:WIDTH]     = FIF.value;
 `endif
+`ifndef rggen_tie_off_unused_signals
+  `define rggen_tie_off_unused_signals(WIDTH, VALID_BITS, RIF) \
+  if (1) begin : __g_tie_off \
+    genvar  __i; \
+    for (__i = 0;__i < WIDTH;++__i) begin : g \
+      if (!(((VALID_BITS) >> __i) & 1'b1)) begin : g \
+        assign  RIF.read_data[__i]  = 1'b0; \
+        assign  RIF.value[__i]      = 1'b0; \
+      end \
+    end \
+  end
+`endif
