@@ -5,11 +5,7 @@ RSpec.describe 'register_block/sv_rtl_top' do
   include_context 'clean-up builder'
 
   before(:all) do
-    load_setup_files(RgGen.builder, [
-      File.join(RGGEN_ROOT, 'rggen-default-register-map/lib/rggen/default_register_map/setup.rb'),
-      File.join(RGGEN_ROOT, 'rggen-spreadsheet-loader/lib/rggen/spreadsheet_loader/setup.rb'),
-      File.join(RGGEN_SYSTEMVERILOG_ROOT, 'lib/rggen/systemverilog/rtl/setup.rb')
-    ])
+    RgGen.enable_all
   end
 
   def create_register_block(&body)

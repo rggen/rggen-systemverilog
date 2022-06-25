@@ -30,21 +30,18 @@ RSpec.describe 'register_block/protocol' do
     end
   end
 
-  before(:all) do
-    RgGen.enable(:register_block, [:bus_width, :address_width])
-  end
-
   after(:all) do
     registries = @shared_contexts[0].__send__(:feature_registries)
     registries.pop
   end
 
   before do
+    RgGen.enable(:global, [:bus_width, :address_width])
     RgGen.enable(:register_block, :protocol)
   end
 
   after do
-    RgGen.disable(:register_block, :protocol)
+    RgGen.enable_all
     delete_configuration_factory
   end
 
