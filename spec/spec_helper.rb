@@ -8,20 +8,20 @@ builder = RgGen::Core::Builder.create
 RgGen.builder(builder)
 
 require 'rggen/default_register_map'
-RgGen::DefaultRegisterMap.plugin_spec.activate(builder)
+builder.plugin_manager.activate_plugin_by_name(:'rggen-default-register-map')
 
 require 'rggen/spreadsheet_loader'
-RgGen::SpreadsheetLoader.plugin_spec.activate(builder)
+builder.plugin_manager.activate_plugin_by_name(:'rggen-spreadsheet-loader')
 
 RSpec.configure do |config|
   RgGen::Devtools::SpecHelper.setup(config)
 end
 
 require 'rggen/systemverilog/rtl'
-RgGen::SystemVerilog::RTL.plugin_spec.activate(builder)
+builder.plugin_manager.activate_plugin_by_name(:'rggen-sv-rtl')
 
 require 'rggen/systemverilog/ral'
-RgGen::SystemVerilog::RAL.plugin_spec.activate(builder)
+builder.plugin_manager.activate_plugin_by_name(:'rggen-sv-ral')
 
 RGGEN_ROOT = ENV['RGGEN_ROOT'] || File.expand_path('../..', __dir__)
 RGGEN_SYSTEMVERILOG_ROOT = File.expand_path('..', __dir__)

@@ -8,7 +8,8 @@ RgGen.define_list_feature(:register_block, :protocol) do
 
     def available_protocols
       feature_registries
-        .map(&method(:collect_available_protocols)).inject(:&)
+        .map { |registry| registry.enabled_features(:protocol) }
+        .inject(:&)
     end
 
     private
