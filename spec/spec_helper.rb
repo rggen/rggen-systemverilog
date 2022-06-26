@@ -3,6 +3,7 @@
 require 'bundler/setup'
 require 'rggen/devtools/spec_helper'
 require 'rggen/core'
+require 'support/shared_context'
 
 builder = RgGen::Core::Builder.create
 RgGen.builder(builder)

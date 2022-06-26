@@ -3,11 +3,9 @@
 
 RSpec.describe 'bit_field/type/rws' do
   include_context 'clean-up builder'
-  include_context 'sv ral common'
+  include_context 'bit field ral common'
 
   before(:all) do
-    RgGen.enable(:register, [:name, :size, :type])
-    RgGen.enable(:bit_field, [:name, :bit_assignment, :initial_value, :reference, :type])
     RgGen.enable(:bit_field, :type, [:rw, :rws])
   end
 

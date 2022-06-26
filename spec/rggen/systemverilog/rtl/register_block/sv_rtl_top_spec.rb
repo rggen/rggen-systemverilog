@@ -9,7 +9,8 @@ RSpec.describe 'register_block/sv_rtl_top' do
   end
 
   def create_register_block(&body)
-    create_sv_rtl(&body).register_blocks.first
+    configuraiton = create_configuration(enable_wide_register: true)
+    create_sv_rtl(configuraiton, &body).register_blocks.first
   end
 
   let(:bus_width) { default_configuration.bus_width }

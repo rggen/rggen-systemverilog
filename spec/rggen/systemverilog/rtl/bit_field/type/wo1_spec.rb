@@ -2,28 +2,10 @@
 
 RSpec.describe 'bit_field/type/wo1' do
   include_context 'clean-up builder'
-  include_context 'sv rtl common'
+  include_context 'bit field rtl common'
 
   before(:all) do
-    RgGen.enable(:global, [:bus_width, :address_width, :array_port_format])
-    RgGen.enable(:register_block, :byte_size)
-    RgGen.enable(:register_file, [:name, :size, :offset_address])
-    RgGen.enable(:register, [:name, :size, :type, :offset_address])
-    RgGen.enable(:bit_field, [:name, :bit_assignment, :initial_value, :reference, :type])
     RgGen.enable(:bit_field, :type, [:wo1])
-    RgGen.enable(:register_block, :sv_rtl_top)
-    RgGen.enable(:register_file, :sv_rtl_top)
-    RgGen.enable(:register, :sv_rtl_top)
-    RgGen.enable(:bit_field, :sv_rtl_top)
-  end
-
-  def create_bit_fields(&body)
-    configuration = create_configuration(array_port_format: array_port_format)
-    create_sv_rtl(configuration, &body).bit_fields
-  end
-
-  let(:array_port_format) do
-    [:packed, :unpacked, :serialized].sample
   end
 
   it '出力ポート#value_outを持つ' do
