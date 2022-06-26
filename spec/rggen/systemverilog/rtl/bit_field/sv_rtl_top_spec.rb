@@ -5,7 +5,7 @@ RSpec.describe 'bit_field/sv_rtl_top' do
   include_context 'clean-up builder'
 
   before(:all) do
-    RgGen.enable(:global, [:bus_width, :address_width, :array_port_format])
+    RgGen.enable(:global, [:bus_width, :address_width, :enable_wide_register, :array_port_format])
     RgGen.enable(:register_block, [:name, :byte_size])
     RgGen.enable(:register_file, [:name, :offset_address, :size])
     RgGen.enable(:register, [:name, :offset_address, :size, :type])
@@ -18,7 +18,9 @@ RSpec.describe 'bit_field/sv_rtl_top' do
   end
 
   def create_bit_fields(array_port_format = :packed, &body)
-    configuration = create_configuration(array_port_format: array_port_format)
+    configuration = create_configuration(
+      enable_wide_register: true, array_port_format: array_port_format
+    )
     create_sv_rtl(configuration, &body).bit_fields
   end
 

@@ -5,7 +5,7 @@ RSpec.describe 'register/type/external' do
   include_context 'sv rtl common'
 
   before(:all) do
-    RgGen.enable(:global, [:bus_width, :address_width])
+    RgGen.enable(:global, [:bus_width, :address_width, :enable_wide_register])
     RgGen.enable(:register_block, :byte_size)
     RgGen.enable(:register, [:name, :type, :offset_address, :size])
     RgGen.enable(:register, :type, :external)

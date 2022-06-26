@@ -2,23 +2,10 @@
 
 RSpec.describe 'bit_field/type/rof' do
   include_context 'clean-up builder'
-  include_context 'sv rtl common'
+  include_context 'bit field rtl common'
 
   before(:all) do
-    RgGen.enable(:global, [:bus_width, :address_width])
-    RgGen.enable(:register_block, :byte_size)
-    RgGen.enable(:register_file, [:name, :size, :offset_address])
-    RgGen.enable(:register, [:name, :size, :type, :offset_address])
-    RgGen.enable(:bit_field, [:name, :bit_assignment, :initial_value, :reference, :type])
     RgGen.enable(:bit_field, :type, [:rof])
-    RgGen.enable(:register_block, :sv_rtl_top)
-    RgGen.enable(:register_file, :sv_rtl_top)
-    RgGen.enable(:register, :sv_rtl_top)
-    RgGen.enable(:bit_field, :sv_rtl_top)
-  end
-
-  def create_bit_fields(&body)
-    create_sv_rtl(&body).bit_fields
   end
 
   describe '#generate_code' do

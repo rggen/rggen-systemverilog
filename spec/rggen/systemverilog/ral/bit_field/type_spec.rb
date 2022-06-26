@@ -5,7 +5,7 @@ RSpec.describe 'bit_field/type' do
   include_context 'sv ral common'
 
   before(:all) do
-    RgGen.enable(:global, [:bus_width, :address_width])
+    RgGen.enable(:global, [:bus_width, :address_width, :enable_wide_register])
     RgGen.enable(:register_block, [:byte_size])
     RgGen.enable(:register_file, [:name, :size, :offset_address])
     RgGen.enable(:register, [:name, :size, :offset_address, :type])
