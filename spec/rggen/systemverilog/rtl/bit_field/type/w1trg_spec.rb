@@ -130,6 +130,7 @@ RSpec.describe 'bit_field/type/w1trg' do
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
           .bit_field_if (bit_field_sub_if),
+          .i_value      ('0),
           .o_trigger    (o_register_0_bit_field_0_trigger)
         );
       CODE
@@ -142,6 +143,7 @@ RSpec.describe 'bit_field/type/w1trg' do
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
           .bit_field_if (bit_field_sub_if),
+          .i_value      ('0),
           .o_trigger    (o_register_0_bit_field_1_trigger)
         );
       CODE
@@ -154,6 +156,7 @@ RSpec.describe 'bit_field/type/w1trg' do
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
           .bit_field_if (bit_field_sub_if),
+          .i_value      ('0),
           .o_trigger    (o_register_0_bit_field_2_trigger[i])
         );
       CODE
@@ -166,6 +169,7 @@ RSpec.describe 'bit_field/type/w1trg' do
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
           .bit_field_if (bit_field_sub_if),
+          .i_value      ('0),
           .o_trigger    (o_register_1_bit_field_2_trigger[i][j])
         );
       CODE
@@ -178,6 +182,7 @@ RSpec.describe 'bit_field/type/w1trg' do
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
           .bit_field_if (bit_field_sub_if),
+          .i_value      ('0),
           .o_trigger    (o_register_2_bit_field_2_trigger[i][j][k])
         );
       CODE
@@ -190,6 +195,7 @@ RSpec.describe 'bit_field/type/w1trg' do
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
           .bit_field_if (bit_field_sub_if),
+          .i_value      ('0),
           .o_trigger    (o_register_file_3_register_file_0_register_0_bit_field_2_trigger[i][j][k][l][m])
         );
       CODE
