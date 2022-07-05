@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   spec.license = 'MIT'
 
   spec.metadata = {
-    'bug_tracker_uri' => 'https://github.com/rggen/rggen-systemverilog/issues',
+    'bug_tracker_uri' => 'https://github.com/rggen/rggen/issues',
     'mailing_list_uri' => 'https://groups.google.com/d/forum/rggen',
     'rubygems_mfa_required' => 'true',
     'source_code_uri' => 'https://github.com/rggen/rggen-systemverilog',
