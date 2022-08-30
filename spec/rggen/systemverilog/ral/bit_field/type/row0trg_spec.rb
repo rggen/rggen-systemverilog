@@ -8,7 +8,7 @@ RSpec.describe 'bit_field/type/row0trg' do
     RgGen.enable(:bit_field, :type, [:row0trg])
   end
 
-  specify 'アクセス属性はRO' do
+  specify 'モデル名はrggen_ral_row0trg_field' do
     sv_ral = create_sv_ral do
       register do
         name 'register_0'
@@ -16,6 +16,6 @@ RSpec.describe 'bit_field/type/row0trg' do
       end
     end
 
-    expect(sv_ral.bit_fields[0].access).to eq 'RO'
+    expect(sv_ral.bit_fields[0].model_name).to eq 'rggen_ral_row0trg_field'
   end
 end
