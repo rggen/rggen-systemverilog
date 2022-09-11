@@ -27,8 +27,8 @@ module RgGen
         def offset_address
           [*register_files, register]
             .flat_map(&method(:collect_offsets))
-            .yield_self(&method(:partial_sums))
-            .yield_self(&method(:format_offsets))
+            .then(&method(:partial_sums))
+            .then(&method(:format_offsets))
         end
 
         def collect_offsets(component)

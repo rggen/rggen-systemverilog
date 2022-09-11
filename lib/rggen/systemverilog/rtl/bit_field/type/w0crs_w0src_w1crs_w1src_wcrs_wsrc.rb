@@ -20,7 +20,7 @@ RgGen.define_list_item_feature(
     end
 
     def read_set?
-      [:w0crs, :w1crs, :wcrs].include?(bit_field.type)
+      [:w0crs, :w1crs, :wcrs].any? { |type| bit_field.type == type }
     end
 
     def write_action
