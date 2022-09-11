@@ -51,9 +51,9 @@ module RgGen
 
         def index(offset_or_offsets = nil)
           offset_or_offsets
-            .yield_self(&method(:index_operands))
-            .yield_self(&method(:partial_sums))
-            .yield_self(&method(:reduce_indices))
+            .then(&method(:index_operands))
+            .then(&method(:partial_sums))
+            .then(&method(:reduce_indices))
         end
 
         def inside_loop?
