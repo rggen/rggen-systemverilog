@@ -1,0 +1,25 @@
+rggen_bit_field #(
+  .WIDTH              (<%= width %>),
+  .INITIAL_VALUE      (<%= initial_value %>),
+  .SW_READ_ACTION     (<%= sw_read_action %>),
+  .SW_WRITE_ACTION    (<%= sw_write_action %>),
+  .SW_WRITE_ONCE      (<%= write_once %>),
+  .STORAGE            (<%= storage %>),
+  .EXTERNAL_READ_DATA (<%= external_read_data %>),
+  .TRIGGER            (<%= trigger %>)
+) u_bit_field (
+  .i_clk              (i_clk),
+  .i_rst_n            (i_rst_n),
+  .bit_field_if       (bit_field_sub_if),
+  .o_write_trigger    (<%= output_port(:write_trigger) %>),
+  .o_read_trigger     (<%= output_port(:read_trigger) %>),
+  .i_sw_write_enable  ('1),
+  .i_hw_write_enable  (<%= input_port(:hw_write_enable) %>),
+  .i_hw_write_data    (<%= input_port(:hw_write_data) %>),
+  .i_hw_set           (<%= input_port(:hw_set) %>),
+  .i_hw_clear         (<%= input_port(:hw_clear) %>),
+  .i_value            (<%= input_port(:value_in) %>),
+  .i_mask             ('1),
+  .o_value            (<%= output_port(:value_out) %>),
+  .o_value_unmasked   ()
+);
