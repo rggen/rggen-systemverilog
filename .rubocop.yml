@@ -26,6 +26,7 @@ Metrics/BlockLength:
     - factory
     - setup_plugin
     - sv_rtl
+    - sv_rtl_package
     - sv_ral
 
 Metrics/MethodLength:

@@ -36,3 +36,26 @@ RSpec.shared_context 'bit field ral common' do
     RgGen.enable(:bit_field, [:name, :bit_assignment, :initial_value, :reference, :type])
   end
 end
+
+RSpec.shared_context 'sv rtl package common' do
+  include_context 'sv rtl common'
+
+  def build_sv_rtl_package_factory(builder)
+    builder.build_factory(:output, :sv_rtl_package)
+  end
+
+  def create_sv_rtl_package(configuration = nil, &data_block)
+    configuration = default_configuration if configuration.nil?
+    register_map = create_register_map(configuration) { register_block(&data_block) }
+    @sv_rtl_package_factory[0] ||= build_sv_rtl_package_factory(RgGen.builder)
+    @sv_rtl_package_factory[0].create(configuration, register_map)
+  end
+
+  def delete_sv_rtl_package_factory
+    @sv_rtl_package_factory.delete
+  end
+
+  before(:all) do
+    @sv_rtl_package_factory ||= []
+  end
+end
