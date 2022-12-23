@@ -14,6 +14,7 @@ RgGen.setup_plugin :'rggen-sv-rtl-package' do |plugin|
   end
 
   plugin.files [
-    'rtl_package/bit_field/sv_rtl_package'
+    'rtl_package/bit_field/sv_rtl_package',
+    'rtl_package/register/sv_rtl_package'
   ]
 end
