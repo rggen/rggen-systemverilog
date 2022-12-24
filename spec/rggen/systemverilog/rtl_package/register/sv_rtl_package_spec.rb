@@ -171,7 +171,7 @@ RSpec.describe 'register/sv_rtl_package' do
       )
       expect(sv_rtl_package[0]).to have_parameter(
         :register_block, :__offset,
-        name: 'REGISTER_0_OFFSET', parameter_type: :localparam,
+        name: 'REGISTER_0_BYTE_OFFSET', parameter_type: :localparam,
         data_type: :bit, width: 8, default: "8'h00"
       )
 
@@ -187,7 +187,7 @@ RSpec.describe 'register/sv_rtl_package' do
       )
       expect(sv_rtl_package[1]).to have_parameter(
         :register_block, :__offset,
-        name: 'REGISTER_1_OFFSET', parameter_type: :localparam,
+        name: 'REGISTER_1_BYTE_OFFSET', parameter_type: :localparam,
         data_type: :bit, width: 8, default: "8'h04"
       )
 
@@ -203,7 +203,7 @@ RSpec.describe 'register/sv_rtl_package' do
       )
       expect(sv_rtl_package[2]).to have_parameter(
         :register_block, :__offset,
-        name: 'REGISTER_2_OFFSET', parameter_type: :localparam,
+        name: 'REGISTER_2_BYTE_OFFSET', parameter_type: :localparam,
         data_type: :bit, width: 8, default: "8'h0c"
       )
 
@@ -219,7 +219,7 @@ RSpec.describe 'register/sv_rtl_package' do
       )
       expect(sv_rtl_package[3]).to have_parameter(
         :register_block, :__offset,
-        name: 'REGISTER_3_OFFSET', parameter_type: :localparam,
+        name: 'REGISTER_3_BYTE_OFFSET', parameter_type: :localparam,
         data_type: :bit, width: 8, default: "8'h0c"
       )
 
@@ -240,7 +240,7 @@ RSpec.describe 'register/sv_rtl_package' do
       )
       expect(sv_rtl_package[4]).to have_parameter(
         :register_block, :__offset,
-        name: 'REGISTER_4_OFFSET', parameter_type: :localparam,
+        name: 'REGISTER_4_BYTE_OFFSET', parameter_type: :localparam,
         data_type: :bit, width: 8, array_size: [4], array_format: :unpacked, default: "'{8'h10, 8'h14, 8'h18, 8'h1c}"
       )
 
@@ -261,7 +261,7 @@ RSpec.describe 'register/sv_rtl_package' do
       )
       expect(sv_rtl_package[5]).to have_parameter(
         :register_block, :__offset,
-        name: 'REGISTER_5_OFFSET', parameter_type: :localparam,
+        name: 'REGISTER_5_BYTE_OFFSET', parameter_type: :localparam,
         data_type: :bit, width: 8, array_size: [2, 2], array_format: :unpacked, default: "'{'{8'h20, 8'h24}, '{8'h28, 8'h2c}}"
       )
 
@@ -282,7 +282,7 @@ RSpec.describe 'register/sv_rtl_package' do
       )
       expect(sv_rtl_package[6]).to have_parameter(
         :register_block, :__offset,
-        name: 'REGISTER_6_OFFSET', parameter_type: :localparam,
+        name: 'REGISTER_6_BYTE_OFFSET', parameter_type: :localparam,
         data_type: :bit, width: 8, array_size: [4], array_format: :unpacked, default: "'{8'h30, 8'h30, 8'h30, 8'h30}"
       )
 
@@ -303,7 +303,7 @@ RSpec.describe 'register/sv_rtl_package' do
       )
       expect(sv_rtl_package[7]).to have_parameter(
         :register_block, :__offset,
-        name: 'REGISTER_7_OFFSET', parameter_type: :localparam,
+        name: 'REGISTER_7_BYTE_OFFSET', parameter_type: :localparam,
         data_type: :bit, width: 8, array_size: [2, 2], array_format: :unpacked, default: "'{'{8'h34, 8'h34}, '{8'h34, 8'h34}}"
       )
 
@@ -319,7 +319,7 @@ RSpec.describe 'register/sv_rtl_package' do
       )
       expect(sv_rtl_package[8]).to have_parameter(
         :register_block, :__offset,
-        name: 'REGISTER_8_OFFSET', parameter_type: :localparam,
+        name: 'REGISTER_8_BYTE_OFFSET', parameter_type: :localparam,
         data_type: :bit, width: 8, default: "8'h40"
       )
 
@@ -335,7 +335,7 @@ RSpec.describe 'register/sv_rtl_package' do
       )
       expect(sv_rtl_package[9]).to have_parameter(
         :register_block, :__offset,
-        name: 'REGISTER_FILE_9_REGISTER_9_0_OFFSET', parameter_type: :localparam,
+        name: 'REGISTER_FILE_9_REGISTER_9_0_BYTE_OFFSET', parameter_type: :localparam,
         data_type: :bit, width: 8, default: "8'h50"
       )
 
@@ -356,7 +356,7 @@ RSpec.describe 'register/sv_rtl_package' do
       )
       expect(sv_rtl_package[10]).to have_parameter(
         :register_block, :__offset,
-        name: 'REGISTER_FILE_9_REGISTER_9_1_OFFSET', parameter_type: :localparam,
+        name: 'REGISTER_FILE_9_REGISTER_9_1_BYTE_OFFSET', parameter_type: :localparam,
         data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{8'h58, 8'h5c}"
       )
 
@@ -372,7 +372,7 @@ RSpec.describe 'register/sv_rtl_package' do
       )
       expect(sv_rtl_package[11]).to have_parameter(
         :register_block, :__offset,
-        name: 'REGISTER_FILE_9_REGISTER_FILE_9_2_REGISTER_9_2_0_OFFSET', parameter_type: :localparam,
+        name: 'REGISTER_FILE_9_REGISTER_FILE_9_2_REGISTER_9_2_0_BYTE_OFFSET', parameter_type: :localparam,
         data_type: :bit, width: 8, default: "8'h60"
       )
 
@@ -393,7 +393,7 @@ RSpec.describe 'register/sv_rtl_package' do
       )
       expect(sv_rtl_package[12]).to have_parameter(
         :register_block, :__offset,
-        name: 'REGISTER_FILE_9_REGISTER_FILE_9_2_REGISTER_9_2_1_OFFSET', parameter_type: :localparam,
+        name: 'REGISTER_FILE_9_REGISTER_FILE_9_2_REGISTER_9_2_1_BYTE_OFFSET', parameter_type: :localparam,
         data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{8'h68, 8'h6c}"
       )
 
@@ -414,7 +414,7 @@ RSpec.describe 'register/sv_rtl_package' do
       )
       expect(sv_rtl_package[13]).to have_parameter(
         :register_block, :__offset,
-        name: 'REGISTER_FILE_10_REGISTER_10_0_OFFSET', parameter_type: :localparam,
+        name: 'REGISTER_FILE_10_REGISTER_10_0_BYTE_OFFSET', parameter_type: :localparam,
         data_type: :bit, width: 8, array_size: [2, 2], array_format: :unpacked, default: "'{'{8'h70, 8'h90}, '{8'hb0, 8'hd0}}"
       )
 
@@ -435,7 +435,7 @@ RSpec.describe 'register/sv_rtl_package' do
       )
       expect(sv_rtl_package[14]).to have_parameter(
         :register_block, :__offset,
-        name: 'REGISTER_FILE_10_REGISTER_10_1_OFFSET', parameter_type: :localparam,
+        name: 'REGISTER_FILE_10_REGISTER_10_1_BYTE_OFFSET', parameter_type: :localparam,
         data_type: :bit, width: 8, array_size: [2, 2, 2], array_format: :unpacked, default: "'{'{'{8'h78, 8'h7c}, '{8'h98, 8'h9c}}, '{'{8'hb8, 8'hbc}, '{8'hd8, 8'hdc}}}"
       )
 
@@ -456,7 +456,7 @@ RSpec.describe 'register/sv_rtl_package' do
       )
       expect(sv_rtl_package[15]).to have_parameter(
         :register_block, :__offset,
-        name: 'REGISTER_FILE_10_REGISTER_FILE_10_2_REGISTER_10_2_0_OFFSET', parameter_type: :localparam,
+        name: 'REGISTER_FILE_10_REGISTER_FILE_10_2_REGISTER_10_2_0_BYTE_OFFSET', parameter_type: :localparam,
         data_type: :bit, width: 8, array_size: [2, 2], array_format: :unpacked, default: "'{'{8'h80, 8'ha0}, '{8'hc0, 8'he0}}"
       )
 
@@ -477,7 +477,7 @@ RSpec.describe 'register/sv_rtl_package' do
       )
       expect(sv_rtl_package[16]).to have_parameter(
         :register_block, :__offset,
-        name: 'REGISTER_FILE_10_REGISTER_FILE_10_2_REGISTER_10_2_1_OFFSET', parameter_type: :localparam,
+        name: 'REGISTER_FILE_10_REGISTER_FILE_10_2_REGISTER_10_2_1_BYTE_OFFSET', parameter_type: :localparam,
         data_type: :bit, width: 8, array_size: [2, 2, 2], array_format: :unpacked, default: "'{'{'{8'h88, 8'h8c}, '{8'ha8, 8'hac}}, '{'{8'hc8, 8'hcc}, '{8'he8, 8'hec}}}"
       )
     end

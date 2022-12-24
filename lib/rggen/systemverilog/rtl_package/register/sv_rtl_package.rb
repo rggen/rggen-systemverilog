@@ -40,7 +40,7 @@ RgGen.define_simple_feature(:register, :sv_rtl_package) do
       size_list = array_size_list
       value_list = group_address_list(address_list, size_list).first
       localparam :__offset, {
-        name: "#{full_name}_offset",
+        name: "#{full_name}_byte_offset",
         data_type: :bit, width: width, array_size: size_list, default: value_list
       }
     end
@@ -67,7 +67,7 @@ RgGen.define_simple_feature(:register, :sv_rtl_package) do
       width = register_block.local_address_width
       value = address_list.first
       localparam :__offset, {
-        name: "#{full_name}_OFFSET",
+        name: "#{full_name}_byte_offset",
         data_type: :bit, width: width, default: value
       }
     end

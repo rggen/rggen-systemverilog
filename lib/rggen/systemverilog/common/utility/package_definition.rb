@@ -8,6 +8,7 @@ module RgGen
           define_attribute :name
           define_attribute :package_imports
           define_attribute :include_files
+          define_attribute :parameters
 
           def package_imports(packages)
             @package_imports ||= []
@@ -36,19 +37,26 @@ module RgGen
           def pre_body_code(code)
             package_import_declaration(code)
             file_include_directives(code)
+            parameter_declarations(code)
           end
 
           def package_import_declaration(code)
             declarations =
-              Array(@package_imports)
-                .map { |package| ['import', space, package, '::*'] }
-            add_declarations_to_body(code, declarations)
+              @package_imports
+                &.map { |package| ['import', space, package, '::*'] }
+            declarations &&
+              add_declarations_to_body(code, declarations)
           end
 
           def file_include_directives(code)
-            Array(@include_files).each do |file|
+            @include_files&.each do |file|
               code << ['`include', space, string(file), nl]
             end
+          end
+
+          def parameter_declarations(code)
+            parameters &&
+              add_declarations_to_body(code, parameters)
           end
 
           def footer_code

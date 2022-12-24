@@ -11,6 +11,14 @@ RSpec.describe RgGen::SystemVerilog::Common::Utility::PackageDefinition do
     ['foo.svh', 'bar.svh']
   end
 
+  let(:parameters) do
+    [:FOO, :BAR].map.with_index do |name, i|
+      RgGen::SystemVerilog::Common::Utility::DataObject.new(
+        :parameter, name: name, parameter_type: :parameter, data_type: :int, default: i
+      ).declaration
+    end
+  end
+
   it 'パッケージ定義を行うコードを返す' do
     expect(
       package_definition(:foo_pkg)
@@ -63,6 +71,17 @@ RSpec.describe RgGen::SystemVerilog::Common::Utility::PackageDefinition do
 
     expect(
       package_definition(:foo_pkg) do |p|
+        p.parameters parameters
+      end
+    ).to match_string(<<~'PACKAGE')
+      package foo_pkg;
+        parameter int FOO = 0;
+        parameter int BAR = 1;
+      endpackage
+    PACKAGE
+
+    expect(
+      package_definition(:foo_pkg) do |p|
         p.body { 'int foo;' }
         p.body { |c| c << 'int bar;' }
       end
@@ -77,6 +96,7 @@ RSpec.describe RgGen::SystemVerilog::Common::Utility::PackageDefinition do
       package_definition(:foo_pkg) do |p|
         p.body { 'int foo;' }
         p.body { |c| c << 'int bar;' }
+        p.parameters parameters
         p.include_files include_files
         p.package_imports packages
       end
@@ -86,6 +106,8 @@ RSpec.describe RgGen::SystemVerilog::Common::Utility::PackageDefinition do
         import baz_pkg::*;
         `include "foo.svh"
         `include "bar.svh"
+        parameter int FOO = 0;
+        parameter int BAR = 1;
         int foo;
         int bar;
       endpackage
