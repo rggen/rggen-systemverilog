@@ -21,6 +21,9 @@ end
 require 'rggen/systemverilog/rtl'
 builder.plugin_manager.activate_plugin_by_name(:'rggen-sv-rtl')
 
+require 'rggen/systemverilog/rtl_package'
+builder.plugin_manager.activate_plugin_by_name(:'rggen-sv-rtl-package')
+
 require 'rggen/systemverilog/ral'
 builder.plugin_manager.activate_plugin_by_name(:'rggen-sv-ral')
 
