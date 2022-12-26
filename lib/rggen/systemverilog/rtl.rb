@@ -7,6 +7,7 @@ require_relative 'rtl/register_index'
 require_relative 'rtl/register_type'
 require_relative 'rtl/indirect_index'
 require_relative 'rtl/bit_field_index'
+require_relative 'rtl_package/feature'
 
 RgGen.setup_plugin :'rggen-sv-rtl' do |plugin|
   plugin.version RgGen::SystemVerilog::VERSION
@@ -49,5 +50,18 @@ RgGen.setup_plugin :'rggen-sv-rtl' do |plugin|
     'rtl/bit_field/type/w0trg_w1trg',
     'rtl/bit_field/type/wo_wo1_wotrg',
     'rtl/bit_field/type/wrc_wrs'
+  ]
+
+  plugin.register_component :sv_rtl_package do
+    component RgGen::SystemVerilog::Common::Component,
+              RgGen::SystemVerilog::Common::ComponentFactory
+    feature RgGen::SystemVerilog::RTLPackage::Feature,
+            RgGen::SystemVerilog::Common::FeatureFactory
+  end
+
+  plugin.files [
+    'rtl_package/bit_field/sv_rtl_package',
+    'rtl_package/register/sv_rtl_package',
+    'rtl_package/register_block/sv_rtl_package'
   ]
 end
