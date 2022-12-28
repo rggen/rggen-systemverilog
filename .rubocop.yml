@@ -10,12 +10,8 @@ inherit_from:
   - .rubocop_todo.yml
 <% end %>
 
-Metrics/AbcSize:
-  IgnoredMethods:
-    - assign_axi4lite_signals
-
 Metrics/BlockLength:
-  IgnoredMethods:
+  AllowedMethods:
     - base_feature
     - build
     - configuration
@@ -28,10 +24,6 @@ Metrics/BlockLength:
     - sv_rtl
     - sv_rtl_package
     - sv_ral
-
-Metrics/MethodLength:
-  IgnoredMethods:
-    - assign_axi4lite_signals
 
 Naming/VariableNumber:
   AllowedIdentifiers:
