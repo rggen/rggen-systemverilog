@@ -19,12 +19,11 @@ RgGen.define_list_item_feature(:register, :type, :external) do
     end
 
     def start_address
-      hex(register.offset_address, address_width)
+      hex(register.address_range.begin, address_width)
     end
 
     def end_address
-      address = register.offset_address + register.byte_size - 1
-      hex(address, address_width)
+      hex(register.address_range.last, address_width)
     end
   end
 end

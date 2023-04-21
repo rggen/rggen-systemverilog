@@ -102,7 +102,13 @@ module RgGen
             operands.reduce(:*)
           elsif operands.first == 1
             operands.last
-          elsif need_bracket
+          else
+            product_expression(operands, need_bracket)
+          end
+        end
+
+        def product_expression(operands, need_bracket)
+          if need_bracket && /[+\-*\/]/ =~ operands.last
             "#{operands.first}*(#{operands.last})"
           else
             operands.join('*')

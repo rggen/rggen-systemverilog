@@ -148,11 +148,11 @@ RSpec.describe RgGen::SystemVerilog::RTL::RegisterIndex do
         expect(components[5].index).to eq 9
         expect(components[6].index).to eq 9
         expect(components[7].index).to eq 10
-        expect(components[8].index).to eq '11+24*(i)'
-        expect(components[9].index).to eq '11+24*(i)+2*j+k'
-        expect(components[10].index).to eq '11+24*(i)+4+5*(2*j+k)'
-        expect(components[11].index).to eq '11+24*(i)+4+5*(2*j+k)+2*l+m'
-        expect(components[12].index).to eq '11+24*(i)+4+5*(2*j+k)+4'
+        expect(components[8].index).to eq '11+24*i'
+        expect(components[9].index).to eq '11+24*i+2*j+k'
+        expect(components[10].index).to eq '11+24*i+4+5*(2*j+k)'
+        expect(components[11].index).to eq '11+24*i+4+5*(2*j+k)+2*l+m'
+        expect(components[12].index).to eq '11+24*i+4+5*(2*j+k)+4'
         expect(components[13].index).to eq '59+2*i+j'
         expect(components[14].index).to eq '59+2*i+j'
         expect(components[15].index).to eq '59+2*i+j'
@@ -184,19 +184,19 @@ RSpec.describe RgGen::SystemVerilog::RTL::RegisterIndex do
         expect(components[6].index(['i', 'j'])).to eq 9
 
         expect(components[8].index(1)).to eq 35
-        expect(components[8].index('i')).to eq '11+24*(i)'
+        expect(components[8].index('i')).to eq '11+24*i'
 
         expect(components[9].index([1, 1])).to eq 36
-        expect(components[9].index(['i', 'j'])).to eq '11+24*(i)+j'
+        expect(components[9].index(['i', 'j'])).to eq '11+24*i+j'
 
         expect(components[10].index([1, 1])).to eq 44
-        expect(components[10].index(['i', 'j'])).to eq '11+24*(i)+4+5*(j)'
+        expect(components[10].index(['i', 'j'])).to eq '11+24*i+4+5*j'
 
         expect(components[11].index([1, 1, 1])).to eq 45
-        expect(components[11].index(['i', 'j', 'k'])).to eq '11+24*(i)+4+5*(j)+k'
+        expect(components[11].index(['i', 'j', 'k'])).to eq '11+24*i+4+5*j+k'
 
         expect(components[12].index([1, 1, 1])).to eq 48
-        expect(components[12].index(['i', 'j', 'k'])).to eq '11+24*(i)+4+5*(j)+4'
+        expect(components[12].index(['i', 'j', 'k'])).to eq '11+24*i+4+5*j+4'
 
         expect(components[13].index(1)).to eq 60
         expect(components[13].index('i')).to eq '59+i'
@@ -208,13 +208,13 @@ RSpec.describe RgGen::SystemVerilog::RTL::RegisterIndex do
         expect(components[15].index(['i', 'j', 'k'])).to eq '59+i'
 
         expect(components[16].index(1)).to eq 67
-        expect(components[16].index('i')).to eq '63+4*(i)'
+        expect(components[16].index('i')).to eq '63+4*i'
 
         expect(components[17].index([1, 1])).to eq 67
-        expect(components[17].index(['i', 'j'])).to eq '63+4*(i)'
+        expect(components[17].index(['i', 'j'])).to eq '63+4*i'
 
         expect(components[18].index([1, 1, 1])).to eq 68
-        expect(components[18].index(['i', 'j', 'k'])).to eq '63+4*(i)+k'
+        expect(components[18].index(['i', 'j', 'k'])).to eq '63+4*i+k'
 
         expect(components[19].index(1)).to eq 79
         expect(components[19].index('i')).to eq 79
