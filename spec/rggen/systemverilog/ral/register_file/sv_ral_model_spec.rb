@@ -72,6 +72,19 @@ RSpec.describe 'register_file/sv_ral_model' do
       register_file do
         name 'register_file_3'
         offset_address 0x60
+        size [2, step: 32]
+
+        register do
+          name 'register_0'
+          offset_address 0x00
+          size [2, step: 8]
+          bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :rw; initial_value 0 }
+        end
+      end
+
+      register_file do
+        name 'register_file_4'
+        offset_address 0xa0
         size [2, 2]
 
         register_file do
@@ -109,11 +122,15 @@ RSpec.describe 'register_file/sv_ral_model' do
     )
     expect(register_files[4]).to have_variable(
       :register_block, :ral_model,
-      name: 'register_file_3', data_type: 'register_file_3_reg_file_model', array_size: [2, 2], array_format: :unpacked, random: true
+      name: 'register_file_3', data_type: 'register_file_3_reg_file_model', array_size: [2], array_format: :unpacked, random: true
     )
     expect(register_files[5]).to have_variable(
+      :register_block, :ral_model,
+      name: 'register_file_4', data_type: 'register_file_4_reg_file_model', array_size: [2, 2], array_format: :unpacked, random: true
+    )
+    expect(register_files[6]).to have_variable(
       :register_file, :ral_model,
-      name: 'register_file_0', data_type: 'register_file_3_register_file_0_reg_file_model', random: true
+      name: 'register_file_0', data_type: 'register_file_4_register_file_0_reg_file_model', random: true
     )
   end
 
@@ -132,10 +149,12 @@ RSpec.describe 'register_file/sv_ral_model' do
         `rggen_ral_create_reg_file(register_file_2[0][1], '{0, 1}, 8'h30, "g_register_file_2.g[0].g[1]")
         `rggen_ral_create_reg_file(register_file_2[1][0], '{1, 0}, 8'h40, "g_register_file_2.g[1].g[0]")
         `rggen_ral_create_reg_file(register_file_2[1][1], '{1, 1}, 8'h50, "g_register_file_2.g[1].g[1]")
-        `rggen_ral_create_reg_file(register_file_3[0][0], '{0, 0}, 8'h60, "g_register_file_3.g[0].g[0]")
-        `rggen_ral_create_reg_file(register_file_3[0][1], '{0, 1}, 8'h70, "g_register_file_3.g[0].g[1]")
-        `rggen_ral_create_reg_file(register_file_3[1][0], '{1, 0}, 8'h80, "g_register_file_3.g[1].g[0]")
-        `rggen_ral_create_reg_file(register_file_3[1][1], '{1, 1}, 8'h90, "g_register_file_3.g[1].g[1]")
+        `rggen_ral_create_reg_file(register_file_3[0], '{0}, 8'h60, "g_register_file_3.g[0]")
+        `rggen_ral_create_reg_file(register_file_3[1], '{1}, 8'h80, "g_register_file_3.g[1]")
+        `rggen_ral_create_reg_file(register_file_4[0][0], '{0, 0}, 8'ha0, "g_register_file_4.g[0].g[0]")
+        `rggen_ral_create_reg_file(register_file_4[0][1], '{0, 1}, 8'hb0, "g_register_file_4.g[0].g[1]")
+        `rggen_ral_create_reg_file(register_file_4[1][0], '{1, 0}, 8'hc0, "g_register_file_4.g[1].g[0]")
+        `rggen_ral_create_reg_file(register_file_4[1][1], '{1, 1}, 8'hd0, "g_register_file_4.g[1].g[1]")
         `rggen_ral_create_reg_file(register_file_0, '{}, 8'h00, "g_register_file_0")
       CODE
     end
@@ -200,7 +219,20 @@ RSpec.describe 'register_file/sv_ral_model' do
 
       expect(register_files[4]).to generate_code(:ral_package, :bottom_up, 0, <<~'CODE')
         class register_file_3_reg_file_model extends rggen_ral_reg_file;
-          rand register_file_3_register_file_0_reg_file_model register_file_0;
+          rand register_file_3_register_0_reg_model register_0[2];
+          function new(string name);
+            super.new(name, 4, 0);
+          endfunction
+          function void build();
+            `rggen_ral_create_reg(register_0[0], '{0}, 8'h00, "RW", "g_register_0.g[0].u_register")
+            `rggen_ral_create_reg(register_0[1], '{1}, 8'h08, "RW", "g_register_0.g[1].u_register")
+          endfunction
+        endclass
+      CODE
+
+      expect(register_files[5]).to generate_code(:ral_package, :bottom_up, 0, <<~'CODE')
+        class register_file_4_reg_file_model extends rggen_ral_reg_file;
+          rand register_file_4_register_file_0_reg_file_model register_file_0;
           function new(string name);
             super.new(name, 4, 0);
           endfunction
@@ -210,9 +242,9 @@ RSpec.describe 'register_file/sv_ral_model' do
         endclass
       CODE
 
-      expect(register_files[5]).to generate_code(:ral_package, :bottom_up, 0, <<~'CODE')
-        class register_file_3_register_file_0_reg_file_model extends rggen_ral_reg_file;
-          rand register_file_3_register_file_0_register_0_reg_model register_0[2][2];
+      expect(register_files[6]).to generate_code(:ral_package, :bottom_up, 0, <<~'CODE')
+        class register_file_4_register_file_0_reg_file_model extends rggen_ral_reg_file;
+          rand register_file_4_register_file_0_register_0_reg_model register_0[2][2];
           function new(string name);
             super.new(name, 4, 0);
           endfunction

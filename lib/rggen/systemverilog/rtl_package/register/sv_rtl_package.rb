@@ -9,7 +9,7 @@ RgGen.define_simple_feature(:register, :sv_rtl_package) do
       }
       localparam :__byte_size, {
         name: "#{full_name}_byte_size",
-        data_type: :int, default: register.byte_size(hierarchical: true)
+        data_type: :int, default: register.total_byte_size(hierarchical: true)
       }
       define_array_size_localparam
       define_offset_localparams

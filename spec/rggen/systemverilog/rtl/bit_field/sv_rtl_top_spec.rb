@@ -804,17 +804,17 @@ RSpec.describe 'bit_field/sv_rtl_top' do
         expect(bit_fields[13].value).to match_identifier('register_if[5+2*i+j].value[20+2*k+:2]')
         expect(bit_fields[14].value).to match_identifier('register_if[5+2*i+j].value[24+4*k+:2]')
 
-        expect(bit_fields[15].value).to match_identifier('register_if[9+2*(i)+j].value[0+:1]')
-        expect(bit_fields[16].value).to match_identifier('register_if[9+2*(i)+j].value[8+:8]')
-        expect(bit_fields[17].value).to match_identifier('register_if[9+2*(i)+j].value[16+1*k+:1]')
-        expect(bit_fields[18].value).to match_identifier('register_if[9+2*(i)+j].value[20+2*k+:2]')
-        expect(bit_fields[19].value).to match_identifier('register_if[9+2*(i)+j].value[24+4*k+:2]')
+        expect(bit_fields[15].value).to match_identifier('register_if[9+2*i+j].value[0+:1]')
+        expect(bit_fields[16].value).to match_identifier('register_if[9+2*i+j].value[8+:8]')
+        expect(bit_fields[17].value).to match_identifier('register_if[9+2*i+j].value[16+1*k+:1]')
+        expect(bit_fields[18].value).to match_identifier('register_if[9+2*i+j].value[20+2*k+:2]')
+        expect(bit_fields[19].value).to match_identifier('register_if[9+2*i+j].value[24+4*k+:2]')
 
-        expect(bit_fields[20].value).to match_identifier('register_if[13+2*(i)+j].value[0+:1]')
-        expect(bit_fields[21].value).to match_identifier('register_if[13+2*(i)+j].value[8+:8]')
-        expect(bit_fields[22].value).to match_identifier('register_if[13+2*(i)+j].value[16+1*k+:1]')
-        expect(bit_fields[23].value).to match_identifier('register_if[13+2*(i)+j].value[20+2*k+:2]')
-        expect(bit_fields[24].value).to match_identifier('register_if[13+2*(i)+j].value[24+4*k+:2]')
+        expect(bit_fields[20].value).to match_identifier('register_if[13+2*i+j].value[0+:1]')
+        expect(bit_fields[21].value).to match_identifier('register_if[13+2*i+j].value[8+:8]')
+        expect(bit_fields[22].value).to match_identifier('register_if[13+2*i+j].value[16+1*k+:1]')
+        expect(bit_fields[23].value).to match_identifier('register_if[13+2*i+j].value[20+2*k+:2]')
+        expect(bit_fields[24].value).to match_identifier('register_if[13+2*i+j].value[24+4*k+:2]')
       end
     end
 
@@ -851,34 +851,34 @@ RSpec.describe 'bit_field/sv_rtl_top' do
         expect(bit_fields[9].value(['i', 'j'], 1)).to match_identifier('register_if[1+i].value[24+4*j+:1]')
 
         expect(bit_fields[15].value([1, 1, 1], 1)).to match_identifier('register_if[12].value[0+:1]')
-        expect(bit_fields[15].value(['i', 'j', 'k'], 1)).to match_identifier('register_if[9+2*(i)+j].value[0+:1]')
+        expect(bit_fields[15].value(['i', 'j', 'k'], 1)).to match_identifier('register_if[9+2*i+j].value[0+:1]')
 
         expect(bit_fields[16].value([1, 1, 1], 4)).to match_identifier('register_if[12].value[8+:4]')
-        expect(bit_fields[16].value(['i', 'j', 'k'], 4)).to match_identifier('register_if[9+2*(i)+j].value[8+:4]')
+        expect(bit_fields[16].value(['i', 'j', 'k'], 4)).to match_identifier('register_if[9+2*i+j].value[8+:4]')
 
         expect(bit_fields[17].value([1, 1, 1], 1)).to match_identifier('register_if[12].value[17+:1]')
-        expect(bit_fields[17].value(['i', 'j', 'k'], 1)).to match_identifier('register_if[9+2*(i)+j].value[16+1*k+:1]')
+        expect(bit_fields[17].value(['i', 'j', 'k'], 1)).to match_identifier('register_if[9+2*i+j].value[16+1*k+:1]')
 
         expect(bit_fields[18].value([1, 1, 1], 1)).to match_identifier('register_if[12].value[22+:1]')
-        expect(bit_fields[18].value(['i', 'j', 'k'], 1)).to match_identifier('register_if[9+2*(i)+j].value[20+2*k+:1]')
+        expect(bit_fields[18].value(['i', 'j', 'k'], 1)).to match_identifier('register_if[9+2*i+j].value[20+2*k+:1]')
 
         expect(bit_fields[19].value([1, 1, 1], 1)).to match_identifier('register_if[12].value[28+:1]')
-        expect(bit_fields[19].value(['i', 'j', 'k'], 1)).to match_identifier('register_if[9+2*(i)+j].value[24+4*k+:1]')
+        expect(bit_fields[19].value(['i', 'j', 'k'], 1)).to match_identifier('register_if[9+2*i+j].value[24+4*k+:1]')
 
         expect(bit_fields[20].value([1, 1, 1, 1], 1)).to match_identifier('register_if[16].value[0+:1]')
-        expect(bit_fields[20].value(['i', 'j', 'k', 'l'], 1)).to match_identifier('register_if[13+2*(i)+k].value[0+:1]')
+        expect(bit_fields[20].value(['i', 'j', 'k', 'l'], 1)).to match_identifier('register_if[13+2*i+k].value[0+:1]')
 
         expect(bit_fields[21].value([1, 1, 1, 1], 4)).to match_identifier('register_if[16].value[8+:4]')
-        expect(bit_fields[21].value(['i', 'j', 'k', 'l'], 4)).to match_identifier('register_if[13+2*(i)+k].value[8+:4]')
+        expect(bit_fields[21].value(['i', 'j', 'k', 'l'], 4)).to match_identifier('register_if[13+2*i+k].value[8+:4]')
 
         expect(bit_fields[22].value([1, 1, 1, 1], 1)).to match_identifier('register_if[16].value[17+:1]')
-        expect(bit_fields[22].value(['i', 'j', 'k', 'l'], 1)).to match_identifier('register_if[13+2*(i)+k].value[16+1*l+:1]')
+        expect(bit_fields[22].value(['i', 'j', 'k', 'l'], 1)).to match_identifier('register_if[13+2*i+k].value[16+1*l+:1]')
 
         expect(bit_fields[23].value([1, 1, 1, 1], 1)).to match_identifier('register_if[16].value[22+:1]')
-        expect(bit_fields[23].value(['i', 'j', 'k', 'l'], 1)).to match_identifier('register_if[13+2*(i)+k].value[20+2*l+:1]')
+        expect(bit_fields[23].value(['i', 'j', 'k', 'l'], 1)).to match_identifier('register_if[13+2*i+k].value[20+2*l+:1]')
 
         expect(bit_fields[24].value([1, 1, 1, 1], 1)).to match_identifier('register_if[16].value[28+:1]')
-        expect(bit_fields[24].value(['i', 'j', 'k', 'l'], 1)).to match_identifier('register_if[13+2*(i)+k].value[24+4*l+:1]')
+        expect(bit_fields[24].value(['i', 'j', 'k', 'l'], 1)).to match_identifier('register_if[13+2*i+k].value[24+4*l+:1]')
       end
     end
   end

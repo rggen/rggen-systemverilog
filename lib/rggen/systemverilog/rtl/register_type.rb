@@ -32,15 +32,29 @@ module RgGen
         end
 
         def collect_offsets(component)
-          if component.register_file? && component.array?
+          if need_byte_offset?(component)
             [component.offset_address, byte_offset(component)]
           else
             component.offset_address
           end
         end
 
+        def need_byte_offset?(component)
+          if component.register_file?
+            component.array?
+          else
+            component.array? && !component.settings[:support_shared_address]
+          end
+        end
+
         def byte_offset(component)
-          "#{component.byte_size(false)}*(#{component.local_index})"
+          byte_size = component.entry_byte_size
+          local_index = component.local_index
+          if /[+\-*\/]/ =~ local_index
+            "#{byte_size}*(#{local_index})"
+          else
+            "#{byte_size}*#{local_index}"
+          end
         end
 
         def format_offsets(offsets)
@@ -58,10 +72,6 @@ module RgGen
         def valid_bits
           bits = register.bit_fields.map(&:bit_map).inject(:|)
           hex(bits, register.width)
-        end
-
-        def register_index
-          register.local_index || 0
         end
       end
     end

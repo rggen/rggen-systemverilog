@@ -26,7 +26,7 @@ module RgGen
         end
 
         def default_offset_address(index)
-          component.offset_address + component.byte_size(false) * index
+          component.offset_address + component.entry_byte_size * index
         end
 
         def hdl_path(array_index)

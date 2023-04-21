@@ -10,7 +10,7 @@ module RgGen
           operands
             .chunk(&method(:integer?))
             .flat_map(&method(:calc_partial_sum))
-            .reject { |value| integer?(value) && value.zero? }
+            .reject(&method(:integer_zero?))
             .tap { |sums| sums.empty? && (sums << 0) }
         end
 
@@ -21,6 +21,10 @@ module RgGen
 
         def integer?(value)
           value.is_a?(Integer)
+        end
+
+        def integer_zero?(value)
+          integer?(value) && value.zero?
         end
       end
     end
