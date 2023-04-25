@@ -91,6 +91,7 @@ RSpec.describe 'regisrer_block/protocol/wishbone' do
             .BYTE_SIZE            (256),
             .ERROR_STATUS         (ERROR_STATUS),
             .DEFAULT_READ_DATA    (DEFAULT_READ_DATA),
+            .INSERT_SLICER        (INSERT_SLICER),
             .USE_STALL            (USE_STALL)
           ) u_adapter (
             .i_clk        (i_clk),

@@ -187,7 +187,7 @@ RSpec.describe 'register_block/protocol' do
       create_sv_rtl(configuration) { byte_size 256 }.register_blocks.first
     end
 
-    it 'パラメータADDRESS_WIDTH/PRE_DECODE/BASE_ADDRESS/ERROR_STATUS/DEFAULT_READ_DATAを持つ' do
+    it 'パラメータADDRESS_WIDTH/PRE_DECODE/BASE_ADDRESS/ERROR_STATUS/DEFAULT_READ_DATA/INSERT_SLICERを持つ' do
       expect(sv_rtl).to have_parameter(
         :address_width,
         name: 'ADDRESS_WIDTH', parameter_type: :parameter, data_type: :int, default: local_address_width
@@ -207,6 +207,10 @@ RSpec.describe 'register_block/protocol' do
       expect(sv_rtl).to have_parameter(
         :default_read_data,
         name: 'DEFAULT_READ_DATA', parameter_type: :parameter, data_type: :bit, width: bus_width, default: "'0"
+      )
+      expect(sv_rtl).to have_parameter(
+        :insert_slicer,
+        name: 'INSERT_SLICER', parameter_type: :parameter, data_type: :bit, width: 1, default: 0
       )
     end
   end

@@ -107,6 +107,7 @@ RSpec.describe 'register_block/protocol/axi4lite' do
             .BYTE_SIZE            (256),
             .ERROR_STATUS         (ERROR_STATUS),
             .DEFAULT_READ_DATA    (DEFAULT_READ_DATA),
+            .INSERT_SLICER        (INSERT_SLICER),
             .WRITE_FIRST          (WRITE_FIRST)
           ) u_adapter (
             .i_clk        (i_clk),

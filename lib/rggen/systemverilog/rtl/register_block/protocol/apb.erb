@@ -7,7 +7,8 @@ rggen_apb_adapter #(
   .BASE_ADDRESS         (<%= base_address %>),
   .BYTE_SIZE            (<%= byte_size %>),
   .ERROR_STATUS         (<%= error_status %>),
-  .DEFAULT_READ_DATA    (<%= default_read_data %>)
+  .DEFAULT_READ_DATA    (<%= default_read_data %>),
+  .INSERT_SLICER        (<%= insert_slicer %>)
 ) u_adapter (
   .i_clk        (<%= clock %>),
   .i_rst_n      (<%= reset %>),
