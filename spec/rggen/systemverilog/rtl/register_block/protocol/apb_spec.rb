@@ -101,7 +101,8 @@ RSpec.describe 'register_block/protocol/apb' do
             .BASE_ADDRESS         (BASE_ADDRESS),
             .BYTE_SIZE            (256),
             .ERROR_STATUS         (ERROR_STATUS),
-            .DEFAULT_READ_DATA    (DEFAULT_READ_DATA)
+            .DEFAULT_READ_DATA    (DEFAULT_READ_DATA),
+            .INSERT_SLICER        (INSERT_SLICER)
           ) u_adapter (
             .i_clk        (i_clk),
             .i_rst_n      (i_rst_n),
