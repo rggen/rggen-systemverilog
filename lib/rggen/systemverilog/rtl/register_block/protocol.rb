@@ -17,12 +17,6 @@ RgGen.define_list_feature(:register_block, :protocol) do
     def feature_registries
       @feature_registries ||= []
     end
-
-    def collect_available_protocols(registry)
-      registry
-        .enabled_features(:protocol)
-        .select { |protocol| registry.feature?(:protocol, protocol) }
-    end
   end
 
   configuration do
@@ -98,10 +92,6 @@ RgGen.define_list_feature(:register_block, :protocol) do
 
       def bus_width
         configuration.bus_width
-      end
-
-      def byte_width
-        configuration.byte_width
       end
 
       def local_address_width
