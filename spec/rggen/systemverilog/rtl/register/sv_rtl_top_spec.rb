@@ -214,7 +214,8 @@ RSpec.describe 'register/sv_rtl_top' do
             .ADDRESS_WIDTH  (8),
             .OFFSET_ADDRESS (8'h00),
             .BUS_WIDTH      (32),
-            .DATA_WIDTH     (32)
+            .DATA_WIDTH     (32),
+            .VALUE_WIDTH    (32)
           ) u_register (
             .i_clk        (i_clk),
             .i_rst_n      (i_rst_n),
@@ -281,8 +282,9 @@ RSpec.describe 'register/sv_rtl_top' do
           rggen_external_register #(
             .ADDRESS_WIDTH  (8),
             .BUS_WIDTH      (32),
+            .VALUE_WIDTH    (32),
             .START_ADDRESS  (8'h10),
-            .END_ADDRESS    (8'h1f)
+            .BYTE_SIZE      (16)
           ) u_register (
             .i_clk        (i_clk),
             .i_rst_n      (i_rst_n),
@@ -302,9 +304,10 @@ RSpec.describe 'register/sv_rtl_top' do
               .READABLE       (1),
               .WRITABLE       (1),
               .ADDRESS_WIDTH  (8),
-              .OFFSET_ADDRESS (8'h20+4*i),
+              .OFFSET_ADDRESS (8'h20+8'(4*i)),
               .BUS_WIDTH      (32),
-              .DATA_WIDTH     (32)
+              .DATA_WIDTH     (32),
+              .VALUE_WIDTH    (32)
             ) u_register (
               .i_clk        (i_clk),
               .i_rst_n      (i_rst_n),
@@ -377,9 +380,10 @@ RSpec.describe 'register/sv_rtl_top' do
               .READABLE       (1),
               .WRITABLE       (1),
               .ADDRESS_WIDTH  (8),
-              .OFFSET_ADDRESS (8'h30+8*i),
+              .OFFSET_ADDRESS (8'h30+8'(8*i)),
               .BUS_WIDTH      (32),
-              .DATA_WIDTH     (32)
+              .DATA_WIDTH     (32),
+              .VALUE_WIDTH    (32)
             ) u_register (
               .i_clk        (i_clk),
               .i_rst_n      (i_rst_n),
@@ -459,6 +463,7 @@ RSpec.describe 'register/sv_rtl_top' do
                 .OFFSET_ADDRESS       (8'h40),
                 .BUS_WIDTH            (32),
                 .DATA_WIDTH           (32),
+                .VALUE_WIDTH          (32),
                 .INDIRECT_INDEX_WIDTH (4),
                 .INDIRECT_INDEX_VALUE ({i[0+:2], j[0+:2]})
               ) u_register (
@@ -535,7 +540,8 @@ RSpec.describe 'register/sv_rtl_top' do
             .ADDRESS_WIDTH  (8),
             .OFFSET_ADDRESS (8'h50),
             .BUS_WIDTH      (32),
-            .DATA_WIDTH     (32)
+            .DATA_WIDTH     (32),
+            .VALUE_WIDTH    (32)
           ) u_register (
             .i_clk        (i_clk),
             .i_rst_n      (i_rst_n),
@@ -583,9 +589,10 @@ RSpec.describe 'register/sv_rtl_top' do
                 .READABLE       (1),
                 .WRITABLE       (1),
                 .ADDRESS_WIDTH  (8),
-                .OFFSET_ADDRESS (8'h60+16*(2*i+j)+4*(2*k+l)),
+                .OFFSET_ADDRESS (8'h60+8'(16*(2*i+j))+8'(4*(2*k+l))),
                 .BUS_WIDTH      (32),
-                .DATA_WIDTH     (32)
+                .DATA_WIDTH     (32),
+                .VALUE_WIDTH    (32)
               ) u_register (
                 .i_clk        (i_clk),
                 .i_rst_n      (i_rst_n),
@@ -633,9 +640,10 @@ RSpec.describe 'register/sv_rtl_top' do
               .READABLE       (1),
               .WRITABLE       (1),
               .ADDRESS_WIDTH  (8),
-              .OFFSET_ADDRESS (8'ha0+32*i+8*j),
+              .OFFSET_ADDRESS (8'ha0+8'(32*i)+8'(8*j)),
               .BUS_WIDTH      (32),
-              .DATA_WIDTH     (32)
+              .DATA_WIDTH     (32),
+              .VALUE_WIDTH    (32)
             ) u_register (
               .i_clk        (i_clk),
               .i_rst_n      (i_rst_n),

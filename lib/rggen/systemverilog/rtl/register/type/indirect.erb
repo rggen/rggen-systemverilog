@@ -5,6 +5,7 @@ rggen_indirect_register #(
   .OFFSET_ADDRESS       (<%= offset_address %>),
   .BUS_WIDTH            (<%= bus_width %>),
   .DATA_WIDTH           (<%= width %>),
+  .VALUE_WIDTH          (<%= value_width %>),
   .INDIRECT_INDEX_WIDTH (<%= index_width %>),
   .INDIRECT_INDEX_VALUE (<%= concat(index_values) %>)
 ) u_register (

@@ -14,16 +14,12 @@ RgGen.define_list_item_feature(:register, :type, :external) do
 
     private
 
-    def byte_width
-      configuration.byte_width
-    end
-
     def start_address
       hex(register.address_range.begin, address_width)
     end
 
-    def end_address
-      hex(register.address_range.last, address_width)
+    def byte_size
+      register.total_byte_size
     end
   end
 end
