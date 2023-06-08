@@ -26,11 +26,5 @@ RgGen.define_list_item_feature(:register_block, :protocol, :axi4lite) do
     end
 
     main_code :register_block, from_template: true
-
-    private
-
-    def id_port_width
-      "((#{id_width}>0)?#{id_width}:1)"
-    end
   end
 end
