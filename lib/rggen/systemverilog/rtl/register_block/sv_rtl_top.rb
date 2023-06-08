@@ -3,6 +3,7 @@
 RgGen.define_simple_feature(:register_block, :sv_rtl_top) do
   sv_rtl do
     export :total_registers
+    export :value_width
 
     build do
       input :clock, { name: 'i_clk', width: 1 }
@@ -19,7 +20,11 @@ RgGen.define_simple_feature(:register_block, :sv_rtl_top) do
     end
 
     def total_registers
-      register_block.files_and_registers.sum(&:count)
+      @total_registers ||= register_block.files_and_registers.sum(&:count)
+    end
+
+    def value_width
+      @value_width ||= register_block.registers.map(&:width).max
     end
 
     private
@@ -30,10 +35,6 @@ RgGen.define_simple_feature(:register_block, :sv_rtl_top) do
 
     def bus_width
       configuration.bus_width
-    end
-
-    def value_width
-      register_block.registers.map(&:width).max
     end
 
     def body_code(code)

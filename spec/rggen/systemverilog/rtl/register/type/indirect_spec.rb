@@ -193,6 +193,7 @@ RSpec.describe 'register/type/indirect' do
           .OFFSET_ADDRESS       (8'h10),
           .BUS_WIDTH            (32),
           .DATA_WIDTH           (32),
+          .VALUE_WIDTH          (32),
           .INDIRECT_INDEX_WIDTH (1),
           .INDIRECT_INDEX_VALUE ({1'h1})
         ) u_register (
@@ -214,6 +215,7 @@ RSpec.describe 'register/type/indirect' do
           .OFFSET_ADDRESS       (8'h14),
           .BUS_WIDTH            (32),
           .DATA_WIDTH           (32),
+          .VALUE_WIDTH          (32),
           .INDIRECT_INDEX_WIDTH (2),
           .INDIRECT_INDEX_VALUE ({i[0+:2]})
         ) u_register (
@@ -235,6 +237,7 @@ RSpec.describe 'register/type/indirect' do
           .OFFSET_ADDRESS       (8'h18),
           .BUS_WIDTH            (32),
           .DATA_WIDTH           (32),
+          .VALUE_WIDTH          (32),
           .INDIRECT_INDEX_WIDTH (6),
           .INDIRECT_INDEX_VALUE ({i[0+:2], j[0+:4]})
         ) u_register (
@@ -256,6 +259,7 @@ RSpec.describe 'register/type/indirect' do
           .OFFSET_ADDRESS       (8'h1c),
           .BUS_WIDTH            (32),
           .DATA_WIDTH           (32),
+          .VALUE_WIDTH          (32),
           .INDIRECT_INDEX_WIDTH (7),
           .INDIRECT_INDEX_VALUE ({1'h0, i[0+:2], j[0+:4]})
         ) u_register (
@@ -277,6 +281,7 @@ RSpec.describe 'register/type/indirect' do
           .OFFSET_ADDRESS       (8'h20),
           .BUS_WIDTH            (32),
           .DATA_WIDTH           (32),
+          .VALUE_WIDTH          (32),
           .INDIRECT_INDEX_WIDTH (1),
           .INDIRECT_INDEX_VALUE ({1'h0})
         ) u_register (
@@ -298,6 +303,7 @@ RSpec.describe 'register/type/indirect' do
           .OFFSET_ADDRESS       (8'h24),
           .BUS_WIDTH            (32),
           .DATA_WIDTH           (32),
+          .VALUE_WIDTH          (32),
           .INDIRECT_INDEX_WIDTH (1),
           .INDIRECT_INDEX_VALUE ({1'h0})
         ) u_register (
@@ -319,6 +325,7 @@ RSpec.describe 'register/type/indirect' do
           .OFFSET_ADDRESS       (8'h28),
           .BUS_WIDTH            (32),
           .DATA_WIDTH           (32),
+          .VALUE_WIDTH          (32),
           .INDIRECT_INDEX_WIDTH (4),
           .INDIRECT_INDEX_VALUE ({i[0+:2], 2'h0})
         ) u_register (
@@ -340,6 +347,7 @@ RSpec.describe 'register/type/indirect' do
           .OFFSET_ADDRESS       (8'h2c),
           .BUS_WIDTH            (32),
           .DATA_WIDTH           (32),
+          .VALUE_WIDTH          (32),
           .INDIRECT_INDEX_WIDTH (7),
           .INDIRECT_INDEX_VALUE ({1'h0, i[0+:2], j[0+:4]})
         ) u_register (
@@ -358,9 +366,10 @@ RSpec.describe 'register/type/indirect' do
           .READABLE             (1),
           .WRITABLE             (1),
           .ADDRESS_WIDTH        (8),
-          .OFFSET_ADDRESS       (8'h30+8*(2*i+j)),
+          .OFFSET_ADDRESS       (8'h30+8'(8*(2*i+j))),
           .BUS_WIDTH            (32),
           .DATA_WIDTH           (32),
+          .VALUE_WIDTH          (32),
           .INDIRECT_INDEX_WIDTH (7),
           .INDIRECT_INDEX_VALUE ({1'h0, k[0+:2], l[0+:4]})
         ) u_register (
@@ -379,9 +388,10 @@ RSpec.describe 'register/type/indirect' do
           .READABLE             (1),
           .WRITABLE             (1),
           .ADDRESS_WIDTH        (8),
-          .OFFSET_ADDRESS       (8'h30+8*(2*i+j)+8'h04),
+          .OFFSET_ADDRESS       (8'h30+8'(8*(2*i+j))+8'h04),
           .BUS_WIDTH            (32),
           .DATA_WIDTH           (32),
+          .VALUE_WIDTH          (32),
           .INDIRECT_INDEX_WIDTH (7),
           .INDIRECT_INDEX_VALUE ({1'h0, k[0+:2], l[0+:4]})
         ) u_register (

@@ -1,8 +1,9 @@
 rggen_external_register #(
   .ADDRESS_WIDTH  (<%= address_width %>),
   .BUS_WIDTH      (<%= bus_width %>),
+  .VALUE_WIDTH    (<%= value_width %>),
   .START_ADDRESS  (<%= start_address %>),
-  .END_ADDRESS    (<%= end_address %>)
+  .BYTE_SIZE      (<%= byte_size %>)
 ) u_register (
   .i_clk        (<%= register_block.clock %>),
   .i_rst_n      (<%= register_block.reset %>),

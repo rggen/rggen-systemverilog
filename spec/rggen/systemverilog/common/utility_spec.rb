@@ -54,7 +54,7 @@ RSpec.describe RgGen::SystemVerilog::Common::Utility do
   end
 
   describe '#repeat' do
-    it '繰り返し連接のコード編を返す' do
+    it '繰り返し連接のコード片を返す' do
       expect(sv.send(:repeat, 2, '4\'b0000')).to eq '{2{4\'b0000}}'
     end
   end
@@ -84,7 +84,7 @@ RSpec.describe RgGen::SystemVerilog::Common::Utility do
   end
 
   describe '#function_call' do
-    it '関数呼び出しのコード編を返す' do
+    it '関数呼び出しのコード片を返す' do
       expect(sv.send(:function_call, :foo)).to eq 'foo()'
       expect(sv.send(:function_call, :foo, :bar)).to eq 'foo(bar)'
       expect(sv.send(:function_call, :foo, [:bar, :baz])).to eq 'foo(bar, baz)'
@@ -92,7 +92,7 @@ RSpec.describe RgGen::SystemVerilog::Common::Utility do
   end
 
   describe '#macro_call' do
-    it '関数呼び出しのコード編を返す' do
+    it '関数呼び出しのコード片を返す' do
       expect(sv.send(:macro_call, :foo)).to eq '`foo'
       expect(sv.send(:macro_call, :foo, :bar)).to eq '`foo(bar)'
       expect(sv.send(:macro_call, :foo, [:bar, :baz])).to eq '`foo(bar, baz)'
@@ -124,6 +124,12 @@ RSpec.describe RgGen::SystemVerilog::Common::Utility do
       expect(sv.send(:hex, 0x10, 5)).to eq '5\'h10'
       expect(sv.send(:hex, 0x10, 8)).to eq '8\'h10'
       expect(sv.send(:hex, 0x10, 9)).to eq '9\'h010'
+    end
+  end
+
+  describe 'width_cast' do
+    it '幅キャストを行うコード片を返す' do
+      expect(sv.send(:width_cast, '4*i', 8)).to eq '8\'(4*i)'
     end
   end
 end

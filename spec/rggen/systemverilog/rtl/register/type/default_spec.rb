@@ -129,7 +129,8 @@ RSpec.describe 'register/type/default' do
           .ADDRESS_WIDTH  (10),
           .OFFSET_ADDRESS (10'h000),
           .BUS_WIDTH      (32),
-          .DATA_WIDTH     (32)
+          .DATA_WIDTH     (32),
+          .VALUE_WIDTH    (64)
         ) u_register (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -144,9 +145,10 @@ RSpec.describe 'register/type/default' do
           .READABLE       (1),
           .WRITABLE       (1),
           .ADDRESS_WIDTH  (10),
-          .OFFSET_ADDRESS (10'h010+4*i),
+          .OFFSET_ADDRESS (10'h010+10'(4*i)),
           .BUS_WIDTH      (32),
-          .DATA_WIDTH     (32)
+          .DATA_WIDTH     (32),
+          .VALUE_WIDTH    (64)
         ) u_register (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -161,9 +163,10 @@ RSpec.describe 'register/type/default' do
           .READABLE       (1),
           .WRITABLE       (1),
           .ADDRESS_WIDTH  (10),
-          .OFFSET_ADDRESS (10'h020+4*(2*i+j)),
+          .OFFSET_ADDRESS (10'h020+10'(4*(2*i+j))),
           .BUS_WIDTH      (32),
-          .DATA_WIDTH     (32)
+          .DATA_WIDTH     (32),
+          .VALUE_WIDTH    (64)
         ) u_register (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -178,9 +181,10 @@ RSpec.describe 'register/type/default' do
           .READABLE       (1),
           .WRITABLE       (1),
           .ADDRESS_WIDTH  (10),
-          .OFFSET_ADDRESS (10'h030+8*i),
+          .OFFSET_ADDRESS (10'h030+10'(8*i)),
           .BUS_WIDTH      (32),
-          .DATA_WIDTH     (32)
+          .DATA_WIDTH     (32),
+          .VALUE_WIDTH    (64)
         ) u_register (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -197,7 +201,8 @@ RSpec.describe 'register/type/default' do
           .ADDRESS_WIDTH  (10),
           .OFFSET_ADDRESS (10'h040),
           .BUS_WIDTH      (32),
-          .DATA_WIDTH     (32)
+          .DATA_WIDTH     (32),
+          .VALUE_WIDTH    (64)
         ) u_register (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -214,7 +219,8 @@ RSpec.describe 'register/type/default' do
           .ADDRESS_WIDTH  (10),
           .OFFSET_ADDRESS (10'h050),
           .BUS_WIDTH      (32),
-          .DATA_WIDTH     (32)
+          .DATA_WIDTH     (32),
+          .VALUE_WIDTH    (64)
         ) u_register (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -231,7 +237,8 @@ RSpec.describe 'register/type/default' do
           .ADDRESS_WIDTH  (10),
           .OFFSET_ADDRESS (10'h060),
           .BUS_WIDTH      (32),
-          .DATA_WIDTH     (64)
+          .DATA_WIDTH     (64),
+          .VALUE_WIDTH    (64)
         ) u_register (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -248,7 +255,8 @@ RSpec.describe 'register/type/default' do
           .ADDRESS_WIDTH  (10),
           .OFFSET_ADDRESS (10'h070),
           .BUS_WIDTH      (32),
-          .DATA_WIDTH     (64)
+          .DATA_WIDTH     (64),
+          .VALUE_WIDTH    (64)
         ) u_register (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -265,7 +273,8 @@ RSpec.describe 'register/type/default' do
           .ADDRESS_WIDTH  (10),
           .OFFSET_ADDRESS (10'h080),
           .BUS_WIDTH      (32),
-          .DATA_WIDTH     (32)
+          .DATA_WIDTH     (32),
+          .VALUE_WIDTH    (64)
         ) u_register (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -282,7 +291,8 @@ RSpec.describe 'register/type/default' do
           .ADDRESS_WIDTH  (10),
           .OFFSET_ADDRESS (10'h090),
           .BUS_WIDTH      (32),
-          .DATA_WIDTH     (32)
+          .DATA_WIDTH     (32),
+          .VALUE_WIDTH    (64)
         ) u_register (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -297,9 +307,10 @@ RSpec.describe 'register/type/default' do
           .READABLE       (1),
           .WRITABLE       (1),
           .ADDRESS_WIDTH  (10),
-          .OFFSET_ADDRESS (10'h0a0+32*(2*i+j)+10'h010+4*(2*k+l)),
+          .OFFSET_ADDRESS (10'h0a0+10'(32*(2*i+j))+10'h010+10'(4*(2*k+l))),
           .BUS_WIDTH      (32),
-          .DATA_WIDTH     (32)
+          .DATA_WIDTH     (32),
+          .VALUE_WIDTH    (64)
         ) u_register (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),
@@ -314,9 +325,10 @@ RSpec.describe 'register/type/default' do
           .READABLE       (1),
           .WRITABLE       (1),
           .ADDRESS_WIDTH  (10),
-          .OFFSET_ADDRESS (10'h200+32*i+8*j),
+          .OFFSET_ADDRESS (10'h200+10'(32*i)+10'(8*j)),
           .BUS_WIDTH      (32),
-          .DATA_WIDTH     (32)
+          .DATA_WIDTH     (32),
+          .VALUE_WIDTH    (64)
         ) u_register (
           .i_clk        (i_clk),
           .i_rst_n      (i_rst_n),

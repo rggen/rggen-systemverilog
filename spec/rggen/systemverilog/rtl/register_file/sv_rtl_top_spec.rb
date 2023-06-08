@@ -115,7 +115,8 @@ RSpec.describe 'register_file/sv_rtl_top' do
               .ADDRESS_WIDTH  (9),
               .OFFSET_ADDRESS (9'h000),
               .BUS_WIDTH      (32),
-              .DATA_WIDTH     (32)
+              .DATA_WIDTH     (32),
+              .VALUE_WIDTH    (32)
             ) u_register (
               .i_clk        (i_clk),
               .i_rst_n      (i_rst_n),
@@ -158,7 +159,8 @@ RSpec.describe 'register_file/sv_rtl_top' do
               .ADDRESS_WIDTH  (9),
               .OFFSET_ADDRESS (9'h004),
               .BUS_WIDTH      (32),
-              .DATA_WIDTH     (32)
+              .DATA_WIDTH     (32),
+              .VALUE_WIDTH    (32)
             ) u_register (
               .i_clk        (i_clk),
               .i_rst_n      (i_rst_n),
@@ -207,7 +209,8 @@ RSpec.describe 'register_file/sv_rtl_top' do
                 .ADDRESS_WIDTH  (9),
                 .OFFSET_ADDRESS (9'h010),
                 .BUS_WIDTH      (32),
-                .DATA_WIDTH     (32)
+                .DATA_WIDTH     (32),
+                .VALUE_WIDTH    (32)
               ) u_register (
                 .i_clk        (i_clk),
                 .i_rst_n      (i_rst_n),
@@ -251,7 +254,8 @@ RSpec.describe 'register_file/sv_rtl_top' do
               .ADDRESS_WIDTH  (9),
               .OFFSET_ADDRESS (9'h014),
               .BUS_WIDTH      (32),
-              .DATA_WIDTH     (32)
+              .DATA_WIDTH     (32),
+              .VALUE_WIDTH    (32)
             ) u_register (
               .i_clk        (i_clk),
               .i_rst_n      (i_rst_n),
@@ -306,9 +310,10 @@ RSpec.describe 'register_file/sv_rtl_top' do
                         .READABLE       (1),
                         .WRITABLE       (1),
                         .ADDRESS_WIDTH  (9),
-                        .OFFSET_ADDRESS (9'h020+32*(2*i+j)+4*(2*k+l)),
+                        .OFFSET_ADDRESS (9'h020+9'(32*(2*i+j))+9'(4*(2*k+l))),
                         .BUS_WIDTH      (32),
-                        .DATA_WIDTH     (32)
+                        .DATA_WIDTH     (32),
+                        .VALUE_WIDTH    (32)
                       ) u_register (
                         .i_clk        (i_clk),
                         .i_rst_n      (i_rst_n),
@@ -356,9 +361,10 @@ RSpec.describe 'register_file/sv_rtl_top' do
                       .READABLE       (1),
                       .WRITABLE       (1),
                       .ADDRESS_WIDTH  (9),
-                      .OFFSET_ADDRESS (9'h020+32*(2*i+j)+9'h010+4*(2*k+l)),
+                      .OFFSET_ADDRESS (9'h020+9'(32*(2*i+j))+9'h010+9'(4*(2*k+l))),
                       .BUS_WIDTH      (32),
-                      .DATA_WIDTH     (32)
+                      .DATA_WIDTH     (32),
+                      .VALUE_WIDTH    (32)
                     ) u_register (
                       .i_clk        (i_clk),
                       .i_rst_n      (i_rst_n),
@@ -413,9 +419,10 @@ RSpec.describe 'register_file/sv_rtl_top' do
                     .READABLE       (1),
                     .WRITABLE       (1),
                     .ADDRESS_WIDTH  (9),
-                    .OFFSET_ADDRESS (9'h0a0+64*i+8*j),
+                    .OFFSET_ADDRESS (9'h0a0+9'(64*i)+9'(8*j)),
                     .BUS_WIDTH      (32),
-                    .DATA_WIDTH     (32)
+                    .DATA_WIDTH     (32),
+                    .VALUE_WIDTH    (32)
                   ) u_register (
                     .i_clk        (i_clk),
                     .i_rst_n      (i_rst_n),
@@ -460,9 +467,10 @@ RSpec.describe 'register_file/sv_rtl_top' do
                   .READABLE       (1),
                   .WRITABLE       (1),
                   .ADDRESS_WIDTH  (9),
-                  .OFFSET_ADDRESS (9'h0a0+64*i+9'h010+8*j),
+                  .OFFSET_ADDRESS (9'h0a0+9'(64*i)+9'h010+9'(8*j)),
                   .BUS_WIDTH      (32),
-                  .DATA_WIDTH     (32)
+                  .DATA_WIDTH     (32),
+                  .VALUE_WIDTH    (32)
                 ) u_register (
                   .i_clk        (i_clk),
                   .i_rst_n      (i_rst_n),

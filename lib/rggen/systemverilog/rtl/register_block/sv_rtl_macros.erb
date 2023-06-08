@@ -12,7 +12,7 @@
   if (1) begin : __g_tie_off \
     genvar  __i; \
     for (__i = 0;__i < WIDTH;++__i) begin : g \
-      if (!(((VALID_BITS) >> __i) & 1'b1)) begin : g \
+      if ((((VALID_BITS) >> __i) % 2) == 0) begin : g \
         assign  RIF.read_data[__i]  = 1'b0; \
         assign  RIF.value[__i]      = 1'b0; \
       end \

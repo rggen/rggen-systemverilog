@@ -16,8 +16,16 @@ module RgGen
           register.writable? && 1 || 0
         end
 
+        def width
+          register.width
+        end
+
         def bus_width
           configuration.bus_width
+        end
+
+        def value_width
+          register_block.value_width
         end
 
         def address_width
@@ -62,16 +70,15 @@ module RgGen
         end
 
         def format_offset(offset)
-          offset.is_a?(Integer) ? hex(offset, address_width) : offset
-        end
-
-        def width
-          register.width
+          case offset
+          when Integer then hex(offset, address_width)
+          else width_cast(offset, address_width)
+          end
         end
 
         def valid_bits
           bits = register.bit_fields.map(&:bit_map).inject(:|)
-          hex(bits, register.width)
+          hex(bits, width)
         end
       end
     end
