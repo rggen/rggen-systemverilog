@@ -26,7 +26,7 @@ RSpec.describe 'register_block/protocol/axi4lite' do
       [8, 16, 128, 256].each do |bus_width|
         expect {
           create_configuration(bus_width: bus_width, protocol: :axi4lite)
-        }.to raise_configuration_error "bus width eigher 32 bit or 64 bit is only supported: #{bus_width}"
+        }.to raise_configuration_error "bus width either 32 bit or 64 bit is only supported: #{bus_width}"
       end
     end
   end
