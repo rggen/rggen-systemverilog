@@ -31,6 +31,7 @@ RgGen.setup_plugin :'rggen-sv-rtl' do |plugin|
     'rtl/register/type',
     'rtl/register/type/external',
     'rtl/register/type/indirect',
+    'rtl/register/type/rw',
     'rtl/bit_field/sv_rtl_top',
     'rtl/bit_field/type',
     'rtl/bit_field/type/custom',
