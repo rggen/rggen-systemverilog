@@ -283,6 +283,7 @@ RSpec.describe 'register/sv_rtl_top' do
             .ADDRESS_WIDTH  (8),
             .BUS_WIDTH      (32),
             .VALUE_WIDTH    (32),
+            .STROBE_WIDTH   (REGISTER_1_STROBE_WIDTH),
             .START_ADDRESS  (8'h10),
             .BYTE_SIZE      (16)
           ) u_register (

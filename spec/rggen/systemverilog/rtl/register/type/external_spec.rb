@@ -19,6 +19,18 @@ RSpec.describe 'register/type/external' do
     create_sv_rtl(configuration, &body).registers
   end
 
+  it 'パラメータ#strobe_widthを持つ' do
+    registers = create_registers do
+      byte_size 256
+      register { name 'register_0'; offset_address 0x00; type :external; size [1] }
+    end
+
+    expect(registers[0]).to have_parameter(
+      :register_block, :strobe_width,
+      name: 'REGISTER_0_STROBE_WIDTH', parameter_type: :parameter, data_type: :int, default: 4
+    )
+  end
+
   it 'インターフェースポート#bus_ifを持つ' do
     registers = create_registers do
       byte_size 256
@@ -44,6 +56,7 @@ RSpec.describe 'register/type/external' do
           .ADDRESS_WIDTH  (8),
           .BUS_WIDTH      (32),
           .VALUE_WIDTH    (32),
+          .STROBE_WIDTH   (REGISTER_0_STROBE_WIDTH),
           .START_ADDRESS  (8'h00),
           .BYTE_SIZE      (4)
         ) u_register (
@@ -59,6 +72,7 @@ RSpec.describe 'register/type/external' do
           .ADDRESS_WIDTH  (8),
           .BUS_WIDTH      (32),
           .VALUE_WIDTH    (32),
+          .STROBE_WIDTH   (REGISTER_1_STROBE_WIDTH),
           .START_ADDRESS  (8'h80),
           .BYTE_SIZE      (128)
         ) u_register (
