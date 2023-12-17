@@ -10,9 +10,8 @@ module RgGen
           define_attribute :arguments
 
           def return_type(**attributes)
-            attributes.size.zero? || (
-              @return_type = DataObject.new(:variable, **attributes)
-            )
+            attributes.empty? ||
+              (@return_type = DataObject.new(:variable, **attributes))
             @return_type
           end
 
