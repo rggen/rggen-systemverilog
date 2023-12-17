@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email = ['rggen@googlegroups.com']
 
   spec.summary = "rggen-systemverilog-#{RgGen::SystemVerilog::VERSION}"
-  spec.description = <<~'DESCRIPTION'
+  spec.description = <<~DESCRIPTION
     SystemVerilog RTL and UVM RAL model generators for RgGen.
   DESCRIPTION
   spec.homepage = 'https://github.com/rggen/rggen-systemverilog'
@@ -27,6 +27,4 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.required_ruby_version = '>= 2.7'
-
-  spec.add_development_dependency 'bundler'
 end
