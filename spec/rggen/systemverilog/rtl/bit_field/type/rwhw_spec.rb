@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-RSpec.describe 'bit_field/type/rws' do
+RSpec.describe 'bit_field/type/rwhw' do
   include_context 'clean-up builder'
   include_context 'bit field rtl common'
 
   before(:all) do
-    RgGen.enable(:bit_field, :type, [:rw, :rws])
+    RgGen.enable(:bit_field, :type, [:rw, :rwhw])
   end
 
   let(:bit_fields) do
@@ -14,34 +14,34 @@ RSpec.describe 'bit_field/type/rws' do
 
       register do
         name 'register_0'
-        bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 1; type :rws; initial_value 0 }
-        bit_field { name 'bit_field_1'; bit_assignment lsb: 1, width: 1; type :rws; initial_value 0; reference 'register_4.bit_field_0' }
-        bit_field { name 'bit_field_2'; bit_assignment lsb: 4, width: 2; type :rws; initial_value 0 }
-        bit_field { name 'bit_field_3'; bit_assignment lsb: 6, width: 2; type :rws; initial_value 0; reference 'register_4.bit_field_0' }
-        bit_field { name 'bit_field_4'; bit_assignment lsb: 16, width: 4, sequence_size: 2, step: 8; type :rws; initial_value 0 }
-        bit_field { name 'bit_field_5'; bit_assignment lsb: 20, width: 4, sequence_size: 2, step: 8; type :rws; initial_value 0; reference 'register_4.bit_field_0' }
+        bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 1; type :rwhw; initial_value 0 }
+        bit_field { name 'bit_field_1'; bit_assignment lsb: 1, width: 1; type :rwhw; initial_value 0; reference 'register_4.bit_field_0' }
+        bit_field { name 'bit_field_2'; bit_assignment lsb: 4, width: 2; type :rwhw; initial_value 0 }
+        bit_field { name 'bit_field_3'; bit_assignment lsb: 6, width: 2; type :rwhw; initial_value 0; reference 'register_4.bit_field_0' }
+        bit_field { name 'bit_field_4'; bit_assignment lsb: 16, width: 4, sequence_size: 2, step: 8; type :rwhw; initial_value 0 }
+        bit_field { name 'bit_field_5'; bit_assignment lsb: 20, width: 4, sequence_size: 2, step: 8; type :rwhw; initial_value 0; reference 'register_4.bit_field_0' }
       end
 
       register do
         name 'register_1'
         size [4]
-        bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 1; type :rws; initial_value 0 }
-        bit_field { name 'bit_field_1'; bit_assignment lsb: 1, width: 1; type :rws; initial_value 0; reference 'register_4.bit_field_0' }
-        bit_field { name 'bit_field_2'; bit_assignment lsb: 4, width: 2; type :rws; initial_value 0 }
-        bit_field { name 'bit_field_3'; bit_assignment lsb: 6, width: 2; type :rws; initial_value 0; reference 'register_4.bit_field_0' }
-        bit_field { name 'bit_field_4'; bit_assignment lsb: 16, width: 4, sequence_size: 2, step: 8; type :rws; initial_value 0 }
-        bit_field { name 'bit_field_5'; bit_assignment lsb: 20, width: 4, sequence_size: 2, step: 8; type :rws; initial_value 0; reference 'register_4.bit_field_0' }
+        bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 1; type :rwhw; initial_value 0 }
+        bit_field { name 'bit_field_1'; bit_assignment lsb: 1, width: 1; type :rwhw; initial_value 0; reference 'register_4.bit_field_0' }
+        bit_field { name 'bit_field_2'; bit_assignment lsb: 4, width: 2; type :rwhw; initial_value 0 }
+        bit_field { name 'bit_field_3'; bit_assignment lsb: 6, width: 2; type :rwhw; initial_value 0; reference 'register_4.bit_field_0' }
+        bit_field { name 'bit_field_4'; bit_assignment lsb: 16, width: 4, sequence_size: 2, step: 8; type :rwhw; initial_value 0 }
+        bit_field { name 'bit_field_5'; bit_assignment lsb: 20, width: 4, sequence_size: 2, step: 8; type :rwhw; initial_value 0; reference 'register_4.bit_field_0' }
       end
 
       register do
         name 'register_2'
         size [2, 2]
-        bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 1; type :rws; initial_value 0 }
-        bit_field { name 'bit_field_1'; bit_assignment lsb: 1, width: 1; type :rws; initial_value 0; reference 'register_4.bit_field_0' }
-        bit_field { name 'bit_field_2'; bit_assignment lsb: 4, width: 2; type :rws; initial_value 0 }
-        bit_field { name 'bit_field_3'; bit_assignment lsb: 6, width: 2; type :rws; initial_value 0; reference 'register_4.bit_field_0' }
-        bit_field { name 'bit_field_4'; bit_assignment lsb: 16, width: 4, sequence_size: 2, step: 8; type :rws; initial_value 0 }
-        bit_field { name 'bit_field_5'; bit_assignment lsb: 20, width: 4, sequence_size: 2, step: 8; type :rws; initial_value 0; reference 'register_4.bit_field_0' }
+        bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 1; type :rwhw; initial_value 0 }
+        bit_field { name 'bit_field_1'; bit_assignment lsb: 1, width: 1; type :rwhw; initial_value 0; reference 'register_4.bit_field_0' }
+        bit_field { name 'bit_field_2'; bit_assignment lsb: 4, width: 2; type :rwhw; initial_value 0 }
+        bit_field { name 'bit_field_3'; bit_assignment lsb: 6, width: 2; type :rwhw; initial_value 0; reference 'register_4.bit_field_0' }
+        bit_field { name 'bit_field_4'; bit_assignment lsb: 16, width: 4, sequence_size: 2, step: 8; type :rwhw; initial_value 0 }
+        bit_field { name 'bit_field_5'; bit_assignment lsb: 20, width: 4, sequence_size: 2, step: 8; type :rwhw; initial_value 0; reference 'register_4.bit_field_0' }
       end
 
       register_file do
@@ -52,12 +52,12 @@ RSpec.describe 'bit_field/type/rws' do
           register do
             name 'register_0'
             size [2, 2]
-            bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 1; type :rws; initial_value 0 }
-            bit_field { name 'bit_field_1'; bit_assignment lsb: 1, width: 1; type :rws; initial_value 0; reference 'register_file_5.register_file_0.register_0.bit_field_0' }
-            bit_field { name 'bit_field_2'; bit_assignment lsb: 4, width: 2; type :rws; initial_value 0 }
-            bit_field { name 'bit_field_3'; bit_assignment lsb: 6, width: 2; type :rws; initial_value 0; reference 'register_file_5.register_file_0.register_0.bit_field_0' }
-            bit_field { name 'bit_field_4'; bit_assignment lsb: 16, width: 4, sequence_size: 2, step: 8; type :rws; initial_value 0 }
-            bit_field { name 'bit_field_5'; bit_assignment lsb: 20, width: 4, sequence_size: 2, step: 8; type :rws; initial_value 0; reference 'register_file_5.register_file_0.register_0.bit_field_0' }
+            bit_field { name 'bit_field_0'; bit_assignment lsb: 0, width: 1; type :rwhw; initial_value 0 }
+            bit_field { name 'bit_field_1'; bit_assignment lsb: 1, width: 1; type :rwhw; initial_value 0; reference 'register_file_5.register_file_0.register_0.bit_field_0' }
+            bit_field { name 'bit_field_2'; bit_assignment lsb: 4, width: 2; type :rwhw; initial_value 0 }
+            bit_field { name 'bit_field_3'; bit_assignment lsb: 6, width: 2; type :rwhw; initial_value 0; reference 'register_file_5.register_file_0.register_0.bit_field_0' }
+            bit_field { name 'bit_field_4'; bit_assignment lsb: 16, width: 4, sequence_size: 2, step: 8; type :rwhw; initial_value 0 }
+            bit_field { name 'bit_field_5'; bit_assignment lsb: 20, width: 4, sequence_size: 2, step: 8; type :rwhw; initial_value 0; reference 'register_file_5.register_file_0.register_0.bit_field_0' }
           end
         end
       end
@@ -212,132 +212,132 @@ RSpec.describe 'bit_field/type/rws' do
   end
 
   context '参照ビットフィールドを持たない場合' do
-    it '入力ポート#setを持つ' do
+    it '入力ポート#validを持つ' do
       expect(bit_fields[0]).to have_port(
-        :register_block, :set,
-        name: 'i_register_0_bit_field_0_set', direction: :input, data_type: :logic, width: 1
+        :register_block, :valid,
+        name: 'i_register_0_bit_field_0_valid', direction: :input, data_type: :logic, width: 1
       )
       expect(bit_fields[2]).to have_port(
-        :register_block, :set,
-        name: 'i_register_0_bit_field_2_set', direction: :input, data_type: :logic, width: 1
+        :register_block, :valid,
+        name: 'i_register_0_bit_field_2_valid', direction: :input, data_type: :logic, width: 1
       )
       expect(bit_fields[4]).to have_port(
-        :register_block, :set,
-        name: 'i_register_0_bit_field_4_set', direction: :input, data_type: :logic, width: 1,
+        :register_block, :valid,
+        name: 'i_register_0_bit_field_4_valid', direction: :input, data_type: :logic, width: 1,
         array_size: [2], array_format: array_port_format
       )
 
       expect(bit_fields[6]).to have_port(
-        :register_block, :set,
-        name: 'i_register_1_bit_field_0_set', direction: :input, data_type: :logic, width: 1,
+        :register_block, :valid,
+        name: 'i_register_1_bit_field_0_valid', direction: :input, data_type: :logic, width: 1,
         array_size: [4], array_format: array_port_format
       )
       expect(bit_fields[8]).to have_port(
-        :register_block, :set,
-        name: 'i_register_1_bit_field_2_set', direction: :input, data_type: :logic, width: 1,
+        :register_block, :valid,
+        name: 'i_register_1_bit_field_2_valid', direction: :input, data_type: :logic, width: 1,
         array_size: [4], array_format: array_port_format
       )
       expect(bit_fields[10]).to have_port(
-        :register_block, :set,
-        name: 'i_register_1_bit_field_4_set', direction: :input, data_type: :logic, width: 1,
+        :register_block, :valid,
+        name: 'i_register_1_bit_field_4_valid', direction: :input, data_type: :logic, width: 1,
         array_size: [4, 2], array_format: array_port_format
       )
 
       expect(bit_fields[12]).to have_port(
-        :register_block, :set,
-        name: 'i_register_2_bit_field_0_set', direction: :input, data_type: :logic, width: 1,
+        :register_block, :valid,
+        name: 'i_register_2_bit_field_0_valid', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2], array_format: array_port_format
       )
       expect(bit_fields[14]).to have_port(
-        :register_block, :set,
-        name: 'i_register_2_bit_field_2_set', direction: :input, data_type: :logic, width: 1,
+        :register_block, :valid,
+        name: 'i_register_2_bit_field_2_valid', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2], array_format: array_port_format
       )
       expect(bit_fields[16]).to have_port(
-        :register_block, :set,
-        name: 'i_register_2_bit_field_4_set', direction: :input, data_type: :logic, width: 1,
+        :register_block, :valid,
+        name: 'i_register_2_bit_field_4_valid', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2, 2], array_format: array_port_format
       )
 
       expect(bit_fields[18]).to have_port(
-        :register_block, :set,
-        name: 'i_register_file_3_register_file_0_register_0_bit_field_0_set', direction: :input, data_type: :logic, width: 1,
+        :register_block, :valid,
+        name: 'i_register_file_3_register_file_0_register_0_bit_field_0_valid', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2, 2, 2], array_format: array_port_format
       )
       expect(bit_fields[20]).to have_port(
-        :register_block, :set,
-        name: 'i_register_file_3_register_file_0_register_0_bit_field_2_set', direction: :input, data_type: :logic, width: 1,
+        :register_block, :valid,
+        name: 'i_register_file_3_register_file_0_register_0_bit_field_2_valid', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2, 2, 2], array_format: array_port_format
       )
       expect(bit_fields[22]).to have_port(
-        :register_block, :set,
-        name: 'i_register_file_3_register_file_0_register_0_bit_field_4_set', direction: :input, data_type: :logic, width: 1,
+        :register_block, :valid,
+        name: 'i_register_file_3_register_file_0_register_0_bit_field_4_valid', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2, 2, 2, 2], array_format: array_port_format
       )
     end
   end
 
   context '参照ビットフィールドを持つ場合' do
-    it '入力ポート#setを持たない' do
+    it '入力ポート#validを持たない' do
       expect(bit_fields[1]).to not_have_port(
-        :register_block, :set,
-        name: 'i_register_0_bit_field_1_set', direction: :input, data_type: :logic, width: 1
+        :register_block, :valid,
+        name: 'i_register_0_bit_field_1_valid', direction: :input, data_type: :logic, width: 1
       )
       expect(bit_fields[3]).to not_have_port(
-        :register_block, :set,
-        name: 'i_register_0_bit_field_3_set', direction: :input, data_type: :logic, width: 1
+        :register_block, :valid,
+        name: 'i_register_0_bit_field_3_valid', direction: :input, data_type: :logic, width: 1
       )
       expect(bit_fields[5]).to not_have_port(
-        :register_block, :set,
-        name: 'i_register_0_bit_field_5_set', direction: :input, data_type: :logic, width: 1,
+        :register_block, :valid,
+        name: 'i_register_0_bit_field_5_valid', direction: :input, data_type: :logic, width: 1,
         array_size: [2], array_format: array_port_format
       )
 
       expect(bit_fields[7]).to not_have_port(
-        :register_block, :set,
-        name: 'i_register_1_bit_field_1_set', direction: :input, data_type: :logic, width: 1,
+        :register_block, :valid,
+        name: 'i_register_1_bit_field_1_valid', direction: :input, data_type: :logic, width: 1,
         array_size: [4], array_format: array_port_format
       )
       expect(bit_fields[9]).to not_have_port(
-        :register_block, :set,
-        name: 'i_register_1_bit_field_3_set', direction: :input, data_type: :logic, width: 1,
+        :register_block, :valid,
+        name: 'i_register_1_bit_field_3_valid', direction: :input, data_type: :logic, width: 1,
         array_size: [4], array_format: array_port_format
       )
       expect(bit_fields[11]).to not_have_port(
-        :register_block, :set,
-        name: 'i_register_1_bit_field_5_set', direction: :input, data_type: :logic, width: 1,
+        :register_block, :valid,
+        name: 'i_register_1_bit_field_5_valid', direction: :input, data_type: :logic, width: 1,
         array_size: [4, 2], array_format: array_port_format
       )
 
       expect(bit_fields[13]).to not_have_port(
-        :register_block, :set,
-        name: 'i_register_2_bit_field_1_set', direction: :input, data_type: :logic, width: 1,
+        :register_block, :valid,
+        name: 'i_register_2_bit_field_1_valid', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2], array_format: array_port_format
       )
       expect(bit_fields[15]).to not_have_port(
-        :register_block, :set,
-        name: 'i_register_2_bit_field_3_set', direction: :input, data_type: :logic, width: 1,
+        :register_block, :valid,
+        name: 'i_register_2_bit_field_3_valid', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2], array_format: array_port_format
       )
       expect(bit_fields[17]).to not_have_port(
-        :register_block, :set,
-        name: 'i_register_2_bit_field_5_set', direction: :input, data_type: :logic, width: 1,
+        :register_block, :valid,
+        name: 'i_register_2_bit_field_5_valid', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2, 2], array_format: array_port_format
       )
 
       expect(bit_fields[19]).to not_have_port(
-        :register_block, :set,
-        name: 'i_register_file_3_register_file_0_register_0_bit_field_1_set', direction: :input, data_type: :logic, width: 1,
+        :register_block, :valid,
+        name: 'i_register_file_3_register_file_0_register_0_bit_field_1_valid', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2, 2, 2], array_format: array_port_format
       )
       expect(bit_fields[21]).to not_have_port(
-        :register_block, :set,
-        name: 'i_register_file_3_register_file_0_register_0_bit_field_3_set', direction: :input, data_type: :logic, width: 1,
+        :register_block, :valid,
+        name: 'i_register_file_3_register_file_0_register_0_bit_field_3_valid', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2, 2, 2], array_format: array_port_format
       )
       expect(bit_fields[23]).to not_have_port(
-        :register_block, :set,
-        name: 'i_register_file_3_register_file_0_register_0_bit_field_5_set', direction: :input, data_type: :logic, width: 1,
+        :register_block, :valid,
+        name: 'i_register_file_3_register_file_0_register_0_bit_field_5_valid', direction: :input, data_type: :logic, width: 1,
         array_size: [2, 2, 2, 2, 2], array_format: array_port_format
       )
     end
@@ -358,7 +358,7 @@ RSpec.describe 'bit_field/type/rws' do
           .o_write_trigger    (),
           .o_read_trigger     (),
           .i_sw_write_enable  ('1),
-          .i_hw_write_enable  (i_register_0_bit_field_0_set),
+          .i_hw_write_enable  (i_register_0_bit_field_0_valid),
           .i_hw_write_data    (i_register_0_bit_field_0),
           .i_hw_set           ('0),
           .i_hw_clear         ('0),
@@ -402,7 +402,7 @@ RSpec.describe 'bit_field/type/rws' do
           .o_write_trigger    (),
           .o_read_trigger     (),
           .i_sw_write_enable  ('1),
-          .i_hw_write_enable  (i_register_0_bit_field_2_set),
+          .i_hw_write_enable  (i_register_0_bit_field_2_valid),
           .i_hw_write_data    (i_register_0_bit_field_2),
           .i_hw_set           ('0),
           .i_hw_clear         ('0),
@@ -446,7 +446,7 @@ RSpec.describe 'bit_field/type/rws' do
           .o_write_trigger    (),
           .o_read_trigger     (),
           .i_sw_write_enable  ('1),
-          .i_hw_write_enable  (i_register_0_bit_field_4_set[i]),
+          .i_hw_write_enable  (i_register_0_bit_field_4_valid[i]),
           .i_hw_write_data    (i_register_0_bit_field_4[i]),
           .i_hw_set           ('0),
           .i_hw_clear         ('0),
@@ -490,7 +490,7 @@ RSpec.describe 'bit_field/type/rws' do
           .o_write_trigger    (),
           .o_read_trigger     (),
           .i_sw_write_enable  ('1),
-          .i_hw_write_enable  (i_register_1_bit_field_4_set[i][j]),
+          .i_hw_write_enable  (i_register_1_bit_field_4_valid[i][j]),
           .i_hw_write_data    (i_register_1_bit_field_4[i][j]),
           .i_hw_set           ('0),
           .i_hw_clear         ('0),
@@ -534,7 +534,7 @@ RSpec.describe 'bit_field/type/rws' do
           .o_write_trigger    (),
           .o_read_trigger     (),
           .i_sw_write_enable  ('1),
-          .i_hw_write_enable  (i_register_2_bit_field_4_set[i][j][k]),
+          .i_hw_write_enable  (i_register_2_bit_field_4_valid[i][j][k]),
           .i_hw_write_data    (i_register_2_bit_field_4[i][j][k]),
           .i_hw_set           ('0),
           .i_hw_clear         ('0),
@@ -578,7 +578,7 @@ RSpec.describe 'bit_field/type/rws' do
           .o_write_trigger    (),
           .o_read_trigger     (),
           .i_sw_write_enable  ('1),
-          .i_hw_write_enable  (i_register_file_3_register_file_0_register_0_bit_field_4_set[i][j][k][l][m]),
+          .i_hw_write_enable  (i_register_file_3_register_file_0_register_0_bit_field_4_valid[i][j][k][l][m]),
           .i_hw_write_data    (i_register_file_3_register_file_0_register_0_bit_field_4[i][j][k][l][m]),
           .i_hw_set           ('0),
           .i_hw_clear         ('0),
