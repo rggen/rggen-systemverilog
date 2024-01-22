@@ -46,6 +46,7 @@ RgGen.setup_plugin :'rggen-sv-rtl' do |plugin|
     'rtl/bit_field/type/rwc',
     'rtl/bit_field/type/rwe_rwl',
     'rtl/bit_field/type/rwhw',
+    'rtl/bit_field/type/rws',
     'rtl/bit_field/type/w0crs_w0src_w1crs_w1src_wcrs_wsrc',
     'rtl/bit_field/type/w0t_w1t',
     'rtl/bit_field/type/w0trg_w1trg',

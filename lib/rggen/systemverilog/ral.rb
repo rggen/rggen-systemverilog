@@ -27,7 +27,7 @@ RgGen.setup_plugin :'rggen-sv-ral' do |plugin|
     'ral/bit_field/type/rotrg_rwtrg_wotrg',
     'ral/bit_field/type/row0trg_row1trg_w0trg_w1trg',
     'ral/bit_field/type/rowo_rowotrg',
-    'ral/bit_field/type/rwc_rwhw',
+    'ral/bit_field/type/rwc_rwhw_rws',
     'ral/bit_field/type/rwe_rwl'
   ]
 end
