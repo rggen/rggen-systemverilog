@@ -1,14 +1,18 @@
 # frozen_string_literal: true
 
-RgGen.define_list_item_feature(:bit_field, :type, :rws) do
+RgGen.define_list_item_feature(:bit_field, :type, :rohw) do
   sv_rtl do
     build do
       unless bit_field.reference?
-        input :set, {
-          name: "i_#{full_name}_set", width: 1,
+        input :valid, {
+          name: "i_#{full_name}_valid", width: 1,
           array_size: array_size, array_format: array_port_format
         }
       end
+      input :value_in, {
+        name: "i_#{full_name}", width: width,
+        array_size: array_size, array_format: array_port_format
+      }
       output :value_out, {
         name: "o_#{full_name}", width: width,
         array_size: array_size, array_format: array_port_format
@@ -19,8 +23,8 @@ RgGen.define_list_item_feature(:bit_field, :type, :rws) do
 
     private
 
-    def set_signal
-      reference_bit_field || set[loop_variables]
+    def valid_signal
+      reference_bit_field || valid[loop_variables]
     end
   end
 end
