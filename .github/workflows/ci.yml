@@ -12,6 +12,8 @@ jobs:
         frozen_string_literal: ['yes', 'no']
 
     env:
+      BUNDLE_WITH: 'development_common development_test'
+      BUNDLE_WITHOUT: 'development_lint development_local'
       RUBYOPT: ${{ (matrix.frozen_string_literal == 'yes' && '--enable-frozen-string-literal') || '' }}
       USE_GEM_PATCHED_LOCALLY: ${{ matrix.frozen_string_literal }}
 
