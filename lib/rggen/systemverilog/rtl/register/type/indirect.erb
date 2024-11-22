@@ -6,12 +6,11 @@ rggen_indirect_register #(
   .BUS_WIDTH            (<%= bus_width %>),
   .DATA_WIDTH           (<%= width %>),
   .VALUE_WIDTH          (<%= value_width %>),
-  .INDIRECT_INDEX_WIDTH (<%= index_width %>),
-  .INDIRECT_INDEX_VALUE (<%= concat(index_values) %>)
+  .INDIRECT_MATCH_WIDTH (<%= index_match_width %>)
 ) u_register (
   .i_clk            (<%= register_block.clock %>),
   .i_rst_n          (<%= register_block.reset %>),
   .register_if      (<%= register_if %>),
-  .i_indirect_index (<%= indirect_index %>),
+  .i_indirect_match (<%= indirect_match %>),
   .bit_field_if     (<%= bit_field_if %>)
 );

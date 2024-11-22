@@ -5,11 +5,11 @@ RgGen.define_list_item_feature(:register, :type, :indirect) do
     include RgGen::SystemVerilog::RTL::IndirectIndex
 
     build do
-      logic :indirect_index, { width: index_width }
+      logic :indirect_match, { width: index_match_width }
     end
 
     main_code :register do |code|
-      code << indirect_index_assignment << nl
+      indirect_index_matches(code)
       code << process_template
     end
   end
