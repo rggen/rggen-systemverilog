@@ -453,10 +453,11 @@ RSpec.describe 'register/sv_rtl_top' do
           genvar j;
           for (i = 0;i < 2;++i) begin : g
             for (j = 0;j < 2;++j) begin : g
-              logic [3:0] indirect_index;
+              logic [1:0] indirect_match;
               rggen_bit_field_if #(32) bit_field_if();
               `rggen_tie_off_unused_signals(32, 32'h00000303, bit_field_if)
-              assign indirect_index = {register_if[0].value[0+:2], register_if[0].value[8+:2]};
+              assign indirect_match[0] = register_if[0].value[0+:2] == 2'(i);
+              assign indirect_match[1] = register_if[0].value[8+:2] == 2'(j);
               rggen_indirect_register #(
                 .READABLE             (1),
                 .WRITABLE             (1),
@@ -465,13 +466,12 @@ RSpec.describe 'register/sv_rtl_top' do
                 .BUS_WIDTH            (32),
                 .DATA_WIDTH           (32),
                 .VALUE_WIDTH          (32),
-                .INDIRECT_INDEX_WIDTH (4),
-                .INDIRECT_INDEX_VALUE ({i[0+:2], j[0+:2]})
+                .INDIRECT_MATCH_WIDTH (2)
               ) u_register (
                 .i_clk            (i_clk),
                 .i_rst_n          (i_rst_n),
                 .register_if      (register_if[8+2*i+j]),
-                .i_indirect_index (indirect_index),
+                .i_indirect_match (indirect_match),
                 .bit_field_if     (bit_field_if)
               );
               if (1) begin : g_bit_field_0

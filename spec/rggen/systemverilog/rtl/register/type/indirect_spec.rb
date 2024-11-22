@@ -159,25 +159,25 @@ RSpec.describe 'register/type/indirect' do
     sv_rtl.registers
   end
 
-  it 'logic変数#indirect_indexを持つ' do
+  it 'logic変数#indirect_matchを持つ' do
     expect(registers[4]).to have_variable(
-      :indirect_index,
-      name: 'indirect_index', data_type: :logic, width: 1
+      :indirect_match,
+      name: 'indirect_match', data_type: :logic, width: 1
     )
 
     expect(registers[5]).to have_variable(
-      :indirect_index,
-      name: 'indirect_index', data_type: :logic, width: 2
+      :indirect_match,
+      name: 'indirect_match', data_type: :logic, width: 1
     )
 
     expect(registers[6]).to have_variable(
-      :indirect_index,
-      name: 'indirect_index', data_type: :logic, width: 6
+      :indirect_match,
+      name: 'indirect_match', data_type: :logic, width: 2
     )
 
     expect(registers[7]).to have_variable(
-      :indirect_index,
-      name: 'indirect_index', data_type: :logic, width: 7
+      :indirect_match,
+      name: 'indirect_match', data_type: :logic, width: 3
     )
   end
 
@@ -185,7 +185,7 @@ RSpec.describe 'register/type/indirect' do
     it 'rggen_indirect_registerをインスタンスするコードを出力する' do
       expect(registers[4]).to generate_code(:register, :top_down, <<~'CODE')
         `rggen_tie_off_unused_signals(32, 32'h00000001, bit_field_if)
-        assign indirect_index = {register_if[0].value[0+:1]};
+        assign indirect_match = register_if[0].value[0+:1] == 1'h1;
         rggen_indirect_register #(
           .READABLE             (1),
           .WRITABLE             (1),
@@ -194,20 +194,19 @@ RSpec.describe 'register/type/indirect' do
           .BUS_WIDTH            (32),
           .DATA_WIDTH           (32),
           .VALUE_WIDTH          (32),
-          .INDIRECT_INDEX_WIDTH (1),
-          .INDIRECT_INDEX_VALUE ({1'h1})
+          .INDIRECT_MATCH_WIDTH (1)
         ) u_register (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),
           .register_if      (register_if[4]),
-          .i_indirect_index (indirect_index),
+          .i_indirect_match (indirect_match),
           .bit_field_if     (bit_field_if)
         );
       CODE
 
       expect(registers[5]).to generate_code(:register, :top_down, <<~'CODE')
         `rggen_tie_off_unused_signals(32, 32'h00000001, bit_field_if)
-        assign indirect_index = {register_if[0].value[8+:2]};
+        assign indirect_match = register_if[0].value[8+:2] == 2'(i);
         rggen_indirect_register #(
           .READABLE             (1),
           .WRITABLE             (1),
@@ -216,20 +215,20 @@ RSpec.describe 'register/type/indirect' do
           .BUS_WIDTH            (32),
           .DATA_WIDTH           (32),
           .VALUE_WIDTH          (32),
-          .INDIRECT_INDEX_WIDTH (2),
-          .INDIRECT_INDEX_VALUE ({i[0+:2]})
+          .INDIRECT_MATCH_WIDTH (1)
         ) u_register (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),
           .register_if      (register_if[5+i]),
-          .i_indirect_index (indirect_index),
+          .i_indirect_match (indirect_match),
           .bit_field_if     (bit_field_if)
         );
       CODE
 
       expect(registers[6]).to generate_code(:register, :top_down, <<~'CODE')
         `rggen_tie_off_unused_signals(32, 32'h00000001, bit_field_if)
-        assign indirect_index = {register_if[0].value[8+:2], register_if[0].value[16+:4]};
+        assign indirect_match[0] = register_if[0].value[8+:2] == 2'(i);
+        assign indirect_match[1] = register_if[0].value[16+:4] == 4'(j);
         rggen_indirect_register #(
           .READABLE             (1),
           .WRITABLE             (1),
@@ -238,20 +237,21 @@ RSpec.describe 'register/type/indirect' do
           .BUS_WIDTH            (32),
           .DATA_WIDTH           (32),
           .VALUE_WIDTH          (32),
-          .INDIRECT_INDEX_WIDTH (6),
-          .INDIRECT_INDEX_VALUE ({i[0+:2], j[0+:4]})
+          .INDIRECT_MATCH_WIDTH (2)
         ) u_register (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),
           .register_if      (register_if[7+4*i+j]),
-          .i_indirect_index (indirect_index),
+          .i_indirect_match (indirect_match),
           .bit_field_if     (bit_field_if)
         );
       CODE
 
       expect(registers[7]).to generate_code(:register, :top_down, <<~'CODE')
         `rggen_tie_off_unused_signals(32, 32'h00000001, bit_field_if)
-        assign indirect_index = {register_if[0].value[0+:1], register_if[0].value[8+:2], register_if[0].value[16+:4]};
+        assign indirect_match[0] = register_if[0].value[0+:1] == 1'h0;
+        assign indirect_match[1] = register_if[0].value[8+:2] == 2'(i);
+        assign indirect_match[2] = register_if[0].value[16+:4] == 4'(j);
         rggen_indirect_register #(
           .READABLE             (1),
           .WRITABLE             (1),
@@ -260,20 +260,19 @@ RSpec.describe 'register/type/indirect' do
           .BUS_WIDTH            (32),
           .DATA_WIDTH           (32),
           .VALUE_WIDTH          (32),
-          .INDIRECT_INDEX_WIDTH (7),
-          .INDIRECT_INDEX_VALUE ({1'h0, i[0+:2], j[0+:4]})
+          .INDIRECT_MATCH_WIDTH (3)
         ) u_register (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),
           .register_if      (register_if[15+4*i+j]),
-          .i_indirect_index (indirect_index),
+          .i_indirect_match (indirect_match),
           .bit_field_if     (bit_field_if)
         );
       CODE
 
       expect(registers[8]).to generate_code(:register, :top_down, <<~'CODE')
         `rggen_tie_off_unused_signals(32, 32'h00000001, bit_field_if)
-        assign indirect_index = {register_if[0].value[0+:1]};
+        assign indirect_match = register_if[0].value[0+:1] == 1'h0;
         rggen_indirect_register #(
           .READABLE             (1),
           .WRITABLE             (0),
@@ -282,20 +281,19 @@ RSpec.describe 'register/type/indirect' do
           .BUS_WIDTH            (32),
           .DATA_WIDTH           (32),
           .VALUE_WIDTH          (32),
-          .INDIRECT_INDEX_WIDTH (1),
-          .INDIRECT_INDEX_VALUE ({1'h0})
+          .INDIRECT_MATCH_WIDTH (1)
         ) u_register (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),
           .register_if      (register_if[23]),
-          .i_indirect_index (indirect_index),
+          .i_indirect_match (indirect_match),
           .bit_field_if     (bit_field_if)
         );
       CODE
 
       expect(registers[9]).to generate_code(:register, :top_down, <<~'CODE')
         `rggen_tie_off_unused_signals(32, 32'h00000001, bit_field_if)
-        assign indirect_index = {register_if[0].value[0+:1]};
+        assign indirect_match = register_if[0].value[0+:1] == 1'h0;
         rggen_indirect_register #(
           .READABLE             (0),
           .WRITABLE             (1),
@@ -304,20 +302,20 @@ RSpec.describe 'register/type/indirect' do
           .BUS_WIDTH            (32),
           .DATA_WIDTH           (32),
           .VALUE_WIDTH          (32),
-          .INDIRECT_INDEX_WIDTH (1),
-          .INDIRECT_INDEX_VALUE ({1'h0})
+          .INDIRECT_MATCH_WIDTH (1)
         ) u_register (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),
           .register_if      (register_if[24]),
-          .i_indirect_index (indirect_index),
+          .i_indirect_match (indirect_match),
           .bit_field_if     (bit_field_if)
         );
       CODE
 
       expect(registers[10]).to generate_code(:register, :top_down, <<~'CODE')
         `rggen_tie_off_unused_signals(32, 32'h00000001, bit_field_if)
-        assign indirect_index = {register_if[1].value[0+:2], register_if[2].value[0+:2]};
+        assign indirect_match[0] = register_if[1].value[0+:2] == 2'(i);
+        assign indirect_match[1] = register_if[2].value[0+:2] == 2'h0;
         rggen_indirect_register #(
           .READABLE             (1),
           .WRITABLE             (1),
@@ -326,20 +324,21 @@ RSpec.describe 'register/type/indirect' do
           .BUS_WIDTH            (32),
           .DATA_WIDTH           (32),
           .VALUE_WIDTH          (32),
-          .INDIRECT_INDEX_WIDTH (4),
-          .INDIRECT_INDEX_VALUE ({i[0+:2], 2'h0})
+          .INDIRECT_MATCH_WIDTH (2)
         ) u_register (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),
           .register_if      (register_if[25+i]),
-          .i_indirect_index (indirect_index),
+          .i_indirect_match (indirect_match),
           .bit_field_if     (bit_field_if)
         );
       CODE
 
       expect(registers[11]).to generate_code(:register, :top_down, <<~'CODE')
         `rggen_tie_off_unused_signals(32, 32'h00000001, bit_field_if)
-        assign indirect_index = {register_if[3].value[0+:1], register_if[3].value[8+:2], register_if[3].value[16+:4]};
+        assign indirect_match[0] = register_if[3].value[0+:1] == 1'h0;
+        assign indirect_match[1] = register_if[3].value[8+:2] == 2'(i);
+        assign indirect_match[2] = register_if[3].value[16+:4] == 4'(j);
         rggen_indirect_register #(
           .READABLE             (1),
           .WRITABLE             (1),
@@ -348,20 +347,21 @@ RSpec.describe 'register/type/indirect' do
           .BUS_WIDTH            (32),
           .DATA_WIDTH           (32),
           .VALUE_WIDTH          (32),
-          .INDIRECT_INDEX_WIDTH (7),
-          .INDIRECT_INDEX_VALUE ({1'h0, i[0+:2], j[0+:4]})
+          .INDIRECT_MATCH_WIDTH (3)
         ) u_register (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),
           .register_if      (register_if[27+4*i+j]),
-          .i_indirect_index (indirect_index),
+          .i_indirect_match (indirect_match),
           .bit_field_if     (bit_field_if)
         );
       CODE
 
       expect(registers[12]).to generate_code(:register, :top_down, <<~'CODE')
         `rggen_tie_off_unused_signals(32, 32'h00000001, bit_field_if)
-        assign indirect_index = {register_if[0].value[0+:1], register_if[0].value[8+:2], register_if[0].value[16+:4]};
+        assign indirect_match[0] = register_if[0].value[0+:1] == 1'h0;
+        assign indirect_match[1] = register_if[0].value[8+:2] == 2'(k);
+        assign indirect_match[2] = register_if[0].value[16+:4] == 4'(l);
         rggen_indirect_register #(
           .READABLE             (1),
           .WRITABLE             (1),
@@ -370,20 +370,21 @@ RSpec.describe 'register/type/indirect' do
           .BUS_WIDTH            (32),
           .DATA_WIDTH           (32),
           .VALUE_WIDTH          (32),
-          .INDIRECT_INDEX_WIDTH (7),
-          .INDIRECT_INDEX_VALUE ({1'h0, k[0+:2], l[0+:4]})
+          .INDIRECT_MATCH_WIDTH (3)
         ) u_register (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),
           .register_if      (register_if[35+16*(2*i+j)+4*k+l]),
-          .i_indirect_index (indirect_index),
+          .i_indirect_match (indirect_match),
           .bit_field_if     (bit_field_if)
         );
       CODE
 
       expect(registers[13]).to generate_code(:register, :top_down, <<~'CODE')
         `rggen_tie_off_unused_signals(32, 32'h00000001, bit_field_if)
-        assign indirect_index = {register_if[3].value[0+:1], register_if[3].value[8+:2], register_if[3].value[16+:4]};
+        assign indirect_match[0] = register_if[3].value[0+:1] == 1'h0;
+        assign indirect_match[1] = register_if[3].value[8+:2] == 2'(k);
+        assign indirect_match[2] = register_if[3].value[16+:4] == 4'(l);
         rggen_indirect_register #(
           .READABLE             (1),
           .WRITABLE             (1),
@@ -392,13 +393,12 @@ RSpec.describe 'register/type/indirect' do
           .BUS_WIDTH            (32),
           .DATA_WIDTH           (32),
           .VALUE_WIDTH          (32),
-          .INDIRECT_INDEX_WIDTH (7),
-          .INDIRECT_INDEX_VALUE ({1'h0, k[0+:2], l[0+:4]})
+          .INDIRECT_MATCH_WIDTH (3)
         ) u_register (
           .i_clk            (i_clk),
           .i_rst_n          (i_rst_n),
           .register_if      (register_if[35+16*(2*i+j)+8+4*k+l]),
-          .i_indirect_index (indirect_index),
+          .i_indirect_match (indirect_match),
           .bit_field_if     (bit_field_if)
         );
       CODE
