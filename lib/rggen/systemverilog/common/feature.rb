@@ -38,9 +38,9 @@ module RgGen
           @package_imports = Hash.new { |h, k| h[k] = [] }
         end
 
-        def define_entity(context, name, args, &block)
+        def define_entity(context, name, args, &)
           layer, attributes = parse_entity_arguments(args)
-          entity = create_entity(context, name, attributes, &block)
+          entity = create_entity(context, name, attributes, &)
           add_entity(context, entity, name, layer)
         end
 
@@ -56,9 +56,9 @@ module RgGen
           end
         end
 
-        def create_entity(context, name, attributes, &block)
-          merged_attributes = { name: name }.merge(Hash(attributes))
-          __send__(context.method_name, context.entity_type, merged_attributes, &block)
+        def create_entity(context, name, attributes, &)
+          merged_attributes = { name: }.merge(Hash(attributes))
+          __send__(context.method_name, context.entity_type, merged_attributes, &)
         end
 
         def add_entity(context, entity, name, layer)

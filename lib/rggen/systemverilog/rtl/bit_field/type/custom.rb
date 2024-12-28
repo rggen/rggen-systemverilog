@@ -5,47 +5,47 @@ RgGen.define_list_item_feature(:bit_field, :type, :custom) do
     build do
       if external_read_data?
         input :value_in, {
-          name: "i_#{full_name}", width: width,
-          array_size: array_size, array_format: array_port_format
+          name: "i_#{full_name}", width:,
+          array_size:, array_format: array_port_format
         }
       else
         output :value_out, {
-          name: "o_#{full_name}", width: width,
-          array_size: array_size, array_format: array_port_format
+          name: "o_#{full_name}", width:,
+          array_size:, array_format: array_port_format
         }
       end
       if bit_field.hw_write?
         input :hw_write_enable, {
           name: "i_#{full_name}_hw_write_enable", width: 1,
-          array_size: array_size, array_format: array_port_format
+          array_size:, array_format: array_port_format
         }
         input :hw_write_data, {
-          name: "i_#{full_name}_hw_write_data", width: width,
-          array_size: array_size, array_format: array_port_format
+          name: "i_#{full_name}_hw_write_data", width:,
+          array_size:, array_format: array_port_format
         }
       end
       if bit_field.hw_set?
         input :hw_set, {
-          name: "i_#{full_name}_hw_set", width: width,
-          array_size: array_size, array_format: array_port_format
+          name: "i_#{full_name}_hw_set", width:,
+          array_size:, array_format: array_port_format
         }
       end
       if bit_field.hw_clear?
         input :hw_clear, {
-          name: "i_#{full_name}_hw_clear", width: width,
-          array_size: array_size, array_format: array_port_format
+          name: "i_#{full_name}_hw_clear", width:,
+          array_size:, array_format: array_port_format
         }
       end
       if bit_field.write_trigger?
         output :write_trigger, {
           name: "o_#{full_name}_write_trigger", width: 1,
-          array_size: array_size, array_format: array_port_format
+          array_size:, array_format: array_port_format
         }
       end
       if bit_field.read_trigger?
         output :read_trigger, {
           name: "o_#{full_name}_read_trigger", width: 1,
-          array_size: array_size, array_format: array_port_format
+          array_size:, array_format: array_port_format
         }
       end
     end

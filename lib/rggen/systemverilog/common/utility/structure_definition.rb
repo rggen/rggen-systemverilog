@@ -7,9 +7,9 @@ module RgGen
         class StructureDefinition < Core::Utility::CodeUtility::StructureDefinition
           include Core::Utility::AttributeSetter
 
-          def initialize(default_attributes = {}, &block)
+          def initialize(default_attributes = {}, &)
             apply_attributes(**default_attributes)
-            super(&block)
+            super(&)
           end
 
           private
