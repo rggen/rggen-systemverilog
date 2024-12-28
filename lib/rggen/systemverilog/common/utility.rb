@@ -92,7 +92,7 @@ module RgGen
         end
 
         def argument(name, attribute = {})
-          DataObject.new(:argument, attribute.merge(name: name)).declaration
+          DataObject.new(:argument, attribute.merge(name:)).declaration
         end
 
         {
@@ -103,7 +103,7 @@ module RgGen
           package_definition: PackageDefinition
         }.each do |method_name, definition|
           define_method(method_name) do |name, attributes = {}, &block|
-            definition.new(attributes.merge(name: name), &block).to_code
+            definition.new(attributes.merge(name:), &block).to_code
           end
         end
       end

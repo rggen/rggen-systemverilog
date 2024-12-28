@@ -6,32 +6,28 @@ module RgGen
       class Feature < Common::Feature
         private
 
-        def create_variable(data_type, attributes, &block)
-          DataObject.new(
-            :variable, attributes.merge(data_type: data_type), &block
-          )
+        def create_variable(data_type, attributes, &)
+          DataObject.new(:variable, attributes.merge(data_type:), &)
         end
 
-        def create_if_instance(_, attributes, &block)
-          InterfaceInstance.new(attributes, &block)
+        def create_if_instance(_, attributes, &)
+          InterfaceInstance.new(attributes, &)
         end
 
-        def create_port(direction, attributes, &block)
+        def create_port(direction, attributes, &)
           attributes =
             { data_type: 'logic' }
               .merge(attributes)
-              .merge(direction: direction)
-          DataObject.new(:argument, attributes, &block)
+              .merge(direction:)
+          DataObject.new(:argument, attributes, &)
         end
 
-        def create_if_port(_, attributes, &block)
-          InterfacePort.new(attributes, &block)
+        def create_if_port(_, attributes, &)
+          InterfacePort.new(attributes, &)
         end
 
-        def create_parameter(parameter_type, attributes, &block)
-          DataObject.new(
-            :parameter, attributes.merge(parameter_type: parameter_type), &block
-          )
+        def create_parameter(parameter_type, attributes, &)
+          DataObject.new(:parameter, attributes.merge(parameter_type:), &)
         end
 
         define_entity :logic, :create_variable, :variable, -> { component }

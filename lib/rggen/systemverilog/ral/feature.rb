@@ -6,14 +6,12 @@ module RgGen
       class Feature < Common::Feature
         private
 
-        def create_variable(_, attributes, &block)
-          DataObject.new(
-            :variable, attributes.merge(array_format: :unpacked), &block
-          )
+        def create_variable(_, attributes, &)
+          DataObject.new(:variable, attributes.merge(array_format: :unpacked), &)
         end
 
-        def create_parameter(_, attributes, &block)
-          DataObject.new(:parameter, attributes, &block)
+        def create_parameter(_, attributes, &)
+          DataObject.new(:parameter, attributes, &)
         end
 
         define_entity :variable, :create_variable, :variable, -> { component.parent }

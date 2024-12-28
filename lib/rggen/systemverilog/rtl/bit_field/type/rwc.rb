@@ -6,12 +6,12 @@ RgGen.define_list_item_feature(:bit_field, :type, :rwc) do
       unless bit_field.reference?
         input :clear, {
           name: "i_#{full_name}_clear", width: 1,
-          array_size: array_size, array_format: array_port_format
+          array_size:, array_format: array_port_format
         }
       end
       output :value_out, {
-        name: "o_#{full_name}", width: width,
-        array_size: array_size, array_format: array_port_format
+        name: "o_#{full_name}", width:,
+        array_size:, array_format: array_port_format
       }
     end
 

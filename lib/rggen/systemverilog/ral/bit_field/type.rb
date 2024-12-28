@@ -4,12 +4,12 @@ RgGen.define_list_feature(:bit_field, :type) do
   sv_ral do
     base_feature do
       define_helpers do
-        def access(access_type = nil, &block)
-          attribute_accessor('@access', access_type, &block)
+        def access(access_type = nil, &)
+          attribute_accessor('@access', access_type, &)
         end
 
-        def model_name(name = nil, &block)
-          attribute_accessor('@model_name', name, &block)
+        def model_name(name = nil, &)
+          attribute_accessor('@model_name', name, &)
         end
 
         private
@@ -28,7 +28,7 @@ RgGen.define_list_feature(:bit_field, :type) do
       build do
         variable :ral_model, {
           name: bit_field.name, data_type: model_name,
-          array_size: array_size, random: true
+          array_size:, random: true
         }
       end
 
