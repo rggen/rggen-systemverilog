@@ -86,7 +86,7 @@ module RgGen
           end
 
           def serialized_array_size
-            size = [(width || 1), *array_size]
+            size = [width || 1, *array_size]
             if size.all? { |s| s.is_a?(Integer) }
               [size.inject(&:*)]
             else
