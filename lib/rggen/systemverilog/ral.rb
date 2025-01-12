@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'common'
+require_relative 'register_map/keyword_checker'
 require_relative 'ral/feature'
 require_relative 'ral/register_common'
 
@@ -29,5 +30,9 @@ RgGen.setup_plugin :'rggen-sv-ral' do |plugin|
     'ral/bit_field/type/rowo_rowotrg',
     'ral/bit_field/type/rwc_rwhw_rws',
     'ral/bit_field/type/rwe_rwl'
+  ]
+
+  plugin.files [
+    'register_map/name'
   ]
 end

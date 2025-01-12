@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'common'
+require_relative 'register_map/keyword_checker'
 require_relative 'rtl/feature'
 require_relative 'rtl/partial_sum'
 require_relative 'rtl/register_index'
@@ -65,5 +66,9 @@ RgGen.setup_plugin :'rggen-sv-rtl' do |plugin|
     'rtl_package/bit_field/sv_rtl_package',
     'rtl_package/register/sv_rtl_package',
     'rtl_package/register_block/sv_rtl_package'
+  ]
+
+  plugin.files [
+    'register_map/name'
   ]
 end
