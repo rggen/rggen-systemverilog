@@ -45,7 +45,7 @@ module RgGen
 
         def self.included(klass)
           klass.class_eval do
-            verify(:feature) do
+            verify(:feature, prepend: true) do
               error_condition do
                 @name && SYSTEMVERILOG_KEYWORDS.include?(@name)
               end
