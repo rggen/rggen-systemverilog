@@ -34,7 +34,7 @@ RgGen.define_simple_feature(:register_block, :sv_rtl_top) do
     end
 
     def bus_width
-      configuration.bus_width
+      register_block.bus_width
     end
 
     def body_code(code)

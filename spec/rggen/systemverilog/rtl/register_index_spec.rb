@@ -19,8 +19,8 @@ RSpec.describe RgGen::SystemVerilog::RTL::RegisterIndex do
   end
 
   before(:all) do
-    RgGen.enable(:global, [:bus_width, :address_width, :enable_wide_register, :array_port_format])
-    RgGen.enable(:register_block, [:byte_size])
+    RgGen.enable(:global, [:address_width, :enable_wide_register, :array_port_format])
+    RgGen.enable(:register_block, [:byte_size, :bus_width])
     RgGen.enable(:register_file, [:name, :offset_address, :size, :index])
     RgGen.enable(:register, [:name, :offset_address, :size, :type, :index])
     RgGen.enable(:bit_field, [:name, :bit_assignment, :type, :initial_value, :reference, :sv_rtl_top])

@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
 RSpec.describe 'register_block/protocol/wishbone' do
-  include_context 'configuration common'
+  include_context 'sv rtl common'
   include_context 'clean-up builder'
 
   before(:all) do
-    RgGen.enable(:global, [:bus_width, :address_width, :enable_wide_register])
-    RgGen.enable(:register_block, :protocol)
+    RgGen.enable(:global, [:address_width, :enable_wide_register])
+    RgGen.enable(:register_block, [:protocol, :bus_width, :name, :byte_size])
     RgGen.enable(:register_block, :protocol, [:wishbone])
+    RgGen.enable(:register, [:name, :offset_address, :size, :type])
+    RgGen.enable(:register, :type, :external)
+    RgGen.enable(:register_block, :sv_rtl_top)
   end
 
   describe 'configuration' do
@@ -15,25 +18,49 @@ RSpec.describe 'register_block/protocol/wishbone' do
       configuration = create_configuration(protocol: :wishbone)
       expect(configuration).to have_property(:protocol, :wishbone)
     end
+  end
 
-    it '64ビットを超えるバス幅に対応しない' do
-      [8, 16, 32, 64].each do |bus_width|
-        expect {
-          create_configuration(bus_width: bus_width, protocol: :wishbone)
-        }.not_to raise_error
+  describe 'エラーチェック' do
+    def create_register_block(**config_values, &)
+      configuration = create_configuration(**config_values)
+      regiter_map = create_register_map(configuration) do
+        register_block do
+          name 'block'
+          byte_size 8
+          block_given? && instance_eval(&)
+        end
       end
+      regiter_map.register_blocks.first
+    end
 
-      [128, 256].each do |bus_width|
-        expect {
-          create_configuration(bus_width: bus_width, protocol: :wishbone)
-        }.to raise_configuration_error "bus width over 64 bit is not supported: #{bus_width}"
+    context 'バス幅が64ビットを超える場合' do
+      it 'RegisterMapErrorを起こす' do
+        [8, 16, 32, 64].each do |width|
+          expect {
+            create_register_block(bus_width: width, protocol: :wishbone)
+          }.not_to raise_error
+
+          expect {
+            create_register_block(bus_width: 32, protocol: :wishbone) { bus_width width }
+          }.not_to raise_error
+        end
+
+        [128, 256].each do |width|
+          message = "bus width over 64 bits is not supported: #{width}"
+
+          expect {
+            create_register_block(bus_width: width, protocol: :wishbone)
+          }.to raise_register_map_error message
+
+          expect {
+            create_register_block(bus_width: 32, protocol: :wishbone) { bus_width width }
+          }.to raise_register_map_error message
+        end
       end
     end
   end
 
   describe 'sv rtl' do
-    include_context 'sv rtl common'
-
     before(:all) do
       RgGen.enable(:register_block, [:name, :byte_size])
       RgGen.enable(:register, [:name, :offset_address, :size, :type])

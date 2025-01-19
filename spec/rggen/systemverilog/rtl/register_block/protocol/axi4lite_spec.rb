@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
 RSpec.describe 'register_block/protocol/axi4lite' do
-  include_context 'configuration common'
+  include_context 'sv rtl common'
   include_context 'clean-up builder'
 
   before(:all) do
-    RgGen.enable(:global, [:bus_width, :address_width, :enable_wide_register])
-    RgGen.enable(:register_block, :protocol)
+    RgGen.enable(:global, [:address_width, :enable_wide_register])
+    RgGen.enable(:register_block, [:protocol, :bus_width, :name, :byte_size])
     RgGen.enable(:register_block, :protocol, [:axi4lite])
+    RgGen.enable(:register, [:name, :offset_address, :size, :type])
+    RgGen.enable(:register, :type, :external)
+    RgGen.enable(:register_block, :sv_rtl_top)
   end
 
   describe 'configuration' do
@@ -15,32 +18,49 @@ RSpec.describe 'register_block/protocol/axi4lite' do
       configuration = create_configuration(protocol: :axi4lite)
       expect(configuration).to have_property(:protocol, :axi4lite)
     end
+  end
 
-    specify '32/64ビット以外のバス幅は未対応' do
-      [32, 64].each do |bus_width|
-        expect {
-          create_configuration(bus_width: bus_width, protocol: :axi4lite)
-        }.not_to raise_error
+  describe 'エラーチェック' do
+    def create_register_block(**config_values, &)
+      configuration = create_configuration(**config_values)
+      register_map = create_register_map(configuration) do
+        register_block do
+          name 'block'
+          byte_size 8
+          block_given? && instance_eval(&)
+        end
       end
+      register_map.register_blocks.first
+    end
 
-      [8, 16, 128, 256].each do |bus_width|
-        expect {
-          create_configuration(bus_width: bus_width, protocol: :axi4lite)
-        }.to raise_configuration_error "bus width either 32 bit or 64 bit is only supported: #{bus_width}"
+    context 'バス幅が32/64ビット以外の場合' do
+      it 'RegisterMapErrorを起こす' do
+        [32, 64].each do |width|
+          expect {
+            create_register_block(bus_width: width, protocol: :axi4lite)
+          }.not_to raise_error
+
+          expect {
+            create_register_block(bus_width: 32, protocol: :axi4lite) { bus_width width }
+          }.not_to raise_error
+        end
+
+        [8, 16, 128, 256].each do |width|
+          message = "bus width either 32 bit or 64 bit is only supported: #{width}"
+
+          expect {
+            create_register_block(bus_width: width, protocol: :axi4lite)
+          }.to raise_register_map_error message
+
+          expect {
+            create_register_block(bus_width: 32, protocol: :axi4lite) { bus_width width }
+          }.to raise_register_map_error message
+        end
       end
     end
   end
 
   describe 'sv rtl' do
-    include_context 'sv rtl common'
-
-    before(:all) do
-      RgGen.enable(:register_block, [:name, :byte_size])
-      RgGen.enable(:register, [:name, :offset_address, :size, :type])
-      RgGen.enable(:register, :type, :external)
-      RgGen.enable(:register_block, :sv_rtl_top)
-    end
-
     let(:address_width) { 16 }
 
     let(:bus_width) { 32 }

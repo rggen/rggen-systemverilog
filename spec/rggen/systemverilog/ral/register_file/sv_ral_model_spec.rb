@@ -5,8 +5,8 @@ RSpec.describe 'register_file/sv_ral_model' do
   include_context 'clean-up builder'
 
   before(:all) do
-    RgGen.enable(:global, [:bus_width, :address_width, :enable_wide_register])
-    RgGen.enable(:register_block, [:byte_size])
+    RgGen.enable(:global, [:address_width, :enable_wide_register])
+    RgGen.enable(:register_block, [:byte_size, :bus_width])
     RgGen.enable(:register_file, [:name, :offset_address, :size])
     RgGen.enable(:register, [:name, :offset_address, :size, :type])
     RgGen.enable(:bit_field, [:name, :bit_assignment, :type, :initial_value, :reference])

@@ -1,13 +1,16 @@
 #! frozen_string_literal: true
 
 RSpec.describe 'register_block/protocol/native' do
-  include_context 'configuration common'
+  include_context 'sv rtl common'
   include_context 'clean-up builder'
 
   before(:all) do
-    RgGen.enable(:global, [:bus_width, :address_width, :enable_wide_register])
-    RgGen.enable(:register_block, :protocol)
+    RgGen.enable(:global, [:address_width, :enable_wide_register])
+    RgGen.enable(:register_block, [:protocol, :bus_width, :name, :byte_size])
     RgGen.enable(:register_block, :protocol, [:native])
+    RgGen.enable(:register, [:name, :offset_address, :size, :type])
+    RgGen.enable(:register, :type, :external)
+    RgGen.enable(:register_block, :sv_rtl_top)
   end
 
   describe 'configuration' do
@@ -18,15 +21,6 @@ RSpec.describe 'register_block/protocol/native' do
   end
 
   describe 'sv rtl' do
-    include_context 'sv rtl common'
-
-    before(:all) do
-      RgGen.enable(:register_block, [:name, :byte_size])
-      RgGen.enable(:register, [:name, :offset_address, :size, :type])
-      RgGen.enable(:register, :type, :external)
-      RgGen.enable(:register_block, :sv_rtl_top)
-    end
-
     let(:address_width) do
       16
     end

@@ -12,6 +12,12 @@ require 'rggen/default_register_map'
 builder.plugin_manager.activate_plugin_by_name(:'rggen-default-register-map')
 
 require 'rggen/spreadsheet_loader'
+builder.update_plugin(:'rggen-spreadsheet-loader') do |plugin|
+  plugin.setup_loader :register_map, :spreadsheet do |entry|
+    entry.ignore_value :register_block, :comment
+    entry.ignore_value :register, :comment
+  end
+end
 builder.plugin_manager.activate_plugin_by_name(:'rggen-spreadsheet-loader')
 
 RSpec.configure do |config|

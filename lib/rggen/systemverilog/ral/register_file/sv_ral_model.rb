@@ -47,7 +47,7 @@ RgGen.define_simple_feature(:register_file, :sv_ral_model) do
     end
 
     def byte_width
-      configuration.byte_width
+      register_block.byte_width
     end
 
     def child_model_constructors

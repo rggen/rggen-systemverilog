@@ -36,8 +36,8 @@ RSpec.describe 'register_block/protocol' do
   end
 
   before do
-    RgGen.enable(:global, [:bus_width, :address_width])
-    RgGen.enable(:register_block, :protocol)
+    RgGen.enable(:global, [:address_width])
+    RgGen.enable(:register_block, [:protocol, :bus_width])
   end
 
   after do

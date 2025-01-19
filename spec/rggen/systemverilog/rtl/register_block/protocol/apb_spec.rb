@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
 RSpec.describe 'register_block/protocol/apb' do
-  include_context 'configuration common'
+  include_context 'sv rtl common'
   include_context 'clean-up builder'
 
   before(:all) do
-    RgGen.enable(:global, [:bus_width, :address_width, :enable_wide_register])
-    RgGen.enable(:register_block, :protocol)
+    RgGen.enable(:global, [:address_width, :enable_wide_register])
+    RgGen.enable(:register_block, [:protocol, :bus_width, :name, :byte_size])
     RgGen.enable(:register_block, :protocol, [:apb])
+    RgGen.enable(:register, [:name, :offset_address, :size, :type])
+    RgGen.enable(:register, :type, :external)
+    RgGen.enable(:register_block, :sv_rtl_top)
   end
 
   describe 'configuration' do
@@ -15,46 +18,63 @@ RSpec.describe 'register_block/protocol/apb' do
       configuration = create_configuration(protocol: :apb)
       expect(configuration).to have_property(:protocol, :apb)
     end
+  end
 
-    it '32ビットを超えるバス幅に対応しない' do
-      [8, 16, 32].each do |bus_width|
-        expect {
-          create_configuration(bus_width: bus_width, protocol: :apb)
-        }.not_to raise_error
+  describe 'エラーチェック' do
+    def create_register_block(**config_values, &)
+      configuration = create_configuration(**config_values)
+      regiter_map = create_register_map(configuration) do
+        register_block do
+          name 'block'
+          byte_size 4
+          block_given? && instance_eval(&)
+        end
       end
+      regiter_map.register_blocks.first
+    end
 
-      [64, 128, 256].each do |bus_width|
-        expect {
-          create_configuration(bus_width: bus_width, protocol: :apb)
-        }.to raise_configuration_error "bus width over 32 bit is not supported: #{bus_width}"
+    context 'バス幅が32ビットを超える場合' do
+      it 'RegiterMapErrorを起こす' do
+        [8, 16, 32].each do |width|
+          expect {
+            create_register_block(bus_width: width, protocol: :apb) {}
+          }.not_to raise_error
+
+          expect {
+            create_register_block(bus_width: 32, protocol: :apb) { bus_width width }
+          }.not_to raise_error
+        end
+
+        [64, 128, 256].each do |width|
+          expect {
+            create_register_block(bus_width: width, protocol: :apb)
+          }.to raise_register_map_error "bus width over 32 bits is not supported: #{width}"
+
+          expect {
+            create_register_block(bus_width: 32, protocol: :apb) { bus_width width }
+          }.to raise_register_map_error "bus width over 32 bits is not supported: #{width}"
+        end
       end
     end
 
-    it '32ビットを超えるアドレス幅に対応しない' do
-      [2, 32, rand(3..31)].each do |address_width|
-        expect {
-          create_configuration(address_width: address_width, protocol: :apb)
-        }.not_to raise_error
-      end
+    context 'アドレス幅が32ビットを超える場合' do
+      it 'ConfigurationErrorを起こす' do
+        [2, 32, rand(3..31)].each do |address_width|
+          expect {
+            create_register_block(address_width: address_width, protocol: :apb) {}
+          }.not_to raise_error
+        end
 
-      [33, 34, rand(35..64)].each do |address_width|
-        expect {
-          create_configuration(address_width: address_width, protocol: :apb)
-        }.to raise_configuration_error "address width over 32 bit is not supported: #{address_width}"
+        [33, 34, rand(35..64)].each do |address_width|
+          expect {
+            create_register_block(address_width: address_width, protocol: :apb)
+          }.to raise_configuration_error "address width over 32 bits is not supported: #{address_width}"
+        end
       end
     end
   end
 
   describe 'sv rtl' do
-    include_context 'sv rtl common'
-
-    before(:all) do
-      RgGen.enable(:register_block, [:name, :byte_size])
-      RgGen.enable(:register, [:name, :offset_address, :size, :type])
-      RgGen.enable(:register, :type, :external)
-      RgGen.enable(:register_block, :sv_rtl_top)
-    end
-
     let(:address_width) { 16 }
 
     let(:bus_width) { 32 }
