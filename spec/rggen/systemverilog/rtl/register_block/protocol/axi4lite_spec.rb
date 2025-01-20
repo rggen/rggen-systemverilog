@@ -7,32 +7,33 @@ RSpec.describe 'register_block/protocol/axi4lite' do
   before(:all) do
     RgGen.enable(:global, [:address_width, :enable_wide_register])
     RgGen.enable(:register_block, [:protocol, :bus_width, :name, :byte_size])
-    RgGen.enable(:register_block, :protocol, [:axi4lite])
+    RgGen.enable(:register_block, :protocol, [:native, :axi4lite])
     RgGen.enable(:register, [:name, :offset_address, :size, :type])
     RgGen.enable(:register, :type, :external)
     RgGen.enable(:register_block, :sv_rtl_top)
   end
 
-  describe 'configuration' do
-    specify 'プロトコル名は:axi4lite' do
-      configuration = create_configuration(protocol: :axi4lite)
-      expect(configuration).to have_property(:protocol, :axi4lite)
+  def create_register_block(**config_values, &)
+    configuration = create_configuration(**config_values)
+    register_map = create_register_map(configuration) do
+      register_block do
+        name 'block'
+        byte_size 8
+        block_given? && instance_eval(&)
+      end
     end
+    register_map.register_blocks.first
+  end
+
+  specify 'プロトコル名は:axi4lite' do
+    configuration = create_configuration(protocol: :axi4lite)
+    expect(configuration).to have_property(:protocol, :axi4lite)
+
+    register_block = create_register_block { protocol :axi4lite }
+    expect(register_block).to have_property(:protocol, :axi4lite)
   end
 
   describe 'エラーチェック' do
-    def create_register_block(**config_values, &)
-      configuration = create_configuration(**config_values)
-      register_map = create_register_map(configuration) do
-        register_block do
-          name 'block'
-          byte_size 8
-          block_given? && instance_eval(&)
-        end
-      end
-      register_map.register_blocks.first
-    end
-
     context 'バス幅が32/64ビット以外の場合' do
       it 'RegisterMapErrorを起こす' do
         [32, 64].each do |width|
@@ -41,7 +42,7 @@ RSpec.describe 'register_block/protocol/axi4lite' do
           }.not_to raise_error
 
           expect {
-            create_register_block(bus_width: 32, protocol: :axi4lite) { bus_width width }
+            create_register_block(bus_width: 32) { bus_width width; protocol :axi4lite }
           }.not_to raise_error
         end
 
@@ -53,7 +54,7 @@ RSpec.describe 'register_block/protocol/axi4lite' do
           }.to raise_register_map_error message
 
           expect {
-            create_register_block(bus_width: 32, protocol: :axi4lite) { bus_width width }
+            create_register_block(bus_width: 32) { bus_width width; protocol :axi4lite }
           }.to raise_register_map_error message
         end
       end
@@ -61,45 +62,43 @@ RSpec.describe 'register_block/protocol/axi4lite' do
   end
 
   describe 'sv rtl' do
-    let(:address_width) { 16 }
+    let(:address_width) do
+      16
+    end
 
-    let(:bus_width) { 32 }
+    let(:bus_width) do
+      32
+    end
 
-    def create_register_block(&body)
+    let(:sv_rtl_top) do
       configuration = create_configuration(
         address_width: address_width,
         bus_width: bus_width,
         protocol: :axi4lite
       )
-      create_sv_rtl(configuration, &body).register_blocks.first
-    end
-
-    it 'パラメータ#id_width/#write_firstを持つ' do
-      register_block = create_register_block do
+      sv_rtl = create_sv_rtl(configuration) do
         name 'block_0'
         byte_size 256
         register { name 'register_0'; offset_address 0x00; size [1]; type :external }
+        register { name 'register_1'; offset_address 0x10; size [1]; type :external }
+        register { name 'register_2'; offset_address 0x20; size [1]; type :external }
       end
+      sv_rtl.register_blocks.first
+    end
 
-      expect(register_block).to have_parameter(
+    it 'パラメータ#id_width/#write_firstを持つ' do
+      expect(sv_rtl_top).to have_parameter(
         :id_width,
         name: 'ID_WIDTH', parameter_type: :parameter, data_type: :int, default: 0
       )
-
-      expect(register_block).to have_parameter(
+      expect(sv_rtl_top).to have_parameter(
         :write_first,
         name: 'WRITE_FIRST', parameter_type: :parameter, data_type: :bit, default: 1
       )
     end
 
     it 'インターフェースポート#axi4lite_ifを持つ' do
-      register_block = create_register_block do
-        name 'block_0'
-        byte_size 256
-        register { name 'register_0'; offset_address 0x00; size [1]; type :external }
-      end
-
-      expect(register_block).to have_interface_port(
+      expect(sv_rtl_top).to have_interface_port(
         :axi4lite_if,
         name: 'axi4lite_if', interface_type: 'rggen_axi4lite_if', modport: 'slave'
       )
@@ -107,15 +106,7 @@ RSpec.describe 'register_block/protocol/axi4lite' do
 
     describe '#generate_code' do
       it 'rggen_axi4lite_adapterをインスタンスするコードを生成する' do
-        register_block = create_register_block do
-          name 'block_0'
-          byte_size 256
-          register { name 'register_0'; offset_address 0x00; size [1]; type :external }
-          register { name 'register_1'; offset_address 0x10; size [1]; type :external }
-          register { name 'register_2'; offset_address 0x20; size [1]; type :external }
-        end
-
-        expect(register_block).to generate_code(:register_block, :top_down, <<~'CODE')
+        expect(sv_rtl_top).to generate_code(:register_block, :top_down, <<~'CODE')
           rggen_axi4lite_adapter #(
             .ID_WIDTH             (ID_WIDTH),
             .ADDRESS_WIDTH        (ADDRESS_WIDTH),
