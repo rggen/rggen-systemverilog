@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 RgGen.define_list_item_feature(:register_block, :protocol, :wishbone) do
-  configuration do
+  register_map do
     verify(:component) do
-      error_condition { configuration.bus_width > 64 }
+      error_condition { register_block.bus_width > 64 }
       message do
-        'bus width over 64 bit is not supported: ' \
-        "#{configuration.bus_width}"
+        'bus width over 64 bits is not supported: ' \
+        "#{register_block.bus_width}"
+      end
+      position do
+        register_block.feature(:bus_width).position
       end
     end
   end

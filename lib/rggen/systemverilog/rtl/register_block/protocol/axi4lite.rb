@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 RgGen.define_list_item_feature(:register_block, :protocol, :axi4lite) do
-  configuration do
+  register_map do
     verify(:component) do
-      error_condition { ![32, 64].include?(configuration.bus_width) }
+      error_condition { ![32, 64].include?(register_block.bus_width) }
       message do
         'bus width either 32 bit or 64 bit is only supported: ' \
-        "#{configuration.bus_width}"
+        "#{register_block.bus_width}"
+      end
+      position do
+        register_block.feature(:bus_width).position
       end
     end
   end

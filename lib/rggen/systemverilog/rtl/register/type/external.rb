@@ -5,7 +5,7 @@ RgGen.define_list_item_feature(:register, :type, :external) do
     build do
       parameter :strobe_width, {
         name: "#{register.name}_strobe_width".upcase,
-        data_type: :int, default: configuration.bus_width / 8
+        data_type: :int, default: bus_width / 8
       }
       interface_port :bus_if, {
         name: "#{register.name}_bus_if",

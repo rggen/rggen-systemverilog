@@ -21,7 +21,7 @@ module RgGen
         end
 
         def bus_width
-          configuration.bus_width
+          register_block.bus_width
         end
 
         def value_width

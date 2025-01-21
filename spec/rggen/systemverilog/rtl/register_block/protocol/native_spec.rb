@@ -1,32 +1,39 @@
 #! frozen_string_literal: true
 
 RSpec.describe 'register_block/protocol/native' do
-  include_context 'configuration common'
+  include_context 'sv rtl common'
   include_context 'clean-up builder'
 
   before(:all) do
-    RgGen.enable(:global, [:bus_width, :address_width, :enable_wide_register])
-    RgGen.enable(:register_block, :protocol)
-    RgGen.enable(:register_block, :protocol, [:native])
+    RgGen.enable(:global, [:address_width, :enable_wide_register])
+    RgGen.enable(:register_block, [:protocol, :bus_width, :name, :byte_size])
+    RgGen.enable(:register_block, :protocol, [:apb, :native])
+    RgGen.enable(:register, [:name, :offset_address, :size, :type])
+    RgGen.enable(:register, :type, :external)
+    RgGen.enable(:register_block, :sv_rtl_top)
   end
 
-  describe 'configuration' do
-    specify 'プロトコル名は:native' do
-      configuration = create_configuration(protocol: :native)
-      expect(configuration).to have_property(:protocol, :native)
+  def create_register_block(**config_values, &)
+    configuration = create_configuration(**config_values)
+    register_map = create_register_map(configuration) do
+      register_block do
+        name 'block'
+        byte_size 8
+        block_given? && instance_eval(&)
+      end
     end
+    register_map.register_blocks.first
+  end
+
+  specify 'プロトコル名は:native' do
+    configuration = create_configuration(protocol: :native)
+    expect(configuration).to have_property(:protocol, :native)
+
+    register_block = create_register_block { protocol :native }
+    expect(register_block).to have_property(:protocol, :native)
   end
 
   describe 'sv rtl' do
-    include_context 'sv rtl common'
-
-    before(:all) do
-      RgGen.enable(:register_block, [:name, :byte_size])
-      RgGen.enable(:register, [:name, :offset_address, :size, :type])
-      RgGen.enable(:register, :type, :external)
-      RgGen.enable(:register_block, :sv_rtl_top)
-    end
-
     let(:address_width) do
       16
     end
@@ -36,21 +43,18 @@ RSpec.describe 'register_block/protocol/native' do
     end
 
     let(:register_block) do
-      create_register_block do
+      configuration =
+        create_configuration(
+          address_width:, bus_width:, protocol: :native
+        )
+      sv_rtl = create_sv_rtl(configuration) do
         name 'block_0'
         byte_size 256
         register { name 'register_0'; offset_address 0x00; size [1]; type :external }
         register { name 'register_1'; offset_address 0x10; size [1]; type :external }
         register { name 'register_2'; offset_address 0x20; size [1]; type :external }
       end
-    end
-
-    def create_register_block(&)
-      configuration =
-        create_configuration(
-          address_width:, bus_width:, protocol: :native
-        )
-      create_sv_rtl(configuration, &).register_blocks.first
+      sv_rtl.register_blocks.first
     end
 
     it 'パラメータ#strobe_widthを持つ' do

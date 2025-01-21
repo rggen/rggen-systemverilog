@@ -6,16 +6,25 @@ RgGen.define_list_feature(:register_block, :protocol) do
       feature_registries << registry
     end
 
-    def available_protocols
-      feature_registries
-        .map { |registry| registry.enabled_features(:protocol) }
-        .inject(:&)
+    def default_protocol
+      available_protocols.first
+    end
+
+    def find_protocol(value)
+      available_protocols
+        .find { value.to_sym.casecmp?(_1) }
     end
 
     private
 
     def feature_registries
       @feature_registries ||= []
+    end
+
+    def available_protocols
+      feature_registries
+        .map { |registry| registry.enabled_features(:protocol) }
+        .inject(:&)
     end
   end
 
@@ -31,32 +40,42 @@ RgGen.define_list_feature(:register_block, :protocol) do
 
     factory do
       convert_value do |value, position|
-        protocol = find_protocol(value)
-        protocol ||
+        shared_context.find_protocol(value) ||
           (error "unknown protocol: #{value.inspect}", position)
       end
 
       default_value do |position|
-        default_protocol ||
+        shared_context.default_protocol ||
           (error 'no protocols are available', position)
       end
 
       def target_feature_key(data)
         data.value
       end
+    end
+  end
 
-      private
+  register_map do
+    base_feature do
+      property :protocol, default: -> { configuration.protocol }
+      build { |protocol| @protocol = protocol }
 
-      def find_protocol(value)
-        available_protocols.find(&value.to_sym.method(:casecmp?))
+      def position
+        super || configuration.feature(:protocol).position
+      end
+    end
+
+    default_feature do
+    end
+
+    factory do
+      convert_value do |value, position|
+        shared_context.find_protocol(value) ||
+          (error "unknown protocol: #{value.inspect}", position)
       end
 
-      def default_protocol
-        available_protocols.first
-      end
-
-      def available_protocols
-        @available_protocols ||= shared_context.available_protocols
+      def target_feature_key(configuration, data)
+        data&.value || configuration.protocol
       end
     end
   end
@@ -91,7 +110,7 @@ RgGen.define_list_feature(:register_block, :protocol) do
       private
 
       def bus_width
-        configuration.bus_width
+        register_block.bus_width
       end
 
       def local_address_width
@@ -120,8 +139,8 @@ RgGen.define_list_feature(:register_block, :protocol) do
     end
 
     factory do
-      def target_feature_key(configuration, _register_block)
-        configuration.protocol
+      def target_feature_key(_configuration, register_block)
+        register_block.protocol
       end
     end
   end

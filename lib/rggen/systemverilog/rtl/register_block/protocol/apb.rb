@@ -1,20 +1,26 @@
 # frozen_string_literal: true
 
 RgGen.define_list_item_feature(:register_block, :protocol, :apb) do
-  configuration do
+  register_map do
     verify(:component) do
-      error_condition { configuration.bus_width > 32 }
+      error_condition { register_block.bus_width > 32 }
       message do
-        'bus width over 32 bit is not supported: ' \
-        "#{configuration.bus_width}"
+        'bus width over 32 bits is not supported: ' \
+        "#{register_block.bus_width}"
+      end
+      position do
+        register_block.feature(:bus_width).position
       end
     end
 
     verify(:component) do
       error_condition { configuration.address_width > 32 }
       message do
-        'address width over 32 bit is not supported: ' \
+        'address width over 32 bits is not supported: ' \
         "#{configuration.address_width}"
+      end
+      position do
+        configuration.feature(:address_width).position
       end
     end
   end

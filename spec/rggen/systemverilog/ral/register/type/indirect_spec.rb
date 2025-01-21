@@ -5,8 +5,8 @@ RSpec.describe 'register/type/indirect' do
   include_context 'sv ral common'
 
   before(:all) do
-    RgGen.enable(:global, [:bus_width, :address_width, :enable_wide_register])
-    RgGen.enable(:register_block, [:byte_size])
+    RgGen.enable(:global, [:address_width, :enable_wide_register])
+    RgGen.enable(:register_block, [:byte_size, :bus_width])
     RgGen.enable(:register_file, [:name, :offset_address, :size])
     RgGen.enable(:register, [:name, :offset_address, :size, :type])
     RgGen.enable(:register, :type, [:indirect])
