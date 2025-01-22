@@ -35,11 +35,11 @@ RSpec.describe 'global/array_port_format' do
 
   describe 'エラーチェック' do
     context '入力がpacked/unpacked/serialized以外の場合' do
-      it 'ConfigurationErrorを起こす' do
+      it 'SourceErrorを起こす' do
         [nil, true, false, '', 'foo', :foo, 0, Object.new].each do |value|
           expect {
             create_configuration(array_port_format: value)
-          }.to raise_configuration_error "illegal input value for array port format: #{value.inspect}"
+          }.to raise_source_error "illegal input value for array port format: #{value.inspect}"
         end
       end
     end

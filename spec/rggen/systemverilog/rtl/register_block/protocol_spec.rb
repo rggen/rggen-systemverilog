@@ -103,18 +103,18 @@ RSpec.describe 'register_block/protocol' do
           RgGen.enable(:register_block, :protocol, [:buz, :qux])
         end
 
-        it 'ConfigurationErrorを起こす' do
+        it 'SourceErrorを起こす' do
           expect {
             create_configuration
-          }.to raise_configuration_error 'no protocols are available'
+          }.to raise_source_error 'no protocols are available'
 
           expect {
             create_configuration(protocol: nil)
-          }.to raise_configuration_error 'no protocols are available'
+          }.to raise_source_error 'no protocols are available'
 
           expect {
             create_configuration(protocol: '')
-          }.to raise_configuration_error 'no protocols are available'
+          }.to raise_source_error 'no protocols are available'
         end
       end
 
@@ -123,36 +123,36 @@ RSpec.describe 'register_block/protocol' do
           RgGen.enable(:register_block, :protocol, [:foo, :bar, :baz, :qux])
         end
 
-        it 'ConfigurationErrorを起こす' do
+        it 'SourceErrorを起こす' do
           value = random_string(/foobar/i)
           expect {
             create_configuration(protocol: value)
-          }.to raise_configuration_error "unknown protocol: #{value.inspect}"
+          }.to raise_source_error "unknown protocol: #{value.inspect}"
 
           value = random_string(/foobar/i).to_sym
           expect {
             create_configuration(protocol: value)
-          }.to raise_configuration_error "unknown protocol: #{value.inspect}"
+          }.to raise_source_error "unknown protocol: #{value.inspect}"
 
           value = random_string(/baz/i)
           expect {
             create_configuration(protocol: value)
-          }.to raise_configuration_error "unknown protocol: #{value.inspect}"
+          }.to raise_source_error "unknown protocol: #{value.inspect}"
 
           value = random_string(/baz/i).to_sym
           expect {
             create_configuration(protocol: value)
-          }.to raise_configuration_error "unknown protocol: #{value.inspect}"
+          }.to raise_source_error "unknown protocol: #{value.inspect}"
 
           value = random_string(/qux/i)
           expect {
             create_configuration(protocol: value)
-          }.to raise_configuration_error "unknown protocol: #{value.inspect}"
+          }.to raise_source_error "unknown protocol: #{value.inspect}"
 
           value = random_string(/qux/i).to_sym
           expect {
             create_configuration(protocol: value)
-          }.to raise_configuration_error "unknown protocol: #{value.inspect}"
+          }.to raise_source_error "unknown protocol: #{value.inspect}"
         end
       end
 
@@ -161,16 +161,16 @@ RSpec.describe 'register_block/protocol' do
           RgGen.enable(:register_block, :protocol, [:foo, :bar, :fizz])
         end
 
-        it 'ConfigurationErrorを起こす' do
+        it 'SourceErrorを起こす' do
           value = random_string(/fizz/i)
           expect {
             create_configuration(protocol: value)
-          }.to raise_configuration_error "unknown protocol: #{value.inspect}"
+          }.to raise_source_error "unknown protocol: #{value.inspect}"
 
           value = random_string(/fizz/i).to_sym
           expect {
             create_configuration(protocol: value)
-          }.to raise_configuration_error "unknown protocol: #{value.inspect}"
+          }.to raise_source_error "unknown protocol: #{value.inspect}"
         end
       end
     end
@@ -235,18 +235,18 @@ RSpec.describe 'register_block/protocol' do
         RgGen.enable(:register_block, :protocol, [:buz, :qux])
       end
 
-      it 'ConfigurationErrorを起こす' do
+      it 'SourceErrorを起こす' do
         expect {
           create_configuration
-        }.to raise_configuration_error 'no protocols are available'
+        }.to raise_source_error 'no protocols are available'
 
         expect {
           create_configuration(protocol: nil)
-        }.to raise_configuration_error 'no protocols are available'
+        }.to raise_source_error 'no protocols are available'
 
         expect {
           create_configuration(protocol: '')
-        }.to raise_configuration_error 'no protocols are available'
+        }.to raise_source_error 'no protocols are available'
       end
     end
 
@@ -255,54 +255,54 @@ RSpec.describe 'register_block/protocol' do
         RgGen.enable(:register_block, :protocol, [:foo, :bar, :baz, :qux])
       end
 
-      it 'ConfigurationError/RegisterMapErrorを起こす' do
+      it 'SourceErrorを起こす' do
         value = random_string(/foobar/i)
         expect {
           create_configuration(protocol: value)
-        }.to raise_configuration_error "unknown protocol: #{value.inspect}"
+        }.to raise_source_error "unknown protocol: #{value.inspect}"
         expect {
           create_register_block { protocol value }
-        }.to raise_register_map_error "unknown protocol: #{value.inspect}"
+        }.to raise_source_error "unknown protocol: #{value.inspect}"
 
         value = random_string(/foobar/i).to_sym
         expect {
           create_configuration(protocol: value)
-        }.to raise_configuration_error "unknown protocol: #{value.inspect}"
+        }.to raise_source_error "unknown protocol: #{value.inspect}"
         expect {
           create_register_block { protocol value }
-        }.to raise_register_map_error "unknown protocol: #{value.inspect}"
+        }.to raise_source_error "unknown protocol: #{value.inspect}"
 
         value = random_string(/baz/i)
         expect {
           create_configuration(protocol: value)
-        }.to raise_configuration_error "unknown protocol: #{value.inspect}"
+        }.to raise_source_error "unknown protocol: #{value.inspect}"
         expect {
           create_register_block { protocol value }
-        }.to raise_register_map_error "unknown protocol: #{value.inspect}"
+        }.to raise_source_error "unknown protocol: #{value.inspect}"
 
         value = random_string(/baz/i).to_sym
         expect {
           create_configuration(protocol: value)
-        }.to raise_configuration_error "unknown protocol: #{value.inspect}"
+        }.to raise_source_error "unknown protocol: #{value.inspect}"
         expect {
           create_register_block { protocol value }
-        }.to raise_register_map_error "unknown protocol: #{value.inspect}"
+        }.to raise_source_error "unknown protocol: #{value.inspect}"
 
         value = random_string(/qux/i)
         expect {
           create_configuration(protocol: value)
-        }.to raise_configuration_error "unknown protocol: #{value.inspect}"
+        }.to raise_source_error "unknown protocol: #{value.inspect}"
         expect {
           create_register_block { protocol value }
-        }.to raise_register_map_error "unknown protocol: #{value.inspect}"
+        }.to raise_source_error "unknown protocol: #{value.inspect}"
 
         value = random_string(/qux/i).to_sym
         expect {
           create_configuration(protocol: value)
-        }.to raise_configuration_error "unknown protocol: #{value.inspect}"
+        }.to raise_source_error "unknown protocol: #{value.inspect}"
         expect {
           create_register_block { protocol value }
-        }.to raise_register_map_error "unknown protocol: #{value.inspect}"
+        }.to raise_source_error "unknown protocol: #{value.inspect}"
       end
     end
 
@@ -311,22 +311,22 @@ RSpec.describe 'register_block/protocol' do
         RgGen.enable(:register_block, :protocol, [:foo, :bar, :fizz])
       end
 
-      it 'ConfigurationError/RegisterMapErrorを起こす' do
+      it 'SourceError/RegisterMapErrorを起こす' do
         value = random_string(/fizz/i)
         expect {
           create_configuration(protocol: value)
-        }.to raise_configuration_error "unknown protocol: #{value.inspect}"
+        }.to raise_source_error "unknown protocol: #{value.inspect}"
         expect {
           create_register_block { protocol value }
-        }.to raise_register_map_error "unknown protocol: #{value.inspect}"
+        }.to raise_source_error "unknown protocol: #{value.inspect}"
 
         value = random_string(/fizz/i).to_sym
         expect {
           create_configuration(protocol: value)
-        }.to raise_configuration_error "unknown protocol: #{value.inspect}"
+        }.to raise_source_error "unknown protocol: #{value.inspect}"
         expect {
           create_register_block { protocol value }
-        }.to raise_register_map_error "unknown protocol: #{value.inspect}"
+        }.to raise_source_error "unknown protocol: #{value.inspect}"
       end
     end
   end

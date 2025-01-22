@@ -35,7 +35,7 @@ RSpec.describe 'register_block/protocol/wishbone' do
 
   describe 'エラーチェック' do
     context 'バス幅が64ビットを超える場合' do
-      it 'RegisterMapErrorを起こす' do
+      it 'SourceErrorを起こす' do
         [8, 16, 32, 64].each do |width|
           expect {
             create_register_block(bus_width: width, protocol: :wishbone)
@@ -51,11 +51,11 @@ RSpec.describe 'register_block/protocol/wishbone' do
 
           expect {
             create_register_block(bus_width: width, protocol: :wishbone)
-          }.to raise_register_map_error message
+          }.to raise_source_error message
 
           expect {
             create_register_block(bus_width: 32) { bus_width width; protocol :wishbone }
-          }.to raise_register_map_error message
+          }.to raise_source_error message
         end
       end
     end

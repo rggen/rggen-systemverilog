@@ -35,7 +35,7 @@ RSpec.describe 'register_block/protocol/apb' do
 
   describe 'エラーチェック' do
     context 'バス幅が32ビットを超える場合' do
-      it 'RegiterMapErrorを起こす' do
+      it 'SourceErrorを起こす' do
         [8, 16, 32].each do |width|
           expect {
             create_register_block(bus_width: width, protocol: :apb)
@@ -49,17 +49,17 @@ RSpec.describe 'register_block/protocol/apb' do
         [64, 128, 256].each do |width|
           expect {
             create_register_block(bus_width: width, protocol: :apb)
-          }.to raise_register_map_error "bus width over 32 bits is not supported: #{width}"
+          }.to raise_source_error "bus width over 32 bits is not supported: #{width}"
 
           expect {
             create_register_block(bus_width: 32) { bus_width width; protocol :apb }
-          }.to raise_register_map_error "bus width over 32 bits is not supported: #{width}"
+          }.to raise_source_error "bus width over 32 bits is not supported: #{width}"
         end
       end
     end
 
     context 'アドレス幅が32ビットを超える場合' do
-      it 'RegiterMapErrorを起こす' do
+      it 'SourceErrorを起こす' do
         [2, 32, rand(3..31)].each do |address_width|
           expect {
             create_register_block(address_width: address_width, protocol: :apb)
@@ -73,11 +73,11 @@ RSpec.describe 'register_block/protocol/apb' do
         [33, 34, rand(35..64)].each do |address_width|
           expect {
             create_register_block(address_width: address_width, protocol: :apb)
-          }.to raise_register_map_error "address width over 32 bits is not supported: #{address_width}"
+          }.to raise_source_error "address width over 32 bits is not supported: #{address_width}"
 
           expect {
             create_register_block(address_width: address_width) { protocol :apb }
-          }.to raise_register_map_error "address width over 32 bits is not supported: #{address_width}"
+          }.to raise_source_error "address width over 32 bits is not supported: #{address_width}"
         end
       end
     end
