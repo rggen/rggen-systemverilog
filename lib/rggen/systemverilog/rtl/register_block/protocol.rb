@@ -28,22 +28,31 @@ RgGen.define_list_feature(:register_block, :protocol) do
     end
   end
 
+  [:configuration, :register_map].each do |component_type|
+    component(component_type) do
+      base_feature do
+        build { |protocol| @protocol = protocol }
+      end
+
+      default_feature do
+      end
+
+      factory do
+        convert_value do |value, position|
+          shared_context.find_protocol(value) ||
+            (error "unknown protocol: #{value.inspect}", position)
+        end
+      end
+    end
+  end
+
   configuration do
     base_feature do
       property :protocol
-      build { |protocol| @protocol = protocol }
       printable :protocol
     end
 
-    default_feature do
-    end
-
     factory do
-      convert_value do |value, position|
-        shared_context.find_protocol(value) ||
-          (error "unknown protocol: #{value.inspect}", position)
-      end
-
       default_value do |position|
         shared_context.default_protocol ||
           (error 'no protocols are available', position)
@@ -58,22 +67,13 @@ RgGen.define_list_feature(:register_block, :protocol) do
   register_map do
     base_feature do
       property :protocol, default: -> { configuration.protocol }
-      build { |protocol| @protocol = protocol }
 
       def position
         super || configuration.feature(:protocol).position
       end
     end
 
-    default_feature do
-    end
-
     factory do
-      convert_value do |value, position|
-        shared_context.find_protocol(value) ||
-          (error "unknown protocol: #{value.inspect}", position)
-      end
-
       def target_feature_key(configuration, data)
         data&.value || configuration.protocol
       end
