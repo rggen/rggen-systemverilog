@@ -57,11 +57,16 @@ RSpec.describe 'register_block/protocol/native' do
       sv_rtl.register_blocks.first
     end
 
-    it 'パラメータ#strobe_widthを持つ' do
+    it 'パラメータ#strobe_width/#use_read_strobeを持つ' do
       expect(register_block).to have_parameter(
         :strobe_width,
         name: 'STROBE_WIDTH', parameter_type: :parameter,
         data_type: :int, default: bus_width / 8
+      )
+      expect(register_block).to have_parameter(
+        :use_read_strobe,
+        name: 'USE_READ_STROBE', parameter_type: :parameter,
+        data_type: :bit, default: 0
       )
     end
 
@@ -84,6 +89,7 @@ RSpec.describe 'register_block/protocol/native' do
             .PRE_DECODE           (PRE_DECODE),
             .BASE_ADDRESS         (BASE_ADDRESS),
             .BYTE_SIZE            (256),
+            .USE_READ_STROBE      (USE_READ_STROBE),
             .ERROR_STATUS         (ERROR_STATUS),
             .DEFAULT_READ_DATA    (DEFAULT_READ_DATA),
             .INSERT_SLICER        (INSERT_SLICER)

@@ -26,6 +26,7 @@ RgGen.setup_plugin :'rggen-sv-rtl' do |plugin|
     'rtl/register_block/protocol',
     'rtl/register_block/protocol/apb',
     'rtl/register_block/protocol/axi4lite',
+    'rtl/register_block/protocol/avalon',
     'rtl/register_block/protocol/wishbone',
     'rtl/register_block/protocol/native',
     'rtl/register_file/sv_rtl_top',

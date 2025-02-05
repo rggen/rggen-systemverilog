@@ -1,19 +1,17 @@
-rggen_native_adapter #(
+rggen_avalon_adapter #(
   .ADDRESS_WIDTH        (<%= address_width %>),
   .LOCAL_ADDRESS_WIDTH  (<%= local_address_width %>),
   .BUS_WIDTH            (<%= bus_width %>),
-  .STROBE_WIDTH         (<%= strobe_width %>),
   .REGISTERS            (<%= total_registers %>),
   .PRE_DECODE           (<%= pre_decode %>),
   .BASE_ADDRESS         (<%= base_address %>),
   .BYTE_SIZE            (<%= byte_size %>),
-  .USE_READ_STROBE      (<%= use_read_strobe %>),
   .ERROR_STATUS         (<%= error_status %>),
   .DEFAULT_READ_DATA    (<%= default_read_data %>),
   .INSERT_SLICER        (<%= insert_slicer %>)
 ) u_adapter (
   .i_clk        (<%= clock %>),
   .i_rst_n      (<%= reset %>),
-  .csrbus_if    (<%= csrbus_if %>),
+  .avalon_if    (<%= avalon_if %>),
   .register_if  (<%= register_if %>)
 );
