@@ -16,14 +16,10 @@ module RgGen
           def define_entity(entity_type, method, declaration_type, default_layer)
             context =
               EntityContext.new(entity_type, method, declaration_type, default_layer)
-            define_method(entity_type) do |name, *args, &block|
-              if args.size >= 3
-                message = 'wrong number of arguments ' \
-                          "(given #{args.size + 1}, expected 1..3)"
-                raise ArgumentError.new(message)
-              end
-              define_entity(context, name, args, &block)
-            end
+            feature_hash_variable_store(:@entity_contexts, entity_type, context)
+
+            return if method_defined?(entity_type)
+            public alias_method(entity_type, :entity_method)
           end
         end
 
@@ -36,6 +32,17 @@ module RgGen
         def post_initialize
           super
           @package_imports = Hash.new { |h, k| h[k] = [] }
+        end
+
+        def entity_method(name, *args, &)
+          if args.size >= 3
+            message = 'wrong number of arguments ' \
+                      "(given #{args.size + 1}, expected 1..3)"
+            raise ArgumentError.new(message)
+          end
+
+          context = feature_hash_variable_fetch(:@entity_contexts, __callee__)
+          define_entity(context, name, args, &)
         end
 
         def define_entity(context, name, args, &)
