@@ -278,9 +278,9 @@ RSpec.describe 'register/type/indirect' do
             `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, -1, "")
           endfunction
           function void setup_index_fields();
-            setup_index_field("register_0.bit_field_0", 1'h0);
             setup_index_field("register_0.bit_field_1", array_index[0]);
             setup_index_field("register_0.bit_field_2", array_index[1]);
+            setup_index_field("register_0.bit_field_0", 1'h0);
           endfunction
         endclass
       CODE

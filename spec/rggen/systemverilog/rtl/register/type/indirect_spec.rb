@@ -249,9 +249,9 @@ RSpec.describe 'register/type/indirect' do
 
       expect(registers[7]).to generate_code(:register, :top_down, <<~'CODE')
         `rggen_tie_off_unused_signals(32, 32'h00000001, bit_field_if)
-        assign indirect_match[0] = register_if[0].value[0+:1] == 1'h0;
-        assign indirect_match[1] = register_if[0].value[8+:2] == 2'(i);
-        assign indirect_match[2] = register_if[0].value[16+:4] == 4'(j);
+        assign indirect_match[0] = register_if[0].value[8+:2] == 2'(i);
+        assign indirect_match[1] = register_if[0].value[16+:4] == 4'(j);
+        assign indirect_match[2] = register_if[0].value[0+:1] == 1'h0;
         rggen_indirect_register #(
           .READABLE             (1),
           .WRITABLE             (1),
@@ -336,9 +336,9 @@ RSpec.describe 'register/type/indirect' do
 
       expect(registers[11]).to generate_code(:register, :top_down, <<~'CODE')
         `rggen_tie_off_unused_signals(32, 32'h00000001, bit_field_if)
-        assign indirect_match[0] = register_if[3].value[0+:1] == 1'h0;
-        assign indirect_match[1] = register_if[3].value[8+:2] == 2'(i);
-        assign indirect_match[2] = register_if[3].value[16+:4] == 4'(j);
+        assign indirect_match[0] = register_if[3].value[8+:2] == 2'(i);
+        assign indirect_match[1] = register_if[3].value[16+:4] == 4'(j);
+        assign indirect_match[2] = register_if[3].value[0+:1] == 1'h0;
         rggen_indirect_register #(
           .READABLE             (1),
           .WRITABLE             (1),
@@ -359,9 +359,9 @@ RSpec.describe 'register/type/indirect' do
 
       expect(registers[12]).to generate_code(:register, :top_down, <<~'CODE')
         `rggen_tie_off_unused_signals(32, 32'h00000001, bit_field_if)
-        assign indirect_match[0] = register_if[0].value[0+:1] == 1'h0;
-        assign indirect_match[1] = register_if[0].value[8+:2] == 2'(k);
-        assign indirect_match[2] = register_if[0].value[16+:4] == 4'(l);
+        assign indirect_match[0] = register_if[0].value[8+:2] == 2'(k);
+        assign indirect_match[1] = register_if[0].value[16+:4] == 4'(l);
+        assign indirect_match[2] = register_if[0].value[0+:1] == 1'h0;
         rggen_indirect_register #(
           .READABLE             (1),
           .WRITABLE             (1),
@@ -382,9 +382,9 @@ RSpec.describe 'register/type/indirect' do
 
       expect(registers[13]).to generate_code(:register, :top_down, <<~'CODE')
         `rggen_tie_off_unused_signals(32, 32'h00000001, bit_field_if)
-        assign indirect_match[0] = register_if[3].value[0+:1] == 1'h0;
-        assign indirect_match[1] = register_if[3].value[8+:2] == 2'(k);
-        assign indirect_match[2] = register_if[3].value[16+:4] == 4'(l);
+        assign indirect_match[0] = register_if[3].value[8+:2] == 2'(k);
+        assign indirect_match[1] = register_if[3].value[16+:4] == 4'(l);
+        assign indirect_match[2] = register_if[3].value[0+:1] == 1'h0;
         rggen_indirect_register #(
           .READABLE             (1),
           .WRITABLE             (1),
