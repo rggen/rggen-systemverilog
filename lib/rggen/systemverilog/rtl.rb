@@ -21,7 +21,6 @@ RgGen.setup_plugin :'rggen-sv-rtl' do |plugin|
   end
 
   plugin.files [
-    'rtl/global/array_port_format',
     'rtl/register_block/sv_rtl_top',
     'rtl/register_block/protocol',
     'rtl/register_block/protocol/apb',

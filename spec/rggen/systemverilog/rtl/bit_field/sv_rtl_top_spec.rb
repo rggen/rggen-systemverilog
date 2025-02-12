@@ -5,7 +5,7 @@ RSpec.describe 'bit_field/sv_rtl_top' do
   include_context 'clean-up builder'
 
   before(:all) do
-    RgGen.enable(:global, [:address_width, :enable_wide_register, :array_port_format])
+    RgGen.enable(:global, [:address_width, :enable_wide_register])
     RgGen.enable(:register_block, [:name, :byte_size, :bus_width])
     RgGen.enable(:register_file, [:name, :offset_address, :size])
     RgGen.enable(:register, [:name, :offset_address, :size, :type])
@@ -17,19 +17,15 @@ RSpec.describe 'bit_field/sv_rtl_top' do
     RgGen.enable(:bit_field, :sv_rtl_top)
   end
 
-  def create_bit_fields(array_port_format = :packed, &body)
-    configuration = create_configuration(
-      enable_wide_register: true, array_port_format: array_port_format
-    )
-    create_sv_rtl(configuration, &body).bit_fields
+  def create_bit_fields(&)
+    configuration = create_configuration(enable_wide_register: true)
+    create_sv_rtl(configuration, &).bit_fields
   end
 
   describe '#initial_value' do
     context '単一の初期値が指定されている場合' do
-      let(:array_port_format) { [:packed, :unpacked, :serialized].sample }
-
       it '局所パラメータinitial_valueを持つ' do
-        bit_fields = create_bit_fields(array_port_format) do
+        bit_fields = create_bit_fields do
           name 'block_0'
           byte_size 256
 
@@ -183,7 +179,7 @@ RSpec.describe 'bit_field/sv_rtl_top' do
       end
 
       it 'パラメータinitial_valueを持つ' do
-        bit_fields = create_bit_fields(:packed, &register_map_body)
+        bit_fields = create_bit_fields(&register_map_body)
         expect(bit_fields[0]).to have_parameter(
           :register_block, :initial_value,
           name: "REGISTER_0_BIT_FIELD_0_INITIAL_VALUE", parameter_type: :parameter,
@@ -197,7 +193,7 @@ RSpec.describe 'bit_field/sv_rtl_top' do
         expect(bit_fields[2]).to have_parameter(
           :register_block, :initial_value,
           name: "REGISTER_0_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 8, array_size: [2], array_format: :packed, default: "{2{8'h02}}"
+          data_type: :bit, width: 8, array_size: [2], default: "{2{8'h02}}"
         )
         expect(bit_fields[3]).to have_parameter(
           :register_block, :initial_value,
@@ -212,7 +208,7 @@ RSpec.describe 'bit_field/sv_rtl_top' do
         expect(bit_fields[5]).to have_parameter(
           :register_block, :initial_value,
           name: "REGISTER_1_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 8, array_size: [2], array_format: :packed, default: "{2{8'h02}}"
+          data_type: :bit, width: 8, array_size: [2], default: "{2{8'h02}}"
         )
         expect(bit_fields[6]).to have_parameter(
           :register_block, :initial_value,
@@ -227,7 +223,7 @@ RSpec.describe 'bit_field/sv_rtl_top' do
         expect(bit_fields[8]).to have_parameter(
           :register_block, :initial_value,
           name: "REGISTER_FILE_2_REGISTER_0_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 8, array_size: [2], array_format: :packed, default: "{2{8'h02}}"
+          data_type: :bit, width: 8, array_size: [2], default: "{2{8'h02}}"
         )
         expect(bit_fields[9]).to have_parameter(
           :register_block, :initial_value,
@@ -242,140 +238,14 @@ RSpec.describe 'bit_field/sv_rtl_top' do
         expect(bit_fields[11]).to have_parameter(
           :register_block, :initial_value,
           name: "REGISTER_FILE_3_REGISTER_0_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 8, array_size: [2], array_format: :packed, default: "{2{8'h02}}"
-        )
-
-        bit_fields = create_bit_fields(:unpacked, &register_map_body)
-        expect(bit_fields[0]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_0_BIT_FIELD_0_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 1, default: "1'h0"
-        )
-        expect(bit_fields[1]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_0_BIT_FIELD_1_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 8, default: "8'h01"
-        )
-        expect(bit_fields[2]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_0_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{default: 8'h02}"
-        )
-        expect(bit_fields[3]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_1_BIT_FIELD_0_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 1, default: "1'h0"
-        )
-        expect(bit_fields[4]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_1_BIT_FIELD_1_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 8, default: "8'h01"
-        )
-        expect(bit_fields[5]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_1_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{default: 8'h02}"
-        )
-        expect(bit_fields[6]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_FILE_2_REGISTER_0_BIT_FIELD_0_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 1, default: "1'h0"
-        )
-        expect(bit_fields[7]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_FILE_2_REGISTER_0_BIT_FIELD_1_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 8, default: "8'h01"
-        )
-        expect(bit_fields[8]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_FILE_2_REGISTER_0_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{default: 8'h02}"
-        )
-        expect(bit_fields[9]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_FILE_3_REGISTER_0_BIT_FIELD_0_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 1, default: "1'h0"
-        )
-        expect(bit_fields[10]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_FILE_3_REGISTER_0_BIT_FIELD_1_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 8, default: "8'h01"
-        )
-        expect(bit_fields[11]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_FILE_3_REGISTER_0_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{default: 8'h02}"
-        )
-
-        bit_fields = create_bit_fields(:serialized, &register_map_body)
-        expect(bit_fields[0]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_0_BIT_FIELD_0_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 1, default: "1'h0"
-        )
-        expect(bit_fields[1]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_0_BIT_FIELD_1_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 8, default: "8'h01"
-        )
-        expect(bit_fields[2]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_0_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 8, array_size: [2], array_format: :serialized, default: "{2{8'h02}}"
-        )
-        expect(bit_fields[3]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_1_BIT_FIELD_0_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 1, default: "1'h0"
-        )
-        expect(bit_fields[4]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_1_BIT_FIELD_1_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 8, default: "8'h01"
-        )
-        expect(bit_fields[5]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_1_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 8, array_size: [2], array_format: :serialized, default: "{2{8'h02}}"
-        )
-        expect(bit_fields[6]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_FILE_2_REGISTER_0_BIT_FIELD_0_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 1, default: "1'h0"
-        )
-        expect(bit_fields[7]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_FILE_2_REGISTER_0_BIT_FIELD_1_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 8, default: "8'h01"
-        )
-        expect(bit_fields[8]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_FILE_2_REGISTER_0_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 8, array_size: [2], array_format: :serialized, default: "{2{8'h02}}"
-        )
-        expect(bit_fields[9]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_FILE_3_REGISTER_0_BIT_FIELD_0_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 1, default: "1'h0"
-        )
-        expect(bit_fields[10]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_FILE_3_REGISTER_0_BIT_FIELD_1_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 8, default: "8'h01"
-        )
-        expect(bit_fields[11]).to have_parameter(
-          :register_block, :initial_value,
-          name: "REGISTER_FILE_3_REGISTER_0_BIT_FIELD_2_INITIAL_VALUE", parameter_type: :parameter,
-          data_type: :bit, width: 8, array_size: [2], array_format: :serialized, default: "{2{8'h02}}"
+          data_type: :bit, width: 8, array_size: [2], default: "{2{8'h02}}"
         )
       end
     end
 
     context '配列化された初期値が指定されている場合' do
-      let(:array_port_format) { [:packed, :unpacked, :serialized].sample }
-
       it '局所パラメータinitial_valueを持つ' do
-        bit_fields = create_bit_fields(array_port_format) do
+        bit_fields = create_bit_fields do
           name 'block_0'
           byte_size 256
 
@@ -416,42 +286,42 @@ RSpec.describe 'bit_field/sv_rtl_top' do
         expect(bit_fields[0]).to have_parameter(
           :initial_value,
           name: "INITIAL_VALUE", parameter_type: :localparam,
-          data_type: :bit, width: 8, array_size: [1], array_format: :unpacked, default: "'{8'h00}"
+          data_type: :bit, width: 8, array_size: [1], default: "{8'h00}"
         )
         expect(bit_fields[1]).to have_parameter(
           :initial_value,
           name: "INITIAL_VALUE", parameter_type: :localparam,
-          data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{8'h01, 8'h02}"
+          data_type: :bit, width: 8, array_size: [2], default: "{8'h02, 8'h01}"
         )
         expect(bit_fields[2]).to have_parameter(
           :initial_value,
           name: "INITIAL_VALUE", parameter_type: :localparam,
-          data_type: :bit, width: 8, array_size: [1], array_format: :unpacked, default: "'{8'h00}"
+          data_type: :bit, width: 8, array_size: [1], default: "{8'h00}"
         )
         expect(bit_fields[3]).to have_parameter(
           :initial_value,
           name: "INITIAL_VALUE", parameter_type: :localparam,
-          data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{8'h01, 8'h02}"
+          data_type: :bit, width: 8, array_size: [2], default: "{8'h02, 8'h01}"
         )
         expect(bit_fields[4]).to have_parameter(
           :initial_value,
           name: "INITIAL_VALUE", parameter_type: :localparam,
-          data_type: :bit, width: 8, array_size: [1], array_format: :unpacked, default: "'{8'h00}"
+          data_type: :bit, width: 8, array_size: [1], default: "{8'h00}"
         )
         expect(bit_fields[5]).to have_parameter(
           :initial_value,
           name: "INITIAL_VALUE", parameter_type: :localparam,
-          data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{8'h01, 8'h02}"
+          data_type: :bit, width: 8, array_size: [2], default: "{8'h02, 8'h01}"
         )
         expect(bit_fields[6]).to have_parameter(
           :initial_value,
           name: "INITIAL_VALUE", parameter_type: :localparam,
-          data_type: :bit, width: 8, array_size: [1], array_format: :unpacked, default: "'{8'h00}"
+          data_type: :bit, width: 8, array_size: [1], default: "{8'h00}"
         )
         expect(bit_fields[7]).to have_parameter(
           :initial_value,
           name: "INITIAL_VALUE", parameter_type: :localparam,
-          data_type: :bit, width: 8, array_size: [2], array_format: :unpacked, default: "'{8'h01, 8'h02}"
+          data_type: :bit, width: 8, array_size: [2], default: "{8'h02, 8'h01}"
         )
       end
     end
@@ -1053,7 +923,7 @@ RSpec.describe 'bit_field/sv_rtl_top' do
         if (1) begin : g_bit_field_4
           genvar i;
           for (i = 0;i < 2;++i) begin : g
-            localparam bit [1:0] INITIAL_VALUE[2] = '{2'h0, 2'h1};
+            localparam bit [1:0][1:0] INITIAL_VALUE = {2'h1, 2'h0};
             rggen_bit_field_if #(2) bit_field_sub_if();
             `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 24+4*i, 2)
             rggen_bit_field #(
@@ -1206,7 +1076,7 @@ RSpec.describe 'bit_field/sv_rtl_top' do
         if (1) begin : g_bit_field_4
           genvar j;
           for (j = 0;j < 2;++j) begin : g
-            localparam bit [1:0] INITIAL_VALUE[2] = '{2'h0, 2'h1};
+            localparam bit [1:0][1:0] INITIAL_VALUE = {2'h1, 2'h0};
             rggen_bit_field_if #(2) bit_field_sub_if();
             `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 24+4*j, 2)
             rggen_bit_field #(
@@ -1359,7 +1229,7 @@ RSpec.describe 'bit_field/sv_rtl_top' do
         if (1) begin : g_bit_field_4
           genvar k;
           for (k = 0;k < 2;++k) begin : g
-            localparam bit [1:0] INITIAL_VALUE[2] = '{2'h0, 2'h1};
+            localparam bit [1:0][1:0] INITIAL_VALUE = {2'h1, 2'h0};
             rggen_bit_field_if #(2) bit_field_sub_if();
             `rggen_connect_bit_field_if(bit_field_if, bit_field_sub_if, 24+4*k, 2)
             rggen_bit_field #(

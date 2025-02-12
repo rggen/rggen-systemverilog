@@ -9,8 +9,7 @@ RSpec.describe 'bit_field/type/w0trg' do
   end
 
   let(:bit_fields) do
-    configuration = create_configuration(array_port_format: array_port_format)
-    sv_rtl = create_sv_rtl(configuration) do
+    sv_rtl = create_sv_rtl do
       byte_size 256
 
       register do
@@ -66,61 +65,59 @@ RSpec.describe 'bit_field/type/w0trg' do
     expect(bit_fields[2]).to have_port(
       :register_block, :trigger,
       name: 'o_register_0_bit_field_2_trigger', direction: :output, data_type: :logic, width: 4,
-      array_size: [2], array_format: array_port_format
+      array_size: [2]
     )
 
     expect(bit_fields[3]).to have_port(
       :register_block, :trigger,
       name: 'o_register_1_bit_field_0_trigger', direction: :output, data_type: :logic, width: 1,
-      array_size: [4], array_format: array_port_format
+      array_size: [4]
     )
     expect(bit_fields[4]).to have_port(
       :register_block, :trigger,
       name: 'o_register_1_bit_field_1_trigger', direction: :output, data_type: :logic, width: 4,
-      array_size: [4], array_format: array_port_format
+      array_size: [4]
     )
     expect(bit_fields[5]).to have_port(
       :register_block, :trigger,
       name: 'o_register_1_bit_field_2_trigger', direction: :output, data_type: :logic, width: 4,
-      array_size: [4, 2], array_format: array_port_format
+      array_size: [4, 2]
     )
 
     expect(bit_fields[6]).to have_port(
       :register_block, :trigger,
       name: 'o_register_2_bit_field_0_trigger', direction: :output, data_type: :logic, width: 1,
-      array_size: [2, 2], array_format: array_port_format
+      array_size: [2, 2]
     )
     expect(bit_fields[7]).to have_port(
       :register_block, :trigger,
       name: 'o_register_2_bit_field_1_trigger', direction: :output, data_type: :logic, width: 4,
-      array_size: [2, 2], array_format: array_port_format
+      array_size: [2, 2]
     )
     expect(bit_fields[8]).to have_port(
       :register_block, :trigger,
       name: 'o_register_2_bit_field_2_trigger', direction: :output, data_type: :logic, width: 4,
-      array_size: [2, 2, 2], array_format: array_port_format
+      array_size: [2, 2, 2]
     )
 
     expect(bit_fields[9]).to have_port(
       :register_block, :trigger,
       name: 'o_register_file_3_register_file_0_register_0_bit_field_0_trigger', direction: :output, data_type: :logic, width: 1,
-      array_size: [2, 2, 2, 2], array_format: array_port_format
+      array_size: [2, 2, 2, 2]
     )
     expect(bit_fields[10]).to have_port(
       :register_block, :trigger,
       name: 'o_register_file_3_register_file_0_register_0_bit_field_1_trigger', direction: :output, data_type: :logic, width: 4,
-      array_size: [2, 2, 2, 2], array_format: array_port_format
+      array_size: [2, 2, 2, 2]
     )
     expect(bit_fields[11]).to have_port(
       :register_block, :trigger,
       name: 'o_register_file_3_register_file_0_register_0_bit_field_2_trigger', direction: :output, data_type: :logic, width: 4,
-      array_size: [2, 2, 2, 2, 2], array_format: array_port_format
+      array_size: [2, 2, 2, 2, 2]
     )
   end
 
   describe '#generate_code' do
-    let(:array_port_format) { :packed }
-
     it 'rggen_bit_field_w01trgをインスタンスするコードを生成する' do
       expect(bit_fields[0]).to generate_code(:bit_field, :top_down, <<~'CODE')
         rggen_bit_field_w01trg #(

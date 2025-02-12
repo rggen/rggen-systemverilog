@@ -206,8 +206,6 @@ RSpec.describe 'bit_field/type/custom' do
   end
 
   describe '#generate_code' do
-    let(:array_port_format) { :packed }
-
     it 'rggen_bit_fieldをインスタンスするコードを生成する' do
       expect(bit_fields[0]).to generate_code(:bit_field, :top_down, <<~'CODE')
         rggen_bit_field #(

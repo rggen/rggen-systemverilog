@@ -4,17 +4,14 @@ RgGen.define_list_item_feature(:bit_field, :type, [:rw, :rwtrg, :w1]) do
   sv_rtl do
     build do
       output :value_out, {
-        name: "o_#{full_name}", width:,
-        array_size:, array_format: array_port_format
+        name: "o_#{full_name}", width:, array_size:
       }
       if rwtrg?
         output :write_trigger, {
-          name: "o_#{full_name}_write_trigger", width: 1,
-          array_size:, array_format: array_port_format
+          name: "o_#{full_name}_write_trigger", width: 1, array_size:
         }
         output :read_trigger, {
-          name: "o_#{full_name}_read_trigger", width: 1,
-          array_size:, array_format: array_port_format
+          name: "o_#{full_name}_read_trigger", width: 1, array_size:
         }
       end
     end

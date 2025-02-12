@@ -4,12 +4,10 @@ RgGen.define_list_item_feature(:bit_field, :type, [:rs, :w0s, :w1s, :ws, :wos]) 
   sv_rtl do
     build do
       input :clear, {
-        name: "i_#{full_name}_clear", width:,
-        array_size:, array_format: array_port_format
+        name: "i_#{full_name}_clear", width:, array_size:
       }
       output :value_out, {
-        name: "o_#{full_name}", width:,
-        array_size:, array_format: array_port_format
+        name: "o_#{full_name}", width:, array_size:
       }
     end
 

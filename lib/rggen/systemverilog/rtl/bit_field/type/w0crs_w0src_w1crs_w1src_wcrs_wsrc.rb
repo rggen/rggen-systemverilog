@@ -6,8 +6,7 @@ RgGen.define_list_item_feature(
   sv_rtl do
     build do
       output :value_out, {
-        name: "o_#{full_name}", width:,
-        array_size:, array_format: array_port_format
+        name: "o_#{full_name}", width:, array_size:
       }
     end
 
