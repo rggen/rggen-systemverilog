@@ -4,7 +4,7 @@ RSpec.shared_context 'bit field rtl common' do
   include_context 'sv rtl common'
 
   before(:all) do
-    RgGen.enable(:global, [:address_width, :enable_wide_register, :array_port_format])
+    RgGen.enable(:global, [:address_width, :enable_wide_register])
     RgGen.enable(:register_block, [:byte_size, :bus_width])
     RgGen.enable(:register_file, [:name, :size, :offset_address])
     RgGen.enable(:register, [:name, :size, :type, :offset_address])
@@ -15,14 +15,8 @@ RSpec.shared_context 'bit field rtl common' do
     RgGen.enable(:bit_field, :sv_rtl_top)
   end
 
-  let(:array_port_format) do
-    [:packed, :unpacked, :serialized].sample
-  end
-
   def create_bit_fields(&body)
-    configuration = create_configuration(
-      enable_wide_register: true, array_port_format: array_port_format
-    )
+    configuration = create_configuration(enable_wide_register: true)
     create_sv_rtl(configuration, &body).bit_fields
   end
 end

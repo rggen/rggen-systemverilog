@@ -10,20 +10,17 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
       if fixed_initial_value?
         localparam :initial_value, {
           name: initial_value_name, data_type: :bit, width: bit_field.width,
-          array_size: initial_value_size, array_format: initial_value_format,
-          default: initial_value_rhs
+          array_size: initial_value_size, default: initial_value_rhs
         }
       elsif initial_value?
         parameter :initial_value, {
           name: initial_value_name, data_type: :bit, width: bit_field.width,
-          array_size: initial_value_size, array_format: initial_value_format,
-          default: initial_value_rhs
+          array_size: initial_value_size, default: initial_value_rhs
         }
       end
       interface :bit_field_sub_if, {
         name: 'bit_field_sub_if',
-        interface_type: 'rggen_bit_field_if',
-        parameter_values: [bit_field.width]
+        interface_type: 'rggen_bit_field_if', parameter_values: [bit_field.width]
       }
     end
 
@@ -64,20 +61,13 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
       initial_value_array? && [bit_field.sequence_size] || nil
     end
 
-    def initial_value_format
-      fixed_initial_value? && :unpacked ||
-        configuration.array_port_format
-    end
-
     def initial_value_rhs
       initial_value_array? && initial_value_array_rhs || sized_initial_value
     end
 
     def initial_value_array_rhs
       if fixed_initial_value?
-        array(sized_initial_values)
-      elsif initial_value_format == :unpacked
-        array(default: sized_initial_value)
+        concat(sized_initial_values)
       else
         repeat(bit_field.sequence_size, sized_initial_value)
       end
@@ -89,7 +79,10 @@ RgGen.define_simple_feature(:bit_field, :sv_rtl_top) do
     end
 
     def sized_initial_values
-      bit_field.initial_values&.map { |v| hex(v, bit_field.width) }
+      bit_field
+        .initial_values
+        .reverse_each
+        .map { |v| hex(v, bit_field.width) }
     end
 
     def loop_size

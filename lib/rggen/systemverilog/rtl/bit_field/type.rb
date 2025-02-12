@@ -9,10 +9,6 @@ RgGen.define_list_feature(:bit_field, :type) do
 
       private
 
-      def array_port_format
-        configuration.array_port_format
-      end
-
       def full_name
         bit_field.full_name('_')
       end

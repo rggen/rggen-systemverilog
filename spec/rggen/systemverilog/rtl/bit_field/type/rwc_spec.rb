@@ -94,55 +94,55 @@ RSpec.describe 'bit_field/type/rwc' do
     expect(bit_fields[4]).to have_port(
       :register_block, :value_out,
       name: 'o_register_0_bit_field_4', direction: :output, data_type: :logic, width: 4,
-      array_size: [2], array_format: array_port_format
+      array_size: [2]
     )
 
     expect(bit_fields[6]).to have_port(
       :register_block, :value_out,
       name: 'o_register_1_bit_field_0', direction: :output, data_type: :logic, width: 1,
-      array_size: [4], array_format: array_port_format
+      array_size: [4]
     )
     expect(bit_fields[8]).to have_port(
       :register_block, :value_out,
       name: 'o_register_1_bit_field_2', direction: :output, data_type: :logic, width: 2,
-      array_size: [4], array_format: array_port_format
+      array_size: [4]
     )
     expect(bit_fields[10]).to have_port(
       :register_block, :value_out,
       name: 'o_register_1_bit_field_4', direction: :output, data_type: :logic, width: 4,
-      array_size: [4, 2], array_format: array_port_format
+      array_size: [4, 2]
     )
 
     expect(bit_fields[12]).to have_port(
       :register_block, :value_out,
       name: 'o_register_2_bit_field_0', direction: :output, data_type: :logic, width: 1,
-      array_size: [2, 2], array_format: array_port_format
+      array_size: [2, 2]
     )
     expect(bit_fields[14]).to have_port(
       :register_block, :value_out,
       name: 'o_register_2_bit_field_2', direction: :output, data_type: :logic, width: 2,
-      array_size: [2, 2], array_format: array_port_format
+      array_size: [2, 2]
     )
     expect(bit_fields[16]).to have_port(
       :register_block, :value_out,
       name: 'o_register_2_bit_field_4', direction: :output, data_type: :logic, width: 4,
-      array_size: [2, 2, 2], array_format: array_port_format
+      array_size: [2, 2, 2]
     )
 
     expect(bit_fields[18]).to have_port(
       :register_block, :value_out,
       name: 'o_register_file_3_register_file_0_register_0_bit_field_0', direction: :output, data_type: :logic, width: 1,
-      array_size: [2, 2, 2, 2], array_format: array_port_format
+      array_size: [2, 2, 2, 2]
     )
     expect(bit_fields[20]).to have_port(
       :register_block, :value_out,
       name: 'o_register_file_3_register_file_0_register_0_bit_field_2', direction: :output, data_type: :logic, width: 2,
-      array_size: [2, 2, 2, 2], array_format: array_port_format
+      array_size: [2, 2, 2, 2]
     )
     expect(bit_fields[22]).to have_port(
       :register_block, :value_out,
       name: 'o_register_file_3_register_file_0_register_0_bit_field_4', direction: :output, data_type: :logic, width: 4,
-      array_size: [2, 2, 2, 2, 2], array_format: array_port_format
+      array_size: [2, 2, 2, 2, 2]
     )
   end
 
@@ -159,55 +159,55 @@ RSpec.describe 'bit_field/type/rwc' do
       expect(bit_fields[4]).to have_port(
         :register_block, :clear,
         name: 'i_register_0_bit_field_4_clear', direction: :input, data_type: :logic, width: 1,
-        array_size: [2], array_format: array_port_format
+        array_size: [2]
       )
 
       expect(bit_fields[6]).to have_port(
         :register_block, :clear,
         name: 'i_register_1_bit_field_0_clear', direction: :input, data_type: :logic, width: 1,
-        array_size: [4], array_format: array_port_format
+        array_size: [4]
       )
       expect(bit_fields[8]).to have_port(
         :register_block, :clear,
         name: 'i_register_1_bit_field_2_clear', direction: :input, data_type: :logic, width: 1,
-        array_size: [4], array_format: array_port_format
+        array_size: [4]
       )
       expect(bit_fields[10]).to have_port(
         :register_block, :clear,
         name: 'i_register_1_bit_field_4_clear', direction: :input, data_type: :logic, width: 1,
-        array_size: [4, 2], array_format: array_port_format
+        array_size: [4, 2]
       )
 
       expect(bit_fields[12]).to have_port(
         :register_block, :clear,
         name: 'i_register_2_bit_field_0_clear', direction: :input, data_type: :logic, width: 1,
-        array_size: [2, 2], array_format: array_port_format
+        array_size: [2, 2]
       )
       expect(bit_fields[14]).to have_port(
         :register_block, :clear,
         name: 'i_register_2_bit_field_2_clear', direction: :input, data_type: :logic, width: 1,
-        array_size: [2, 2], array_format: array_port_format
+        array_size: [2, 2]
       )
       expect(bit_fields[16]).to have_port(
         :register_block, :clear,
         name: 'i_register_2_bit_field_4_clear', direction: :input, data_type: :logic, width: 1,
-        array_size: [2, 2, 2], array_format: array_port_format
+        array_size: [2, 2, 2]
       )
 
       expect(bit_fields[18]).to have_port(
         :register_block, :clear,
         name: 'i_register_file_3_register_file_0_register_0_bit_field_0_clear', direction: :input, data_type: :logic, width: 1,
-        array_size: [2, 2, 2, 2], array_format: array_port_format
+        array_size: [2, 2, 2, 2]
       )
       expect(bit_fields[20]).to have_port(
         :register_block, :clear,
         name: 'i_register_file_3_register_file_0_register_0_bit_field_2_clear', direction: :input, data_type: :logic, width: 1,
-        array_size: [2, 2, 2, 2], array_format: array_port_format
+        array_size: [2, 2, 2, 2]
       )
       expect(bit_fields[22]).to have_port(
         :register_block, :clear,
         name: 'i_register_file_3_register_file_0_register_0_bit_field_4_clear', direction: :input, data_type: :logic, width: 1,
-        array_size: [2, 2, 2, 2, 2], array_format: array_port_format
+        array_size: [2, 2, 2, 2, 2]
       )
     end
   end
@@ -225,62 +225,60 @@ RSpec.describe 'bit_field/type/rwc' do
       expect(bit_fields[5]).to not_have_port(
         :register_block, :clear,
         name: 'i_register_0_bit_field_5_clear', direction: :input, data_type: :logic, width: 1,
-        array_size: [2], array_format: array_port_format
+        array_size: [2]
       )
 
       expect(bit_fields[7]).to not_have_port(
         :register_block, :clear,
         name: 'i_register_1_bit_field_1_clear', direction: :input, data_type: :logic, width: 1,
-        array_size: [4], array_format: array_port_format
+        array_size: [4]
       )
       expect(bit_fields[9]).to not_have_port(
         :register_block, :clear,
         name: 'i_register_1_bit_field_3_clear', direction: :input, data_type: :logic, width: 1,
-        array_size: [4], array_format: array_port_format
+        array_size: [4]
       )
       expect(bit_fields[11]).to not_have_port(
         :register_block, :clear,
         name: 'i_register_1_bit_field_5_clear', direction: :input, data_type: :logic, width: 1,
-        array_size: [4, 2], array_format: array_port_format
+        array_size: [4, 2]
       )
 
       expect(bit_fields[13]).to not_have_port(
         :register_block, :clear,
         name: 'i_register_2_bit_field_1_clear', direction: :input, data_type: :logic, width: 1,
-        array_size: [2, 2], array_format: array_port_format
+        array_size: [2, 2]
       )
       expect(bit_fields[15]).to not_have_port(
         :register_block, :clear,
         name: 'i_register_2_bit_field_3_clear', direction: :input, data_type: :logic, width: 1,
-        array_size: [2, 2], array_format: array_port_format
+        array_size: [2, 2]
       )
       expect(bit_fields[17]).to not_have_port(
         :register_block, :clear,
         name: 'i_register_2_bit_field_5_clear', direction: :input, data_type: :logic, width: 1,
-        array_size: [2, 2, 2], array_format: array_port_format
+        array_size: [2, 2, 2]
       )
 
       expect(bit_fields[19]).to not_have_port(
         :register_block, :clear,
         name: 'i_register_file_3_register_file_0_register_0_bit_field_1_clear', direction: :input, data_type: :logic, width: 1,
-        array_size: [2, 2, 2, 2], array_format: array_port_format
+        array_size: [2, 2, 2, 2]
       )
       expect(bit_fields[21]).to not_have_port(
         :register_block, :clear,
         name: 'i_register_file_3_register_file_0_register_0_bit_field_3_clear', direction: :input, data_type: :logic, width: 1,
-        array_size: [2, 2, 2, 2], array_format: array_port_format
+        array_size: [2, 2, 2, 2]
       )
       expect(bit_fields[23]).to not_have_port(
         :register_block, :clear,
         name: 'i_register_file_3_register_file_0_register_0_bit_field_5_clear', direction: :input, data_type: :logic, width: 1,
-        array_size: [2, 2, 2, 2, 2], array_format: array_port_format
+        array_size: [2, 2, 2, 2, 2]
       )
     end
   end
 
   describe '#generate_code' do
-    let(:array_port_format) { :packed }
-
     it 'rggen_bit_fieldをインスタンスするコードを出力する' do
       expect(bit_fields[0]).to generate_code(:bit_field, :top_down, <<~'CODE')
         rggen_bit_field #(
