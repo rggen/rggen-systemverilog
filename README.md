@@ -1,6 +1,6 @@
 [![Gem Version](https://badge.fury.io/rb/rggen-systemverilog.svg)](https://badge.fury.io/rb/rggen-systemverilog)
 [![CI](https://github.com/rggen/rggen-systemverilog/workflows/CI/badge.svg)](https://github.com/rggen/rggen-systemverilog/actions?query=workflow%3ACI)
-[![Maintainability](https://api.codeclimate.com/v1/badges/88086c5be538a1564a35/maintainability)](https://codeclimate.com/github/rggen/rggen-systemverilog/maintainability)
+[![Maintainability](https://qlty.sh/badges/1b06df23-43bd-413d-90f9-b98c565be895/maintainability.svg)](https://qlty.sh/gh/rggen/projects/rggen-systemverilog)
 [![codecov](https://codecov.io/gh/rggen/rggen-systemverilog/branch/master/graph/badge.svg)](https://codecov.io/gh/rggen/rggen-systemverilog)
 [![Gitter](https://badges.gitter.im/rggen/rggen.svg)](https://gitter.im/rggen/rggen?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
