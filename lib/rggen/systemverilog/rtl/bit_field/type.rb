@@ -34,7 +34,7 @@ RgGen.define_list_feature(:bit_field, :type) do
       end
 
       def initial_value
-        index = bit_field.initial_value_array? && bit_field.local_index || nil
+        index = bit_field.initial_value_array? && loop_variables || nil
         bit_field.initial_value[index]
       end
 
@@ -46,7 +46,7 @@ RgGen.define_list_feature(:bit_field, :type) do
         bit_field.reference? &&
           bit_field
             .find_reference(register_block.bit_fields)
-            .value(bit_field.local_indices, bit_field.reference_width)
+            .value(bit_field.local_indexes, bit_field.reference_width)
       end
 
       def bit_field_if

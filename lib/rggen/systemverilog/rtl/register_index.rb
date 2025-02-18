@@ -8,7 +8,7 @@ module RgGen
 
         EXPORTED_METHODS = [
           :loop_variables, :local_loop_variables,
-          :local_index, :local_indices,
+          :local_index, :local_indexes,
           :index, :inside_loop?
         ].freeze
 
@@ -45,15 +45,15 @@ module RgGen
               .join('+')
         end
 
-        def local_indices
-          [*upper_register_file&.local_indices, local_index]
+        def local_indexes
+          [*upper_register_file&.local_indexes, local_index]
         end
 
         def index(offset_or_offsets = nil)
           offset_or_offsets
             .then(&method(:index_operands))
             .then(&method(:partial_sums))
-            .then(&method(:reduce_indices))
+            .then(&method(:reduce_indexes))
         end
 
         def inside_loop?
@@ -84,11 +84,11 @@ module RgGen
           ]
         end
 
-        def reduce_indices(indices)
-          if indices.empty? || indices.all?(&method(:integer?))
-            indices.sum
+        def reduce_indexes(indexes)
+          if indexes.empty? || indexes.all?(&method(:integer?))
+            indexes.sum
           else
-            indices.join('+')
+            indexes.join('+')
           end
         end
 

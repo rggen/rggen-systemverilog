@@ -5,7 +5,7 @@ module RgGen
     module RTL
       module BitFieldIndex
         EXPORTED_METHODS = [
-          :local_index, :local_indices, :loop_variables, :array_size
+          :local_index, :local_indexes, :loop_variables, :flat_loop_index, :array_size
         ].freeze
 
         def self.included(feature)
@@ -18,8 +18,8 @@ module RgGen
           create_identifier(local_index_name)
         end
 
-        def local_indices
-          [*register.local_indices, local_index_name]
+        def local_indexes
+          [*register.local_indexes, local_index_name]
         end
 
         def loop_variables
@@ -27,13 +27,22 @@ module RgGen
             [*register.loop_variables, local_index].compact
         end
 
+        def flat_loop_index
+          return unless inside_loop?
+
+          size = array_size
+          factors =
+            Array.new(size.size) { |i| size[(i + 1)..].inject(1, :*) }
+          factors
+            .zip(loop_variables)
+            .map { |f, v| f == 1 && v || "#{f}*#{v}" }
+            .join('+')
+        end
+
         def array_size
-          (inside_loop? || nil) &&
-            [
-              *register_files.flat_map(&:array_size),
-              *register.array_size,
-              *bit_field.sequence_size
-            ].compact
+          return unless inside_loop?
+
+          [*register.array_size(hierarchical: true), *bit_field.sequence_size]
         end
 
         private

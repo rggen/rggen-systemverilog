@@ -81,16 +81,16 @@ RSpec.describe 'register_block/sv_ral_model' do
             super.new(name, 4, 0);
           endfunction
           function void build();
-            `rggen_ral_create_reg(register_0, '{}, 8'h00, "RW", "g_register_0.u_register")
-            `rggen_ral_create_reg(register_1[0][0], '{0, 0}, 8'h10, "RW", "g_register_1.g[0].g[0].u_register")
-            `rggen_ral_create_reg(register_1[0][1], '{0, 1}, 8'h14, "RW", "g_register_1.g[0].g[1].u_register")
-            `rggen_ral_create_reg(register_1[1][0], '{1, 0}, 8'h18, "RW", "g_register_1.g[1].g[0].u_register")
-            `rggen_ral_create_reg(register_1[1][1], '{1, 1}, 8'h1c, "RW", "g_register_1.g[1].g[1].u_register")
-            `rggen_ral_create_reg_file(register_file_2, '{}, 8'h20, "g_register_file_2")
-            `rggen_ral_create_reg_file(register_file_3[0][0], '{0, 0}, 8'h30, "g_register_file_3.g[0].g[0]")
-            `rggen_ral_create_reg_file(register_file_3[0][1], '{0, 1}, 8'h34, "g_register_file_3.g[0].g[1]")
-            `rggen_ral_create_reg_file(register_file_3[1][0], '{1, 0}, 8'h38, "g_register_file_3.g[1].g[0]")
-            `rggen_ral_create_reg_file(register_file_3[1][1], '{1, 1}, 8'h3c, "g_register_file_3.g[1].g[1]")
+            `rggen_ral_create_reg(register_0, '{}, '{}, 8'h00, "RW", "g_register_0.u_register")
+            `rggen_ral_create_reg(register_1[0][0], '{0, 0}, '{2, 2}, 8'h10, "RW", "g_register_1.g[0].g[0].u_register")
+            `rggen_ral_create_reg(register_1[0][1], '{0, 1}, '{2, 2}, 8'h14, "RW", "g_register_1.g[0].g[1].u_register")
+            `rggen_ral_create_reg(register_1[1][0], '{1, 0}, '{2, 2}, 8'h18, "RW", "g_register_1.g[1].g[0].u_register")
+            `rggen_ral_create_reg(register_1[1][1], '{1, 1}, '{2, 2}, 8'h1c, "RW", "g_register_1.g[1].g[1].u_register")
+            `rggen_ral_create_reg_file(register_file_2, '{}, '{}, 8'h20, "g_register_file_2")
+            `rggen_ral_create_reg_file(register_file_3[0][0], '{0, 0}, '{2, 2}, 8'h30, "g_register_file_3.g[0].g[0]")
+            `rggen_ral_create_reg_file(register_file_3[0][1], '{0, 1}, '{2, 2}, 8'h34, "g_register_file_3.g[0].g[1]")
+            `rggen_ral_create_reg_file(register_file_3[1][0], '{1, 0}, '{2, 2}, 8'h38, "g_register_file_3.g[1].g[0]")
+            `rggen_ral_create_reg_file(register_file_3[1][1], '{1, 1}, '{2, 2}, 8'h3c, "g_register_file_3.g[1].g[1]")
             `rggen_ral_create_block(register_4, 8'h40, this, INTEGRATE_REGISTER_4)
           endfunction
         endclass

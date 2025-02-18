@@ -6,7 +6,7 @@ module RgGen
       module RegisterCommon
         private
 
-        def array_indices
+        def array_indexes
           if component.array?
             index_table = component.array_size.map { |size| (0...size).to_a }
             index_table[0].product(*index_table[1..])

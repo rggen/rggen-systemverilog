@@ -14,7 +14,7 @@ RgGen.define_simple_feature(:register_file, :sv_ral_model) do
     end
 
     def constructors
-      array_indices.map.with_index(&method(:constructor_code))
+      array_indexes.map.with_index(&method(:constructor_code))
     end
 
     main_code :ral_package do
@@ -37,8 +37,8 @@ RgGen.define_simple_feature(:register_file, :sv_ral_model) do
 
     def arguments(array_index, index)
       [
-        ral_model[array_index], array(array_index), offset_address(index),
-        string(hdl_path(array_index))
+        ral_model[array_index], array(array_index), array(register_file.array_size),
+        offset_address(index), string(hdl_path(array_index))
       ]
     end
 
