@@ -32,7 +32,7 @@ RgGen.define_list_feature(:register, :type) do
       end
 
       def constructors
-        array_indices.map.with_index(&method(:constructor_code))
+        array_indexes.map.with_index(&method(:constructor_code))
       end
 
       private
@@ -55,8 +55,8 @@ RgGen.define_list_feature(:register, :type) do
 
       def arguments(array_index, index)
         [
-          ral_model[array_index], array(array_index), offset_address(index),
-          string(access_rights), string(hdl_path(array_index))
+          ral_model[array_index], array(array_index), array(register.array_size),
+          offset_address(index), string(access_rights), string(hdl_path(array_index))
         ]
       end
 

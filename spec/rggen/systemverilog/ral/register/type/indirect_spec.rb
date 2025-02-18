@@ -185,37 +185,37 @@ RSpec.describe 'register/type/indirect' do
       end
 
       expect(code_block).to match_string(<<~'CODE')
-        `rggen_ral_create_reg(register_4, '{}, 8'h10, "RW", "g_register_4.u_register")
-        `rggen_ral_create_reg(register_5[0], '{0}, 8'h14, "RW", "g_register_5.g[0].u_register")
-        `rggen_ral_create_reg(register_5[1], '{1}, 8'h14, "RW", "g_register_5.g[1].u_register")
-        `rggen_ral_create_reg(register_6[0][0], '{0, 0}, 8'h18, "RW", "g_register_6.g[0].g[0].u_register")
-        `rggen_ral_create_reg(register_6[0][1], '{0, 1}, 8'h18, "RW", "g_register_6.g[0].g[1].u_register")
-        `rggen_ral_create_reg(register_6[0][2], '{0, 2}, 8'h18, "RW", "g_register_6.g[0].g[2].u_register")
-        `rggen_ral_create_reg(register_6[0][3], '{0, 3}, 8'h18, "RW", "g_register_6.g[0].g[3].u_register")
-        `rggen_ral_create_reg(register_6[1][0], '{1, 0}, 8'h18, "RW", "g_register_6.g[1].g[0].u_register")
-        `rggen_ral_create_reg(register_6[1][1], '{1, 1}, 8'h18, "RW", "g_register_6.g[1].g[1].u_register")
-        `rggen_ral_create_reg(register_6[1][2], '{1, 2}, 8'h18, "RW", "g_register_6.g[1].g[2].u_register")
-        `rggen_ral_create_reg(register_6[1][3], '{1, 3}, 8'h18, "RW", "g_register_6.g[1].g[3].u_register")
-        `rggen_ral_create_reg(register_7[0][0], '{0, 0}, 8'h1c, "RW", "g_register_7.g[0].g[0].u_register")
-        `rggen_ral_create_reg(register_7[0][1], '{0, 1}, 8'h1c, "RW", "g_register_7.g[0].g[1].u_register")
-        `rggen_ral_create_reg(register_7[0][2], '{0, 2}, 8'h1c, "RW", "g_register_7.g[0].g[2].u_register")
-        `rggen_ral_create_reg(register_7[0][3], '{0, 3}, 8'h1c, "RW", "g_register_7.g[0].g[3].u_register")
-        `rggen_ral_create_reg(register_7[1][0], '{1, 0}, 8'h1c, "RW", "g_register_7.g[1].g[0].u_register")
-        `rggen_ral_create_reg(register_7[1][1], '{1, 1}, 8'h1c, "RW", "g_register_7.g[1].g[1].u_register")
-        `rggen_ral_create_reg(register_7[1][2], '{1, 2}, 8'h1c, "RW", "g_register_7.g[1].g[2].u_register")
-        `rggen_ral_create_reg(register_7[1][3], '{1, 3}, 8'h1c, "RW", "g_register_7.g[1].g[3].u_register")
-        `rggen_ral_create_reg(register_8, '{}, 8'h20, "RO", "g_register_8.u_register")
-        `rggen_ral_create_reg(register_9, '{}, 8'h24, "WO", "g_register_9.u_register")
-        `rggen_ral_create_reg(register_10[0], '{0}, 8'h28, "RW", "g_register_10.g[0].u_register")
-        `rggen_ral_create_reg(register_10[1], '{1}, 8'h28, "RW", "g_register_10.g[1].u_register")
-        `rggen_ral_create_reg(register_0[0][0], '{0, 0}, 8'h00, "RW", "g_register_0.g[0].g[0].u_register")
-        `rggen_ral_create_reg(register_0[0][1], '{0, 1}, 8'h00, "RW", "g_register_0.g[0].g[1].u_register")
-        `rggen_ral_create_reg(register_0[1][0], '{1, 0}, 8'h00, "RW", "g_register_0.g[1].g[0].u_register")
-        `rggen_ral_create_reg(register_0[1][1], '{1, 1}, 8'h00, "RW", "g_register_0.g[1].g[1].u_register")
-        `rggen_ral_create_reg(register_0[0][0], '{0, 0}, 8'h00, "RW", "g_register_0.g[0].g[0].u_register")
-        `rggen_ral_create_reg(register_0[0][1], '{0, 1}, 8'h00, "RW", "g_register_0.g[0].g[1].u_register")
-        `rggen_ral_create_reg(register_0[1][0], '{1, 0}, 8'h00, "RW", "g_register_0.g[1].g[0].u_register")
-        `rggen_ral_create_reg(register_0[1][1], '{1, 1}, 8'h00, "RW", "g_register_0.g[1].g[1].u_register")
+        `rggen_ral_create_reg(register_4, '{}, '{}, 8'h10, "RW", "g_register_4.u_register")
+        `rggen_ral_create_reg(register_5[0], '{0}, '{2}, 8'h14, "RW", "g_register_5.g[0].u_register")
+        `rggen_ral_create_reg(register_5[1], '{1}, '{2}, 8'h14, "RW", "g_register_5.g[1].u_register")
+        `rggen_ral_create_reg(register_6[0][0], '{0, 0}, '{2, 4}, 8'h18, "RW", "g_register_6.g[0].g[0].u_register")
+        `rggen_ral_create_reg(register_6[0][1], '{0, 1}, '{2, 4}, 8'h18, "RW", "g_register_6.g[0].g[1].u_register")
+        `rggen_ral_create_reg(register_6[0][2], '{0, 2}, '{2, 4}, 8'h18, "RW", "g_register_6.g[0].g[2].u_register")
+        `rggen_ral_create_reg(register_6[0][3], '{0, 3}, '{2, 4}, 8'h18, "RW", "g_register_6.g[0].g[3].u_register")
+        `rggen_ral_create_reg(register_6[1][0], '{1, 0}, '{2, 4}, 8'h18, "RW", "g_register_6.g[1].g[0].u_register")
+        `rggen_ral_create_reg(register_6[1][1], '{1, 1}, '{2, 4}, 8'h18, "RW", "g_register_6.g[1].g[1].u_register")
+        `rggen_ral_create_reg(register_6[1][2], '{1, 2}, '{2, 4}, 8'h18, "RW", "g_register_6.g[1].g[2].u_register")
+        `rggen_ral_create_reg(register_6[1][3], '{1, 3}, '{2, 4}, 8'h18, "RW", "g_register_6.g[1].g[3].u_register")
+        `rggen_ral_create_reg(register_7[0][0], '{0, 0}, '{2, 4}, 8'h1c, "RW", "g_register_7.g[0].g[0].u_register")
+        `rggen_ral_create_reg(register_7[0][1], '{0, 1}, '{2, 4}, 8'h1c, "RW", "g_register_7.g[0].g[1].u_register")
+        `rggen_ral_create_reg(register_7[0][2], '{0, 2}, '{2, 4}, 8'h1c, "RW", "g_register_7.g[0].g[2].u_register")
+        `rggen_ral_create_reg(register_7[0][3], '{0, 3}, '{2, 4}, 8'h1c, "RW", "g_register_7.g[0].g[3].u_register")
+        `rggen_ral_create_reg(register_7[1][0], '{1, 0}, '{2, 4}, 8'h1c, "RW", "g_register_7.g[1].g[0].u_register")
+        `rggen_ral_create_reg(register_7[1][1], '{1, 1}, '{2, 4}, 8'h1c, "RW", "g_register_7.g[1].g[1].u_register")
+        `rggen_ral_create_reg(register_7[1][2], '{1, 2}, '{2, 4}, 8'h1c, "RW", "g_register_7.g[1].g[2].u_register")
+        `rggen_ral_create_reg(register_7[1][3], '{1, 3}, '{2, 4}, 8'h1c, "RW", "g_register_7.g[1].g[3].u_register")
+        `rggen_ral_create_reg(register_8, '{}, '{}, 8'h20, "RO", "g_register_8.u_register")
+        `rggen_ral_create_reg(register_9, '{}, '{}, 8'h24, "WO", "g_register_9.u_register")
+        `rggen_ral_create_reg(register_10[0], '{0}, '{2}, 8'h28, "RW", "g_register_10.g[0].u_register")
+        `rggen_ral_create_reg(register_10[1], '{1}, '{2}, 8'h28, "RW", "g_register_10.g[1].u_register")
+        `rggen_ral_create_reg(register_0[0][0], '{0, 0}, '{2, 2}, 8'h00, "RW", "g_register_0.g[0].g[0].u_register")
+        `rggen_ral_create_reg(register_0[0][1], '{0, 1}, '{2, 2}, 8'h00, "RW", "g_register_0.g[0].g[1].u_register")
+        `rggen_ral_create_reg(register_0[1][0], '{1, 0}, '{2, 2}, 8'h00, "RW", "g_register_0.g[1].g[0].u_register")
+        `rggen_ral_create_reg(register_0[1][1], '{1, 1}, '{2, 2}, 8'h00, "RW", "g_register_0.g[1].g[1].u_register")
+        `rggen_ral_create_reg(register_0[0][0], '{0, 0}, '{2, 2}, 8'h00, "RW", "g_register_0.g[0].g[0].u_register")
+        `rggen_ral_create_reg(register_0[0][1], '{0, 1}, '{2, 2}, 8'h00, "RW", "g_register_0.g[0].g[1].u_register")
+        `rggen_ral_create_reg(register_0[1][0], '{1, 0}, '{2, 2}, 8'h00, "RW", "g_register_0.g[1].g[0].u_register")
+        `rggen_ral_create_reg(register_0[1][1], '{1, 1}, '{2, 2}, 8'h00, "RW", "g_register_0.g[1].g[1].u_register")
       CODE
     end
   end
@@ -229,7 +229,7 @@ RSpec.describe 'register/type/indirect' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, -1, "")
+            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, '{}, 1, 0, 0, "")
           endfunction
           function void setup_index_fields();
             setup_index_field("register_0.bit_field_0", 1'h1);
@@ -244,7 +244,7 @@ RSpec.describe 'register/type/indirect' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, -1, "")
+            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, '{}, 1, 0, 0, "")
           endfunction
           function void setup_index_fields();
             setup_index_field("register_0.bit_field_1", array_index[0]);
@@ -259,7 +259,7 @@ RSpec.describe 'register/type/indirect' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, -1, "")
+            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, '{}, 1, 0, 0, "")
           endfunction
           function void setup_index_fields();
             setup_index_field("register_0.bit_field_1", array_index[0]);
@@ -275,7 +275,7 @@ RSpec.describe 'register/type/indirect' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, -1, "")
+            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, '{}, 1, 0, 0, "")
           endfunction
           function void setup_index_fields();
             setup_index_field("register_0.bit_field_1", array_index[0]);
@@ -292,7 +292,7 @@ RSpec.describe 'register/type/indirect' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field(bit_field_0, 0, 1, "RO", 1, 1'h0, 0, -1, "")
+            `rggen_ral_create_field(bit_field_0, 0, 1, "RO", 1, 1'h0, '{}, 0, 0, 0, "")
           endfunction
           function void setup_index_fields();
             setup_index_field("register_0.bit_field_0", 1'h0);
@@ -307,7 +307,7 @@ RSpec.describe 'register/type/indirect' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field(bit_field_0, 0, 1, "WO", 0, 1'h0, 1, -1, "")
+            `rggen_ral_create_field(bit_field_0, 0, 1, "WO", 0, 1'h0, '{}, 1, 0, 0, "")
           endfunction
           function void setup_index_fields();
             setup_index_field("register_0.bit_field_0", 1'h0);
@@ -322,7 +322,7 @@ RSpec.describe 'register/type/indirect' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, -1, "")
+            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, '{}, 1, 0, 0, "")
           endfunction
           function void setup_index_fields();
             setup_index_field("register_1.register_1", array_index[0]);
@@ -338,7 +338,7 @@ RSpec.describe 'register/type/indirect' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, -1, "")
+            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, '{}, 1, 0, 0, "")
           endfunction
           function void setup_index_fields();
             setup_index_field("register_0.bit_field_0", array_index[0]);
@@ -354,7 +354,7 @@ RSpec.describe 'register/type/indirect' do
             super.new(name, 32, 0);
           endfunction
           function void build();
-            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, 1, -1, "")
+            `rggen_ral_create_field(bit_field_0, 0, 1, "RW", 0, 1'h0, '{}, 1, 0, 0, "")
           endfunction
           function void setup_index_fields();
             setup_index_field("register_0.bit_field_0", array_index[0]);

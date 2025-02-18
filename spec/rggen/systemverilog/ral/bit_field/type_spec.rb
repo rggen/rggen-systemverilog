@@ -253,11 +253,27 @@ RSpec.describe 'bit_field/type' do
 
         register do
           name 'register_3'
+          size [2, 2]
+          bit_field {
+            name 'bit_field_0'; bit_assignment lsb: 0, width: 4, sequence_size: 2, step: 12
+            type :foo; initial_value 0
+          }
+          bit_field {
+            name 'bit_field_1'; bit_assignment lsb: 4, width: 4, sequence_size: 2, step: 12
+            type :foo; initial_value default: 1
+          }
+          bit_field {
+            name 'bit_field_2'; bit_assignment lsb: 8, width: 4, sequence_size: 2, step: 12
+            type :foo; initial_value [[[0, 1], [2, 3]], [[4, 5], [6, 7]]] }
+        end
+
+        register do
+          name 'register_4'
           bit_field { bit_assignment lsb: 0; type :foo }
         end
 
         register_file do
-          name 'register_file_3'
+          name 'register_file_5'
           register do
             name 'register_0'
             bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :foo }
@@ -266,18 +282,18 @@ RSpec.describe 'bit_field/type' do
         end
 
         register do
-          name 'register_4'
+          name 'register_6'
           bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :foo; reference 'register_0.bit_field_0' }
           bit_field { name 'bit_field_1'; bit_assignment lsb: 4, sequence_size: 4; type :foo; reference 'register_2.bit_field_0' }
-          bit_field { name 'bit_field_2'; bit_assignment lsb: 8; type :foo; reference 'register_3' }
+          bit_field { name 'bit_field_2'; bit_assignment lsb: 8; type :foo; reference 'register_4' }
         end
 
         register_file do
-          name 'register_file_5'
+          name 'register_file_7'
           register do
             name 'register_0'
-            bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :foo; reference 'register_file_3.register_0.bit_field_0' }
-            bit_field { name 'bit_field_1'; bit_assignment lsb: 1, sequence_size: 4; type :foo; reference 'register_file_3.register_0.bit_field_1' }
+            bit_field { name 'bit_field_0'; bit_assignment lsb: 0; type :foo; reference 'register_file_5.register_0.bit_field_0' }
+            bit_field { name 'bit_field_1'; bit_assignment lsb: 1, sequence_size: 4; type :foo; reference 'register_file_5.register_0.bit_field_1' }
           end
         end
       end
@@ -288,41 +304,47 @@ RSpec.describe 'bit_field/type' do
       end
 
       expect(code_block).to match_string(<<~'CODE')
-        `rggen_ral_create_field(bit_field_0, 0, 1, "FOO", 1, 1'h0, 0, -1, "")
-        `rggen_ral_create_field(bit_field_1, 8, 8, "FOO", 1, 8'h00, 0, -1, "")
-        `rggen_ral_create_field(bit_field_2, 16, 1, "FOO", 1, 1'h0, 1, -1, "")
-        `rggen_ral_create_field(bit_field_3, 24, 8, "FOO", 1, 8'hab, 1, -1, "")
-        `rggen_ral_create_field(bit_field_0, 0, 1, "BAR", 0, 1'h0, 0, -1, "")
-        `rggen_ral_create_field(bit_field_1, 1, 1, "RW", 1, 1'h0, 0, -1, "")
-        `rggen_ral_create_field(bit_field_0[0], 0, 4, "FOO", 1, 4'h0, 1, 0, "")
-        `rggen_ral_create_field(bit_field_0[1], 12, 4, "FOO", 1, 4'h0, 1, 1, "")
-        `rggen_ral_create_field(bit_field_0[2], 24, 4, "FOO", 1, 4'h0, 1, 2, "")
-        `rggen_ral_create_field(bit_field_0[3], 36, 4, "FOO", 1, 4'h0, 1, 3, "")
-        `rggen_ral_create_field(bit_field_1[0], 4, 4, "FOO", 1, 4'h1, 1, 0, "")
-        `rggen_ral_create_field(bit_field_1[1], 16, 4, "FOO", 1, 4'h1, 1, 1, "")
-        `rggen_ral_create_field(bit_field_1[2], 28, 4, "FOO", 1, 4'h1, 1, 2, "")
-        `rggen_ral_create_field(bit_field_1[3], 40, 4, "FOO", 1, 4'h1, 1, 3, "")
-        `rggen_ral_create_field(bit_field_2[0], 8, 4, "FOO", 1, 4'h0, 1, 0, "")
-        `rggen_ral_create_field(bit_field_2[1], 20, 4, "FOO", 1, 4'h1, 1, 1, "")
-        `rggen_ral_create_field(bit_field_2[2], 32, 4, "FOO", 1, 4'h2, 1, 2, "")
-        `rggen_ral_create_field(bit_field_2[3], 44, 4, "FOO", 1, 4'h3, 1, 3, "")
-        `rggen_ral_create_field(register_3, 0, 1, "FOO", 1, 1'h0, 0, -1, "")
-        `rggen_ral_create_field(bit_field_0, 0, 1, "FOO", 1, 1'h0, 0, -1, "")
-        `rggen_ral_create_field(bit_field_1[0], 1, 1, "FOO", 1, 1'h0, 0, 0, "")
-        `rggen_ral_create_field(bit_field_1[1], 2, 1, "FOO", 1, 1'h0, 0, 1, "")
-        `rggen_ral_create_field(bit_field_1[2], 3, 1, "FOO", 1, 1'h0, 0, 2, "")
-        `rggen_ral_create_field(bit_field_1[3], 4, 1, "FOO", 1, 1'h0, 0, 3, "")
-        `rggen_ral_create_field(bit_field_0, 0, 1, "FOO", 1, 1'h0, 0, -1, "register_0.bit_field_0")
-        `rggen_ral_create_field(bit_field_1[0], 4, 1, "FOO", 1, 1'h0, 0, 0, "register_2.bit_field_0")
-        `rggen_ral_create_field(bit_field_1[1], 5, 1, "FOO", 1, 1'h0, 0, 1, "register_2.bit_field_0")
-        `rggen_ral_create_field(bit_field_1[2], 6, 1, "FOO", 1, 1'h0, 0, 2, "register_2.bit_field_0")
-        `rggen_ral_create_field(bit_field_1[3], 7, 1, "FOO", 1, 1'h0, 0, 3, "register_2.bit_field_0")
-        `rggen_ral_create_field(bit_field_2, 8, 1, "FOO", 1, 1'h0, 0, -1, "register_3.register_3")
-        `rggen_ral_create_field(bit_field_0, 0, 1, "FOO", 1, 1'h0, 0, -1, "register_file_3.register_0.bit_field_0")
-        `rggen_ral_create_field(bit_field_1[0], 1, 1, "FOO", 1, 1'h0, 0, 0, "register_file_3.register_0.bit_field_1")
-        `rggen_ral_create_field(bit_field_1[1], 2, 1, "FOO", 1, 1'h0, 0, 1, "register_file_3.register_0.bit_field_1")
-        `rggen_ral_create_field(bit_field_1[2], 3, 1, "FOO", 1, 1'h0, 0, 2, "register_file_3.register_0.bit_field_1")
-        `rggen_ral_create_field(bit_field_1[3], 4, 1, "FOO", 1, 1'h0, 0, 3, "register_file_3.register_0.bit_field_1")
+        `rggen_ral_create_field(bit_field_0, 0, 1, "FOO", 1, 1'h0, '{}, 0, 0, 0, "")
+        `rggen_ral_create_field(bit_field_1, 8, 8, "FOO", 1, 8'h00, '{}, 0, 0, 0, "")
+        `rggen_ral_create_field(bit_field_2, 16, 1, "FOO", 1, 1'h0, '{}, 1, 0, 0, "")
+        `rggen_ral_create_field(bit_field_3, 24, 8, "FOO", 1, 8'hab, '{}, 1, 0, 0, "")
+        `rggen_ral_create_field(bit_field_0, 0, 1, "BAR", 0, 1'h0, '{}, 0, 0, 0, "")
+        `rggen_ral_create_field(bit_field_1, 1, 1, "RW", 1, 1'h0, '{}, 0, 0, 0, "")
+        `rggen_ral_create_field(bit_field_0[0], 0, 4, "FOO", 1, 4'h0, '{}, 1, 0, 4, "")
+        `rggen_ral_create_field(bit_field_0[1], 12, 4, "FOO", 1, 4'h0, '{}, 1, 1, 4, "")
+        `rggen_ral_create_field(bit_field_0[2], 24, 4, "FOO", 1, 4'h0, '{}, 1, 2, 4, "")
+        `rggen_ral_create_field(bit_field_0[3], 36, 4, "FOO", 1, 4'h0, '{}, 1, 3, 4, "")
+        `rggen_ral_create_field(bit_field_1[0], 4, 4, "FOO", 1, 4'h1, '{}, 1, 0, 4, "")
+        `rggen_ral_create_field(bit_field_1[1], 16, 4, "FOO", 1, 4'h1, '{}, 1, 1, 4, "")
+        `rggen_ral_create_field(bit_field_1[2], 28, 4, "FOO", 1, 4'h1, '{}, 1, 2, 4, "")
+        `rggen_ral_create_field(bit_field_1[3], 40, 4, "FOO", 1, 4'h1, '{}, 1, 3, 4, "")
+        `rggen_ral_create_field(bit_field_2[0], 8, 4, "FOO", 1, 4'h0, '{4'h0, 4'h1, 4'h2, 4'h3}, 1, 0, 4, "")
+        `rggen_ral_create_field(bit_field_2[1], 20, 4, "FOO", 1, 4'h0, '{4'h0, 4'h1, 4'h2, 4'h3}, 1, 1, 4, "")
+        `rggen_ral_create_field(bit_field_2[2], 32, 4, "FOO", 1, 4'h0, '{4'h0, 4'h1, 4'h2, 4'h3}, 1, 2, 4, "")
+        `rggen_ral_create_field(bit_field_2[3], 44, 4, "FOO", 1, 4'h0, '{4'h0, 4'h1, 4'h2, 4'h3}, 1, 3, 4, "")
+        `rggen_ral_create_field(bit_field_0[0], 0, 4, "FOO", 1, 4'h0, '{}, 1, 0, 2, "")
+        `rggen_ral_create_field(bit_field_0[1], 12, 4, "FOO", 1, 4'h0, '{}, 1, 1, 2, "")
+        `rggen_ral_create_field(bit_field_1[0], 4, 4, "FOO", 1, 4'h1, '{}, 1, 0, 2, "")
+        `rggen_ral_create_field(bit_field_1[1], 16, 4, "FOO", 1, 4'h1, '{}, 1, 1, 2, "")
+        `rggen_ral_create_field(bit_field_2[0], 8, 4, "FOO", 1, 4'h0, '{4'h0, 4'h1, 4'h2, 4'h3, 4'h4, 4'h5, 4'h6, 4'h7}, 1, 0, 2, "")
+        `rggen_ral_create_field(bit_field_2[1], 20, 4, "FOO", 1, 4'h0, '{4'h0, 4'h1, 4'h2, 4'h3, 4'h4, 4'h5, 4'h6, 4'h7}, 1, 1, 2, "")
+        `rggen_ral_create_field(register_4, 0, 1, "FOO", 1, 1'h0, '{}, 0, 0, 0, "")
+        `rggen_ral_create_field(bit_field_0, 0, 1, "FOO", 1, 1'h0, '{}, 0, 0, 0, "")
+        `rggen_ral_create_field(bit_field_1[0], 1, 1, "FOO", 1, 1'h0, '{}, 0, 0, 4, "")
+        `rggen_ral_create_field(bit_field_1[1], 2, 1, "FOO", 1, 1'h0, '{}, 0, 1, 4, "")
+        `rggen_ral_create_field(bit_field_1[2], 3, 1, "FOO", 1, 1'h0, '{}, 0, 2, 4, "")
+        `rggen_ral_create_field(bit_field_1[3], 4, 1, "FOO", 1, 1'h0, '{}, 0, 3, 4, "")
+        `rggen_ral_create_field(bit_field_0, 0, 1, "FOO", 1, 1'h0, '{}, 0, 0, 0, "register_0.bit_field_0")
+        `rggen_ral_create_field(bit_field_1[0], 4, 1, "FOO", 1, 1'h0, '{}, 0, 0, 4, "register_2.bit_field_0")
+        `rggen_ral_create_field(bit_field_1[1], 5, 1, "FOO", 1, 1'h0, '{}, 0, 1, 4, "register_2.bit_field_0")
+        `rggen_ral_create_field(bit_field_1[2], 6, 1, "FOO", 1, 1'h0, '{}, 0, 2, 4, "register_2.bit_field_0")
+        `rggen_ral_create_field(bit_field_1[3], 7, 1, "FOO", 1, 1'h0, '{}, 0, 3, 4, "register_2.bit_field_0")
+        `rggen_ral_create_field(bit_field_2, 8, 1, "FOO", 1, 1'h0, '{}, 0, 0, 0, "register_4.register_4")
+        `rggen_ral_create_field(bit_field_0, 0, 1, "FOO", 1, 1'h0, '{}, 0, 0, 0, "register_file_5.register_0.bit_field_0")
+        `rggen_ral_create_field(bit_field_1[0], 1, 1, "FOO", 1, 1'h0, '{}, 0, 0, 4, "register_file_5.register_0.bit_field_1")
+        `rggen_ral_create_field(bit_field_1[1], 2, 1, "FOO", 1, 1'h0, '{}, 0, 1, 4, "register_file_5.register_0.bit_field_1")
+        `rggen_ral_create_field(bit_field_1[2], 3, 1, "FOO", 1, 1'h0, '{}, 0, 2, 4, "register_file_5.register_0.bit_field_1")
+        `rggen_ral_create_field(bit_field_1[3], 4, 1, "FOO", 1, 1'h0, '{}, 0, 3, 4, "register_file_5.register_0.bit_field_1")
       CODE
     end
   end
