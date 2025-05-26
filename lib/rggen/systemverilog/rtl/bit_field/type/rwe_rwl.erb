@@ -1,6 +1,7 @@
 rggen_bit_field #(
   .WIDTH                    (<%= width %>),
   .INITIAL_VALUE            (<%= initial_value %>),
+  .SW_WRITE_CONTROL         (1),
   .SW_WRITE_ENABLE_POLARITY (<%= polarity %>)
 ) u_bit_field (
   .i_clk              (<%= clock %>),

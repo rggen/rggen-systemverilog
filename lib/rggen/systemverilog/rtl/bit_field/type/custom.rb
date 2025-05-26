@@ -82,6 +82,15 @@ RgGen.define_list_item_feature(:bit_field, :type, :custom) do
       bit_field.sw_write_once? && 1 || 0
     end
 
+    def hw_access
+      values = [
+        bit_field.hw_clear? && 1 || 0,
+        bit_field.hw_set? && 1 || 0,
+        bit_field.hw_write? && 1 || 0
+      ]
+      "3'b#{values.join}"
+    end
+
     def storage
       external_read_data? && 0 || 1
     end
