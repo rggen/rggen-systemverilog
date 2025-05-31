@@ -303,6 +303,7 @@ RSpec.describe 'bit_field/type/rwe' do
         rggen_bit_field #(
           .WIDTH                    (1),
           .INITIAL_VALUE            (INITIAL_VALUE),
+          .SW_WRITE_CONTROL         (1),
           .SW_WRITE_ENABLE_POLARITY (RGGEN_ACTIVE_HIGH)
         ) u_bit_field (
           .i_clk              (i_clk),
@@ -326,6 +327,7 @@ RSpec.describe 'bit_field/type/rwe' do
         rggen_bit_field #(
           .WIDTH                    (1),
           .INITIAL_VALUE            (INITIAL_VALUE),
+          .SW_WRITE_CONTROL         (1),
           .SW_WRITE_ENABLE_POLARITY (RGGEN_ACTIVE_HIGH)
         ) u_bit_field (
           .i_clk              (i_clk),
@@ -349,6 +351,7 @@ RSpec.describe 'bit_field/type/rwe' do
         rggen_bit_field #(
           .WIDTH                    (2),
           .INITIAL_VALUE            (INITIAL_VALUE),
+          .SW_WRITE_CONTROL         (1),
           .SW_WRITE_ENABLE_POLARITY (RGGEN_ACTIVE_HIGH)
         ) u_bit_field (
           .i_clk              (i_clk),
@@ -372,6 +375,7 @@ RSpec.describe 'bit_field/type/rwe' do
         rggen_bit_field #(
           .WIDTH                    (2),
           .INITIAL_VALUE            (INITIAL_VALUE),
+          .SW_WRITE_CONTROL         (1),
           .SW_WRITE_ENABLE_POLARITY (RGGEN_ACTIVE_HIGH)
         ) u_bit_field (
           .i_clk              (i_clk),
@@ -395,6 +399,7 @@ RSpec.describe 'bit_field/type/rwe' do
         rggen_bit_field #(
           .WIDTH                    (4),
           .INITIAL_VALUE            (INITIAL_VALUE),
+          .SW_WRITE_CONTROL         (1),
           .SW_WRITE_ENABLE_POLARITY (RGGEN_ACTIVE_HIGH)
         ) u_bit_field (
           .i_clk              (i_clk),
@@ -418,6 +423,7 @@ RSpec.describe 'bit_field/type/rwe' do
         rggen_bit_field #(
           .WIDTH                    (4),
           .INITIAL_VALUE            (INITIAL_VALUE),
+          .SW_WRITE_CONTROL         (1),
           .SW_WRITE_ENABLE_POLARITY (RGGEN_ACTIVE_HIGH)
         ) u_bit_field (
           .i_clk              (i_clk),
@@ -441,6 +447,7 @@ RSpec.describe 'bit_field/type/rwe' do
         rggen_bit_field #(
           .WIDTH                    (4),
           .INITIAL_VALUE            (INITIAL_VALUE),
+          .SW_WRITE_CONTROL         (1),
           .SW_WRITE_ENABLE_POLARITY (RGGEN_ACTIVE_HIGH)
         ) u_bit_field (
           .i_clk              (i_clk),
@@ -464,6 +471,7 @@ RSpec.describe 'bit_field/type/rwe' do
         rggen_bit_field #(
           .WIDTH                    (4),
           .INITIAL_VALUE            (INITIAL_VALUE),
+          .SW_WRITE_CONTROL         (1),
           .SW_WRITE_ENABLE_POLARITY (RGGEN_ACTIVE_HIGH)
         ) u_bit_field (
           .i_clk              (i_clk),
@@ -487,6 +495,7 @@ RSpec.describe 'bit_field/type/rwe' do
         rggen_bit_field #(
           .WIDTH                    (4),
           .INITIAL_VALUE            (INITIAL_VALUE),
+          .SW_WRITE_CONTROL         (1),
           .SW_WRITE_ENABLE_POLARITY (RGGEN_ACTIVE_HIGH)
         ) u_bit_field (
           .i_clk              (i_clk),
@@ -510,6 +519,7 @@ RSpec.describe 'bit_field/type/rwe' do
         rggen_bit_field #(
           .WIDTH                    (4),
           .INITIAL_VALUE            (INITIAL_VALUE),
+          .SW_WRITE_CONTROL         (1),
           .SW_WRITE_ENABLE_POLARITY (RGGEN_ACTIVE_HIGH)
         ) u_bit_field (
           .i_clk              (i_clk),
@@ -533,6 +543,7 @@ RSpec.describe 'bit_field/type/rwe' do
         rggen_bit_field #(
           .WIDTH                    (1),
           .INITIAL_VALUE            (INITIAL_VALUE),
+          .SW_WRITE_CONTROL         (1),
           .SW_WRITE_ENABLE_POLARITY (RGGEN_ACTIVE_HIGH)
         ) u_bit_field (
           .i_clk              (i_clk),
@@ -556,6 +567,7 @@ RSpec.describe 'bit_field/type/rwe' do
         rggen_bit_field #(
           .WIDTH                    (4),
           .INITIAL_VALUE            (INITIAL_VALUE),
+          .SW_WRITE_CONTROL         (1),
           .SW_WRITE_ENABLE_POLARITY (RGGEN_ACTIVE_HIGH)
         ) u_bit_field (
           .i_clk              (i_clk),
@@ -579,6 +591,7 @@ RSpec.describe 'bit_field/type/rwe' do
         rggen_bit_field #(
           .WIDTH                    (4),
           .INITIAL_VALUE            (INITIAL_VALUE),
+          .SW_WRITE_CONTROL         (1),
           .SW_WRITE_ENABLE_POLARITY (RGGEN_ACTIVE_HIGH)
         ) u_bit_field (
           .i_clk              (i_clk),

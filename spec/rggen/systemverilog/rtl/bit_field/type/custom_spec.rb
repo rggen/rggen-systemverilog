@@ -214,6 +214,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_DEFAULT),
           .SW_WRITE_ACTION    (RGGEN_WRITE_DEFAULT),
           .SW_WRITE_ONCE      (0),
+          .HW_ACCESS          (3'b000),
           .STORAGE            (1),
           .EXTERNAL_READ_DATA (0),
           .TRIGGER            (0)
@@ -242,6 +243,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_NONE),
           .SW_WRITE_ACTION    (RGGEN_WRITE_DEFAULT),
           .SW_WRITE_ONCE      (0),
+          .HW_ACCESS          (3'b000),
           .STORAGE            (1),
           .EXTERNAL_READ_DATA (0),
           .TRIGGER            (0)
@@ -270,6 +272,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_DEFAULT),
           .SW_WRITE_ACTION    (RGGEN_WRITE_DEFAULT),
           .SW_WRITE_ONCE      (0),
+          .HW_ACCESS          (3'b000),
           .STORAGE            (1),
           .EXTERNAL_READ_DATA (0),
           .TRIGGER            (0)
@@ -298,6 +301,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_SET),
           .SW_WRITE_ACTION    (RGGEN_WRITE_DEFAULT),
           .SW_WRITE_ONCE      (0),
+          .HW_ACCESS          (3'b000),
           .STORAGE            (1),
           .EXTERNAL_READ_DATA (0),
           .TRIGGER            (0)
@@ -326,6 +330,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_CLEAR),
           .SW_WRITE_ACTION    (RGGEN_WRITE_DEFAULT),
           .SW_WRITE_ONCE      (0),
+          .HW_ACCESS          (3'b000),
           .STORAGE            (1),
           .EXTERNAL_READ_DATA (0),
           .TRIGGER            (0)
@@ -354,6 +359,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_DEFAULT),
           .SW_WRITE_ACTION    (RGGEN_WRITE_NONE),
           .SW_WRITE_ONCE      (0),
+          .HW_ACCESS          (3'b000),
           .STORAGE            (0),
           .EXTERNAL_READ_DATA (1),
           .TRIGGER            (0)
@@ -382,6 +388,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_DEFAULT),
           .SW_WRITE_ACTION    (RGGEN_WRITE_DEFAULT),
           .SW_WRITE_ONCE      (0),
+          .HW_ACCESS          (3'b000),
           .STORAGE            (1),
           .EXTERNAL_READ_DATA (0),
           .TRIGGER            (0)
@@ -410,6 +417,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_DEFAULT),
           .SW_WRITE_ACTION    (RGGEN_WRITE_SET),
           .SW_WRITE_ONCE      (0),
+          .HW_ACCESS          (3'b000),
           .STORAGE            (1),
           .EXTERNAL_READ_DATA (0),
           .TRIGGER            (0)
@@ -438,6 +446,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_DEFAULT),
           .SW_WRITE_ACTION    (RGGEN_WRITE_0_SET),
           .SW_WRITE_ONCE      (0),
+          .HW_ACCESS          (3'b000),
           .STORAGE            (1),
           .EXTERNAL_READ_DATA (0),
           .TRIGGER            (0)
@@ -466,6 +475,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_DEFAULT),
           .SW_WRITE_ACTION    (RGGEN_WRITE_1_SET),
           .SW_WRITE_ONCE      (0),
+          .HW_ACCESS          (3'b000),
           .STORAGE            (1),
           .EXTERNAL_READ_DATA (0),
           .TRIGGER            (0)
@@ -494,6 +504,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_DEFAULT),
           .SW_WRITE_ACTION    (RGGEN_WRITE_CLEAR),
           .SW_WRITE_ONCE      (0),
+          .HW_ACCESS          (3'b000),
           .STORAGE            (1),
           .EXTERNAL_READ_DATA (0),
           .TRIGGER            (0)
@@ -522,6 +533,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_DEFAULT),
           .SW_WRITE_ACTION    (RGGEN_WRITE_0_CLEAR),
           .SW_WRITE_ONCE      (0),
+          .HW_ACCESS          (3'b000),
           .STORAGE            (1),
           .EXTERNAL_READ_DATA (0),
           .TRIGGER            (0)
@@ -550,6 +562,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_DEFAULT),
           .SW_WRITE_ACTION    (RGGEN_WRITE_1_CLEAR),
           .SW_WRITE_ONCE      (0),
+          .HW_ACCESS          (3'b000),
           .STORAGE            (1),
           .EXTERNAL_READ_DATA (0),
           .TRIGGER            (0)
@@ -578,6 +591,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_DEFAULT),
           .SW_WRITE_ACTION    (RGGEN_WRITE_0_TOGGLE),
           .SW_WRITE_ONCE      (0),
+          .HW_ACCESS          (3'b000),
           .STORAGE            (1),
           .EXTERNAL_READ_DATA (0),
           .TRIGGER            (0)
@@ -606,6 +620,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_DEFAULT),
           .SW_WRITE_ACTION    (RGGEN_WRITE_1_TOGGLE),
           .SW_WRITE_ONCE      (0),
+          .HW_ACCESS          (3'b000),
           .STORAGE            (1),
           .EXTERNAL_READ_DATA (0),
           .TRIGGER            (0)
@@ -634,6 +649,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_DEFAULT),
           .SW_WRITE_ACTION    (RGGEN_WRITE_DEFAULT),
           .SW_WRITE_ONCE      (1),
+          .HW_ACCESS          (3'b000),
           .STORAGE            (1),
           .EXTERNAL_READ_DATA (0),
           .TRIGGER            (0)
@@ -662,6 +678,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_DEFAULT),
           .SW_WRITE_ACTION    (RGGEN_WRITE_DEFAULT),
           .SW_WRITE_ONCE      (0),
+          .HW_ACCESS          (3'b001),
           .STORAGE            (1),
           .EXTERNAL_READ_DATA (0),
           .TRIGGER            (0)
@@ -690,6 +707,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_DEFAULT),
           .SW_WRITE_ACTION    (RGGEN_WRITE_DEFAULT),
           .SW_WRITE_ONCE      (0),
+          .HW_ACCESS          (3'b010),
           .STORAGE            (1),
           .EXTERNAL_READ_DATA (0),
           .TRIGGER            (0)
@@ -718,6 +736,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_DEFAULT),
           .SW_WRITE_ACTION    (RGGEN_WRITE_DEFAULT),
           .SW_WRITE_ONCE      (0),
+          .HW_ACCESS          (3'b100),
           .STORAGE            (1),
           .EXTERNAL_READ_DATA (0),
           .TRIGGER            (0)
@@ -746,6 +765,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_DEFAULT),
           .SW_WRITE_ACTION    (RGGEN_WRITE_DEFAULT),
           .SW_WRITE_ONCE      (0),
+          .HW_ACCESS          (3'b000),
           .STORAGE            (1),
           .EXTERNAL_READ_DATA (0),
           .TRIGGER            (1)
@@ -774,6 +794,7 @@ RSpec.describe 'bit_field/type/custom' do
           .SW_READ_ACTION     (RGGEN_READ_DEFAULT),
           .SW_WRITE_ACTION    (RGGEN_WRITE_DEFAULT),
           .SW_WRITE_ONCE      (0),
+          .HW_ACCESS          (3'b000),
           .STORAGE            (1),
           .EXTERNAL_READ_DATA (0),
           .TRIGGER            (1)

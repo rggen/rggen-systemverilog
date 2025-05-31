@@ -498,14 +498,16 @@ RSpec.describe 'bit_field/type/rc' do
           .WIDTH            (1),
           .INITIAL_VALUE    (INITIAL_VALUE),
           .SW_READ_ACTION   (RGGEN_READ_CLEAR),
-          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE)
+          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE),
+          .HW_ACCESS        (3'b010),
+          .EXTERNAL_MASK    (0)
         ) u_bit_field (
           .i_clk              (i_clk),
           .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (),
-          .i_sw_write_enable  ('0),
+          .i_sw_write_enable  ('1),
           .i_hw_write_enable  ('0),
           .i_hw_write_data    ('0),
           .i_hw_set           (i_register_0_bit_field_0_set),
@@ -522,14 +524,16 @@ RSpec.describe 'bit_field/type/rc' do
           .WIDTH            (1),
           .INITIAL_VALUE    (INITIAL_VALUE),
           .SW_READ_ACTION   (RGGEN_READ_CLEAR),
-          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE)
+          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE),
+          .HW_ACCESS        (3'b010),
+          .EXTERNAL_MASK    (1)
         ) u_bit_field (
           .i_clk              (i_clk),
           .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (),
-          .i_sw_write_enable  ('0),
+          .i_sw_write_enable  ('1),
           .i_hw_write_enable  ('0),
           .i_hw_write_data    ('0),
           .i_hw_set           (i_register_0_bit_field_1_set),
@@ -546,14 +550,16 @@ RSpec.describe 'bit_field/type/rc' do
           .WIDTH            (8),
           .INITIAL_VALUE    (INITIAL_VALUE),
           .SW_READ_ACTION   (RGGEN_READ_CLEAR),
-          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE)
+          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE),
+          .HW_ACCESS        (3'b010),
+          .EXTERNAL_MASK    (0)
         ) u_bit_field (
           .i_clk              (i_clk),
           .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (),
-          .i_sw_write_enable  ('0),
+          .i_sw_write_enable  ('1),
           .i_hw_write_enable  ('0),
           .i_hw_write_data    ('0),
           .i_hw_set           (i_register_0_bit_field_2_set),
@@ -570,14 +576,16 @@ RSpec.describe 'bit_field/type/rc' do
           .WIDTH            (8),
           .INITIAL_VALUE    (INITIAL_VALUE),
           .SW_READ_ACTION   (RGGEN_READ_CLEAR),
-          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE)
+          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE),
+          .HW_ACCESS        (3'b010),
+          .EXTERNAL_MASK    (1)
         ) u_bit_field (
           .i_clk              (i_clk),
           .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (),
-          .i_sw_write_enable  ('0),
+          .i_sw_write_enable  ('1),
           .i_hw_write_enable  ('0),
           .i_hw_write_data    ('0),
           .i_hw_set           (i_register_0_bit_field_3_set),
@@ -594,14 +602,16 @@ RSpec.describe 'bit_field/type/rc' do
           .WIDTH            (64),
           .INITIAL_VALUE    (INITIAL_VALUE),
           .SW_READ_ACTION   (RGGEN_READ_CLEAR),
-          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE)
+          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE),
+          .HW_ACCESS        (3'b010),
+          .EXTERNAL_MASK    (0)
         ) u_bit_field (
           .i_clk              (i_clk),
           .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (),
-          .i_sw_write_enable  ('0),
+          .i_sw_write_enable  ('1),
           .i_hw_write_enable  ('0),
           .i_hw_write_data    ('0),
           .i_hw_set           (i_register_1_bit_field_0_set),
@@ -618,14 +628,16 @@ RSpec.describe 'bit_field/type/rc' do
           .WIDTH            (4),
           .INITIAL_VALUE    (INITIAL_VALUE),
           .SW_READ_ACTION   (RGGEN_READ_CLEAR),
-          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE)
+          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE),
+          .HW_ACCESS        (3'b010),
+          .EXTERNAL_MASK    (0)
         ) u_bit_field (
           .i_clk              (i_clk),
           .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (),
-          .i_sw_write_enable  ('0),
+          .i_sw_write_enable  ('1),
           .i_hw_write_enable  ('0),
           .i_hw_write_data    ('0),
           .i_hw_set           (i_register_2_bit_field_0_set[i]),
@@ -642,14 +654,16 @@ RSpec.describe 'bit_field/type/rc' do
           .WIDTH            (4),
           .INITIAL_VALUE    (INITIAL_VALUE),
           .SW_READ_ACTION   (RGGEN_READ_CLEAR),
-          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE)
+          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE),
+          .HW_ACCESS        (3'b010),
+          .EXTERNAL_MASK    (1)
         ) u_bit_field (
           .i_clk              (i_clk),
           .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (),
-          .i_sw_write_enable  ('0),
+          .i_sw_write_enable  ('1),
           .i_hw_write_enable  ('0),
           .i_hw_write_data    ('0),
           .i_hw_set           (i_register_2_bit_field_1_set[i]),
@@ -666,14 +680,16 @@ RSpec.describe 'bit_field/type/rc' do
           .WIDTH            (4),
           .INITIAL_VALUE    (INITIAL_VALUE),
           .SW_READ_ACTION   (RGGEN_READ_CLEAR),
-          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE)
+          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE),
+          .HW_ACCESS        (3'b010),
+          .EXTERNAL_MASK    (0)
         ) u_bit_field (
           .i_clk              (i_clk),
           .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (),
-          .i_sw_write_enable  ('0),
+          .i_sw_write_enable  ('1),
           .i_hw_write_enable  ('0),
           .i_hw_write_data    ('0),
           .i_hw_set           (i_register_3_bit_field_0_set[i][j]),
@@ -690,14 +706,16 @@ RSpec.describe 'bit_field/type/rc' do
           .WIDTH            (4),
           .INITIAL_VALUE    (INITIAL_VALUE),
           .SW_READ_ACTION   (RGGEN_READ_CLEAR),
-          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE)
+          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE),
+          .HW_ACCESS        (3'b010),
+          .EXTERNAL_MASK    (1)
         ) u_bit_field (
           .i_clk              (i_clk),
           .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (),
-          .i_sw_write_enable  ('0),
+          .i_sw_write_enable  ('1),
           .i_hw_write_enable  ('0),
           .i_hw_write_data    ('0),
           .i_hw_set           (i_register_3_bit_field_1_set[i][j]),
@@ -714,14 +732,16 @@ RSpec.describe 'bit_field/type/rc' do
           .WIDTH            (4),
           .INITIAL_VALUE    (INITIAL_VALUE),
           .SW_READ_ACTION   (RGGEN_READ_CLEAR),
-          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE)
+          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE),
+          .HW_ACCESS        (3'b010),
+          .EXTERNAL_MASK    (0)
         ) u_bit_field (
           .i_clk              (i_clk),
           .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (),
-          .i_sw_write_enable  ('0),
+          .i_sw_write_enable  ('1),
           .i_hw_write_enable  ('0),
           .i_hw_write_data    ('0),
           .i_hw_set           (i_register_4_bit_field_0_set[i][j][k]),
@@ -738,14 +758,16 @@ RSpec.describe 'bit_field/type/rc' do
           .WIDTH            (4),
           .INITIAL_VALUE    (INITIAL_VALUE),
           .SW_READ_ACTION   (RGGEN_READ_CLEAR),
-          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE)
+          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE),
+          .HW_ACCESS        (3'b010),
+          .EXTERNAL_MASK    (1)
         ) u_bit_field (
           .i_clk              (i_clk),
           .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (),
-          .i_sw_write_enable  ('0),
+          .i_sw_write_enable  ('1),
           .i_hw_write_enable  ('0),
           .i_hw_write_data    ('0),
           .i_hw_set           (i_register_4_bit_field_1_set[i][j][k]),
@@ -762,14 +784,16 @@ RSpec.describe 'bit_field/type/rc' do
           .WIDTH            (4),
           .INITIAL_VALUE    (INITIAL_VALUE),
           .SW_READ_ACTION   (RGGEN_READ_CLEAR),
-          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE)
+          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE),
+          .HW_ACCESS        (3'b010),
+          .EXTERNAL_MASK    (0)
         ) u_bit_field (
           .i_clk              (i_clk),
           .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (),
-          .i_sw_write_enable  ('0),
+          .i_sw_write_enable  ('1),
           .i_hw_write_enable  ('0),
           .i_hw_write_data    ('0),
           .i_hw_set           (i_register_file_5_register_file_0_register_0_bit_field_0_set[i][j][k][l][m]),
@@ -786,14 +810,16 @@ RSpec.describe 'bit_field/type/rc' do
           .WIDTH            (4),
           .INITIAL_VALUE    (INITIAL_VALUE),
           .SW_READ_ACTION   (RGGEN_READ_CLEAR),
-          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE)
+          .SW_WRITE_ACTION  (RGGEN_WRITE_NONE),
+          .HW_ACCESS        (3'b010),
+          .EXTERNAL_MASK    (1)
         ) u_bit_field (
           .i_clk              (i_clk),
           .i_rst_n            (i_rst_n),
           .bit_field_if       (bit_field_sub_if),
           .o_write_trigger    (),
           .o_read_trigger     (),
-          .i_sw_write_enable  ('0),
+          .i_sw_write_enable  ('1),
           .i_hw_write_enable  ('0),
           .i_hw_write_data    ('0),
           .i_hw_set           (i_register_file_5_register_file_0_register_0_bit_field_1_set[i][j][k][l][m]),

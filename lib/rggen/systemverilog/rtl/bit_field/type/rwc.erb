@@ -1,6 +1,7 @@
 rggen_bit_field #(
   .WIDTH          (<%= width %>),
   .INITIAL_VALUE  (<%= initial_value %>),
+  .HW_ACCESS      (3'b100),
   .HW_CLEAR_WIDTH (1)
 ) u_bit_field (
   .i_clk              (<%= clock %>),
