@@ -5,6 +5,7 @@ module RgGen
     module Common
       class Feature < Core::OutputBase::Feature
         include Common::Utility
+
         template_engine Core::OutputBase::ERBEngine
 
         EntityContext =
