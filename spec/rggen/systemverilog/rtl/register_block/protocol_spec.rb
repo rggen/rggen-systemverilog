@@ -36,12 +36,12 @@ RSpec.describe 'register_block/protocol' do
   end
 
   before do
+    RgGen.disable_all
     RgGen.enable(:global, [:address_width])
     RgGen.enable(:register_block, [:protocol, :bus_width])
   end
 
   after do
-    RgGen.enable_all
     delete_configuration_factory
     delete_register_map_factory
   end
@@ -95,84 +95,6 @@ RSpec.describe 'register_block/protocol' do
       protocol =  [:foo, :bar, :foobar].sample
       configuration = create_configuration(protocol: protocol)
       expect(configuration.printables[:protocol]).to eq protocol
-    end
-
-    describe 'エラーチェック' do
-      context '対象の全生成器で、使用可能なプロトコルがない場合' do
-        before do
-          RgGen.enable(:register_block, :protocol, [:buz, :qux])
-        end
-
-        it 'SourceErrorを起こす' do
-          expect {
-            create_configuration
-          }.to raise_source_error 'no protocols are available'
-
-          expect {
-            create_configuration(protocol: nil)
-          }.to raise_source_error 'no protocols are available'
-
-          expect {
-            create_configuration(protocol: '')
-          }.to raise_source_error 'no protocols are available'
-        end
-      end
-
-      context '有効になっていないプロトコルを指定した場合' do
-        before do
-          RgGen.enable(:register_block, :protocol, [:foo, :bar, :baz, :qux])
-        end
-
-        it 'SourceErrorを起こす' do
-          value = random_string(/foobar/i)
-          expect {
-            create_configuration(protocol: value)
-          }.to raise_source_error "unknown protocol: #{value.inspect}"
-
-          value = random_string(/foobar/i).to_sym
-          expect {
-            create_configuration(protocol: value)
-          }.to raise_source_error "unknown protocol: #{value.inspect}"
-
-          value = random_string(/baz/i)
-          expect {
-            create_configuration(protocol: value)
-          }.to raise_source_error "unknown protocol: #{value.inspect}"
-
-          value = random_string(/baz/i).to_sym
-          expect {
-            create_configuration(protocol: value)
-          }.to raise_source_error "unknown protocol: #{value.inspect}"
-
-          value = random_string(/qux/i)
-          expect {
-            create_configuration(protocol: value)
-          }.to raise_source_error "unknown protocol: #{value.inspect}"
-
-          value = random_string(/qux/i).to_sym
-          expect {
-            create_configuration(protocol: value)
-          }.to raise_source_error "unknown protocol: #{value.inspect}"
-        end
-      end
-
-      context '定義されていないプロトコルを指定した場合' do
-        before do
-          RgGen.enable(:register_block, :protocol, [:foo, :bar, :fizz])
-        end
-
-        it 'SourceErrorを起こす' do
-          value = random_string(/fizz/i)
-          expect {
-            create_configuration(protocol: value)
-          }.to raise_source_error "unknown protocol: #{value.inspect}"
-
-          value = random_string(/fizz/i).to_sym
-          expect {
-            create_configuration(protocol: value)
-          }.to raise_source_error "unknown protocol: #{value.inspect}"
-        end
-      end
     end
   end
 
@@ -248,6 +170,12 @@ RSpec.describe 'register_block/protocol' do
           create_configuration(protocol: '')
         }.to raise_source_error 'no protocols are available'
       end
+
+      specify '有効になっていない生成器は除外される' do
+        RgGen.builder.disable_unused_output_features([:verilog])
+
+        expect { create_configuration }.not_to raise_error
+      end
     end
 
     context '有効になっていないプロトコルを指定した場合' do
@@ -303,6 +231,13 @@ RSpec.describe 'register_block/protocol' do
         expect {
           create_register_block { protocol value }
         }.to raise_source_error "unknown protocol: #{value.inspect}"
+      end
+
+      specify '無効になっている生成器は除外される' do
+        RgGen.builder.disable_unused_output_features([:verilog])
+
+        expect { create_configuration(protocol: 'qux') }.not_to raise_error
+        expect { create_register_block { protocol 'qux'} }.not_to raise_error
       end
     end
 
