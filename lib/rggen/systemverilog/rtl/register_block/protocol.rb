@@ -24,6 +24,7 @@ RgGen.define_list_feature(:register_block, :protocol) do
     def available_protocols
       feature_registries
         .map { |registry| registry.enabled_features(:protocol) }
+        .compact
         .inject(:&)
     end
   end
