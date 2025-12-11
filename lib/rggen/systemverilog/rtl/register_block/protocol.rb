@@ -6,13 +6,17 @@ RgGen.define_list_feature(:register_block, :protocol) do
       feature_registries << registry
     end
 
+    def no_rtl_writers?
+      feature_registries
+        .none? { |registry| registry.enabled_features.include?(:protocol) }
+    end
+
     def default_protocol
       available_protocols.first
     end
 
     def find_protocol(value)
-      available_protocols
-        .find { value.to_sym.casecmp?(_1) }
+      available_protocols.find { value.to_sym.casecmp?(_1) }
     end
 
     private
@@ -23,8 +27,7 @@ RgGen.define_list_feature(:register_block, :protocol) do
 
     def available_protocols
       feature_registries
-        .map { |registry| registry.enabled_features(:protocol) }
-        .compact
+        .filter_map { |registry| registry.enabled_features(:protocol) }
         .inject(:&)
     end
   end
@@ -40,6 +43,14 @@ RgGen.define_list_feature(:register_block, :protocol) do
 
       factory do
         convert_value do |value, position|
+          find_protocol(value, position)
+        end
+
+        private
+
+        def find_protocol(value, position)
+          return if shared_context.no_rtl_writers?
+
           shared_context.find_protocol(value) ||
             (error "unknown protocol: #{value.inspect}", position)
         end
@@ -55,12 +66,20 @@ RgGen.define_list_feature(:register_block, :protocol) do
 
     factory do
       default_value do |position|
-        shared_context.default_protocol ||
-          (error 'no protocols are available', position)
+        default_protocol(position)
       end
 
       def target_feature_key(data)
         data.value
+      end
+
+      private
+
+      def default_protocol(position)
+        return if shared_context.no_rtl_writers?
+
+        shared_context.default_protocol ||
+          (error 'no protocols are available', position)
       end
     end
   end

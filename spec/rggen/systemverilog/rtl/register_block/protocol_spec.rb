@@ -176,6 +176,14 @@ RSpec.describe 'register_block/protocol' do
 
         expect { create_configuration }.not_to raise_error
       end
+
+      context '有効になっているRTL生成器がない場合' do
+        specify 'エラーにならない' do
+          RgGen.builder.disable_unused_output_features([:markdown])
+
+          expect { create_configuration }.not_to raise_error
+        end
+      end
     end
 
     context '有効になっていないプロトコルを指定した場合' do
@@ -239,6 +247,15 @@ RSpec.describe 'register_block/protocol' do
         expect { create_configuration(protocol: 'qux') }.not_to raise_error
         expect { create_register_block { protocol 'qux'} }.not_to raise_error
       end
+
+      context '有効になっているRTL生成器がない場合' do
+        specify 'エラーにならない' do
+          RgGen.builder.disable_unused_output_features([:markdown])
+
+          expect { create_configuration(protocol: 'foobar') }.not_to raise_error
+          expect { create_register_block { protocol 'foobar'} }.not_to raise_error
+        end
+      end
     end
 
     context '定義されていないプロトコルを指定した場合' do
@@ -246,7 +263,7 @@ RSpec.describe 'register_block/protocol' do
         RgGen.enable(:register_block, :protocol, [:foo, :bar, :fizz])
       end
 
-      it 'SourceError/RegisterMapErrorを起こす' do
+      it 'SourceErrorを起こす' do
         value = random_string(/fizz/i)
         expect {
           create_configuration(protocol: value)
@@ -262,6 +279,15 @@ RSpec.describe 'register_block/protocol' do
         expect {
           create_register_block { protocol value }
         }.to raise_source_error "unknown protocol: #{value.inspect}"
+      end
+
+      context '有効になっているRTL生成器がない場合' do
+        specify 'エラーにならない' do
+          RgGen.builder.disable_unused_output_features([:markdown])
+
+          expect { create_configuration(protocol: 'fizz') }.not_to raise_error
+          expect { create_register_block { protocol 'fizz'} }.not_to raise_error
+        end
       end
     end
   end
