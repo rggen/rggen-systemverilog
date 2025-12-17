@@ -22,6 +22,7 @@ RgGen.setup_plugin :'rggen-sv-ral' do |plugin|
     'ral/register/type',
     'ral/register/type/external',
     'ral/register/type/indirect',
+    'ral/register/type/maskable',
     'ral/bit_field/type',
     'ral/bit_field/type/custom',
     'ral/bit_field/type/rof_rohw',
