@@ -24,12 +24,12 @@ RgGen.setup_plugin :'rggen-sv-ral' do |plugin|
     'ral/register/type/indirect',
     'ral/register/type/maskable',
     'ral/bit_field/type',
+    'ral/bit_field/type/counter_rwc_rwhw_rws',
     'ral/bit_field/type/custom',
     'ral/bit_field/type/rof_rohw',
     'ral/bit_field/type/rotrg_rwtrg_wotrg',
     'ral/bit_field/type/row0trg_row1trg_w0trg_w1trg',
     'ral/bit_field/type/rowo_rowotrg',
-    'ral/bit_field/type/rwc_rwhw_rws',
     'ral/bit_field/type/rwe_rwl'
   ]
 
