@@ -8,8 +8,3 @@ gemspec
 root = ENV['RGGEN_ROOT'] || File.expand_path('..', __dir__)
 gemfile = File.join(root, 'rggen-devtools', 'Gemfile')
 eval_gemfile(gemfile)
-
-group :rggen do
-  gem_patched 'facets'
-  gem_patched 'rubyzip'
-end
